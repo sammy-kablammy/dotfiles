@@ -1,0 +1,4 @@
+*.swp
+*.swo
+nvim/lazy-lock.json
+nvim/lua/.luarc.json

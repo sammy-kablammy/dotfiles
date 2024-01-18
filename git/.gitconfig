@@ -1,0 +1,33 @@
+; example for sourcing another file
+; [include]
+;   path = /path/to/other/gitconfig
+
+[credential "https://github.com"]
+	helper = !/usr/bin/gh auth git-credential
+[user]
+    email = 98327570+sammy-kablammy@users.noreply.github.com
+    name = sammy-kablammy
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main
+[pull]
+	rebase = false
+[diff]
+    tool = nvimdiff
+[difftool]
+    prompt = false
+[merge]
+    tool = nvimdiff
+[commit]
+    verbose = true
+[alias]
+    l = "log --all --graph --decorate --oneline"
+    s = "status"
+    ss = "status --short"
+    f = "fetch"
+    fs = "!f() { git fetch && git status; }; f"
+    fss = "!f() { git fetch && git status --short; }; f"
+    dt = "difftool"
+    mt = "mergetool"
+    b = "branch -vv"

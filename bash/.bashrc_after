@@ -1,0 +1,10 @@
+# note: to link to this file from your local bashrc, add
+# source /path/to/this/file
+
+# shortens the path shown in the command prompt
+export PROMPT_DIRTRIM=2
+
+# pink!!! hooray!!!
+export PS1="\[\e[0;35m\]\u\[\e[0;37m\]:\[\e[0;34m\]\w\[\e[0;37m\]$ \[\e[0m\]"
+
+# vim: set filetype=sh:
