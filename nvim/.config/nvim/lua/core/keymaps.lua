@@ -65,6 +65,7 @@ keymap('n', '<leader>bp', '<cmd>bp<cr>')
 keymap('n', '<leader>bq', '<cmd>bd<cr>')
 keymap('n', '<leader>bQ', '<cmd>bd!<cr>')
 keymap('n', '<leader>bd', '<cmd>bd<cr>')
+keymap('n', '<leader>q', '<cmd>bd<cr>')
 keymap('n', '<leader>bD', '<cmd>bd!<cr>')
 
 -- tab stuff
@@ -83,7 +84,7 @@ keymap('n', '<leader>so', function()
 end)
 
 -- quickfix list -- TODO dear god sort out these keymaps
-keymap('n', '<leader>qf', '<cmd>copen<cr>')
+-- keymap('n', '<leader>qf', '<cmd>copen<cr>')
 keymap('n', '<leader>co', '<cmd>copen<cr>')
 keymap('n', '<leader>cq', '<cmd>cclose<cr>')
 keymap('n', '<leader>cf', '<cmd>cfirst<cr>')
