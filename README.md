@@ -7,6 +7,7 @@
 - dotfiles that belong in .config (like your tmux.conf) need the path relative to
 ~ to be recreated inside of the package's directory
 
+```
 ├── nvim
 │   └── .config
 │       └── nvim
@@ -21,6 +22,7 @@
 │           └── tmux.conf
 └── vim
     └── .vimrc
+```
 
 In this example, "vim" is the package name you use when you type the "stow vim"
 command. Since the .vimrc file belongs in ~, no extra structure is needed.
