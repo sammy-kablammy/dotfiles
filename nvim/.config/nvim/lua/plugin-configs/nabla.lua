@@ -3,7 +3,7 @@ local nabla = require('nabla')
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = { '*.tex', '*.md' },
     callback = function()
-        vim.keymap.set('n', '<leader>eq', function()
+        vim.keymap.set('n', '<leader>lt', function()
             nabla.toggle_virt({ autogen = true })
         end)
         vim.keymap.set('n', 'K', function()
