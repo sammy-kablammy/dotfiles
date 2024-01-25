@@ -127,3 +127,6 @@ require("mason-null-ls").setup({
 
 -- this might not be necessary i guess?
 -- require("null-ls").setup({})
+
+vim.keymap.set('n', '<leader>li', '<cmd>LspInfo<cr>')
+vim.keymap.set('n', '<leader>ll', '<cmd>LspLog<cr>')
