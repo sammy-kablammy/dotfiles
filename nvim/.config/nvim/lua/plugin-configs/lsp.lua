@@ -18,13 +18,39 @@
 -- mason-null-ls before null-ls
 -- neodev before lspconfig
 
+-- I used to have all the language servers i use in the 'ensure_installed'
+-- fields but they aren't really necessary on most machines i use, so now you're
+-- just gonna have to use this usercommand when you want to install LSPs.
+vim.api.nvim_create_user_command('LspMe', function() 
+    -- NOTE: you need to use mason names, not lspconfig/null-ls names :( 
+    local my_servers = {
+        -- servers for mason-lspconfig
+        -- "lua_ls",
+        "lua-language-server",
+        "clangd",
+        "jdtls",
+        "pyright",
+        -- "tsserver",
+        "typescript-language-server",
+
+        -- servers for mason-null-ls
+        "stylua",
+        "prettierd",
+        "clang-format",
+        "black",
+    }
+    for _, server in ipairs(my_servers) do
+        vim.cmd("MasonInstall " .. server)
+    end
+end, { desc = 'install all my preferred language servers' })
+
 local mason_lspconfig_set_these_up_please = {
     -- language servers that buckle my shoe (roughly in order of my usage)
-    "lua_ls",
-    "clangd",
-    "jdtls",
-    "pyright",
-    "tsserver",
+    -- "lua_ls",
+    -- "clangd",
+    -- "jdtls",
+    -- "pyright",
+    -- "tsserver",
     -- 'cssls',
     -- 'biome',
     -- 'rust_analyzer',
@@ -36,19 +62,19 @@ local mason_lspconfig_set_these_up_please = {
 }
 
 local mason_null_ls_setup_these_please = {
-    "stylua",
-    "prettierd",
-    "clang_format",
-    "black",
+    -- "stylua",
+    -- "prettierd",
+    -- "clang_format",
+    -- "black",
     -- "eslint_d",
 }
 
 require("mason").setup({})
 
-require("neodev").setup()
+require("neodev").setup({})
 
 require("mason-lspconfig").setup({
-    ensure_installed = mason_lspconfig_set_these_up_please,
+    -- ensure_installed = mason_lspconfig_set_these_up_please,
 })
 
 -- :h mason-lspconfig-automatic-server-setup
@@ -120,7 +146,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 require("mason-null-ls").setup({
     -- A list of sources to install if they're not already installed.
     -- This setting has no relation with the `automatic_installation` setting.
-    ensure_installed = mason_null_ls_setup_these_please,
+    -- ensure_installed = mason_null_ls_setup_these_please,
     automatic_installation = true,
     handlers = {},
 })
