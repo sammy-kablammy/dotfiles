@@ -79,16 +79,20 @@ keymap('n', '<leader>so', function()
     vim.cmd('source')
 end)
 
+-- square bracket fun time [ [ [ ] ] ]
+keymap('n', '[b', vim.cmd.bprevious)
+keymap('n', ']b', vim.cmd.bnext)
+
 -- quickfix list -- TODO dear god sort out these keymaps
 -- keymap('n', '<leader>qf', '<cmd>copen<cr>')
-keymap('n', '<leader>co', '<cmd>copen<cr>')
-keymap('n', '<leader>cq', '<cmd>cclose<cr>')
-keymap('n', '<leader>cf', '<cmd>cfirst<cr>')
-keymap('n', '<leader>cl', '<cmd>clast<cr>')
-keymap('n', '<leader>cn', '<cmd>cn<cr>')
-keymap('n', '<leader>cp', '<cmd>cp<cr>')
-keymap('n', ']t', '<cmd>cn<cr>')
-keymap('n', '[t', '<cmd>cp<cr>')
+-- keymap('n', '<leader>co', '<cmd>copen<cr>')
+-- keymap('n', '<leader>cq', '<cmd>cclose<cr>')
+-- keymap('n', '<leader>cf', '<cmd>cfirst<cr>')
+-- keymap('n', '<leader>cl', '<cmd>clast<cr>')
+-- keymap('n', '<leader>cn', '<cmd>cn<cr>')
+-- keymap('n', '<leader>cp', '<cmd>cp<cr>')
+-- keymap('n', ']t', '<cmd>cn<cr>')
+-- keymap('n', '[t', '<cmd>cp<cr>')
 
 -- "change inside ___" motions but reversed
 keymap('n', 'cr"', '?"<cr><cmd>nohlsearch<cr>ci"')
