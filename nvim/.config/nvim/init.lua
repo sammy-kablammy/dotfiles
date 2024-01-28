@@ -34,8 +34,6 @@ else
     -- note: you can do config = true and lazy will do default plugin setup
 
     require("lazy").setup({
-        -- pretty important plugins. in no particular order.
-        -- these are used all the time.
         {
             "catppuccin/nvim",
             name = "catppuccin",
@@ -67,11 +65,6 @@ else
                 }
             }
         },
-        -- {
-        --     'windwp/nvim-autopairs',
-        --     event = "InsertEnter",
-        --     opts = {} -- this is equalent to setup({}) function
-        -- },
         'nvim-lualine/lualine.nvim',
         'numToStr/Comment.nvim',
         'nvim-treesitter/nvim-treesitter',
@@ -109,15 +102,6 @@ else
         },
         -- ##### okay that's the new snippet stuff
 
-        -- less important plugins. these might be specific to a single language.
-        -- or maybe they are plugins i'm trying to get away from/rewrite myself.
-        -- {
-        --     "nvim-tree/nvim-tree.lua",
-        --     dependencies = {
-        --         'nvim-lua/plenary.nvim',
-        --         'nvim-tree/nvim-web-devicons'
-        --     },
-        -- },
         {
             "folke/which-key.nvim",
             init = function()
@@ -125,11 +109,6 @@ else
                 vim.o.timeoutlen = 500
             end
         },
-        -- {
-        --     'akinsho/bufferline.nvim',
-        --     version = "*",
-        --     dependencies = 'nvim-tree/nvim-web-devicons'
-        -- },
         {
             'ziontee113/icon-picker.nvim',
             dependencies = {
@@ -146,7 +125,6 @@ else
         },
         'folke/todo-comments.nvim',
         'ThePrimeagen/vim-be-good',
-        'simrat39/rust-tools.nvim',
         'jbyuki/nabla.nvim',
         { 'echasnovski/mini.nvim', version = '*' },
 
