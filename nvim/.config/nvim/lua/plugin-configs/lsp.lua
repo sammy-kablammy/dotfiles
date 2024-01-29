@@ -151,8 +151,24 @@ require("mason-null-ls").setup({
     handlers = {},
 })
 
--- this might not be necessary i guess?
--- require("null-ls").setup({})
+-- setting up null-ls is not required if you only use mason-null-ls.
+-- if you have custom servers not found in mason, then you have to manually set
+-- them up here. see :h null-ls-setup
+
+-- you can install gdtoolkit with: pip3 install "gdtoolkit==4.*"
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = '*.gd',
+    callback = function()
+        local null_ls = require("null-ls")
+        null_ls.setup({
+            sources = {
+                null_ls.builtins.diagnostics.gdlint,
+                null_ls.builtins.formatting.gdformat,
+            }
+        })
+    end,
+})
+
 
 vim.keymap.set('n', '<leader>li', '<cmd>LspInfo<cr>')
 vim.keymap.set('n', '<leader>ll', '<cmd>LspLog<cr>')
