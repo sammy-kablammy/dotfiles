@@ -54,6 +54,9 @@ keymap('n', '<Tab>', '<c-^>')
 -- 'go here' - change vim directory to the current buffer's path
 keymap('n', '<leader>gh', function() vim.cmd('cd %:p:h') end)
 
+-- one eyed fighting kirby - use with \1 in a :s command for regex magic
+keymap('c', '<C-k>', [[\(.*\)]])
+
 -- buffer stuff
 keymap('n', '<leader>bb', '<cmd>buffers<cr>')
 keymap('n', '<leader>bn', '<cmd>bn<cr>')
