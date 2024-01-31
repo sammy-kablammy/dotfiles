@@ -39,6 +39,9 @@ keymap('n', '<c-l>', '<c-w>l')
 -- only
 keymap('n', '<leader>o', '<cmd>only<cr>')
 
+-- open newest buffer in vsplit and go back to old file
+keymap('n', '<leader>v', '<cmd>vsplit<cr><cmd>bprev<cr><c-w>r')
+
 -- scroll up and down without getting disoriented
 keymap('n', '<c-d>', '<c-d>zz')
 keymap('n', '<c-u>', '<c-u>zz')
