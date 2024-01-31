@@ -3,6 +3,7 @@
 
 alias 'cls'='clear'
 alias 'ls'='exa'
+alias 'etree'='exa --tree'
 alias 'll'='ls -lh'
 alias 'la'='ls -a'
 alias 'cp'='cp -i'
