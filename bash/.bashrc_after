@@ -1,10 +1,36 @@
 # note: to link to this file from your local bashrc, add
 # source /path/to/this/file
 
+alias 'll'='ls -lh'
+alias 'la'='ls -a'
+alias 'etree'='exa --tree'
+alias 'cp'='cp --interactive'
+alias 'mkdir'='mkdir --parents'
+alias 'peep'='nvim -R' # lol
+alias 'py'='python3'
+alias 'cf'='cd $(find -type d -not -path "*/.*" 2>/dev/null | fzf)'
+alias 'nf'='nvim $(fzf)'
+
+# make and then cd into directory
+mcd () {
+    if [ $# -ne 1 ]; then
+        echo "Expected name of directory to make. Ex: `mcd myproject`"
+        exit 1
+    fi
+    mkdir -p $1
+    cd $1
+}
+
+# open tmux on startup!!! we love tmux!!!
+if [ "$TMUX" = "" ]; then tmux; fi
+
 # shortens the path shown in the command prompt
 export PROMPT_DIRTRIM=2
-
 # pink!!! hooray!!!
 export PS1="\[\e[0;35m\]\u\[\e[0;37m\]:\[\e[0;34m\]\w\[\e[0;37m\]$ \[\e[0m\]"
+
+# change manpage reader. (but nvim is much slower than less so probably don't)
+# export MANPAGER='nvim +Man!'
+# export MANWIDTH=999
 
 # vim: set filetype=sh:
