@@ -11,6 +11,7 @@ alias 'peep'='nvim -R' # lol
 alias 'mkdir'='mkdir -p'
 alias 'python'='python3'
 alias 'py'='python3'
+alias 'nf'='nvim $(fzf)'
 
 # make and then cd into directory
 mcd () {
