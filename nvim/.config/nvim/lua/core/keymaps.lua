@@ -8,6 +8,9 @@
 
 local keymap = vim.keymap.set
 
+-- to get me to stop using ^c and use escape instead
+keymap('i', '<C-c>', '<esc><cmd>echo "Lame 🤓"<cr>')
+
 -- escape terminal mode because the default binding makes no sense like what???
 keymap('t', '<Esc>', [[<C-\><C-n>]])
 
@@ -55,7 +58,10 @@ keymap('n', '<leader>nm', '<cmd>edit ~/.config/nvim/lua/core/misc-vim-stuff.lua<
 keymap('n', '<Tab>', '<c-^>')
 
 -- 'go here' - change vim directory to the current buffer's path
-keymap('n', '<leader>gh', function() vim.cmd('cd %:p:h') end)
+keymap('n', '<leader>gh', function()
+    vim.cmd('cd %:p:h') end, {
+    desc = 'go here - change cwd to match current buffer'
+})
 
 -- one eyed fighting kirby - use with \1 in a :s command for regex magic
 keymap('c', '<C-k>', [[\(.*\)]])
@@ -78,6 +84,7 @@ keymap('n', '<leader>tp', '<cmd>tabprevious<cr>')
 keymap('n', '<leader>tt', '<cmd>tabs<cr>')
 
 -- more remaps
+keymap('n', 'ZW', '<cmd>w<cr>')
 keymap('n', '<leader>w', '<cmd>w<cr>')
 keymap('n', '<leader>ed', '<cmd>edit<cr>')
 keymap('n', '<leader>so', function()

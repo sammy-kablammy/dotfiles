@@ -1,4 +1,6 @@
-require('gitsigns').setup {
+local gitsigns = require('gitsigns')
+
+gitsigns.setup {
     signs                        = {
         add          = { text = '│' },
         change       = { text = '│' },
@@ -39,3 +41,10 @@ require('gitsigns').setup {
         enable = false
     },
 }
+
+vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, {
+    desc = 'Gitsigns preview hunk'
+})
+vim.keymap.set('n', '<leader>gb', gitsigns.toggle_current_line_blame, {
+    desc = 'Gitsigns toggle blame'
+})

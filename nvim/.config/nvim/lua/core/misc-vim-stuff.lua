@@ -5,6 +5,13 @@ vim.opt.expandtab = true
 
 -- 'tabstop' is the number of characters in a tab byte
 vim.opt.tabstop = 4
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = { '*.js', '*.html', '*.c', '*.h' },
+    callback = function()
+        vim.opt_local.tabstop = 2
+        vim.opt_local.shiftwidth = 2
+    end,
+})
 
 -- 'shiftwidth' is the number of characters to shift when using << or >>
 vim.opt.shiftwidth = 4
