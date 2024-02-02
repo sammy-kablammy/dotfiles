@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# this script executes 'git status' on all the git repos found in the given
+# directory. just one level deep. doesn't find repos recursively.
+
+# TODO look up GNU parallel and run 'git fetch' in parallel
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m' # (no color)
+
+# note: -e is needed for color output. example:
+# echo -e "${RED}hello there${NC}"
+
+if [ $# -ne 1 ]; then
+    echo "Expected name of directory to status-ize"
+    exit 1
+fi
+
+if [ ! -d $1 ]; then
+    echo "$1 is not a valid directory"
+    exit 2
+fi
+
+cd $1
+
+for dir in */; do
+    cd "$dir" || exit
+    if [ -d .git ]; then
+        git fetch
+        status=$(git status --short)
+        if [ -z "$status" ]; then
+            echo -e "--> Git repository ${CYAN}$dir${NC} is ${GREEN}up to date :)${NC}"
+        else
+            echo -e "--> Git repository ${CYAN}$dir${NC} is ${RED}NOT up to date :(${NC}"
+            git status --short
+        fi
+    fi
+    cd ..
+done
