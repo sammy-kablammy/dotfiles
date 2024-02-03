@@ -126,7 +126,11 @@ else
         'folke/todo-comments.nvim',
         'ThePrimeagen/vim-be-good',
         'jbyuki/nabla.nvim',
-        { 'echasnovski/mini.nvim', version = '*' },
+        {
+            'echasnovski/mini.nvim',
+            version = '*',
+            dependencies = { 'nvim-tree/nvim-web-devicons' },
+        },
 
         -- my custom plugins
         'sammy-kablammy/nvim_plugin_template',
