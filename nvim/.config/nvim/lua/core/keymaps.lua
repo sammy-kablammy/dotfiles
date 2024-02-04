@@ -8,8 +8,7 @@
 
 local keymap = vim.keymap.set
 
--- to get me to stop using ^c and use escape instead
-keymap('i', '<C-c>', '<esc><cmd>echo "Lame 🤓"<cr>')
+keymap({ 'n', 'i', 'v' }, '<C-c>', '<esc>')
 
 -- escape terminal mode because the default binding makes no sense like what???
 keymap('t', '<Esc>', [[<C-\><C-n>]])
