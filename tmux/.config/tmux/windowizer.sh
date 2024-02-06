@@ -5,7 +5,7 @@ else
     # `-type d` only finds directories
     # `-not -path '*/.*'` is used to ignore dotfiles
     # NOTE: you can also use `-mindepth n` and `-maxdepth n`
-    selected=$(find ~ -mindepth 0 -maxdepth 2 -type d -not -path '*/.*' | fzf)
+    selected=$(find ~ -mindepth 0 -maxdepth 3 -type d -not -path '*/.*' | fzf)
 fi
 
 if [[ -z $selected ]]; then

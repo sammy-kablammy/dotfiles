@@ -9,7 +9,7 @@ alias 'mkdir'='mkdir --parents'
 alias 'peep'='nvim -R' # lol
 alias 'py'='python3'
 alias 'cf'='cd $(find -type d -not -path "*/.*" 2>/dev/null | fzf)'
-alias 'nf'='nvim $(fzf)'
+alias 'nf'='nvim $(find -type f -not -path "*/.*" 2>/dev/null | fzf)'
 
 # make and then cd into directory
 mcd () {
@@ -22,7 +22,7 @@ mcd () {
 }
 
 # open tmux on startup!!! we love tmux!!!
-if [ "$TMUX" = "" ]; then tmux; fi
+if [ "$TMUX" = "" ]; then tmux new-session -s default_sesh; fi
 
 # shortens the path shown in the command prompt
 export PROMPT_DIRTRIM=2

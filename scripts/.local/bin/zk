@@ -1,0 +1,11 @@
+# timestamp=$(date +"%a%b%d_%G_%H-%M-%S")
+timestamp=$(date +"%F_%H-%M-%S")
+
+# this script is very annoying. basically, don't ever use quotes and you should
+# be fine? sure.
+
+# note: you can add some text to nvim by passing +"norm iNew Note"
+
+nvim ~/notes/zk/inbox/$timestamp.md
+
+# vim ft=bash
