@@ -12,6 +12,7 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _) # this line is magic
-
-tmux new-window -c $selected -n $selected_name
+# i'd rather have the name auto-update than set it upon creating the window
+# selected_name=$(basename "$selected" | tr . _) # this line is magic
+# tmux new-window -c $selected -n $selected_name
+tmux new-window -c $selected

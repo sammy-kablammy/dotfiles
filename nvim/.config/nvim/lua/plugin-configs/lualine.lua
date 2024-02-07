@@ -1,7 +1,15 @@
-require('lualine').setup {
+local lualine = require('lualine')
+
+function count_language_servers()
+    -- is this really the way to get the length of a lua table? seriously?
+    return #vim.lsp.get_active_clients()
+end
+
+lualine.setup {
     options = {
         icons_enabled = true,
-        theme = 'dracula',
+        -- theme = 'dracula',
+        theme = 'catppuccin',
         component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = {
@@ -20,7 +28,7 @@ require('lualine').setup {
     },
     sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_b = { 'branch', 'diff' },
         lualine_c = {
             {
                 'filename',
@@ -28,7 +36,8 @@ require('lualine').setup {
             }
         },
         lualine_x = { 'encoding', 'fileformat' },
-        lualine_y = { 'filetype' },
+        -- lualine_y = { 'filetype' },
+        lualine_y = { 'diagnostics', { count_language_servers } },
         lualine_z = { 'progress', 'location' }
     },
     inactive_sections = {
@@ -36,7 +45,7 @@ require('lualine').setup {
         lualine_b = {},
         lualine_c = { 'filename' },
         lualine_x = {},
-        lualine_y = { 'filetype' },
+        lualine_y = {},
         lualine_z = {},
     },
     tabline = {},
