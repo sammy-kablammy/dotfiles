@@ -106,6 +106,8 @@ keymap('n', ']b', vim.cmd.bnext)
 -- keymap('n', ']t', '<cmd>cn<cr>')
 -- keymap('n', '[t', '<cmd>cp<cr>')
 
+keymap('n', 'ciq', 'ci"')
+
 -- "change inside ___" motions but reversed
 keymap('n', 'cr"', '?"<cr><cmd>nohlsearch<cr>ci"')
 keymap('n', "cr'", "?'<cr><cmd>nohlsearch<cr>ci'")
