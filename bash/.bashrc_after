@@ -33,4 +33,10 @@ export PS1="\[\e[0;35m\]\u\[\e[0;37m\]:\[\e[0;34m\]\w\[\e[0;37m\]$ \[\e[0m\]"
 # export MANPAGER='nvim +Man!'
 # export MANWIDTH=999
 
+# fzf catppuccin theme (https://github.com/catppuccin/fzf)
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
+--color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
+--color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
+
 # vim: set filetype=sh:
