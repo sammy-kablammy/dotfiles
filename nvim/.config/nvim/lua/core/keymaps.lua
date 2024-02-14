@@ -32,7 +32,7 @@ keymap('n', 'k', 'gk')
 -- keymap('n', '$', 'g$')
 -- keymap('n', '^', 'g^')
 
--- easier navigation between windows
+-- easier navigation between windows (not needed if vim-tmux-navigator present)
 keymap('n', '<c-h>', '<c-w>h')
 keymap('n', '<c-j>', '<c-w>j')
 keymap('n', '<c-k>', '<c-w>k')
@@ -75,6 +75,10 @@ keymap('n', '<leader>bd', '<cmd>bd<cr>')
 keymap('n', '<leader>q', '<cmd>bd<cr>')
 keymap('n', '<leader>bD', '<cmd>bd!<cr>')
 
+-- TODO consider making this close neovim if you try to close the last remaining
+-- buffer
+keymap('n', '<BS>', '<cmd>bd<cr>')
+
 -- tab stuff
 keymap('n', '<leader>te', '<cmd>tabe<cr>')
 keymap('n', '<leader>tq', '<cmd>tabclose<cr>')
@@ -106,8 +110,6 @@ keymap('n', ']b', vim.cmd.bnext)
 -- keymap('n', ']t', '<cmd>cn<cr>')
 -- keymap('n', '[t', '<cmd>cp<cr>')
 
-keymap('n', 'ciq', 'ci"')
-
 -- "change inside ___" motions but reversed
 keymap('n', 'cr"', '?"<cr><cmd>nohlsearch<cr>ci"')
 keymap('n', "cr'", "?'<cr><cmd>nohlsearch<cr>ci'")
@@ -116,6 +118,9 @@ keymap('n', 'cr(', '?(<cr><cmd>nohlsearch<cr>ci(')
 keymap('n', 'cr[', '?[<cr><cmd>nohlsearch<cr>ci[')
 keymap('n', 'cr{', '?{<cr><cmd>nohlsearch<cr>ci{')
 keymap('n', 'cr<', '?<<cr><cmd>nohlsearch<cr>ci<')
+
+keymap('n', 'ciq', 'ci"')
+keymap('n', 'crq', '?"<cr><cmd>nohlsearch<cr>ci"')
 
 -- add argument to function
 -- keymap('n', '<leader>a', '$F)i, ')
