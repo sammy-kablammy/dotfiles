@@ -3,6 +3,7 @@
 
 alias 'll'='ls -lh'
 alias 'la'='ls -a'
+alias 'lt'='ls -lt'
 alias 'etree'='exa --tree'
 alias 'cp'='cp --interactive'
 alias 'mkdir'='mkdir --parents'
@@ -22,7 +23,7 @@ mcd () {
 }
 
 # open tmux on startup!!! we love tmux!!!
-if [ "$TMUX" = "" ]; then tmux new-session -s default_sesh; fi
+if [ "$TMUX" = "" ]; then tmux new-session; fi
 
 # shortens the path shown in the command prompt
 export PROMPT_DIRTRIM=2
