@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # timestamp=$(date +"%a%b%d_%G_%H-%M-%S")
 timestamp=$(date +"%F_%H-%M-%S")
 
@@ -7,5 +9,3 @@ timestamp=$(date +"%F_%H-%M-%S")
 # note: you can add some text to nvim by passing +"norm iNew Note"
 
 nvim ~/notes/zk/inbox/$timestamp.md
-
-# vim ft=bash

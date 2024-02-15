@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$(find ~ -mindepth 1 -maxdepth 3 -type d -not -path '*/.*' | fzf)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+tmux new-window -c $selected
