@@ -79,13 +79,6 @@ keymap('n', '<leader>bD', '<cmd>bd!<cr>')
 -- buffer
 keymap('n', '<BS>', '<cmd>bd<cr>')
 
--- tab stuff
-keymap('n', '<leader>te', '<cmd>tabe<cr>')
-keymap('n', '<leader>tq', '<cmd>tabclose<cr>')
-keymap('n', '<leader>tn', '<cmd>tabnext<cr>')
-keymap('n', '<leader>tp', '<cmd>tabprevious<cr>')
-keymap('n', '<leader>tt', '<cmd>tabs<cr>')
-
 -- more remaps
 keymap('n', 'ZW', '<cmd>w<cr>')
 keymap('n', '<leader>w', '<cmd>w<cr>')
@@ -98,17 +91,10 @@ end)
 -- square bracket fun time [ [ [ ] ] ]
 keymap('n', '[b', vim.cmd.bprevious)
 keymap('n', ']b', vim.cmd.bnext)
-
--- quickfix list -- TODO dear god sort out these keymaps
--- keymap('n', '<leader>qf', '<cmd>copen<cr>')
--- keymap('n', '<leader>co', '<cmd>copen<cr>')
--- keymap('n', '<leader>cq', '<cmd>cclose<cr>')
--- keymap('n', '<leader>cf', '<cmd>cfirst<cr>')
--- keymap('n', '<leader>cl', '<cmd>clast<cr>')
--- keymap('n', '<leader>cn', '<cmd>cn<cr>')
--- keymap('n', '<leader>cp', '<cmd>cp<cr>')
--- keymap('n', ']t', '<cmd>cn<cr>')
--- keymap('n', '[t', '<cmd>cp<cr>')
+keymap('n', ']c', '<cmd>cn<cr>')
+keymap('n', '[c', '<cmd>cp<cr>')
+keymap('n', ']l', '<cmd>ln<cr>')
+keymap('n', '[l', '<cmd>lp<cr>')
 
 -- "change inside ___" motions but reversed
 keymap('n', 'cr"', '?"<cr><cmd>nohlsearch<cr>ci"')

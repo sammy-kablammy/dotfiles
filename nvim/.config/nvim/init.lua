@@ -157,6 +157,20 @@ else
                 require 'simpletodo'.setup {}
             end
         },
+
+        {
+            "sammy-kablammy/linkma.nvim",
+            config = function()
+                local linkma = require("linkma")
+                vim.api.nvim_create_autocmd({ "BufEnter" }, {
+                    pattern = { "*.md" },
+                    callback = function()
+                        vim.api.nvim_buf_create_user_command(0, "LinkmaToc", linkma.toc_loclist, {})
+                        vim.keymap.set("n", "<leader>lk", linkma.follow_link, { buffer = 0 })
+                    end,
+                })
+            end,
+        },
         -- { dir = '~/my_neovim_plugins/showcase.nvim' },
         -- { dir = '~/my_neovim_plugins/simpletodo.nvim' },
     })
