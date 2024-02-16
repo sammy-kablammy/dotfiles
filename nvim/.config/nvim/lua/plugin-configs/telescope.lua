@@ -5,14 +5,16 @@ local builtin = require("telescope.builtin")
 -- you can use 'builtin.builtin' to find builtin pickers
 
 local function map(lhs, rhs, desc)
-    if desc then
-        vim.keymap.set("n", "<leader>f" .. lhs, rhs, { desc = desc })
-    else
-        vim.keymap.set("n", "<leader>f" .. lhs, rhs, {})
-    end
+	if desc then
+		vim.keymap.set("n", "<leader>f" .. lhs, rhs, { desc = desc })
+	else
+		vim.keymap.set("n", "<leader>f" .. lhs, rhs, {})
+	end
 end
 
-map("f", function() builtin.find_files({ hidden = true }) end, "find files")
+map("f", function()
+	builtin.find_files({ hidden = true })
+end, "find files")
 map("h", builtin.help_tags, "help")
 map("b", builtin.buffers, "buffers")
 map("g", builtin.live_grep, "live grep")
@@ -34,9 +36,9 @@ map("k", builtin.keymaps, "keymaps")
 -- map('gs', builtin.git_status, 'git status')
 
 map("n", function()
-    builtin.find_files({
-        search_dirs = {
-            "~/notes",
-        },
-    })
+	builtin.find_files({
+		search_dirs = {
+			"~/notes",
+		},
+	})
 end, "notes")

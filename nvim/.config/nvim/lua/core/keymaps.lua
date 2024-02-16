@@ -58,7 +58,8 @@ keymap('n', '<Tab>', '<c-^>')
 
 -- 'go here' - change vim directory to the current buffer's path
 keymap('n', '<leader>gh', function()
-    vim.cmd('cd %:p:h') end, {
+    vim.cmd('cd %:p:h')
+end, {
     desc = 'go here - change cwd to match current buffer'
 })
 

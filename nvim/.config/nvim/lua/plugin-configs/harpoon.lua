@@ -11,7 +11,7 @@ local function map(lhs, rhs, desc)
 end
 
 map('<Tab>', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
-'harpoon list')
+    'harpoon list')
 map('a', function() harpoon:list():append() end, '-=> harpoon append <=-')
 map('n', function() harpoon:list():select(1) end, 'harpoon select 1')
 map('e', function() harpoon:list():select(2) end, 'harpoon select 2')
