@@ -2,19 +2,20 @@
 
 -- pressing the tab key causes spaces to be inserted
 vim.opt.expandtab = true
-
--- 'tabstop' is the number of characters in a tab byte
+-- 'tabstop' is the number of characters displayed in a tab byte. setting this
+-- to something other than your shiftwidth lets you see tabs when they're used.
+-- ...but it's also jarring to switch indentation amounts between files
 vim.opt.tabstop = 4
+-- 'shiftwidth' is the number of characters to shift when using << or >>
+vim.opt.shiftwidth = 4
+
 vim.api.nvim_create_autocmd("BufEnter", {
-    pattern = { '*.js', '*.html', '*.c', '*.h' },
+    pattern = { '*.js', '*.html', '*.css', '*.c', '*.h' },
     callback = function()
         vim.opt_local.tabstop = 2
         vim.opt_local.shiftwidth = 2
     end,
 })
-
--- 'shiftwidth' is the number of characters to shift when using << or >>
-vim.opt.shiftwidth = 4
 
 -- disable line wrapping (wrapping causes lines to be displayed on multiple
 -- lines, it won't insert any linebreaks)

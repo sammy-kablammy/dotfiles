@@ -1,5 +1,5 @@
--- this file contains all my keymaps
 
+-- this file contains all my keymaps
 -- <leader> needs to be set up in init.lua, right before setting up lazy!
 
 -- if some keys aren't working, see :h :map-special-keys
@@ -8,7 +8,8 @@
 
 local keymap = vim.keymap.set
 
-keymap({ 'n', 'i', 'v' }, '<C-c>', '<esc>')
+-- this interferes with the command mode <c-f> menu.
+-- keymap({ 'n', 'i', 'v' }, '<C-c>', '<esc>')
 
 -- escape terminal mode because the default binding makes no sense like what???
 keymap('t', '<Esc>', [[<C-\><C-n>]])
@@ -18,8 +19,8 @@ keymap('n', '<c-f>', '')
 keymap('n', '<c-b>', '')
 keymap('i', '<c-a>', '')
 keymap('n', '<c-q>', '')
-keymap('n', '?', '') -- ?query is just /query followed by N
 keymap('n', 'U', '')
+keymap('n', 'gs', '')
 
 -- toggle 'clear search'
 keymap('n', '<leader>cs', '<cmd>set hls!<cr>')
