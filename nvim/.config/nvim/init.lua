@@ -166,7 +166,7 @@ else
 					pattern = { "*.md" },
 					callback = function()
 						vim.api.nvim_buf_create_user_command(0, "LinkmaToc", linkma.toc_loclist, {})
-						vim.keymap.set("n", "<leader>lk", linkma.follow_link, { buffer = 0 })
+						vim.keymap.set("n", "gl", linkma.follow_link, { buffer = 0 })
 					end,
 				})
 			end,

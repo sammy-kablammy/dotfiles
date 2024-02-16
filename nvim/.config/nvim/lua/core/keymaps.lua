@@ -92,10 +92,10 @@ end)
 -- square bracket fun time [ [ [ ] ] ]
 keymap('n', '[b', vim.cmd.bprevious)
 keymap('n', ']b', vim.cmd.bnext)
-keymap('n', ']c', '<cmd>cn<cr>')
-keymap('n', '[c', '<cmd>cp<cr>')
-keymap('n', ']l', '<cmd>ln<cr>')
-keymap('n', '[l', '<cmd>lp<cr>')
+keymap('n', ']c', '<cmd>cnext<cr>')
+keymap('n', '[c', '<cmd>cprev<cr>')
+keymap('n', ']l', '<cmd>lnext<cr>')
+keymap('n', '[l', '<cmd>lprev<cr>')
 
 -- "change inside ___" motions but reversed
 keymap('n', 'cr"', '?"<cr><cmd>nohlsearch<cr>ci"')
