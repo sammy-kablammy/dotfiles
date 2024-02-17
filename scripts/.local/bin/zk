@@ -8,4 +8,4 @@ timestamp=$(date +"%F_%H-%M-%S")
 
 # note: you can add some text to nvim by passing +"norm iNew Note"
 
-nvim ~/notes/zk/inbox/$timestamp.md
+nvim ~/notes/inbox/$timestamp.md

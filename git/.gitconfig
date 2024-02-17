@@ -22,7 +22,7 @@
 [commit]
     verbose = true
 [alias]
-    l = "log --all --graph --decorate --oneline"
+    l = "log --all --graph --decorate --oneline -10"
     st = "status"
     s = "status --short --branch"
     f = "fetch"
