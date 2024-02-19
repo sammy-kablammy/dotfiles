@@ -23,11 +23,11 @@
     verbose = true
 [alias]
     l = "log --all --graph --decorate --oneline"
-    s = "status"
-    ss = "status --short"
+    st = "status"
+    s = "status --short --branch"
     f = "fetch"
-    fs = "!f() { git fetch && git status; }; f"
-    fss = "!f() { git fetch && git status --short; }; f"
+    fst = "!f() { git fetch && git status; }; f"
+    fs = "!f() { git fetch && git status --short --branch; }; f"
     dt = "difftool"
     mt = "mergetool"
     b = "branch -vv"

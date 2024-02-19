@@ -15,7 +15,7 @@ NC='\033[0m' # (no color)
 # note: -e is needed for color output. example:
 # echo -e "${RED}hello there${NC}"
 
-if [ $# -ne 1 ]; then
+if [ $# -gt 1 ]; then
     echo "Expected name of directory to status-ize"
     exit 1
 fi
@@ -25,19 +25,16 @@ if [ ! -d $1 ]; then
     exit 2
 fi
 
+# note: if $1 is not given, then cd to ~
 cd $1
 
 for dir in */; do
     cd "$dir" || exit
     if [ -d .git ]; then
         git fetch
-        status=$(git status --short)
-        if [ -z "$status" ]; then
-            echo -e "--> Git repository ${CYAN}$dir${NC} is ${GREEN}up to date :)${NC}"
-        else
-            echo -e "--> Git repository ${CYAN}$dir${NC} is ${RED}NOT up to date :(${NC}"
-            git status --short
-        fi
+        echo -e "${CYAN}$dir${NC}"
+        git status --short --branch
+        echo
     fi
     cd ..
 done
