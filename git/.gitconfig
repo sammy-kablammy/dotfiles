@@ -26,6 +26,7 @@
     st = "status"
     s = "status --short --branch"
     f = "fetch"
+    fq = "fetch --quiet"
     fst = "!f() { git fetch && git status; }; f"
     fs = "!f() { git fetch && git status --short --branch; }; f"
     dt = "difftool"
