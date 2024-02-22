@@ -24,10 +24,17 @@
     └── .vimrc
 ```
 
-In this example, "vim" is the package name you use when you type the "stow vim"
-command. Since the .vimrc file belongs in ~, no extra structure is needed.
-Compare this to tmux.conf, which belongs in ~/.config/tmux/tmux.conf.
+in this example, "vim" is the package name you use when you type the "stow vim"
+command. since the .vimrc file belongs in ~, no extra structure is needed.
+compare this to tmux.conf, which belongs in ~/.config/tmux/tmux.conf.
 
 - `stow <package name>` to add a package
 - `stow -D <package name>` to delete a package
 - `stow */` to add all directories
+
+# statusization
+
+ever leave your computer for a while but forget to push your changes and then
+have to deal with a bunch of merging when you get back?? haha me neither.
+
+<img src="https://raw.githubusercontent.com/sammy-kablammy/dotfiles/main/statusize.png" width="380" />
