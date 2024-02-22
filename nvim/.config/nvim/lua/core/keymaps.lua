@@ -6,6 +6,12 @@
 -- for example, <C-m> is treated as <Esc>. this will inevitably cost you tens of
 -- minutes of pain in the future when you will bind something to <C-m>.
 
+-- what's the difference between <cr> and <enter>? nothing.
+-- what's the difference between : and <cr>? : requires you to be in normal
+-- mode, while <cmd> can be invoked from any mode. this lets you
+-- programmatically execute commands even from insert mode. just remember to
+-- include a corresponding <cr> for every <cmd>.
+
 local keymap = vim.keymap.set
 
 -- this interferes with the command mode <c-f> menu.
@@ -15,8 +21,8 @@ local keymap = vim.keymap.set
 keymap('t', '<Esc>', [[<C-\><C-n>]])
 
 -- remove annoying mappings
-keymap('n', '<c-f>', '')
-keymap('n', '<c-b>', '')
+keymap({ 'n', 'v' }, '<c-f>', '')
+keymap({ 'n', 'v' }, '<c-b>', '')
 keymap('i', '<c-a>', '')
 keymap('n', '<c-q>', '')
 keymap('n', 'U', '')
@@ -49,13 +55,20 @@ keymap('n', '<leader>v', '<cmd>vsplit<cr><cmd>bprev<cr><c-w>r')
 keymap('n', '<c-d>', '<c-d>zz')
 keymap('n', '<c-u>', '<c-u>zz')
 
+keymap('n', 'n', 'nzz')
+keymap('n', 'N', 'Nzz')
+
 -- easily open config
 keymap('n', '<leader>ni', '<cmd>edit ~/.config/nvim/init.lua<cr>')
 keymap('n', '<leader>nk', '<cmd>edit ~/.config/nvim/lua/core/keymaps.lua<cr>')
 keymap('n', '<leader>nm', '<cmd>edit ~/.config/nvim/lua/core/misc-vim-stuff.lua<cr>')
 
 -- alternate file
-keymap('n', '<Tab>', '<c-^>')
+-- unfortunately, <tab> seems to be treated the same as <c-^>
+-- keymap('n', '<Tab>', '<c-^>')
+-- keymap('n', '[j', '<c-o>')
+-- keymap('n', ']j', '<c-i>')
+keymap('n', '<leader>a', '<cmd>b#<cr>')
 
 -- 'go here' - change vim directory to the current buffer's path
 keymap('n', '<leader>gh', function()
@@ -69,12 +82,12 @@ keymap('c', '<C-k>', [[\(.*\)]])
 
 -- buffer stuff
 keymap('n', '<leader>bb', '<cmd>buffers<cr>')
-keymap('n', '<leader>bn', '<cmd>bn<cr>')
-keymap('n', '<leader>bp', '<cmd>bp<cr>')
-keymap('n', '<leader>bq', '<cmd>bd<cr>')
-keymap('n', '<leader>bQ', '<cmd>bd!<cr>')
+-- keymap('n', '<leader>bn', '<cmd>bn<cr>')
+-- keymap('n', '<leader>bp', '<cmd>bp<cr>')
+-- keymap('n', '<leader>bq', '<cmd>bd<cr>')
+-- keymap('n', '<leader>bQ', '<cmd>bd!<cr>')
 keymap('n', '<leader>bd', '<cmd>bd<cr>')
-keymap('n', '<leader>q', '<cmd>bd<cr>')
+-- keymap('n', '<leader>q', '<cmd>bd<cr>')
 keymap('n', '<leader>bD', '<cmd>bd!<cr>')
 
 -- TODO consider making this close neovim if you try to close the last remaining
