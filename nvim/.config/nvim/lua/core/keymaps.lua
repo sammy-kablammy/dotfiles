@@ -54,6 +54,8 @@ keymap('n', '<leader>v', '<cmd>vsplit<cr><cmd>bprev<cr><c-w>r')
 -- scroll up and down without getting disoriented
 keymap('n', '<c-d>', '<c-d>zz')
 keymap('n', '<c-u>', '<c-u>zz')
+keymap('n', '<c-up>', '<c-u>')
+keymap('n', '<c-down>', '<c-d>')
 
 keymap('n', 'n', 'nzz')
 keymap('n', 'N', 'Nzz')

@@ -6,7 +6,9 @@ vim.opt.expandtab = true
 -- to something other than your shiftwidth lets you see tabs when they're used.
 -- ...but it's also jarring to switch indentation amounts between files
 vim.opt.tabstop = 4
--- 'shiftwidth' is the number of characters to shift when using << or >>
+-- 'shiftwidth' is the number of characters to shift when using << or >>, or
+-- when pressing <tab>. it will keep inserting your preference of whitespace
+-- characters until this column number is reached
 vim.opt.shiftwidth = 4
 
 vim.api.nvim_create_autocmd("BufEnter", {
