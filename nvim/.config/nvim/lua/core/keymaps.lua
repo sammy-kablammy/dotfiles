@@ -20,6 +20,16 @@ local keymap = vim.keymap.set
 -- escape terminal mode because the default binding makes no sense like what???
 keymap('t', '<Esc>', [[<C-\><C-n>]])
 
+-- considering using these...
+-- keymap('i', 'jk', '<Esc>')
+-- keymap('i', 'kj', '<Esc>')
+
+-- paste recently selected text
+keymap('n', '<leader>p', '"0p')
+keymap('n', '<leader>P', '"0P')
+
+keymap('n', '<leader>V', 'ggVG')
+
 -- remove annoying mappings
 keymap({ 'n', 'v' }, '<c-f>', '')
 keymap({ 'n', 'v' }, '<c-b>', '')

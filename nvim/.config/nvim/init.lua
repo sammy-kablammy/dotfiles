@@ -148,6 +148,7 @@ else
             version = "*",
             dependencies = { "nvim-tree/nvim-web-devicons" },
         },
+        { "David-Kunz/gen.nvim" },
 
         -- my custom plugins
         "sammy-kablammy/nvim_plugin_template",
