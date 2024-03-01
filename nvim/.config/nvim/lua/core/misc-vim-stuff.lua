@@ -69,6 +69,10 @@ vim.opt.smartcase = true
 -- faster autosave for swapfiles
 vim.opt.updatetime = 50
 
+vim.opt.spelllang = "en_us"
+-- default spellcheck behavior marks lowercase words as wrong. cringe.
+vim.opt.spellcapcheck = ""
+
 -- self-explanatory enough (or just use :h)
 vim.opt.number = true         -- needed for absolute number on current line
 vim.opt.relativenumber = true -- relative everywhere else

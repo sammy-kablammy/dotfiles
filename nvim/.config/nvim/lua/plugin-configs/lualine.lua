@@ -2,7 +2,7 @@ local lualine = require("lualine")
 
 function count_language_servers()
 	-- is this really the way to get the length of a lua table? seriously?
-	return #vim.lsp.get_clients()
+	return "L:" .. #vim.lsp.get_clients()
 end
 
 lualine.setup({

@@ -28,8 +28,10 @@ if [ "$TMUX" = "" ]; then tmux new-session; fi
 
 # shortens the path shown in the command prompt
 export PROMPT_DIRTRIM=2
-# pink!!! hooray!!!
-export PS1="\[\e[0;35m\]\u\[\e[0;37m\]:\[\e[0;34m\]\w\[\e[0;37m\]$ \[\e[0m\]"
+# username + current working directory
+# export PS1="\[\e[0;35m\]\u\[\e[0;37m\]:\[\e[0;34m\]\w\[\e[0;37m\]$ \[\e[0m\]"
+# just the current working directory ps1
+export PS1="\[\e[0;36m\]\w\[\e[0;37m\]$ \[\e[0m\]"
 
 # change manpage reader. (but nvim is much slower than less so probably don't)
 # export MANPAGER='nvim +Man!'

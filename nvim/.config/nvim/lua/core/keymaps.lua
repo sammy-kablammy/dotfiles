@@ -37,6 +37,9 @@ keymap('i', '<c-a>', '')
 keymap('n', '<c-q>', '')
 keymap('n', 'U', '')
 keymap('n', 'gs', '')
+-- no spellchecking related binds
+keymap('n', 'zg', '')
+keymap('n', 'zw', '')
 
 -- toggle 'clear search'
 keymap('n', '<leader>cs', '<cmd>set hls!<cr>')
@@ -64,8 +67,10 @@ keymap('n', '<leader>v', '<cmd>vsplit<cr><cmd>bprev<cr><c-w>r')
 -- scroll up and down without getting disoriented
 keymap('n', '<c-d>', '<c-d>zz')
 keymap('n', '<c-u>', '<c-u>zz')
-keymap('n', '<c-up>', '<c-u>')
-keymap('n', '<c-down>', '<c-d>')
+keymap('n', '<c-up>', '<c-u>zz')
+keymap('n', '<c-down>', '<c-d>zz')
+keymap('n', '<s-up>', '<c-u>zz')
+keymap('n', '<s-down>', '<c-d>zz')
 
 keymap('n', 'n', 'nzz')
 keymap('n', 'N', 'Nzz')

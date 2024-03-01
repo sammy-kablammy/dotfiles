@@ -14,13 +14,13 @@ cmp.setup({
 		end,
 	},
 	mapping = cmp.mapping.preset.insert({
-		-- (C-n triggers the completion menu)
+		-- (C-n triggers the completion menu - no need to invoke it separately)
+		-- ["<C-y>"] = cmp.mapping.complete(),
 		["<Tab>"] = cmp.mapping.confirm({ select = true }),
+		["<C-y>"] = cmp.mapping.confirm({ select = true }),
 		["<C-e>"] = cmp.mapping.abort(),
 		["<C-u>"] = cmp.mapping.scroll_docs(-4),
 		["<C-d>"] = cmp.mapping.scroll_docs(4),
-		-- what is this supposed to do
-		-- ["<C-y>"] = cmp.mapping.complete(),
 	}),
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
