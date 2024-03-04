@@ -1,7 +1,7 @@
-
 -- this file contains all my keymaps
 -- <leader> needs to be set up in init.lua, right before setting up lazy!
 
+-- :h keycodes for notation
 -- if some keys aren't working, see :h :map-special-keys
 -- for example, <C-m> is treated as <Esc>. this will inevitably cost you tens of
 -- minutes of pain in the future when you will bind something to <C-m>.
@@ -40,6 +40,8 @@ keymap('n', 'gs', '')
 -- no spellchecking related binds
 keymap('n', 'zg', '')
 keymap('n', 'zw', '')
+-- i don't even know what this bind does but it's conflicting with my qmk combos
+keymap('n', "<C-'>", '')
 
 -- toggle 'clear search'
 keymap('n', '<leader>cs', '<cmd>set hls!<cr>')
@@ -112,7 +114,6 @@ keymap('n', '<leader>bD', '<cmd>bd!<cr>')
 keymap('n', '<BS>', '<cmd>bd<cr>')
 
 -- more remaps
-keymap('n', 'ZW', '<cmd>w<cr>')
 keymap('n', '<leader>w', '<cmd>w<cr>')
 keymap('n', '<leader>ed', '<cmd>edit<cr>')
 keymap('n', '<leader>so', function()

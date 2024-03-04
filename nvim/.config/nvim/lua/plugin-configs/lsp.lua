@@ -172,4 +172,5 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>")
 vim.keymap.set("n", "<leader>ll", "<cmd>LspLog<cr>")
+vim.keymap.set("n", "<leader>ls", "<cmd>LspStop<cr>")
 vim.keymap.set("n", "<leader>ln", "<cmd>NullLsInfo<cr>")
