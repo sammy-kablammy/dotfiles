@@ -59,6 +59,20 @@ end, {
     nargs = 1
 })
 
+-- netrw stuff
+vim.g.netrw_banner = 0 -- hide banner by default
+-- tree style file browser instead of list style
+-- ...actually no that breaks the ability to open a new instance that focuses
+-- on the current file
+-- vim.g.netrw_liststyle = 3
+-- vim.g.netrw_preview = -1 -- open file previews LEFT (default DOWN)
+-- it seems you can't do BufEnter, as netrw overwrites that event
+-- i don't know how to execute a callback when netrw opens :(
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = { 'netrw', },
+    callback = function() end,
+})
+
 -- preview substitutions
 vim.opt.inccommand = 'split'
 

@@ -30,6 +30,12 @@ keymap('n', '<leader>P', '"0P')
 
 keymap('n', '<leader>V', 'ggVG')
 
+keymap('n', '<c-n>', function() vim.cmd('Explore') end)
+-- recall that %:p:h is the name of the current buffer's directory
+-- keymap('n', '<c-n>', function() vim.cmd('Explore %:p:h') end)
+-- open netrw to the right and with specified width
+-- keymap('n', '<leader>ex', function() vim.cmd('30Vexplore!') end)
+
 -- remove annoying mappings
 keymap({ 'n', 'v' }, '<c-f>', '')
 keymap({ 'n', 'v' }, '<c-b>', '')
