@@ -59,8 +59,18 @@ end, {
     nargs = 1
 })
 
+vim.api.nvim_create_user_command('HtmlMe', function(opts)
+    local original_color = vim.g.colors_name
+    vim.cmd.color('slate')
+    vim.cmd('TSToggle highlight')
+    vim.cmd('TOhtml')
+    vim.cmd('TSToggle highlight')
+    vim.cmd.color(original_color)
+end, {})
+
 -- netrw stuff
 vim.g.netrw_banner = 0 -- hide banner by default
+-- vim.g.netrw_keepdir = 0 -- sync netrw directory with working directory
 -- tree style file browser instead of list style
 -- ...actually no that breaks the ability to open a new instance that focuses
 -- on the current file

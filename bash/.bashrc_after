@@ -23,6 +23,14 @@ mcd () {
     cd $1
 }
 
+ddg () {
+    w3m "https://duckduckgo.com/lite/?q=$@"
+}
+mdn () {
+    # this doesn't work lol 💀
+    w3m "https://developer.mozilla.org/en-US/search?q=$1"
+}
+
 # open tmux on startup!!! we love tmux!!!
 if [ "$TMUX" = "" ]; then tmux new-session; fi
 
