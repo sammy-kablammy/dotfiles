@@ -143,11 +143,11 @@ else
         "folke/todo-comments.nvim",
         "ThePrimeagen/vim-be-good",
         "jbyuki/nabla.nvim",
-        -- {
-        --     "echasnovski/mini.nvim",
-        --     version = "*",
-        --     dependencies = { "nvim-tree/nvim-web-devicons" },
-        -- },
+        {
+	    "echasnovski/mini.nvim",
+	    version = "*",
+	    dependencies = { "nvim-tree/nvim-web-devicons" },
+        },
         { "David-Kunz/gen.nvim" },
 
         -- my custom plugins

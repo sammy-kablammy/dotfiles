@@ -1,3 +1,8 @@
+-- i would rather just use netrw but boy... the ability to preview files is
+-- really useful. telescope's live_grep feature kinda does this but it requires
+-- a search query. also just having the browser be a popup that supports vim
+-- motions for editing files is nice.
+
 -- require("mini.move").setup({
 -- 	{
 -- 		-- Module mappings. Use `''` (empty string) to disable one.
@@ -95,6 +100,7 @@ vim.api.nvim_create_autocmd("User", {
 
 		map_buf("<Leader>w", mini_files.synchronize)
 		map_buf("-", mini_files.go_out)
+		-- map_buf("p", mini_files.go_in) -- nope! p is already 'paste file'
 		map_buf("q", mini_files.close)
 		map_buf("<Esc>", mini_files.close)
 		map_buf("<C-c>", mini_files.close)
@@ -149,6 +155,7 @@ vim.api.nvim_create_autocmd("User", {
 		local buf_id = args.data.buf_id
 		-- Tweak left-hand side of mapping to your liking
 		vim.keymap.set("n", "g.", toggle_dotfiles, { buffer = buf_id })
+		vim.keymap.set("n", "gh", toggle_dotfiles, { buffer = buf_id })
 	end,
 })
 

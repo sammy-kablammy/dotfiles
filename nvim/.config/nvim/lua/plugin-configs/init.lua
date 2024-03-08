@@ -1,4 +1,4 @@
--- require("plugin-configs.mini")
+require("plugin-configs.mini")
 require("plugin-configs.telescope")
 require("plugin-configs.lsp")
 require("plugin-configs.snippets_and_completion")
