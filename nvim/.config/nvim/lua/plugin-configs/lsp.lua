@@ -73,7 +73,7 @@ require("mason-lspconfig").setup_handlers({
 vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<leader>m", vim.diagnostic.setloclist, {
+vim.keymap.set("n", "<leader>d", vim.diagnostic.setloclist, {
 	desc = "populate loclist from LSP",
 })
 
@@ -100,7 +100,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		-- vim.keymap.set('n', '<space>wl', function()
 		--     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		-- end, opts)
-		vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+		-- vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
 		vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
 		vim.keymap.set("n", "<f2>", vim.lsp.buf.rename, opts)
 		vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)

@@ -144,15 +144,11 @@ keymap('n', 'cr<', '?<<cr><cmd>nohlsearch<cr>ci<')
 keymap('n', 'ciq', 'ci"')
 keymap('n', 'crq', '?"<cr><cmd>nohlsearch<cr>ci"')
 
--- "paragraph format"
-keymap('n', '<leader>p', 'vip:%!fmt<cr>')
-
 -- add argument to function
 -- keymap('n', '<leader>a', '$F)i, ')
 
--- put markdown headings into the quickfix list for easy navigation
--- TODO just make this a separate plugin
-keymap('n', 'md', '<cmd>vimgrep /^\\#/ %<cr><cmd>copen<cr>')
+keymap('n', '<leader>mp', 'vip:%!fmt<cr>', { desc = "markdown: format paragraph" })
+keymap('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link to alternate file" })
 
 -- navigate between git merge conflict markers (do i use this?)
 -- keymap('n', '[g', '?<<<<<<<<cr>')

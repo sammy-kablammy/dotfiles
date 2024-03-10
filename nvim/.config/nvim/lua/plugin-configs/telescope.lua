@@ -42,3 +42,8 @@ map("n", function()
         },
     })
 end, "notes")
+
+vim.keymap.set('n', '<leader>mt',
+    '"tyy<cmd>lua require("telescope.builtin").live_grep()<cr><c-r>t',
+    { desc = "markdown: telescope by tag" }
+)
