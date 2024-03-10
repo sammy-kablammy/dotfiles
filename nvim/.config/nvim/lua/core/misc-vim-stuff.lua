@@ -35,20 +35,23 @@ vim.opt.colorcolumn = "80"
 -- vim.opt.cmdheight = 0
 vim.opt.showmode = false
 
--- see :h fo-table for information about this stuff
--- basically, you want 'r' enabled so that comments are continued in insert mode
--- but you want 'o' disabled so that comments do not continue when using the 'o' motion
--- also you need to use an autocmd because "vim.opt.formatoptions" gets overwritten somehow :(
--- TODO clean this up
+-- See :h fo-table.
+-- You want 'r' enabled so that comments are continued in insert mode.
+-- You want 'o' disabled so that comments don't continue when using 'o' motion.
+-- Also you need to use an autocmd because "vim.opt.formatoptions" gets
+-- overwritten somehow :(
 vim.api.nvim_create_autocmd("BufEnter", {
     callback = function(args)
         vim.opt.formatoptions = "jcrql"
-        if vim.bo.filetype == "markdown" then
-            -- the 't' formatoption inserts line breaks on lines that are too long
-            vim.opt.formatoptions = vim.opt.formatoptions + "t"
-            vim.opt.wrap = true
-        end
-    end
+    end,
+})
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = { '*.md' },
+    callback = function(args)
+        -- the 't' formatoption inserts line breaks on lines that are too long
+        vim.opt_local.formatoptions = "jcrqlt"
+        vim.opt_local.shiftwidth = 2
+    end,
 })
 
 -- open help windows to the right instead of below
@@ -107,3 +110,4 @@ vim.opt.splitright = true
 vim.opt.mouse = "a"
 vim.wo.signcolumn = "yes"
 vim.opt.wrapscan = false
+vim.opt.hls = false

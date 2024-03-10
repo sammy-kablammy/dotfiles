@@ -17,6 +17,8 @@ map('n', function() harpoon:list():select(1) end, 'harpoon select 1')
 map('e', function() harpoon:list():select(2) end, 'harpoon select 2')
 map('i', function() harpoon:list():select(3) end, 'harpoon select 3')
 map('o', function() harpoon:list():select(4) end, 'harpoon select 4')
+map('z', function() harpoon:list():select(1) end, 'harpoon select 1')
+map('x', function() harpoon:list():select(2) end, 'harpoon select 2')
 
 -- create bindings within the harpoon window
 harpoon:extend({

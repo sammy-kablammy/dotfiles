@@ -51,6 +51,7 @@ keymap('n', "<C-'>", '')
 
 -- toggle 'clear search'
 keymap('n', '<leader>cs', '<cmd>set hls!<cr>')
+keymap('n', '<leader>h', '<cmd>set hls!<cr>')
 
 -- movement should work how you expect even if a line is really long
 keymap('n', 'j', 'gj')
@@ -107,13 +108,9 @@ keymap('c', '<C-k>', [[\(.*\)]])
 
 -- buffer stuff
 keymap('n', '<leader>bb', '<cmd>buffers<cr>')
--- keymap('n', '<leader>bn', '<cmd>bn<cr>')
--- keymap('n', '<leader>bp', '<cmd>bp<cr>')
--- keymap('n', '<leader>bq', '<cmd>bd<cr>')
--- keymap('n', '<leader>bQ', '<cmd>bd!<cr>')
 keymap('n', '<leader>bd', '<cmd>bd<cr>')
--- keymap('n', '<leader>q', '<cmd>bd<cr>')
 keymap('n', '<leader>bD', '<cmd>bd!<cr>')
+-- keymap('n', '<leader>q', '<cmd>bd<cr>')
 
 -- TODO consider making this close neovim if you try to close the last remaining
 -- buffer
@@ -146,6 +143,9 @@ keymap('n', 'cr<', '?<<cr><cmd>nohlsearch<cr>ci<')
 
 keymap('n', 'ciq', 'ci"')
 keymap('n', 'crq', '?"<cr><cmd>nohlsearch<cr>ci"')
+
+-- "paragraph format"
+keymap('n', '<leader>p', 'vip:%!fmt<cr>')
 
 -- add argument to function
 -- keymap('n', '<leader>a', '$F)i, ')
