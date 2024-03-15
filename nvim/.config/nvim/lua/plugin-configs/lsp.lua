@@ -73,7 +73,7 @@ require("mason-lspconfig").setup_handlers({
 vim.keymap.set("n", "<space>d", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<leader>d", vim.diagnostic.setloclist, {
+vim.keymap.set("n", "<leader>D", vim.diagnostic.setloclist, {
 	desc = "populate loclist from LSP",
 })
 

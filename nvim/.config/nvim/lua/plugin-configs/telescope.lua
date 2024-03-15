@@ -1,4 +1,5 @@
 local builtin = require("telescope.builtin")
+local utils = require("telescope.utils")
 
 -- make sure you have ripgrep installed
 
@@ -15,6 +16,9 @@ end
 map("f", function()
     builtin.find_files({ hidden = true })
 end, "find files")
+map("F", function()
+    builtin.find_files({ hidden = true, cwd = utils.buffer_dir() })
+end, "find files relative to current buffer")
 map("h", builtin.help_tags, "help")
 map("b", builtin.buffers, "buffers")
 map("g", builtin.live_grep, "live grep")
