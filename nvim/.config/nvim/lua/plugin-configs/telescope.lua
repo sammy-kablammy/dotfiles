@@ -39,13 +39,13 @@ map("k", builtin.keymaps, "keymaps")
 -- map('gi', builtin.git_commits, 'git commits')
 -- map('gs', builtin.git_status, 'git status')
 
-map("n", function()
+local function find_notes()
     builtin.live_grep({
-        search_dirs = {
-            "~/notes/main",
-        },
+        cwd = "~/notes/main",
     })
-end, "notes")
+end
+vim.api.nvim_create_user_command("FindNotes", find_notes, {})
+map("n", find_notes, "notes")
 
 vim.keymap.set('n', '<leader>mt',
     '"tyy<cmd>lua require("telescope.builtin").live_grep()<cr><c-r>t',
