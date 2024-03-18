@@ -70,6 +70,8 @@ keymap('n', '<c-l>', '<c-w>l')
 -- only
 keymap('n', '<leader>o', '<cmd>only<cr>')
 
+keymap('n', '<leader>q', '<cmd>q<cr>')
+
 -- open newest buffer in vsplit and go back to old file
 keymap('n', '<leader>v', '<cmd>vsplit<cr><cmd>bprev<cr><c-w>r')
 

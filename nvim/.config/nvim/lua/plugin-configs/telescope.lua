@@ -4,6 +4,7 @@ local utils = require("telescope.utils")
 -- make sure you have ripgrep installed
 
 -- you can use 'builtin.builtin' to find builtin pickers
+-- or do :Telescope and scroll around
 
 local function map(lhs, rhs, desc)
     if desc then
@@ -30,23 +31,16 @@ map("c", builtin.command_history, "command history")
 map("p", builtin.planets, "planets") -- lol
 map("k", builtin.keymaps, "keymaps")
 
--- these could come in handy
--- map('c', builtin.current_buffer_fuzzy_find, 'current buffer')
--- map('v', builtin.vim_options, '')
--- map('r', builtin.lsp_references, '')
--- map('t', builtin.treesitter, 'treesitter identifiers')
--- map('m', builtin.man_pages, '')
--- map('gi', builtin.git_commits, 'git commits')
--- map('gs', builtin.git_status, 'git status')
-
 local function find_notes()
     builtin.live_grep({
         cwd = "~/notes/main",
+        glob_pattern = "*.md",
     })
 end
 vim.api.nvim_create_user_command("FindNotes", find_notes, {})
 map("n", find_notes, "notes")
 
+-- could i be using grep_string here? meh. this way keeps the #, which i like
 vim.keymap.set('n', '<leader>mt',
     '"tyy<cmd>lua require("telescope.builtin").live_grep()<cr><c-r>t',
     { desc = "markdown: telescope by tag" }

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# in case you don't have access to nvim/telescope, you can use this to search
+# notes by file content
+
+# note that in order to search by tag, you will need to wrap your search query
+# in quotes. otherwise, bash will see a string of the form #tag and interpret
+# it as a comment
+
+if [[ $# -eq 0 ]]; then
+    echo 'example usage:   findnote "#vim"'
+    exit 1
+fi
+
+cd ~/notes/main
+
+# grep-l to only show files, don't show the line that matched
+# grep -r to search by directory. (this prevents "./" from being in file names)
+# fzf -m to allow marking multiple files
+selected=$(grep -lr "$@" | fzf -m --preview='less {}')
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+vim $selected
+
+# silence output, otherwise it will print your cwd
+cd - 1>/dev/null

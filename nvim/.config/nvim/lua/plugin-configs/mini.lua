@@ -100,6 +100,8 @@ vim.api.nvim_create_autocmd("User", {
 
 		map_buf("<Leader>w", mini_files.synchronize)
 		map_buf("-", mini_files.go_out)
+		map_buf("<S-left>", mini_files.go_out)
+		map_buf("<S-right>", mini_files.go_in)
 		-- map_buf("p", mini_files.go_in) -- nope! p is already 'paste file'
 		map_buf("q", mini_files.close)
 		map_buf("<Esc>", mini_files.close)
