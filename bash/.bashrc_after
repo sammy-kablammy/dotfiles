@@ -14,24 +14,16 @@ alias 'py'='python3'
 alias 'cf'='cd $(find -type d -not -path "*/.*" 2>/dev/null | fzf)'
 alias 'nf'='nvim $(find -type f -not -path "*/.*" 2>/dev/null | fzf)'
 alias 'fzfp'='fzf --preview="less {}"'
+alias 'symlink'='ln -s'
 
 # make and then cd into directory
 mcd () {
-    if [ $# -ne 1 ]; then
-        echo "Expected name of directory to make. Ex: `mcd myproject`"
-        exit 1
+    if [ $# -eq 1 ]; then
+        mkdir -p $1
+        cd $1
+    else
+        echo "Expected name of directory to make. Ex: 'mcd myproject'"
     fi
-    mkdir -p $1
-    cd $1
-}
-
-symlink () {
-    echo "standard way to make symlinks: 'ln -s'"
-    if [ $# -ne 2 ]; then
-        echo "error: expected usage is `symlink path/to/original/file link_name`"
-        exit 1
-    fi
-    ln -s $1 $2
 }
 
 ddg () {
@@ -61,5 +53,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=bg+:#363a4f,bg:#24273a,spinner:#f4dbd6,hl:#ed8796 \
 --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
 --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
+
+export EDITOR=nvim
 
 # vim: set filetype=sh

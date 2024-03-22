@@ -1,29 +1,39 @@
 #!/bin/bash
 
 # in case you don't have access to nvim/telescope, you can use this to search
-# notes by file content
+# notes by file contents. requires fzf.
 
-# note that in order to search by tag, you will need to wrap your search query
-# in quotes. otherwise, bash will see a string of the form #tag and interpret
-# it as a comment
-
-if [[ $# -eq 0 ]]; then
-    echo 'example usage:   findnote "#vim"'
-    exit 1
+if [ $# -eq 1 ] && [ $1 == "--help" ]; then
+    echo 'Prompt for search query:'
+    echo '    findnote'
+    echo 'Or, pass your query as arg (use quotes if including special characters like #):'
+    echo '    findnote "#vim"'
+    exit 0
 fi
 
-cd ~/notes/main
+if [[ $# -eq 0 ]]; then
+    read -rp "search: " note_search_query
+else
+    note_search_query=$@
+fi
 
-# grep-l to only show files, don't show the line that matched
-# grep -r to search by directory. (this prevents "./" from being in file names)
+# grep -l to only show file names, don't print the line that matched
 # fzf -m to allow marking multiple files
-selected=$(grep -lr "$@" | fzf -m --preview='less {}')
+selected=$(grep -l "$note_search_query" ~/notes/main/* \
+    | fzf -m --preview='less {}' --preview-window=right,80%)
 
 if [[ -z $selected ]]; then
     exit 0
 fi
 
-vim $selected
-
-# silence output, otherwise it will print your cwd
-cd - 1>/dev/null
+# open the desired note in the default text editor (if we can find one. it
+# seems there isn't a super-duper common convention for this)
+if [ ! -z "$EDITOR" ]; then
+    $EDITOR $selected
+elif [ ! -z "$VISUAL" ]; then
+    $VISUAL $selected
+# elif type "xdg-open" &> /dev/null; then
+#     xdg-open $selected
+else
+    vim $selected
+fi
