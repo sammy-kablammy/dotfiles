@@ -3,16 +3,16 @@
 ;   path = /path/to/other/gitconfig
 
 [credential "https://github.com"]
-	helper = !/usr/bin/gh auth git-credential
+    helper = !/usr/bin/gh auth git-credential
 [user]
     email = 98327570+sammy-kablammy@users.noreply.github.com
     name = sammy-kablammy
 [core]
-	editor = nvim
+    editor = nvim
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [pull]
-	rebase = false
+    rebase = false
 [diff]
     tool = nvimdiff
 [difftool]

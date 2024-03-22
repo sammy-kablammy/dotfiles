@@ -101,29 +101,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		--     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		-- end, opts)
 		-- vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-		vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-		vim.keymap.set("n", "<f2>", vim.lsp.buf.rename, opts)
 		vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
 		vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        -- TODO replace F keys with better keymaps
 		-- format entire buffer
-		vim.keymap.set("n", "<f3>", function()
-			vim.lsp.buf.format({ async = true })
-		end, opts)
 		vim.keymap.set("n", "<leader>lf", function()
 			vim.lsp.buf.format({ async = true })
 		end, opts)
 		-- format selection
-		vim.keymap.set("v", "<f3>", function()
-			vim.lsp.buf.format({
-				async = true,
-				range = {
-					["start"] = vim.api.nvim_buf_get_mark(0, "<"),
-					["end"] = vim.api.nvim_buf_get_mark(0, ">"),
-				},
-			})
-		end)
 		vim.keymap.set("v", "<leader>lf", function()
 			vim.lsp.buf.format({
 				async = true,

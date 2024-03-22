@@ -49,10 +49,6 @@ keymap('n', 'zw', '')
 -- i don't even know what this bind does but it's conflicting with my qmk combos
 keymap('n', "<C-'>", '')
 
--- toggle 'clear search'
-keymap('n', '<leader>cs', '<cmd>set hls!<cr>')
-keymap('n', '<leader>h', '<cmd>set hls!<cr>')
-
 -- movement should work how you expect even if a line is really long
 keymap('n', 'j', 'gj')
 keymap('n', 'k', 'gk')
@@ -124,7 +120,7 @@ keymap('n', '<leader>ed', '<cmd>edit<cr>')
 keymap('n', '<leader>so', function()
     print('sourced!')
     vim.cmd('source')
-end)
+end, { desc = "source!" })
 
 -- square bracket fun time [ [ [ ] ] ]
 keymap('n', '[b', vim.cmd.bprevious)
@@ -151,6 +147,13 @@ keymap('n', 'crq', '?"<cr><cmd>nohlsearch<cr>ci"')
 
 keymap('n', '<leader>mp', 'vip:%!fmt<cr>', { desc = "markdown: format paragraph" })
 keymap('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link to alternate file" })
+
+keymap('n', '<leader>h', '<cmd>set hls!<cr>')
+keymap('n', '<leader>sh', '<cmd>set hls!<cr>')
+keymap('n', '<leader>sl', '<cmd>set list!<cr>')
+keymap('n', '<leader>sc', function()
+    vim.o.cmdheight = 1 - vim.o.cmdheight
+end)
 
 -- navigate between git merge conflict markers (do i use this?)
 -- keymap('n', '[g', '?<<<<<<<<cr>')

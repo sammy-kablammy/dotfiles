@@ -140,13 +140,13 @@ else
                 "nvim-telescope/telescope.nvim",
             },
         },
-        "folke/todo-comments.nvim",
-        "ThePrimeagen/vim-be-good",
-        "jbyuki/nabla.nvim",
+            "folke/todo-comments.nvim",
+            "ThePrimeagen/vim-be-good",
+            "jbyuki/nabla.nvim",
         {
-	    "echasnovski/mini.nvim",
-	    version = "*",
-	    dependencies = { "nvim-tree/nvim-web-devicons" },
+            "echasnovski/mini.nvim",
+            version = "*",
+            dependencies = { "nvim-tree/nvim-web-devicons" },
         },
         { "David-Kunz/gen.nvim" },
 
@@ -167,7 +167,13 @@ else
                     pattern = { "*.md" },
                     callback = function()
                         vim.api.nvim_buf_create_user_command(0, "LinkmaToc", linkma.toc_loclist, {})
-                        vim.keymap.set("n", "gl", linkma.follow_link, { buffer = 0 })
+                        vim.keymap.set("n", "<leader>ml", linkma.follow_link, {
+                            buffer = 0, desc = "linkma: follow link"
+                        })
+                        vim.keymap.set("n", "gl", function()
+                            print("this binding is being phased out. use <leader>ml")
+                            linkma.follow_link()
+                        end, { buffer = 0 })
                     end,
                 })
             end,

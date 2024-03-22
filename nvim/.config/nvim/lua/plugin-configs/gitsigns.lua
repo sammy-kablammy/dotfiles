@@ -41,10 +41,3 @@ gitsigns.setup {
         enable = false
     },
 }
-
-vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, {
-    desc = 'Gitsigns preview hunk'
-})
-vim.keymap.set('n', '<leader>gb', gitsigns.toggle_current_line_blame, {
-    desc = 'Gitsigns toggle blame'
-})
