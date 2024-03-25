@@ -107,6 +107,10 @@ else
             {
                 "hrsh7th/nvim-cmp",
                 lazy = false,
+                dependencies = {
+                    "hrsh7th/cmp-path",
+                    "hrsh7th/cmp-buffer",
+                },
             },
         },
         {

@@ -30,6 +30,10 @@ keymap('n', '<leader>P', '"0P')
 
 keymap('n', '<leader>V', 'ggVG')
 
+keymap('n', '<m-f>', 'w')
+keymap('i', '<m-f>', '<c-right>')
+keymap('i', '<m-b>', '<c-left>')
+
 -- keymap('n', '<c-n>', function() vim.cmd('Explore') end)
 -- recall that %:p:h is the name of the current buffer's directory
 -- keymap('n', '<c-n>', function() vim.cmd('Explore %:p:h') end)
@@ -67,6 +71,7 @@ keymap('n', '<c-l>', '<c-w>l')
 keymap('n', '<leader>o', '<cmd>only<cr>')
 
 keymap('n', '<leader>q', '<cmd>q<cr>')
+keymap('n', '<leader>Q', '<cmd>qa<cr>')
 
 -- open newest buffer in vsplit and go back to old file
 keymap('n', '<leader>v', '<cmd>vsplit<cr><cmd>bprev<cr><c-w>r')
@@ -129,6 +134,8 @@ keymap('n', ']c', '<cmd>cnext<cr>')
 keymap('n', '[c', '<cmd>cprev<cr>')
 keymap('n', ']l', '<cmd>lnext<cr>')
 keymap('n', '[l', '<cmd>lprev<cr>')
+keymap('n', ']t', 'gt')
+keymap('n', '[t', 'gT')
 
 -- "change inside ___" motions but reversed
 keymap('n', 'cr"', '?"<cr><cmd>nohlsearch<cr>ci"')

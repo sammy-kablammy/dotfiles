@@ -14,8 +14,8 @@ vim.o.shiftwidth = 4
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = { '*.js', '*.html', '*.css', '*.c', '*.h' },
     callback = function()
-        vim.o_local.tabstop = 2
-        vim.o_local.shiftwidth = 2
+        vim.opt_local.tabstop = 2
+        vim.opt_local.shiftwidth = 2
     end,
 })
 

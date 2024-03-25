@@ -17,6 +17,13 @@ local cmp = require("cmp")
 local luasnip = require("luasnip")
 
 cmp.setup({
+    enabled = function()
+        -- disable cmp in certain filetypes here. (probably.)
+        local filetype = vim.api.nvim_get_option_value('filetype', {
+            buf = 0,
+        })
+        return true
+    end,
     -- only offer suggestions on keypress; don't have a popup window constantly
     -- appearing with suggestions.
     completion = {
@@ -43,8 +50,9 @@ cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
-	}, {
 		{ name = "path" },
 		{ name = "buffer" },
 	}),
 })
+
+vim.keymap.set('n', '<leader>lc', '<cmd>CmpStatus<cr>')
