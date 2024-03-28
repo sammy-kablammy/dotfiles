@@ -11,10 +11,16 @@ alias 'cp'='cp --interactive'
 alias 'mkdir'='mkdir --parents'
 alias 'peep'='nvim -R' # lol
 alias 'py'='python3'
-alias 'cf'='cd $(find -type d -not -path "*/.*" 2>/dev/null | fzf)'
 alias 'nf'='nvim $(find -type f -not -path "*/.*" 2>/dev/null | fzf)'
 alias 'fzfp'='fzf --preview="less {}"'
 alias 'symlink'='ln -s'
+
+cf () {
+    target_directory=$(find -type d -not -path "*/.*" 2>/dev/null | fzf)
+    if [ ! -z $target_directory ]; then
+        cd $target_directory
+    fi
+}
 
 # make and then cd into directory
 mcd () {

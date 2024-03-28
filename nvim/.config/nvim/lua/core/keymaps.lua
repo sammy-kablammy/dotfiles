@@ -121,7 +121,7 @@ keymap('n', '<BS>', '<cmd>bd<cr>')
 
 -- more remaps
 keymap('n', '<leader>w', '<cmd>w<cr>')
-keymap('n', '<leader>ed', '<cmd>edit<cr>')
+-- keymap('n', '<leader>ed', '<cmd>edit<cr>')
 keymap('n', '<leader>so', function()
     print('sourced!')
     vim.cmd('source')
@@ -160,7 +160,7 @@ keymap('n', '<leader>sh', '<cmd>set hls!<cr>')
 keymap('n', '<leader>sl', '<cmd>set list!<cr>')
 keymap('n', '<leader>sc', function()
     vim.o.cmdheight = 1 - vim.o.cmdheight
-end)
+end, { desc = "set cmdheight to whatever" })
 
 -- navigate between git merge conflict markers (do i use this?)
 -- keymap('n', '[g', '?<<<<<<<<cr>')
