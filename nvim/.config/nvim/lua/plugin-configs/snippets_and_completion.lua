@@ -17,13 +17,14 @@ local cmp = require("cmp")
 local luasnip = require("luasnip")
 
 cmp.setup({
-    enabled = function()
-        -- disable cmp in certain filetypes here. (probably.)
-        local filetype = vim.api.nvim_get_option_value('filetype', {
-            buf = 0,
-        })
-        return true
-    end,
+    -- WARNING: using this seems to break C-n and C-p in in telescope :(
+    -- enabled = function()
+    --     -- disable cmp in certain filetypes here. (probably.)
+    --     local filetype = vim.api.nvim_get_option_value('filetype', {
+    --         buf = 0,
+    --     })
+    --     return true
+    -- end,
     -- only offer suggestions on keypress; don't have a popup window constantly
     -- appearing with suggestions.
     completion = {
