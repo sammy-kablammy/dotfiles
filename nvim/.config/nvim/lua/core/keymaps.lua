@@ -33,6 +33,8 @@ keymap('n', '<leader>V', 'ggVG')
 keymap('n', '<m-f>', 'w')
 keymap('i', '<m-f>', '<c-right>')
 keymap('i', '<m-b>', '<c-left>')
+keymap('i', '<c-a>', '<home>') -- note: this overrides the default <c-a>
+keymap('i', '<c-e>', '<end>')
 
 -- keymap('n', '<c-n>', function() vim.cmd('Explore') end)
 -- recall that %:p:h is the name of the current buffer's directory
@@ -43,11 +45,10 @@ keymap('i', '<m-b>', '<c-left>')
 -- remove annoying mappings
 keymap({ 'n', 'v' }, '<c-f>', '')
 keymap({ 'n', 'v' }, '<c-b>', '')
-keymap('i', '<c-a>', '')
 keymap('n', '<c-q>', '')
 keymap('n', 'U', '')
 keymap('n', 'gs', '')
--- no spellchecking related binds
+-- no spellfile related binds
 keymap('n', 'zg', '')
 keymap('n', 'zw', '')
 -- i don't even know what this bind does but it's conflicting with my qmk combos

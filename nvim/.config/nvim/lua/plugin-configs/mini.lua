@@ -3,35 +3,14 @@
 -- a search query. also just having the browser be a popup that supports vim
 -- motions for editing files is nice.
 
--- require("mini.move").setup({
--- 	{
--- 		-- Module mappings. Use `''` (empty string) to disable one.
--- 		mappings = {
--- 			-- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
--- 			left = "<M-h>",
--- 			right = "<M-l>",
--- 			down = "<M-j>",
--- 			up = "<M-k>",
---
--- 			-- Move current line in Normal mode
--- 			line_left = "<M-h>",
--- 			line_right = "<M-l>",
--- 			line_down = "<M-j>",
--- 			line_up = "<M-k>",
--- 		},
---
--- 		-- Options which control moving behavior
--- 		options = {
--- 			-- Automatically reindent selection during linewise vertical move
--- 			reindent_linewise = true,
--- 		},
--- 	},
--- })
-
 local mini_files = require("mini.files")
 
--- vim.keymap.set('n', '<C-n>', function() require('mini.fi>es').open(nil, false) end)
+-- TODO replace c-n binding
 vim.keymap.set("n", "<C-n>", function()
+    print("use <leader>e instead")
+	mini_files.open(vim.api.nvim_buf_get_name(0), false)
+end)
+vim.keymap.set("n", "<leader>e", function()
 	mini_files.open(vim.api.nvim_buf_get_name(0), false)
 end)
 
@@ -107,6 +86,7 @@ vim.api.nvim_create_autocmd("User", {
 		map_buf("<Esc>", mini_files.close)
 		map_buf("<C-c>", mini_files.close)
 		map_buf("<C-n>", mini_files.close)
+		map_buf("<leader>e", mini_files.close)
 
 		-- i keep accidentally pressing C-j and C-k and it closes the window lol
 		map_buf("<C-j>", function() end)
@@ -191,37 +171,3 @@ vim.api.nvim_create_autocmd("User", {
 --         map_split(buf_id, '<C-v>', 'belowright vertical')
 --     end,
 -- })
-
--- local mini_starter = require('mini.starter')
---
--- mini_starter.setup({
---     items = {
---         mini_starter.sections.builtin_actions(),
---         mini_starter.sections.telescope(),
---         mini_starter.sections.recent_files(8, false),
---     },
---     content_hooks = {
---         mini_starter.gen_hook.adding_bullet('▷ '),
---         mini_starter.gen_hook.aligning('center', 'center'),
---         mini_starter.gen_hook.indexing('all', { 'Builtin actions', 'Telescope' }),
---     },
--- })
---
--- mini_starter.config.header = [[
---                        ____==========_______
---             _--____   |    | ""  " "|       \
---            /  )8}  ^^^| 0  |  =     |  o  0  |
---          </_ +-==B vvv|""  |  =     | '  "" "|
---             \_____/   |____|________|________|
---                      (_(  )\________/___(  )__)
---                        |\  \            /  /\
---                        | \  \          /  /\ \
---                        | |\  \        /  /  \ \
---                        (  )(  )       (  \   (  )
---                         \  / /        \  \   \  \
---                          \|  |\        \  \  |  |
---                           |  | )____    \  \ \  )___
---                           (  )  /  /    (  )  (/  /
---                          /___\ /__/     /___\ /__/
---                            The AT-AT, By Core21
---      (https://www.asciiart.website/index.php?art=movies/star%20wars) ]]
