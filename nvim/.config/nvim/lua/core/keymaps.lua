@@ -28,8 +28,6 @@ keymap('t', '<Esc>', [[<C-\><C-n>]])
 keymap('n', '<leader>p', '"0p')
 keymap('n', '<leader>P', '"0P')
 
-keymap('n', '<leader>V', 'ggVG')
-
 keymap('n', '<m-f>', 'w')
 keymap('i', '<m-f>', '<c-right>')
 keymap('i', '<m-b>', '<c-left>')
@@ -48,7 +46,7 @@ keymap({ 'n', 'v' }, '<c-b>', '')
 keymap('n', '<c-q>', '')
 keymap('n', 'U', '')
 keymap('n', 'gs', '')
--- no spellfile related binds
+-- spellfile related mappings
 keymap('n', 'zg', '')
 keymap('n', 'zw', '')
 -- i don't even know what this bind does but it's conflicting with my qmk combos
@@ -68,14 +66,18 @@ keymap('n', '<c-j>', '<c-w>j')
 keymap('n', '<c-k>', '<c-w>k')
 keymap('n', '<c-l>', '<c-w>l')
 
--- only
 keymap('n', '<leader>o', '<cmd>only<cr>')
-
 keymap('n', '<leader>q', '<cmd>q<cr>')
 keymap('n', '<leader>Q', '<cmd>qa<cr>')
+keymap('n', '<leader>bb', '<cmd>buffers<cr>')
+keymap('n', '<leader>bd', '<cmd>bd<cr>')
+keymap('n', '<leader>bD', '<cmd>bd!<cr>')
+-- TODO consider closing neovim if you try to close the last remaining buffer
+keymap('n', '<BS>', '<cmd>bd<cr>')
 
 -- open newest buffer in vsplit and go back to old file
-keymap('n', '<leader>v', '<cmd>vsplit<cr><cmd>bprev<cr><c-w>r')
+-- keymap('n', '<leader>v', '<cmd>vsplit<cr><cmd>bprev<cr><c-w>r')
+keymap('n', '<leader>v', '<cmd>vert sb #<cr>')
 
 -- scroll up and down without getting disoriented
 keymap('n', '<c-d>', '<c-d>zz')
@@ -84,7 +86,6 @@ keymap('n', '<c-up>', '<c-u>zz')
 keymap('n', '<c-down>', '<c-d>zz')
 keymap('n', '<s-up>', '<c-u>zz')
 keymap('n', '<s-down>', '<c-d>zz')
-
 keymap('n', 'n', 'nzz')
 keymap('n', 'N', 'Nzz')
 
@@ -93,50 +94,54 @@ keymap('n', '<leader>ni', '<cmd>edit ~/.config/nvim/init.lua<cr>')
 keymap('n', '<leader>nk', '<cmd>edit ~/.config/nvim/lua/core/keymaps.lua<cr>')
 keymap('n', '<leader>nm', '<cmd>edit ~/.config/nvim/lua/core/misc-vim-stuff.lua<cr>')
 
--- alternate file
--- unfortunately, <tab> seems to be treated the same as <c-^>
+-- unfortunately, <tab> is treated the same as <c-i>
 -- keymap('n', '<Tab>', '<c-^>')
--- keymap('n', '[j', '<c-o>')
--- keymap('n', ']j', '<c-i>')
 keymap('n', '<leader>a', '<cmd>b#<cr>')
-
--- 'go here' - change vim directory to the current buffer's path
-keymap('n', '<leader>gh', function()
-    vim.cmd('cd %:p:h')
-end, {
-    desc = 'go here - change cwd to match current buffer'
-})
 
 -- one eyed fighting kirby - use with \1 in a :s command for regex magic
 keymap('c', '<C-k>', [[\(.*\)]])
 
--- buffer stuff
-keymap('n', '<leader>bb', '<cmd>buffers<cr>')
-keymap('n', '<leader>bd', '<cmd>bd<cr>')
-keymap('n', '<leader>bD', '<cmd>bd!<cr>')
--- keymap('n', '<leader>q', '<cmd>bd<cr>')
-
--- TODO consider making this close neovim if you try to close the last remaining
--- buffer
-keymap('n', '<BS>', '<cmd>bd<cr>')
-
--- more remaps
-keymap('n', '<leader>w', '<cmd>w<cr>')
--- keymap('n', '<leader>ed', '<cmd>edit<cr>')
+-- misc remaps
+keymap('n', '<leader>V', 'ggVG', { desc = "select entire buffer" })
+keymap('n', '<leader>w', function()
+    print("don't use <leader>w so much")
+    vim.cmd("silent write")
+end)
+keymap('n', '<leader><leader>e', vim.cmd.edit, { desc = "edit" })
 keymap('n', '<leader>so', function()
-    print('sourced!')
+    print('sourced, but use <leader><leader>s instead')
     vim.cmd('source')
-end, { desc = "source!" })
+end)
+keymap('n', '<leader><leader>s', function()
+    print('sourced! hooray!')
+    vim.cmd.source()
+end, { desc = "source" })
+keymap('n', '<leader>gh', function()
+    vim.cmd('cd %:p:h')
+end, { desc = 'go here - change cwd to match current buffer' })
+
+-- set ___
+keymap('n', '<leader>h', '<cmd>set hls!<cr>')
+keymap('n', '<leader>sh', '<cmd>set hls!<cr>')
+keymap('n', '<leader>sl', '<cmd>set list!<cr>')
+keymap('n', '<leader>sc', function()
+    vim.o.cmdheight = 1 - vim.o.cmdheight
+end, { desc = "set cmdheight to whatever" })
 
 -- square bracket fun time [ [ [ ] ] ]
 keymap('n', '[b', vim.cmd.bprevious)
 keymap('n', ']b', vim.cmd.bnext)
-keymap('n', ']c', '<cmd>cnext<cr>')
-keymap('n', '[c', '<cmd>cprev<cr>')
-keymap('n', ']l', '<cmd>lnext<cr>')
-keymap('n', '[l', '<cmd>lprev<cr>')
+keymap('n', ']c', vim.cmd.cnext)
+keymap('n', '[c', vim.cmd.cprev)
+keymap('n', ']l', vim.cmd.lnext)
+keymap('n', '[l', vim.cmd.lprev)
 keymap('n', ']t', 'gt')
 keymap('n', '[t', 'gT')
+keymap('n', '[j', '<c-o>')
+keymap('n', ']j', '<c-i>')
+-- navigate between git merge conflict markers (do i use this?)
+keymap('n', '[g', '?<<<<<<<<cr>')
+keymap('n', ']g', '/<<<<<<<<cr>')
 
 -- "change inside ___" motions but reversed
 keymap('n', 'cr"', '?"<cr><cmd>nohlsearch<cr>ci"')
@@ -155,14 +160,3 @@ keymap('n', 'crq', '?"<cr><cmd>nohlsearch<cr>ci"')
 
 keymap('n', '<leader>mp', 'vip:%!fmt<cr>', { desc = "markdown: format paragraph" })
 keymap('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link to alternate file" })
-
-keymap('n', '<leader>h', '<cmd>set hls!<cr>')
-keymap('n', '<leader>sh', '<cmd>set hls!<cr>')
-keymap('n', '<leader>sl', '<cmd>set list!<cr>')
-keymap('n', '<leader>sc', function()
-    vim.o.cmdheight = 1 - vim.o.cmdheight
-end, { desc = "set cmdheight to whatever" })
-
--- navigate between git merge conflict markers (do i use this?)
--- keymap('n', '[g', '?<<<<<<<<cr>')
--- keymap('n', ']g', '/<<<<<<<<cr>')
