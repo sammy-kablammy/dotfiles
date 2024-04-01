@@ -33,6 +33,8 @@ keymap('i', '<m-f>', '<c-right>')
 keymap('i', '<m-b>', '<c-left>')
 keymap('i', '<c-a>', '<home>') -- note: this overrides the default <c-a>
 keymap('i', '<c-e>', '<end>')
+keymap('i', '<c-f>', '<right>')
+keymap('i', '<c-b>', '<left>')
 
 -- keymap('n', '<c-n>', function() vim.cmd('Explore') end)
 -- recall that %:p:h is the name of the current buffer's directory
@@ -46,6 +48,7 @@ keymap({ 'n', 'v' }, '<c-b>', '')
 keymap('n', '<c-q>', '')
 keymap('n', 'U', '')
 keymap('n', 'gs', '')
+keymap('n', 'gQ', '')
 -- spellfile related mappings
 keymap('n', 'zg', '')
 keymap('n', 'zw', '')
@@ -103,6 +106,8 @@ keymap('c', '<C-k>', [[\(.*\)]])
 
 -- misc remaps
 keymap('n', '<leader>V', 'ggVG', { desc = "select entire buffer" })
+keymap('n', '<leader>gq', 'gggqG2<c-o>', { desc = "format (gq) entire buffer" })
+keymap('n', '<leader>z', '1z=', { desc = "apply first spelling suggestion" })
 keymap('n', '<leader>w', function()
     print("don't use <leader>w so much")
     vim.cmd("silent write")
