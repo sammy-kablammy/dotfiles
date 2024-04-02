@@ -62,34 +62,31 @@ else
             -- or                              , branch = '0.1.x',
             dependencies = { "nvim-lua/plenary.nvim" },
         },
-        {
-            -- { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
-            --- Uncomment these if you want to manage LSP servers from neovim
-            { "williamboman/mason.nvim" },
-            { "williamboman/mason-lspconfig.nvim" },
-            -- LSP Support
-            {
-                "neovim/nvim-lspconfig",
-                dependencies = {
-                    { "hrsh7th/cmp-nvim-lsp" },
-                },
-            },
-            -- Autocompletion
-            {
-                "hrsh7th/nvim-cmp",
-                dependencies = {
-                    { "L3MON4D3/LuaSnip" },
-                },
-            },
-        },
         "nvim-lualine/lualine.nvim",
         "numToStr/Comment.nvim",
         "nvim-treesitter/nvim-treesitter",
         "lewis6991/gitsigns.nvim",
         "folke/neodev.nvim",
+        -- LSP
+        "neovim/nvim-lspconfig",
         "nvimtools/none-ls.nvim",
-
-        -- ##### NEW SNIPPET STUFF
+        "williamboman/mason.nvim",
+        {
+            "williamboman/mason-lspconfig.nvim",
+            dependencies = {
+                "williamboman/mason.nvim",
+                "neovim/nvim-lspconfig",
+            },
+        },
+        {
+            "jay-babu/mason-null-ls.nvim",
+            event = { "BufReadPre", "BufNewFile" },
+            dependencies = {
+                "williamboman/mason.nvim",
+                "nvimtools/none-ls.nvim",
+            },
+        },
+        -- snippets
         {
             {
                 "L3MON4D3/LuaSnip",
@@ -114,22 +111,13 @@ else
             },
         },
         {
-            "jay-babu/mason-null-ls.nvim",
-            event = { "BufReadPre", "BufNewFile" },
-            dependencies = {
-                "williamboman/mason.nvim",
-                "nvimtools/none-ls.nvim",
-            },
-        },
-        -- ##### okay that's the new snippet stuff
-
-        {
             "folke/which-key.nvim",
             init = function()
                 vim.o.timeout = true
                 vim.o.timeoutlen = 500
             end,
         },
+        -- TODO write your own version of this
         {
             "ziontee113/icon-picker.nvim",
             dependencies = {
@@ -144,15 +132,16 @@ else
                 "nvim-telescope/telescope.nvim",
             },
         },
-            "folke/todo-comments.nvim",
-            "ThePrimeagen/vim-be-good",
-            "jbyuki/nabla.nvim",
+        "folke/todo-comments.nvim",
+        "ThePrimeagen/vim-be-good",
+        "jbyuki/nabla.nvim",
         {
             "echasnovski/mini.nvim",
             version = "*",
             dependencies = { "nvim-tree/nvim-web-devicons" },
         },
-        { "David-Kunz/gen.nvim" },
+        -- TODO consider removing gen
+        -- { "David-Kunz/gen.nvim" },
 
         -- my custom plugins
         "sammy-kablammy/nvim_plugin_template",

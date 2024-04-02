@@ -36,6 +36,8 @@ keymap('i', '<c-e>', '<end>')
 keymap('i', '<c-f>', '<right>')
 keymap('i', '<c-b>', '<left>')
 
+
+keymap('n', '<leader>E', function() vim.cmd('Explore') end)
 -- keymap('n', '<c-n>', function() vim.cmd('Explore') end)
 -- recall that %:p:h is the name of the current buffer's directory
 -- keymap('n', '<c-n>', function() vim.cmd('Explore %:p:h') end)
@@ -69,7 +71,7 @@ keymap('n', '<c-j>', '<c-w>j')
 keymap('n', '<c-k>', '<c-w>k')
 keymap('n', '<c-l>', '<c-w>l')
 
-keymap('n', '<leader>o', '<cmd>only<cr>')
+-- keymap('n', '<leader>o', '<cmd>only<cr>')
 keymap('n', '<leader>q', '<cmd>q<cr>')
 keymap('n', '<leader>Q', '<cmd>qa<cr>')
 keymap('n', '<leader>bb', '<cmd>buffers<cr>')
@@ -129,6 +131,7 @@ end, { desc = 'go here - change cwd to match current buffer' })
 keymap('n', '<leader>h', '<cmd>set hls!<cr>')
 keymap('n', '<leader>sh', '<cmd>set hls!<cr>')
 keymap('n', '<leader>sl', '<cmd>set list!<cr>')
+keymap('n', '<leader>sr', '<cmd>set relativenumber!<cr>')
 keymap('n', '<leader>sc', function()
     vim.o.cmdheight = 1 - vim.o.cmdheight
 end, { desc = "set cmdheight to whatever" })

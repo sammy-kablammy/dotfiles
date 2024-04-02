@@ -1,14 +1,17 @@
--- rough explanation of all the plugins (not entirely accurate but i don't feel
--- like researching any more so here you go):
+-- what the heck are all these plugins doing?
 --[[
-- nvim-cmp displays a popup window. gui stuff, basically.
-- cmp_luasnip provides nvim-cmp with a list of snippets
-- luasnip is a source of snippets for nvim-cmp
 - luasnip expands snippets. this modifies the text in the buffer. (you know,
-    the thing you wanted to do the entire time)
-- cmp-nvim-lsp gives you completion suggestions from language servers.
-    you'll notice that if cmp-nvim-lsp is commented out, you don't get lsp stuff
+  the thing you wanted to do in the first place)
+- nvim-cmp displays a popup window. gui stuff, basically. (i think)
 - friendly-snippets is a collection of snippets that people have made
+
+these are completion sources. try disabling each one and see how completion
+suggestions are changed.
+- cmp-nvim-lsp gets completion suggestions from active language servers
+- cmp-path gets completion suggestions file system
+- cmp-buffer gets completion suggestions from the text in the current buffer.
+    (this is basically replacing vim's builtin <c-n>)
+- cmp_luasnip gives you whatever luasnip comes up with
 --]]
 
 require("luasnip.loaders.from_vscode").lazy_load()
@@ -16,20 +19,24 @@ require("luasnip.loaders.from_vscode").lazy_load()
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
+vim.keymap.set({ "i", "s" }, "<C-L>", function()
+	luasnip.jump(1)
+end, { silent = true })
+
 cmp.setup({
-    -- WARNING: using this seems to break C-n and C-p in in telescope :(
-    -- enabled = function()
-    --     -- disable cmp in certain filetypes here. (probably.)
-    --     local filetype = vim.api.nvim_get_option_value('filetype', {
-    --         buf = 0,
-    --     })
-    --     return true
-    -- end,
-    -- only offer suggestions on keypress; don't have a popup window constantly
-    -- appearing with suggestions.
-    completion = {
-        autocomplete = false,
-    },
+	-- WARNING: using this seems to break C-n and C-p in in telescope :(
+	-- enabled = function()
+	--     -- disable cmp in certain filetypes here. (probably.)
+	--     local filetype = vim.api.nvim_get_option_value('filetype', {
+	--         buf = 0,
+	--     })
+	--     return true
+	-- end,
+	-- only offer suggestions on keypress; don't have a popup window constantly
+	-- appearing with suggestions.
+	completion = {
+		autocomplete = false,
+	},
 	window = {
 		documentation = cmp.config.window.bordered(),
 		-- completion = cmp.config.window.bordered(),
@@ -56,4 +63,4 @@ cmp.setup({
 	}),
 })
 
-vim.keymap.set('n', '<leader>lc', '<cmd>CmpStatus<cr>')
+vim.keymap.set("n", "<leader>lc", "<cmd>CmpStatus<cr>")
