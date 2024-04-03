@@ -65,6 +65,7 @@ else
         "nvim-lualine/lualine.nvim",
         "numToStr/Comment.nvim",
         "nvim-treesitter/nvim-treesitter",
+        "nvim-treesitter/nvim-treesitter-textobjects",
         "lewis6991/gitsigns.nvim",
         "folke/neodev.nvim",
         -- LSP
