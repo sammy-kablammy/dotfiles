@@ -1,4 +1,5 @@
-vim.keymap.set('n', '<leader>td', '<cmd>TodoTelescope<cr>')
+-- vim.keymap.set('n', '<leader>td', '<cmd>TodoTelescope<cr>')
+-- TODO (lol) remake this plugin
 
 -- test this plugin here
 

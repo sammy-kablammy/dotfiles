@@ -30,5 +30,6 @@
     fst = "!f() { git fetch && git status; }; f"
     fs = "!f() { git fetch && git status --short --branch; }; f"
     dt = "difftool"
+    dts = "difftool --staged"
     mt = "mergetool"
     b = "branch -vv"

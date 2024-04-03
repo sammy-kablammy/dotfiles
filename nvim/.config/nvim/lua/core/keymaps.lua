@@ -79,6 +79,7 @@ keymap('n', '<leader>bd', '<cmd>bd<cr>')
 keymap('n', '<leader>bD', '<cmd>bd!<cr>')
 -- TODO consider closing neovim if you try to close the last remaining buffer
 keymap('n', '<BS>', '<cmd>bd<cr>')
+keymap('n', '<del>', '<cmd>bd<cr>')
 
 -- open newest buffer in vsplit and go back to old file
 -- keymap('n', '<leader>v', '<cmd>vsplit<cr><cmd>bprev<cr><c-w>r')
@@ -126,6 +127,19 @@ end, { desc = "source" })
 keymap('n', '<leader>gh', function()
     vim.cmd('cd %:p:h')
 end, { desc = 'go here - change cwd to match current buffer' })
+-- slide text left and right whhheeeeeeeeeeeee!!! nrroooom!!!
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
+-- run shell command in fancy popup
+vim.keymap.set("n", "<leader>cm", function()
+    vim.ui.input({
+        prompt = "run shell command:",
+    }, function(input)
+        if input then
+            vim.cmd("!" .. input)
+        end
+    end)
+end)
 
 -- set ___
 keymap('n', '<leader>h', '<cmd>set hls!<cr>')
