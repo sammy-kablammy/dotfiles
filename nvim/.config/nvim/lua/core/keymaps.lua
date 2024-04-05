@@ -28,13 +28,15 @@ keymap('t', '<Esc>', [[<C-\><C-n>]])
 keymap('n', '<leader>p', '"0p')
 keymap('n', '<leader>P', '"0P')
 
+-- these are just not that necessary
+-- keymap('i', '<c-a>', '<home>') -- note: this overrides the default <c-a>
+-- keymap('i', '<c-e>', '<end>')
 keymap('n', '<m-f>', 'w')
-keymap('i', '<m-f>', '<c-right>')
-keymap('i', '<m-b>', '<c-left>')
-keymap('i', '<c-a>', '<home>') -- note: this overrides the default <c-a>
-keymap('i', '<c-e>', '<end>')
 keymap('i', '<c-f>', '<right>')
 keymap('i', '<c-b>', '<left>')
+-- this messes up <esc>b, causing it to ignore the <esc> press.
+-- keymap('i', '<m-b>', '<c-left>')
+-- keymap('i', '<m-f>', '<c-right>')
 
 
 keymap('n', '<leader>E', function() vim.cmd('Explore') end)
