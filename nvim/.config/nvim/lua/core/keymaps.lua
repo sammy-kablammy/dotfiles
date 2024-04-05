@@ -99,6 +99,7 @@ keymap('n', 'N', 'Nzz')
 keymap('n', '<leader>ni', '<cmd>edit ~/.config/nvim/init.lua<cr>')
 keymap('n', '<leader>nk', '<cmd>edit ~/.config/nvim/lua/core/keymaps.lua<cr>')
 keymap('n', '<leader>nm', '<cmd>edit ~/.config/nvim/lua/core/misc-vim-stuff.lua<cr>')
+keymap('n', '<leader>?', '<cmd>vsplit ~/notes/main/vim_reminders.md<cr>')
 
 -- unfortunately, <tab> is treated the same as <c-i>
 -- keymap('n', '<Tab>', '<c-^>')
@@ -145,6 +146,7 @@ end)
 keymap('n', '<leader>h', '<cmd>set hls!<cr>')
 keymap('n', '<leader>sh', '<cmd>set hls!<cr>')
 keymap('n', '<leader>sl', '<cmd>set list!<cr>')
+keymap('n', '<leader>sn', '<cmd>set number!<cr>')
 keymap('n', '<leader>sr', '<cmd>set relativenumber!<cr>')
 keymap('n', '<leader>sc', function()
     vim.o.cmdheight = 1 - vim.o.cmdheight
