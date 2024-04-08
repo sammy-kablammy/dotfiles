@@ -124,19 +124,24 @@ vim.api.nvim_create_user_command('HtmlMe', function()
 end, {})
 
 -- netrw stuff
-vim.g.netrw_banner = 0 -- hide banner by default
+-- yeah... netrw is just too inconsistent to use. like, sometimes netrw is a
+-- buffer, sometimes it's not. sometimes you can preview a file in another
+-- split, sometimes it'll open the file in the same split. just don't bother.
+-- vim.g.netrw_banner = 0 -- hide banner by default
 -- vim.g.netrw_keepdir = 0 -- sync netrw directory with working directory
 -- tree style file browser instead of list style
 -- ...actually no that breaks the ability to open a new instance that focuses
 -- on the current file
 -- vim.g.netrw_liststyle = 3
 -- vim.g.netrw_preview = -1 -- open file previews LEFT (default DOWN)
+-- vim.g.netrw_browse_split = 4
+-- vim.keymap.set("n", "<leader>L", "<cmd>Lex<cr>")
 -- it seems you can't do BufEnter, as netrw overwrites that event
 -- i don't know how to execute a callback when netrw opens :(
-vim.api.nvim_create_autocmd("BufEnter", {
-    pattern = { 'netrw', },
-    callback = function() end,
-})
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--     pattern = { 'netrw', },
+--     callback = function() end,
+-- })
 
 -- preview substitutions with :s
 vim.o.inccommand = 'split'

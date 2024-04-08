@@ -34,10 +34,10 @@ keymap('n', '<leader>P', '"0P')
 keymap('n', '<m-f>', 'w')
 keymap('i', '<c-f>', '<right>')
 keymap('i', '<c-b>', '<left>')
+keymap('i', '<c-d>', '<del>')
 -- this messes up <esc>b, causing it to ignore the <esc> press.
 -- keymap('i', '<m-b>', '<c-left>')
 -- keymap('i', '<m-f>', '<c-right>')
-
 
 keymap('n', '<leader>E', function() vim.cmd('Explore') end)
 -- keymap('n', '<c-n>', function() vim.cmd('Explore') end)
@@ -109,6 +109,8 @@ keymap('n', '<leader>a', '<cmd>b#<cr>')
 
 -- one eyed fighting kirby - use with \1 in a :s command for regex magic
 keymap('c', '<C-k>', [[\(.*\)]])
+-- match a numbEr (1 or more digits)
+keymap('c', '<C-e>', [[\(\d\+\)]])
 
 -- misc remaps
 keymap('n', '<leader>V', 'ggVG', { desc = "select entire buffer" })

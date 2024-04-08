@@ -5,11 +5,6 @@
 
 local mini_files = require("mini.files")
 
--- TODO replace c-n binding
-vim.keymap.set("n", "<C-n>", function()
-    print("use <leader>e instead")
-	mini_files.open(vim.api.nvim_buf_get_name(0), false)
-end)
 vim.keymap.set("n", "<leader>e", function()
 	mini_files.open(vim.api.nvim_buf_get_name(0), false)
 end)
@@ -34,20 +29,21 @@ mini_files.setup({
 		-- go_in_plus  = 'L',
 		go_in_plus = "<Enter>",
 		-- go_out      = 'h',
-		go_out = "<C-h>",
+		go_out = "-",
 		-- go_out_plus = 'H',
 		reset = "<BS>",
 		reveal_cwd = "@", -- i don't know what this does
 		show_help = "g?",
 		synchronize = "=",
-		trim_left = "<",
-		trim_right = ">",
+		-- trim_left = "<",
+		-- trim_right = ">",
 	},
 
 	-- General options
 	options = {
 		-- Whether to delete permanently or move into module-specific trash
-		permanent_delete = true,
+		-- permanent_delete = true,
+		permanent_delete = false,
 		-- Whether to use for editing directories
 		use_as_default_explorer = true,
 	},
@@ -78,14 +74,14 @@ vim.api.nvim_create_autocmd("User", {
 		end
 
 		map_buf("<Leader>w", mini_files.synchronize)
-		map_buf("-", mini_files.go_out)
+		map_buf("<C-h>", mini_files.go_out)
 		map_buf("<S-left>", mini_files.go_out)
 		map_buf("<S-right>", mini_files.go_in)
 		-- map_buf("p", mini_files.go_in) -- nope! p is already 'paste file'
 		map_buf("q", mini_files.close)
 		map_buf("<Esc>", mini_files.close)
 		map_buf("<C-c>", mini_files.close)
-		map_buf("<C-n>", mini_files.close)
+		-- map_buf("<C-n>", mini_files.close)
 		map_buf("<leader>e", mini_files.close)
 
 		-- i keep accidentally pressing C-j and C-k and it closes the window lol
