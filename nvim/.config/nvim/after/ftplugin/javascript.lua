@@ -1,1 +1,1 @@
-vim.keymap.set("n", "<enter>", "<cmd>!node %<cr>", { buffer = true })
+vim.keymap.set("n", "<leader><enter>", "<cmd>!node %<cr>", { buffer = true })

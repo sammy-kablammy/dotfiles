@@ -14,8 +14,9 @@ vim.o.makeprg = "go run"
 
 vim.keymap.set("n", "<leader>ts", "<cmd>!go test<cr>", { buffer = true })
 vim.keymap.set("n", "<leader>W", "<cmd>%!gofmt<cr><cmd>w<cr><cmd>!go test<cr>", { buffer = true })
--- TODO consider <leader><enter> instead
-vim.keymap.set("n", "<enter>", "<cmd>!go run %<cr>", { buffer = true })
+-- NOTE you can't just use <enter> because that messes with the keybind that
+-- jumps to a quickfix list element
+vim.keymap.set("n", "<leader><enter>", "<cmd>!go run %<cr>", { buffer = true })
 
 -- vim.api.nvim_create_autocmd({ "BufWrite" }, {
 -- 	pattern = { "*.go" },

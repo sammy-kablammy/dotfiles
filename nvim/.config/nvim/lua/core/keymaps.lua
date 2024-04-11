@@ -40,6 +40,7 @@ keymap('i', '<c-d>', '<del>')
 -- keymap('i', '<m-f>', '<c-right>')
 
 keymap('n', '<leader>E', function() vim.cmd('Explore') end)
+keymap('n', '<leader>R', function() vim.cmd('Rexplore') end)
 -- keymap('n', '<c-n>', function() vim.cmd('Explore') end)
 -- recall that %:p:h is the name of the current buffer's directory
 -- keymap('n', '<c-n>', function() vim.cmd('Explore %:p:h') end)
