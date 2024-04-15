@@ -34,6 +34,11 @@ vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end, { desc
 vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end, { desc = "harpoon select 3" })
 vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end, { desc = "harpoon select 4" })
 
+vim.keymap.set("n", "<leader>0", function()
+    harpoon:list():append()
+    print("appended buffer to harpoon list! :)")
+end, { desc = "harpoon append" })
+
 -- create bindings within the harpoon window
 harpoon:extend({
     UI_CREATE = function(cx)

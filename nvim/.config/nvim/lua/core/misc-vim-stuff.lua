@@ -168,6 +168,13 @@ vim.api.nvim_create_user_command("Listchars", function()
     end)
 end, {})
 
+-- highlight on yank (how did i not know this was built in to neovim!?!?!?)
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.highlight.on_yank({ timeout = 100 })
+    end
+})
+
 -- you can use :h for these
 vim.o.number = true         -- needed for absolute number on current line
 vim.o.relativenumber = true -- relative numbers everywhere else
