@@ -11,7 +11,6 @@ alias 'cp'='cp --interactive'
 alias 'mkdir'='mkdir --parents'
 alias 'peep'='nvim -R' # lol
 alias 'py'='python3'
-alias 'nf'='nvim $(find -type f -not -path "*/.*" 2>/dev/null | fzf)'
 alias 'fzfp'='fzf --preview="less {}"'
 alias 'symlink'='ln -s'
 
@@ -19,6 +18,13 @@ cf () {
     target_directory=$(find -type d -not -path "*/.*" 2>/dev/null | fzf)
     if [ ! -z $target_directory ]; then
         cd $target_directory
+    fi
+}
+
+nf () {
+    target_file=$(find -type f -not -path "*/.*" 2>/dev/null | fzf)
+    if [ ! -z $target_file ]; then
+        nvim $target_file
     fi
 }
 
