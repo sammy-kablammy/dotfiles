@@ -21,6 +21,8 @@
     tool = nvimdiff
 [commit]
     verbose = true
+[url "https://github.com/"]
+    insteadOf = gh:
 [alias]
     l = "log --all --graph --decorate --oneline -10"
     st = "status"
