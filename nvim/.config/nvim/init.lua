@@ -7,13 +7,24 @@ function fmt()
     vim.lsp.buf.format()
 end
 
+math.randomseed(os.time())
+local function print_random_startup_message()
+    local messages = {
+        '🤓🤓 neovim, btw 🤓🤓',
+        '👀 hello neovimmers',
+        'any neovimmers?? 👀👀',
+        'welcome to vscode',
+    }
+    print(messages[math.random(#messages)])
+end
+
 if vim.g.vscode then
     print("👀 hello vscoders")
     vim.keymap.set("n", "j", "gj")
     vim.keymap.set("n", "k", "gk")
     require("core.misc-vim-stuff")
 else
-    print("👀 hello neovimmers")
+    print_random_startup_message()
 
     -- Lazy.nvim bootstrap
     local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -136,6 +147,7 @@ else
         "folke/todo-comments.nvim",
         "ThePrimeagen/vim-be-good",
         "jbyuki/nabla.nvim",
+        "mbbill/undotree",
         {
             "echasnovski/mini.nvim",
             version = "*",

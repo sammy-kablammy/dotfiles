@@ -100,7 +100,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 vim.api.nvim_create_autocmd("BufEnter", {
     pattern = { '*.md' },
     callback = function()
-        vim.o.formatoptions = "jcrqt"
+        vim.o.formatoptions = "jcrqtn"
     end,
 })
 
