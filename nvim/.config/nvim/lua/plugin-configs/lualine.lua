@@ -32,7 +32,8 @@ lualine.setup({
 		lualine_c = {
 			{
 				"filename",
-				path = 4,
+                -- ehhhh i don't really know whether i want the whole path
+				-- path = 4,
 			},
 		},
 		lualine_x = { "encoding", "fileformat" },

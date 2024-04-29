@@ -186,6 +186,7 @@ else
         },
         -- { dir = '~/my_neovim_plugins/showcase.nvim' },
         -- { dir = '~/my_neovim_plugins/simpletodo.nvim' },
+        -- { dir = '~/my_neovim_plugins/commentma.nvim' },
     })
 
     -- ...and these are my config files :)

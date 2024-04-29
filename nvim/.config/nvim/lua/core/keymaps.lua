@@ -118,8 +118,10 @@ keymap('n', '<leader>V', 'ggVG', { desc = "select entire buffer" })
 keymap('n', '<leader>gq', 'gggqG2<c-o>', { desc = "format (gq) entire buffer" })
 keymap('n', '<leader>z', '1z=', { desc = "apply first spelling suggestion" })
 keymap('n', '<leader>w', function()
-    print("don't use <leader>w so much")
-    vim.cmd("silent write")
+    -- TODO still unsure how i want to treat writing...
+    -- print("don't use <leader>w so much")
+    -- vim.cmd("silent write")
+    vim.cmd("write")
 end)
 keymap('n', '<leader><leader>e', vim.cmd.edit, { desc = "edit" })
 keymap('n', '<leader>so', function()
@@ -149,6 +151,8 @@ vim.keymap.set("n", "<leader>cm", function()
         end
     end)
 end)
+-- pressing <space>A applies the A to the next line, so let's try this keymap
+keymap('n', '<leader>A', 'A')
 
 -- set ___
 keymap('n', '<leader>h', '<cmd>set hls!<cr>')
