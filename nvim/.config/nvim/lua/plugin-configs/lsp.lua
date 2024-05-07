@@ -31,6 +31,7 @@ vim.api.nvim_create_user_command("LspMe", function()
 		"pyright",
 		"typescript-language-server",
 		"css-lsp",
+		"gopls",
 
 		-- careful installing too many things. especially with null-ls.
 		-- they tend to conflict with each other

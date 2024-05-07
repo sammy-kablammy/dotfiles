@@ -117,6 +117,7 @@ keymap('c', '<C-e>', [[\(\d\+\)]])
 keymap('n', '<leader>V', 'ggVG', { desc = "select entire buffer" })
 keymap('n', '<leader>gq', 'gggqG2<c-o>', { desc = "format (gq) entire buffer" })
 keymap('n', '<leader>z', '1z=', { desc = "apply first spelling suggestion" })
+keymap('i', '<c-a>', '<esc>1z=ea')
 keymap('n', '<leader>w', function()
     -- TODO still unsure how i want to treat writing...
     -- print("don't use <leader>w so much")
@@ -191,8 +192,13 @@ keymap('n', 'cr<', '?<<cr><cmd>nohlsearch<cr>ci<')
 keymap('n', 'ciq', 'ci"')
 keymap('n', 'crq', '?"<cr><cmd>nohlsearch<cr>ci"')
 
+-- termdebug
+keymap('n', '<leader>da', '<cmd>Asm<cr>', { desc = 'Debug: Asm' })
+keymap('n', '<leader>db', '<cmd>Break<cr>', { desc = 'Debug: Breakpoint (:Clear to undo)' })
+keymap('n', '<leader>dc', '<cmd>Continue<cr>', { desc = 'Debug: Continue' })
+keymap('n', '<leader>de', '<cmd>Evaluate<cr>', { desc = 'Debug: Evaluate' })
+keymap('n', '<leader>dn', '<cmd>Over<cr>', { desc = 'Debug: Next (step over)' })
+keymap('n', '<leader>ds', '<cmd>Step<cr>', { desc = 'Debug: Step (step into)' })
+
 -- add argument to function
 -- keymap('n', '<leader>a', '$F)i, ')
-
-keymap('n', '<leader>mp', 'vip:%!fmt<cr>', { desc = "markdown: format paragraph" })
-keymap('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link to alternate file" })

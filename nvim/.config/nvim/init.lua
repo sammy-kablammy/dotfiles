@@ -196,3 +196,5 @@ else
     require("core.abbreviations")
     require("core.code-running")
 end
+
+vim.cmd("packadd termdebug")

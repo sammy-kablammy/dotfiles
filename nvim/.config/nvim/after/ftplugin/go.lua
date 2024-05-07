@@ -25,3 +25,8 @@ vim.keymap.set("n", "<leader><enter>", "<cmd>!go run %<cr>", { buffer = true })
 --         vim.cmd("silent %!gofmt")
 -- 	end,
 -- })
+
+vim.cmd([[inoreabbrev ien if err != nil {]])
+vim.cmd([[inoreabbrev ienf if err != nil {<cr>log.Fatal(err)<cr>}]])
+
+-- TODO make a keybind that opens the docs (https://pkg.go.dev/std) in a browser

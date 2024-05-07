@@ -68,4 +68,6 @@ export FZF_DEFAULT_OPTS=" \
 
 export EDITOR=nvim
 
+# note: you'll want to set NOTES somewhere
+
 # vim: set filetype=sh
