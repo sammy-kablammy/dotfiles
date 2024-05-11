@@ -13,6 +13,7 @@ alias 'peep'='nvim -R' # lol
 alias 'py'='python3'
 alias 'fzfp'='fzf --preview="less {}"'
 alias 'symlink'='ln -s'
+alias 'e'='xdg-open'
 
 cf () {
     target_directory=$(find -type d -not -path "*/.*" 2>/dev/null | fzf)

@@ -2,3 +2,11 @@
 *.swo
 nvim/.config/nvim/lazy-lock.json
 nvim/lua/.luarc.json
+
+scripts/.local/bin/*
+# you'll just have to manually update this list with new scripts
+!scripts/.local/bin/statusize
+!scripts/.local/bin/zk
+!scripts/.local/bin/nvimgrep
+!scripts/.local/bin/sessionizer
+!scripts/.local/bin/windowizer
