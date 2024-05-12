@@ -14,6 +14,7 @@ local function print_random_startup_message()
         '👀 hello neovimmers',
         'any neovimmers?? 👀👀',
         'welcome to vscode',
+        'kama pona tawa ilo Neowin',
     }
     print(messages[math.random(#messages)])
 end

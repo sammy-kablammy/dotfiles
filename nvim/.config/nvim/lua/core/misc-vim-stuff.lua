@@ -93,14 +93,12 @@ vim.o.breakindent = true
 -- You need to use an autocommand because 'fo' is a "local to buffer" option.
 vim.api.nvim_create_autocmd("BufEnter", {
     callback = function()
+        -- this is really janky but i haven't found an event that fires after
+        -- the ftplugins are loaded.
+        if vim.o.filetype == 'markdown' then
+          return
+        end
         vim.o.formatoptions = "jcrq"
-    end,
-})
--- note: this autocmd fires after BufEnter
-vim.api.nvim_create_autocmd("BufEnter", {
-    pattern = { '*.md' },
-    callback = function()
-        vim.o.formatoptions = "jcrqtn"
     end,
 })
 
@@ -189,3 +187,4 @@ vim.o.signcolumn = "yes"
 vim.o.wrapscan = false
 vim.o.hls = false
 vim.o.showmode = false
+vim.o.foldmethod = "marker"

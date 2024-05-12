@@ -38,7 +38,7 @@ vim.api.nvim_create_user_command("LspMe", function()
 
 		-- for mason-null-ls:
 		"stylua",
-		"prettierd",
+		-- "prettierd", -- annoying with markdown.
 		"clang-format",
 		"black",
 

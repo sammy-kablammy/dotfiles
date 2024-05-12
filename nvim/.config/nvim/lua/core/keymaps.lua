@@ -34,7 +34,7 @@ keymap('n', '<leader>P', '"0P')
 keymap('n', '<m-f>', 'w')
 keymap('i', '<c-f>', '<right>')
 keymap('i', '<c-b>', '<left>')
-keymap('i', '<c-d>', '<del>')
+-- keymap('i', '<c-d>', '<del>') -- unsure about this one. de-indent is good.
 -- this messes up <esc>b, causing it to ignore the <esc> press.
 -- keymap('i', '<m-b>', '<c-left>')
 -- keymap('i', '<m-f>', '<c-right>')
@@ -117,7 +117,7 @@ keymap('c', '<C-e>', [[\(\d\+\)]])
 keymap('n', '<leader>V', 'ggVG', { desc = "select entire buffer" })
 keymap('n', '<leader>gq', 'gggqG2<c-o>', { desc = "format (gq) entire buffer" })
 keymap('n', '<leader>z', '1z=', { desc = "apply first spelling suggestion" })
-keymap('i', '<c-a>', '<esc>1z=ea')
+-- keymap('i', '<c-a>', '<esc>1z=ea')
 keymap('n', '<leader>w', function()
     -- TODO still unsure how i want to treat writing...
     -- print("don't use <leader>w so much")

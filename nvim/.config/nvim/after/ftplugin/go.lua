@@ -16,8 +16,10 @@ vim.keymap.set("n", "<leader>ts", "<cmd>!go test<cr>", { buffer = true })
 vim.keymap.set("n", "<leader>bn", "<cmd>!go test -bench=.<cr>", { buffer = true })
 vim.keymap.set("n", "<leader>W", "<cmd>%!gofmt<cr><cmd>w<cr>", { buffer = true })
 -- NOTE you can't just use <enter> because that messes with the keybind that
--- jumps to a quickfix list element
+-- jumps to a quickfix list element... or does it??? maybe it just wasn't buffer
+-- local before... 🤔🤔🤔
 vim.keymap.set("n", "<leader><enter>", "<cmd>!go run %<cr>", { buffer = true })
+vim.keymap.set("n", "<leader><leader><enter>", "<cmd>vert new | r!go run #<cr>", { buffer = true })
 
 -- vim.api.nvim_create_autocmd({ "BufWrite" }, {
 -- 	pattern = { "*.go" },
