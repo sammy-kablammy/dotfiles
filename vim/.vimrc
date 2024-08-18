@@ -1,102 +1,54 @@
-" (this file has kinda died since switching to neovim)
+" ~~~ new (post-switching-to-neovim) vimrc ~~~
 
-" Note: to reference this file in your local vimrc, add
-" source /path/to/this/file
+" i'm considering maintaining both a vimrc and a neovim config. the neovim
+" config might actually source the vim config so that i don't have as much
+" duplication. this can be accomplished with vim.cmd.source("~/.vimrc")
 
-" Note: to disable a setting, add a "no" to the beginning of it.
-" For example, the following line disables swapfiles:
-" set noswapfile
+" the vimconfig uses no plugins and is only a single file. vim should be as
+" fast and minimal as possible. neovim is for plugins (still minimal
 
-" The internet says use 'filetype indent on' instead of cindent/smartindent
-set nosmartindent
-set nocindent
-" Use indentation rules based on filetype
-filetype indent on
 
-" 'tabstop' is simply the width in characters of a tab byte
-set tabstop=4
+" source otherfile.vim
 
-" 'shiftwidth' sets the number of characters to shift when using << or >>
-set shiftwidth=4
-
-" Copy the current line's indentation to the next line
+let mapleader = "<space>"
+color slate
+syntax on
+set number
+set termguicolors
+set ignorecase smartcase
+set hlsearch incsearch nowrapscan
+set wildmenu
+set nowrap
+set textwidth=80
+set colorcolumn=+0 " +0 syncs colorcolumn with textwidth
+set scrolloff=3 sidescrolloff=3
+set formatoptions=jcrq " this is always in flux but i guess it's fine for now
+set cursorline
+set breakindent
+set noswapfile
 set autoindent
-
-" Use spaces instead of tabs
-set expandtab
-
-" When pressing backspace on a piece of indentation, delete an entire unit
-" of indentation instead of just a single space.
-set smarttab
-
-" When scrolling off the edge of the screen, pad with 'scrolloff' lines
-set scrolloff=5
-
-" Big vertical red line at 100 characters
-set colorcolumn=100
-highlight ColorColumn ctermbg=darkred
-
-" Highlight text matching current search, even before completing the search
-set incsearch
-
-" If a search query includes caps then searching is case-sensitive, else it's case-insensitive
-set smartcase
-
-" Pressing "backspace" should work as you expect. Here's some more info:
+set laststatus=1
+set list lcs=lead:·,trail:·,tab:>-
+	" test tab here
+    " test leading/trailing space here  
+set splitbelow splitright
+" allow viewing other buffers without saving the current buffer " (neovim
+" enables this by default, i don't know why vim doesn't)
+set hidden
+" backspace should work as expected (another of nvim's better defaults)
 " 'eol'    : lets you backspace onto the previous line
 " 'start'  : lets you backspace characters that weren't typed during
 "            this current insert session (i think)
 " 'indent' : lets you backspace indentation that was created by autoindent
-" set backspace=indent,eol,start
-set backspace=eol,start
+set backspace=indent,eol,start
 
-" When splitting horizontally (the default way for :sp), put the new window below
-set splitbelow
-" When splitting vertically, put the new window on the right
-set splitright
-
-" Wrap text after 100 characters
-set textwidth=100
-
-" These are self-explanatory enough (or just :h for help)
-syntax on
-color slate
-set showcmd
-set ruler
-set title
-set number
-set relativenumber
-set cursorline
-
-" --------------------------------
-" ----- Remappings and stuff -----
-" --------------------------------
-
-" Custom leader key
-let mapleader = "\<Space>"
-
-" Save file
-map <Leader>w :<CR>
-
-" Shorter splitting keybinds
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" comment macro in normal mode (marker is 'c' for 'comment')
-map <C-_> mc^i// <Esc>`c3l
-" comment macro in insert mode
-imap <C-_> <esc><C-_>li
-
-" Alternate tab switching
-nnoremap <Leader><Tab> gt
-
-" Duplicate vscode vsplit keyboard shortcut. (Same as vim's ctrl+w v)
-nnoremap <C-\> :vs<CR>
-
-" Easily open terminal in vsplit
-nnoremap <Leader>t :vert term<CR>
-
-" Easier :Explore command to access file explorer
-map <Leader>e :Ex<CR>
+" user command and autocommand examples (i prefer lua but it's good to know how to do this from vimscript)
+command SetPreferredIndentSettings set shiftwidth=4 tabstop=4 softtabstop=4 expandtab
+SetPreferredIndentSettings
+" long autocmd syntax
+autocmd BufEnter "*" {
+    " commands go here
+    " they can span multiple lines
+}
+" short autocmd syntax
+au bufnew * SetPreferredIndentSettings
