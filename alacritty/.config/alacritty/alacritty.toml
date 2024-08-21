@@ -1,0 +1,40 @@
+# massively incomplete right now
+
+# pretty much everything you want is right here:
+# https://alacritty.org/config-alacritty.html
+# you may also want to check here:
+# https://github.com/alacritty/alacritty#configuration
+
+# on windows, put this in AppData/Roaming/alacritty/alacritty.toml
+
+############################################################
+
+import = [
+    "catppuccin-macchiato.toml"
+]
+
+# needed for colorscheme
+[env]
+TERM = "xterm-256color"
+
+[shell]
+program = "wsl"
+# i can't get WSL to start in the WSL home directory 😔
+# args = []
+# working_directory = "\\wsl.localhost\Ubuntu\home\sam"
+
+# [window]
+# startup_mode = "Maximized"
+
+[font]
+normal = { family = "JetBrainsMonoNL Nerd Font", style = "Regular" }
+size = 12.0
+
+# alacritty by default (at least on windows) ignores control+space. somehow,
+# remapping it to \u0000 fixes this. i can't even.
+[[keyboard.bindings]]
+key = "Space"
+mods = "Control"
+chars = "\u0000"
+
+# TODO ctrl+6 for alternate file

@@ -1,33 +1,42 @@
 #!/bin/bash
 
-# in case you don't have access to nvim/telescope, you can use this to search
-# notes by file contents. requires fzf.
+# some notes
+# get title of a note:
+# head --lines=1 --quiet 1 some_long_note_name.md
+# get tags of a note:
+# grep "^#[a-zA-Z0-9]\+" vim_reminders.md 
+# grep "^#[[:alnum:]]\+" vim_reminders.md 
 
-if [ $# -eq 1 ] && [ $1 == "--help" ]; then
-    echo 'Prompt for search query:'
+notes_dir=/home/sam/notes
+grep="grep -l"
+if type rg &> /dev/null; then
+    grep=rg
+fi
+
+if [ $# -eq 1 ] && $([ $1 == "--help" ] || [ $1 == "-h" ]); then
+    echo 'Be prompted for search query (no need to quote or escape)'
     echo '    findnote'
-    echo 'Or, pass your query as arg (use quotes if including special characters like #):'
+    echo 'Pass your query as an argument (use "" if including bash characters like #):'
     echo '    findnote "#vim"'
+    echo "Note: you can only preview, fzf isn\'t used for searching right now"
     exit 0
 fi
 
-if [[ $# -eq 0 ]]; then
+if [ $# -eq 0 ]; then
     read -rp "search: " note_search_query
 else
     note_search_query=$@
 fi
 
-# grep -l to only show file names, don't print the line that matched
-# fzf -m to allow marking multiple files
-selected=$(grep -l "$note_search_query" ~/notes/main/* \
-    | fzf -m --preview='less {}' --preview-window=right,80%)
-
-if [[ -z $selected ]]; then
+selected=$($grep --files-with-matches "$note_search_query" $notes_dir/main/* \
+    | fzf --multi --preview='less {}' --preview-window=right,80%)
+if [ -z $selected ]; then
     exit 0
 fi
 
 # open the desired note in the default text editor (if we can find one. it
 # seems there isn't a super-duper common convention for this)
+cd $notes_dir
 if [ ! -z "$EDITOR" ]; then
     $EDITOR $selected
 elif [ ! -z "$VISUAL" ]; then

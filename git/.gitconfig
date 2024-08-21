@@ -35,3 +35,9 @@
     dts = "difftool --staged"
     mt = "mergetool"
     b = "branch -vv"
+    alias = "!f() { git config --list | grep 'alias'; }; f"
+    untrack = "rm --cached" # remove file from repo without deleting from filesystem
+    co = "checkout"
+    w = "worktree"
+    ds = "diff --stat"
+    ls = "ls-files"

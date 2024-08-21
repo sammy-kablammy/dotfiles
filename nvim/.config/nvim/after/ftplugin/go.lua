@@ -1,9 +1,10 @@
 -- we love golang!!! hooray!!!
 
-vim.o.expandtab = false
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.softtabstop = 4
+vim.bo.expandtab = false
+vim.bo.tabstop = 4
+vim.bo.shiftwidth = 4
+vim.bo.softtabstop = 4
+vim.b.sam_override_whitespace_settings = true
 
 vim.o.formatprg = "gofmt"
 
@@ -31,4 +32,6 @@ vim.keymap.set("n", "<leader><leader><enter>", "<cmd>vert new | r!go run #<cr>",
 vim.cmd([[inoreabbrev ien if err != nil {]])
 vim.cmd([[inoreabbrev ienf if err != nil {<cr>log.Fatal(err)<cr>}]])
 
--- TODO make a keybind that opens the docs (https://pkg.go.dev/std) in a browser
+vim.b.sam_documentation_url = "https://pkg.go.dev/std"
+
+InsertMap("f", "for i := 0; i < len; i++ {\n}<esc>O")
