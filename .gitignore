@@ -1,7 +1,5 @@
 *.swp
 *.swo
-nvim/.config/nvim/lazy-lock.json
-nvim/lua/.luarc.json
 awesome/.config/awesome/default/
 
 scripts/.local/bin/*
