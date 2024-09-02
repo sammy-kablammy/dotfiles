@@ -202,9 +202,19 @@ vim.api.nvim_create_user_command('Mainnote', function()
     vim.cmd.bdelete()
     vim.cmd.edit("~/notes/main/" .. file_path)
 end, {})
+vim.api.nvim_create_user_command('Inboxnote', function()
+    local file_path = vim.fn.expand("%:t")
+    vim.cmd("!mv '%' ~/notes/inbox/")
+    vim.cmd.bdelete()
+    vim.cmd.edit("~/notes/inbox/" .. file_path)
+end, {})
 vim.api.nvim_create_user_command('Tagnotes', function()
     vim.cmd("!~/notes/maketags.sh")
 end, {})
+
+-- the path isn't set properly for some reason (at least on chromeos),
+-- preventing my shell scripts from being found
+vim.cmd("silent !PATH=$PATH:~/.local.bin")
 
 
 

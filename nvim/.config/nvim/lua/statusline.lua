@@ -3,6 +3,8 @@
 -- complexity; they're horizontal abstractions. i'd rather avoid an extra
 -- dependency in my config and just use the default one. 
 
+-- TODO consider using 'winbar' instead of 'statusline'
+
 -- :h statusline
 -- :h lua-eval
 

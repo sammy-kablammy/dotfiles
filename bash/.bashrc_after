@@ -80,6 +80,10 @@ nf () {
     fi
 }
 
+cl () {
+    cd $1 && ls
+}
+
 # shorter pushd, suppresses the "dirs"-like message that pushd normally outputs
 pd() {
     if [ -z $1 ]; then

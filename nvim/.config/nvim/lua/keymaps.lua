@@ -230,6 +230,8 @@ vim.keymap.set("n", "gC", "guiw~e", { desc = "capitalize first character of word
 -- experimental ctrl+space mode switching
 vim.keymap.set({ "i", "x", "c" }, "<c-space>", "<esc>")
 
+vim.keymap.set("n", "g=", "g+") -- (redo, alias for g+)
+
 
 
 ---------- keymap graveyard ----------
