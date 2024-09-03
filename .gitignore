@@ -9,3 +9,5 @@ scripts/.local/bin/*
 !scripts/.local/bin/nvimgrep
 !scripts/.local/bin/sessionizer
 !scripts/.local/bin/windowizer
+
+nvim/.config/nvim/spell/*.spl
