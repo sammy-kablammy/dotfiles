@@ -33,7 +33,17 @@ function LspStatusline()
     end
     return retval
 end
-vim.o.statusline = [[ %f%< %m%r%=%S %{%luaeval("LspStatusline()")%} (%l,%c) ]]
+function StatusLineNoteTitle()
+    -- TODO highlight note title with the proper color
+    if vim.bo.filetype ~= "markdown" then
+        return ""
+    end
+    return vim.fn.getline(1)
+end
+-- TODO split this long string out into several more reasonably named strings
+-- e.g.:
+-- local readonly_flag = "%r"
+vim.o.statusline = [[ %f%< %m%r %{luaeval("StatusLineNoteTitle()")} %=%S %{%luaeval("LspStatusline()")%} (%l,%c) ]]
 
 
 

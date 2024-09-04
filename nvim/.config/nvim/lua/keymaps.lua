@@ -155,17 +155,19 @@ end, { desc = "toggle conceallevel" })
 -- square bracket fun time [ [ [ ] ] ]
 vim.keymap.set("n", "[b", vim.cmd.bprevious, { desc = "prev buffer" })
 vim.keymap.set("n", "]b", vim.cmd.bnext, { desc = "next buffer" })
-vim.keymap.set("n", "]c", vim.cmd.cnext, { desc = "prev qflist" })
-vim.keymap.set("n", "[c", vim.cmd.cp, { desc = "next qflist" })
-vim.keymap.set("n", "]l", vim.cmd.ln, { desc = "prev loclist" })
-vim.keymap.set("n", "[l", vim.cmd.lp, { desc = "next loclist" })
-vim.keymap.set("n", "]t", "gt", { desc = "prev tab" })
-vim.keymap.set("n", "[t", "gT", { desc = "next tab" })
-vim.keymap.set("n", "[g", vim.cmd.tnext, { desc = "next tag" })
-vim.keymap.set("n", "[g", vim.cmd.tprev, { desc = "prev tag" })
+vim.keymap.set("n", "[c", vim.cmd.cprev, { desc = "prev qflist" })
+vim.keymap.set("n", "]c", vim.cmd.cnext, { desc = "next qflist" })
+vim.keymap.set("n", "[l", vim.cmd.lprev, { desc = "prev loclist" })
+vim.keymap.set("n", "]l", vim.cmd.lnext, { desc = "next loclist" })
+vim.keymap.set("n", "[t", "gT", { desc = "prev tab" })
+vim.keymap.set("n", "]t", "gt", { desc = "next tab" })
+vim.keymap.set("n", "[T", function() vim.cmd.tabmove("-1") end, { desc = "move tab left" })
+vim.keymap.set("n", "]T", function() vim.cmd.tabmove("+1") end, { desc = "move tab right" })
+-- vim.keymap.set("n", "[g", vim.cmd.tprev, { desc = "prev tag" })
+-- vim.keymap.set("n", "]g", vim.cmd.tnext, { desc = "next tag" })
 
 vim.keymap.set("n", "<leader>gh", function()
-    vim.cmd("cd %:p:h")
+    vim.cmd("cd %:h")
 end, { desc = "go here - change cwd to match current buffer" })
 
 -- display current buffer in new tab. unlike <c-w>T because it keeps the old
@@ -177,7 +179,9 @@ vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>")
 
 vim.keymap.set("n", "<leader>ty", function()
     local ftplugin_path = "~/.config/nvim/after/ftplugin/" .. vim.bo.filetype .. ".lua"
-    vim.cmd.edit(ftplugin_path)
+    -- i would rather :edit the file but it messes up whitespace settings (sw,
+    -- ts, sts) when you do that so instead i'm gonna :vsplit
+    vim.cmd.vsplit(ftplugin_path)
 end, { desc = "open FiletYpe plugin"})
 
 -- filetype specific docs

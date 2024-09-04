@@ -84,15 +84,23 @@ require("nvim-treesitter.configs").setup({
                 -- You can use the capture groups defined in textobjects.scm
                 ["af"] = "@function.outer",
                 ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
+                -- ["ac"] = "@class.outer",
                 -- you can optionally set descriptions to the mappings (used in the desc parameter of nvim_buf_set_keymap
-                ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                -- ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+
+                -- markdown code blocks
+                -- note to self: see
+                -- ~/.local/share/nvim/lazy/nvim-treesitter-textobjects/ and
+                -- find the textobjects.scm files for the correct names
+                ["ic"] = "@block.inner",
+                ["ac"] = "@block.outer",
+
             },
             -- You can choose the select mode (default is charwise 'v')
             selection_modes = {
                 ["@parameter.outer"] = "v", -- charwise
                 ["@function.outer"] = "V", -- linewise
-                ["@class.outer"] = "<c-v>", -- blockwise
+                -- ["@class.outer"] = "<c-v>", -- blockwise
             },
             -- If you set this to `true` (default is `false`) then any textobject is
             -- extended to include preceding or succeeding whitespace. Succeeding
@@ -101,11 +109,12 @@ require("nvim-treesitter.configs").setup({
             include_surrounding_whitespace = false,
         },
         swap = {
-            swap_next = {
-                ["<leader>ts"] = "@parameter.inner",
-            },
+            enable = true,
             swap_previous = {
-                ["<leader>tS"] = "@parameter.inner",
+                ["<leader>tp"] = "@parameter.inner",
+            },
+            swap_next = {
+                ["<leader>tn"] = "@parameter.inner",
             },
         },
     },
