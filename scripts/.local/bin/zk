@@ -3,10 +3,7 @@
 # timestamp=$(date +"%a%b%d_%G_%H-%M-%S")
 timestamp=$(date +"%F_%H-%M-%S")
 
-# this script is very annoying. basically, don't ever use quotes and you should
-# be fine? sure.
-
-# note: you can add some text to nvim by passing +"norm iNew Note"
-
-touch "$HOME/notes/inbox/$timestamp.md"
+# i don't need to touch the file if i'm about to edit it, right? this might
+# break some other things though
+# touch "$HOME/notes/inbox/$timestamp.md"
 echo "$HOME/notes/inbox/$timestamp.md"

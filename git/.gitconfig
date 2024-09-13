@@ -9,6 +9,9 @@
     name = sammy-kablammy
 [core]
     editor = nvim
+    # git likes to dump a bunch of garbage to stdout when exiting the pager for
+    # commands like 'git log' and 'git show'
+	pager = less -+X # (the + re-enables the option)
 [init]
     defaultBranch = main
 [pull]
@@ -39,6 +42,7 @@
     mt = "mergetool"
     ref = "reflog --date=short"
     s = "status --short --branch"
+    sh = "show -5 --pretty=oneline"
     st = "status"
     untrack = "rm --cached" # remove file from repo without deleting from filesystem
     w = "worktree"
