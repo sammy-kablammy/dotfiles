@@ -3,7 +3,6 @@
 -- :cab for command mode only, :iab for insert mode only.
 
 vim.cmd([[
-    inoreabbrev mdcode ```<cr><cr>```<up>
     inoreabbrev cdb ```<cr>```<up>
     noreabbrev functino function
     noreabbrev serach search

@@ -194,6 +194,24 @@ require("keymaps")
 require("statusline")
 require("abbreviations")
 
+-- this really belongs somewhere else
+-- huh?
+-- inspired by wtf.nvim (https://github.com/piersolenski/wtf.nvim)
+vim.api.nvim_create_user_command("Huh", function()
+    local diag = vim.diagnostic.get_next()
+    if not diag then
+        print("no diagnostics to search")
+        return
+    end
+    -- there may be some URL characters that aren't escaped properly
+    local formatted_msg = vim.fn.substitute(diag.message, " ", "%20", "g")
+    formatted_msg = vim.fn.substitute(formatted_msg, ";", "%3b", "g")
+    local ddg = [[https://duckduckgo.com/?t=lm&q=]]
+    local search_query = ddg .. vim.bo.filetype .. "%20" .. formatted_msg
+    vim.print(search_query)
+    vim.ui.open(ddg .. search_query)
+end, {})
+
 -- vim.cmd("packadd termdebug")
 -- vim.keymap.set("n", "<leader>Da", "<cmd>Asm<cr>", { desc = "Debug: Asm" })
 -- vim.keymap.set("n", "<leader>Db", "<cmd>Break<cr>", { desc = "Debug: Breakpoint (:Clear to undo)" })

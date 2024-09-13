@@ -6,6 +6,7 @@
 local mini_files = require("mini.files")
 
 vim.keymap.set("n", "<leader>e", function()
+    print("try not to rely on this so much")
 	mini_files.open(vim.api.nvim_buf_get_name(0), false)
 end)
 

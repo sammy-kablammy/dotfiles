@@ -174,6 +174,9 @@ end, { desc = "go here - change cwd to match current buffer" })
 -- window where it was
 vim.keymap.set("n", "<c-w>t", "<cmd>tabnew %<cr>", { desc = "create new tab"})
 
+vim.keymap.set("n", "<c-w>u", "<c-w>p")
+vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
+
 -- it's annoying for search results highlighted all the time, so i press this occasionally
 vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>")
 

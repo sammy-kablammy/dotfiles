@@ -193,24 +193,52 @@ vim.o.signcolumn = "yes" -- i would use "number" but gitsigns signs are too comm
 
 -- interacting with notes
 vim.api.nvim_create_user_command('Deletenote', function()
+    if vim.bo.modified then
+        print("must save note before moving")
+        return
+    end
     vim.cmd("!mv '%' ~/notes/.trash/")
     vim.cmd.bdelete()
 end, {})
 vim.api.nvim_create_user_command('Mainnote', function()
+    if vim.bo.modified then
+        print("must save note before moving")
+        return
+    end
     local file_path = vim.fn.expand("%:t")
     vim.cmd("!mv '%' ~/notes/main/")
     vim.cmd.bdelete()
     vim.cmd.edit("~/notes/main/" .. file_path)
 end, {})
 vim.api.nvim_create_user_command('Inboxnote', function()
+    if vim.bo.modified then
+        print("must save note before moving")
+        return
+    end
     local file_path = vim.fn.expand("%:t")
     vim.cmd("!mv '%' ~/notes/inbox/")
     vim.cmd.bdelete()
     vim.cmd.edit("~/notes/inbox/" .. file_path)
 end, {})
-vim.api.nvim_create_user_command('Tagnotes', function()
+vim.api.nvim_create_user_command('TagNotes', function()
     vim.cmd("!~/notes/maketags.sh")
 end, {})
+vim.api.nvim_create_user_command('NewNote', function()
+    local obj = vim.system({"zk"}, {}):wait()
+    -- there's a trailing newline; remove it
+    local filename = string.sub(obj.stdout, 1, -2)
+    vim.cmd.edit(filename)
+end, {})
+vim.api.nvim_create_user_command('RandomNote', function()
+    local obj = vim.system({"randomnote"}, {}):wait()
+    -- there's a trailing newline; remove it
+    local filename = string.sub(obj.stdout, 1, -2)
+    vim.cmd.edit(filename)
+end, {})
+vim.keymap.set("n", "<leader>nt", "<cmd>TagNotes<cr>")
+vim.keymap.set("n", "<leader>nn", "<cmd>NewNote<cr>")
+vim.keymap.set("n", "<leader>ni", "<cmd>edit ~/notes/main/inbox.md<cr>")
+vim.keymap.set("n", "<leader>nr", "<cmd>RandomNote<cr>")
 
 -- the path isn't set properly for some reason (at least on chromeos),
 -- preventing my shell scripts from being found
@@ -231,6 +259,14 @@ vim.api.nvim_create_user_command('SourceLua', function()
 end, {
     desc = "source selected lua code",
     range = 2, -- nvim needs this to allow this user command to accept a range
+})
+
+-- peak laziness
+vim.api.nvim_create_user_command('Subij', function()
+    vim.cmd("s/i/j/g")
+    vim.cmd.nohlsearch()
+end, {
+    desc = "substitute i for j, used in for-loops",
 })
 
 
