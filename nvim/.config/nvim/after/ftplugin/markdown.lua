@@ -12,30 +12,14 @@ vim.cmd("inoreabbrev <buffer> hr ---")
 
 vim.keymap.set('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link to Alternate file", buffer = true })
 vim.keymap.set('n', '<leader>mc', 'I[<esc>A]<esc>jI(<esc>A)<esc>kJx', { desc = "markdown: Create link", buffer = true })
+vim.keymap.set('n', '<leader>mn', 'o[[<c-r>#]]<esc>^w', { desc = "markdown: link to Alternate file", buffer = true })
 
-
--- -- code block detection (experimental, not working, don't really know why,
--- just gonna use treesitter-textobjects instead i guess)
--- vim.keymap.set("v", "am", function()
---     local linenum = vim.fn.search("```", "cnW")
---     local line = vim.fn.getline(linenum)
---     local codeblock_start_pattern = [[```.\+$]]
---     local codeblock_end_pattern = [[```$]]
---     local is_codeblock_end = string.match(line, codeblock_end_pattern) ~= nil
---     if (is_codeblock_end) then
---         local start_linenum = vim.fn.search(codeblock_start_pattern, "bnW")
---         vim.print(start_linenum, linenum)
---         vim.api.nvim_buf_set_mark(0, "<", start_linenum, 0, {})
---         vim.api.nvim_buf_set_mark(0, ">", linenum, 0, {})
---     else
---         local end_linenum = vim.fn.search(codeblock_end_pattern, "nW")
---         vim.print(linenum, end_linenum)
---         vim.api.nvim_buf_set_mark(0, "<", linenum, 0, {})
---         vim.api.nvim_buf_set_mark(0, ">", end_linenum, 0, {})
---     end
---     vim.cmd.normal("gv")
--- end, { desc = "Markdown code block" })
-
+vim.keymap.set("n", "<enter>", function()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    vim.api.nvim_win_set_cursor(0, { cursor[1], 0 })
+    vim.fn.search([[\d\d\d\d-\d\d-\d\d_\d\d-\d\d-\d\d\.md]], "", "" .. cursor[1])
+    vim.api.nvim_feedkeys("gf", "n", true)
+end, { desc = "markdown: follow note link", buffer = true })
 
 -- 'a' option is cool but it messes up lists and basically everything
 vim.bo.formatoptions = "trqnj"
@@ -158,6 +142,9 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
 -- concluded...
 function Listify()
     vim.cmd("'[,']normal I- ")
+end
+function Unlistify()
+    -- todo use this substitution command: s/\s*- /
 end
 vim.keymap.set("n", "gl", function()
     -- this is ugly but i don't know of a better way
