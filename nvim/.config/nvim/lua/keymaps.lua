@@ -85,11 +85,12 @@ vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)
 vim.keymap.set("n", "j", "gj")
 vim.keymap.set("n", "k", "gk")
 
--- easier navigation between windows (not needed if vim-tmux-navigator present)
-vim.keymap.set("n", "<c-h>", "<c-w>h")
-vim.keymap.set("n", "<c-j>", "<c-w>j")
-vim.keymap.set("n", "<c-k>", "<c-w>k")
-vim.keymap.set("n", "<c-l>", "<c-w>l")
+-- -- easier navigation between windows (not needed if vim-tmux-navigator present)
+-- trying to get rid of these because <c-w> is good enough and i prefer fullscreen over splits these days
+-- vim.keymap.set("n", "<c-h>", "<c-w>h")
+-- vim.keymap.set("n", "<c-j>", "<c-w>j")
+-- vim.keymap.set("n", "<c-k>", "<c-w>k")
+-- vim.keymap.set("n", "<c-l>", "<c-w>l")
 
 -- i like closing buffers as soon as, i'm done with them, this makes it easier
 vim.keymap.set("n", "<bs>", "<cmd>bd<cr>")
@@ -222,6 +223,7 @@ vim.keymap.set("n", "gG", "ggVG", { desc = "select entire buffer" })
 vim.keymap.set("n", "gQ", "gggqG<c-o><c-o>", { desc = "format (gq) entire buffer" })
 vim.keymap.set("n", "<leader>o", vim.cmd.options, { desc = "show vim options" })
 vim.keymap.set("v", "<leader>col", "!column -t<cr>", { desc = "columnize selection" })
+vim.keymap.set("v", "<leader>qmk", "!column -t<cr>gv>gv>", { desc = "columnize selection and shift, for qmk keymaps" })
 vim.keymap.set('n', 'ciq', 'ci"')
 vim.keymap.set("n", "<leader>z", "1z=", { desc = "apply first spelling suggestion" })
 vim.keymap.set("n", "<leader>w", vim.cmd.update, { desc = "write (well, update) file" })
@@ -234,10 +236,10 @@ vim.keymap.set("n", "<leader><leader>m", "<cmd>messages<cr>")
 vim.keymap.set("n", "<leader><leader>p", "<cmd>pwd<cr>")
 vim.keymap.set("n", "gC", "guiw~e", { desc = "capitalize first character of word" })
 
--- experimental ctrl+space mode switching
-vim.keymap.set({ "i", "x", "c" }, "<c-space>", "<esc>")
-
 vim.keymap.set("n", "g=", "g+") -- (redo, alias for g+)
+
+-- 's' in visual mode is redundant (use 'c' instead), use 's' for substitution
+vim.keymap.set("v", "s", ":s")
 
 
 
@@ -293,3 +295,4 @@ vim.keymap.set("n", "g=", "g+") -- (redo, alias for g+)
 -- vim.keymap.set("c", "<c-g>", "<c-c>", { desc = "emacs style prompt quitting" })
 -- use this if you want ctrl-c to be exactly like pressing escape
 -- vim.keymap.set('i', '<C-c>', '<cmd>stopinsert<cr>')
+-- vim.keymap.set({ "i", "x", "c" }, "<c-space>", "<esc>") -- experimental ctrl+space mode switching

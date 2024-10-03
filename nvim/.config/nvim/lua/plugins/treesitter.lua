@@ -2,6 +2,7 @@
 -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 
 vim.keymap.set('n', '<leader>tr', '<cmd>InspectTree<cr>')
+vim.keymap.set('n', '<leader>ti', '<cmd>InspectTree<cr>')
 vim.keymap.set('n', '<leader>te', '<cmd>EditQuery<cr>')
 vim.keymap.set('n', '<leader>ts', '<cmd>InspectTree<cr><cmd>EditQuery<cr><cmd>wincmd =<cr>')
 vim.keymap.set('n', '<leader>th', '<cmd>TSToggle highlight<cr>')
@@ -50,7 +51,7 @@ require("nvim-treesitter.configs").setup({
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = "<leader>ti",
+            -- init_selection = "<leader>ti",
             node_incremental = "<c-h>",
             -- scope_incremental = "",
             node_decremental = "<c-l>",
@@ -88,10 +89,9 @@ require("nvim-treesitter.configs").setup({
                 -- you can optionally set descriptions to the mappings (used in the desc parameter of nvim_buf_set_keymap
                 -- ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
 
-                -- markdown code blocks
-                -- note to self: see
-                -- ~/.local/share/nvim/lazy/nvim-treesitter-textobjects/ and
-                -- find the textobjects.scm files for the correct names
+                -- markdown code blocks. see
+                -- ~/.local/share/nvim/lazy/nvim-treesitter-textobjects/
+                -- and the relevant textobjects.scm file for the correct name
                 ["ic"] = "@block.inner",
                 ["ac"] = "@block.outer",
 

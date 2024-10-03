@@ -6,7 +6,7 @@ vim.bo.shiftwidth = 4
 vim.bo.softtabstop = 4
 vim.b.sam_override_whitespace_settings = true
 
-vim.o.formatprg = "gofmt"
+vim.bo.formatprg = "gofmt"
 
 -- integrate vim's :make command and quickfix list with go
 vim.cmd("compiler go")

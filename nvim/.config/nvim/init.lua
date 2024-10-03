@@ -167,6 +167,7 @@ require("lazy").setup({
             require("simpletodo").setup({})
         end,
     },
+
     {
         "sammy-kablammy/linkma.nvim",
         config = function()
@@ -175,13 +176,17 @@ require("lazy").setup({
                 pattern = { "*.md" },
                 callback = function()
                     vim.api.nvim_buf_create_user_command(0, "LinkmaToc", linkma.toc_loclist, {})
-                    vim.keymap.set("n", "<leader>ml", linkma.follow_link, {
-                        buffer = 0, desc = "linkma: follow link"
-                    })
+                    vim.keymap.set("n", "<enter>", linkma.follow_link, { buffer = 0, desc = "follow link" })
+                    -- link text object support
+                    vim.keymap.set("x", "il", linkma.select_link_text_object, { buffer = 0, desc = "inner link" })
+                    vim.keymap.set("o", "il", ":normal vil<cr>", { buffer = 0, desc = "inner link" })
+                    vim.keymap.set("x", "al", function() linkma.select_link_text_object(true) end, { buffer = 0, desc = "around link" })
+                    vim.keymap.set("o", "al", ":normal val<cr>", { buffer = 0, desc = "around link" })
                 end,
             })
         end,
     },
+
     -- { dir = '~/my_neovim_plugins/showcase.nvim' },
     -- { dir = '~/my_neovim_plugins/simpletodo.nvim' },
     -- { dir = '~/my_neovim_plugins/commentma.nvim' },
@@ -193,6 +198,7 @@ require("vim_settings")
 require("keymaps")
 require("statusline")
 require("abbreviations")
+require("crunner")
 
 -- this really belongs somewhere else
 -- huh?
@@ -211,6 +217,10 @@ vim.api.nvim_create_user_command("Huh", function()
     vim.print(search_query)
     vim.ui.open(ddg .. search_query)
 end, {})
+
+-- for cleaner screen demos, TODO make a user command for toggling this
+-- vim.o.colorcolumn = ""
+-- vim.o.laststatus = 0
 
 -- vim.cmd("packadd termdebug")
 -- vim.keymap.set("n", "<leader>Da", "<cmd>Asm<cr>", { desc = "Debug: Asm" })

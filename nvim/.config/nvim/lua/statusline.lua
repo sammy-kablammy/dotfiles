@@ -46,6 +46,7 @@ end
 vim.o.statusline = [[ %f%< %m%r %{luaeval("StatusLineNoteTitle()")} %=%S %{%luaeval("LspStatusline()")%} (%l,%c) ]]
 
 
+-- TODO include 'fileformat' whenever it's not "unix"
 
 -- TODO make a tabline
 -- vim.o.tabline = ""

@@ -14,6 +14,11 @@ telescope.setup({
             height = 0.95,
             preview_cutoff = 5,
         },
+        mappings = {
+            n = {
+                ["X"] = require("telescope.actions").delete_buffer,
+            },
+        },
     },
     extensions = {
         undo = {
@@ -33,6 +38,7 @@ telescope_map("f", function() builtin.find_files({ hidden = true }) end, "find f
 telescope_map("F", function() builtin.find_files({ hidden = true, cwd = utils.buffer_dir() }) end, "find files relative to current buffer")
 telescope_map("h", builtin.help_tags, "help")
 telescope_map("b", builtin.buffers, "buffers")
+telescope_map("B", function() builtin.live_grep({ grep_open_files = true }) end, "live grep, only open buffers")
 telescope_map("g", builtin.live_grep, "live grep")
 telescope_map("G", function() builtin.live_grep({ cwd = utils.buffer_dir() }) end, "live grep relative to current buffer")
 telescope_map("o", builtin.oldfiles, "old files")
@@ -48,6 +54,7 @@ telescope_map("i", builtin.vim_options, "vim options")
 telescope_map("t", builtin.builtin, "telescope builtin")
 telescope_map("r", builtin.resume, "telescope resume")
 telescope_map("v", function() builtin.find_files({ hidden = true, cwd = "$HOME/.config/nvim/" }) end, "vim config files")
+telescope_map("V", function() builtin.live_grep({ cwd = "~/.config/nvim/" }) end, "live grep relative to dotfiles")
 telescope_map("]", builtin.tags, "telescope tags")
 
 local function find_notes()
@@ -63,6 +70,11 @@ telescope_map("n", find_notes, "my notes, general")
 telescope_map("N", function()
     builtin.tags({ cwd = "~/notes", ctags_file = "~/notes/tags" })
 end, "my notes, tags only")
+telescope_map("z", function()
+    local link = vim.api.nvim_buf_get_name(0)
+    local basename = vim.fs.basename(link)
+    builtin.grep_string({ search = basename })
+end, "my notes, backlinks search")
 
 require("telescope").load_extension("undo")
 vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>")

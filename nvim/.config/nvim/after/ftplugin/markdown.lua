@@ -14,13 +14,6 @@ vim.keymap.set('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link 
 vim.keymap.set('n', '<leader>mc', 'I[<esc>A]<esc>jI(<esc>A)<esc>kJx', { desc = "markdown: Create link", buffer = true })
 vim.keymap.set('n', '<leader>mn', 'o[[<c-r>#]]<esc>^w', { desc = "markdown: link to Alternate file", buffer = true })
 
-vim.keymap.set("n", "<enter>", function()
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    vim.api.nvim_win_set_cursor(0, { cursor[1], 0 })
-    vim.fn.search([[\d\d\d\d-\d\d-\d\d_\d\d-\d\d-\d\d\.md]], "", "" .. cursor[1])
-    vim.api.nvim_feedkeys("gf", "n", true)
-end, { desc = "markdown: follow note link", buffer = true })
-
 -- 'a' option is cool but it messes up lists and basically everything
 vim.bo.formatoptions = "trqnj"
 vim.b.sam_override_formatoptions = true
@@ -35,6 +28,8 @@ vim.b.sam_override_formatoptions = true
 -- vim.opt.com:append("b:-")
 -- vim.opt.com:append("b:1.")
 ----------
+
+
 
 -- TODO split this into its own plugin
 -- TODO if when gO is pressed, the current buffer type is quickfix, bypass the
@@ -95,18 +90,20 @@ function UpdateNoteTitles()
         -- lua doesn't have a 'continue' keyword. kill me.
         if start_idx then
             local fd = io.open(filename, "r")
+            local title
             if fd == nil then
-                print("ruh roh, note '" .. filename .. "' not found")
-                return
+                -- print("ruh roh, note '" .. filename .. "' not found")
+                title = "UNKNOWN NOTE :("
+            else
+                local full_title = fd:read("*l")
+                fd:close()
+                title = string.sub(full_title, 3) -- (remove "# ")
             end
-            local title = fd:read("*l")
-            local shortened_title = string.sub(title, 3) -- (remove "# ")
-            fd:close()
             local ns_id = vim.api.nvim_create_namespace("markdown_link_note_title")
             vim.api.nvim_buf_set_extmark(0, ns_id, linenum - 1, start_idx, {
                 virt_text = {
                     {
-                        shortened_title,
+                        title,
                         "TabLineSel",
                     },
                 },
