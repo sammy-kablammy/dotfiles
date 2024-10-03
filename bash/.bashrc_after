@@ -6,6 +6,8 @@
 # todo: make a function analogous to the builtin 'help' that explains some of my
 # more common aliases/functions/scripts. add color tho. color pretty
 
+# you can run "exec bash" to reload this file (easier than "source ~/.bashrc")
+
 ################################################################################
 
 # note: nodejs on *some* package managers (apt, i'm looking at you) may be
@@ -34,8 +36,20 @@ alias 'vimless'='/usr/local/share/nvim/runtime/macros/less.sh --clean'
 alias 'vl'='vimless'
 alias 'py'='python3'
 alias 'bt'='bluetoothctl'
+alias 'xc'='xclip -selection clipboard -rmlastnl'
+alias 'wat'='watch -ctn 0.2'
 
-alias 'c'='cd ..'
+# cd to multiple places at once; easier up-a-dir
+c () {
+    if [ $# -eq 0 ]; then
+        cd ".."
+    elif [ $# -eq 1 ]; then
+        cd "$1"
+    else
+        tmux split -c "$2"
+        cd "$1"
+    fi
+}
 alias 'cc'='cd ../..'
 alias 'ccc'='cd ../../..'
 alias 'cccc'='cd ../../../..'
@@ -48,11 +62,13 @@ if type "batcat" &> /dev/null; then
     alias 'bat'='batcat'
 fi
 
+# don't overwrite files with the > redirect operator (use >| to forcefully redirect)
+set -o noclobber
+
 # quickly simulate WSL with `tmux new-window -e WSL_DISTRO_NAME=Ubuntu`
 if [ ! -z $WSL_DISTRO_NAME ]; then
     alias 'x'='explorer.exe'
-    # on WSL, you should download the wslu package to get `wslview`, which is
-    # similar to xdg-open
+    # on WSL, you should download the wslu package to get `wslview`, which is similar to xdg-open
 else
     alias 'x'='xdg-open'
 fi
@@ -116,13 +132,17 @@ ksearch () {
     xdg-open "https://www.kernel.org/doc/html/latest/search.html?q=$1"
 }
 
+markthis() {
+    echo -e "\e[34m@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\e[0m"
+    echo -e "\e[32m@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\e[0m"
+}
+
 # open tmux on startup!!! we love tmux!!!
 if [ -z "$TMUX" ]; then
     tmux new-session
 else
     tmux set status off
 fi
-
 
 # check the "shopt" command section in bash(1) for more fun stuff
 # typing a directory name will cd you into it
@@ -194,10 +214,11 @@ bind '"\C-xb": "``\C-b"'
 bind '"\C-x\C-b": "\C-xb"'
 bind '"\C-xh": "--help"'
 bind '"\C-x\C-h": "\C-xh"'
+bind '"\C-xf": "\"$(fzf)\""'
+bind '"\C-x\C-f": "\C-xf"'
+bind '"\C-x?": "man bash | less -p \"Commands for Moving\"\n"' # (open keybind reference)
 
-# WSL might not define the XDG family of environment variables for you. also
-# link to the standard in your notes, if you haven't already:
-# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+# WSL might not define the XDG family of environment variables for you
 if [ -z XDG_CONFIG_HOME ]; then
     export XDG_CONFIG_HOME=$HOME/.config/
 fi
@@ -242,6 +263,10 @@ f () {
     fi
 }
 alias F='f ~'
+alias C='f ..'
+alias CC='f ../..'
+alias CCC='f ../../..'
+alias CCCC='f ../../../..'
 
 
 
@@ -262,7 +287,7 @@ alias F='f ~'
 # pandoc
 # pdftotext (for pdf viewing with 'less')
 # some latex stuff?
-# java
+# java (specifically, apt package openjdk-17-jdk)
 # w3m
 # and some more that i'm forgetting
 
