@@ -155,3 +155,6 @@ end)
 vim.api.nvim_create_user_command("LoremIpsum", function()
     vim.cmd.norm("i Lorem ipsum odor amet, consectetuer adipiscing elit. Sociosqu imperdiet volutpat dapibus sed varius quisque duis. Maximus sociosqu mollis convallis himenaeos in. Facilisi eleifend dapibus semper volutpat adipiscing. Luctus nisl lobortis hac molestie mi nam. Gravida pulvinar penatibus cursus, suscipit etiam tincidunt eleifend nunc sed. Augue placerat vulputate sollicitudin malesuada facilisi rhoncus. Dignissim inceptos ullamcorper, bibendum porttitor tristique id suspendisse! Sed taciti adipiscing curabitur nec fringilla tempus.")
 end, {})
+
+-- TODO use vim.spell.check() to do spell checking across entire file, buffer
+-- list, or current directory. print fancy results and/or use quickfix list

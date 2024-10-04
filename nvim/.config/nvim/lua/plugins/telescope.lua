@@ -20,14 +20,14 @@ telescope.setup({
             },
         },
     },
-    extensions = {
-        undo = {
-            side_by_side = true,
-            layout_config = {
-                preview_width = 0.7,
-            },
-        },
-    },
+    -- extensions = {
+    --     undo = {
+    --         side_by_side = true,
+    --         layout_config = {
+    --             preview_width = 0.7,
+    --         },
+    --     },
+    -- },
 })
 
 local function telescope_map(lhs, rhs, desc)
@@ -76,5 +76,5 @@ telescope_map("z", function()
     builtin.grep_string({ search = basename })
 end, "my notes, backlinks search")
 
-require("telescope").load_extension("undo")
-vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>")
+-- require("telescope").load_extension("undo")
+-- vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>")

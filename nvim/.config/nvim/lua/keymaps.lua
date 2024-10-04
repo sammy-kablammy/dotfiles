@@ -30,8 +30,8 @@ vim.keymap.set("n", "<c-q>", "<nop>")
 vim.keymap.set("n", "U", "<nop>")
 vim.keymap.set("n", "gs", "<nop>")
 vim.keymap.set("n", "gQ", "<nop>")
-vim.keymap.set("n", "zg", "<nop>")
-vim.keymap.set("n", "zw", "<nop>")
+-- vim.keymap.set("n", "zg", "<nop>")
+-- vim.keymap.set("n", "zw", "<nop>")
 vim.keymap.set("n", "<C-'>", '<nop>') -- i don't even know what this is but it conflicts with my qmk combos
 
 -- insert mode "leader key" style bindings. snippets for dummies. note that the
