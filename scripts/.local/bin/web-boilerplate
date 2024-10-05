@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [ -f index.html -o -f index.css -o -f index.js ]; then
+    echo "uhh... files already exist, you probably don't want to overwrite them"
+    exit 1;
+fi
+
+cat >index.html <<EOL
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>template</title>
+        <link href="index.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>template</h1>
+    <script src="index.js"></script>
+    </body>
+</html>
+EOL
+
+cat >index.js <<EOL
+console.log("hi")
+EOL
+
+cat >index.css <<EOL
+body {
+    background-color: grey;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+EOL
