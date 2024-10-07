@@ -20,14 +20,6 @@ telescope.setup({
             },
         },
     },
-    -- extensions = {
-    --     undo = {
-    --         side_by_side = true,
-    --         layout_config = {
-    --             preview_width = 0.7,
-    --         },
-    --     },
-    -- },
 })
 
 local function telescope_map(lhs, rhs, desc)

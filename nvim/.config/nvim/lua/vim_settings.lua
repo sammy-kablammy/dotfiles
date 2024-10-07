@@ -133,7 +133,6 @@ vim.o.dictionary = "/usr/share/dict/american-english"
 ---------------------------"local to buffer" settings---------------------------
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
     callback = function()
-
         -- 'textwidth' is hard wrap. it inserts newlines into the buffer after a
         -- certain number of characters. this applies to comments if 'c' is a
         -- formatoption; it applies to normal text if 't' is.
@@ -157,7 +156,6 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
         vim.o.swapfile = true
         vim.o.undofile = true
-
     end,
 })
 
@@ -191,14 +189,12 @@ vim.o.sidescrolloff = 3
 vim.o.signcolumn = "yes" -- i would use "number" but gitsigns signs are too common
 
 
--- interacting with notes
-vim.api.nvim_create_user_command('Deletenote', function()
-    if vim.bo.modified then
-        print("must save note before moving")
-        return
-    end
-    vim.cmd("!mv '%' ~/notes/.trash/")
-    vim.cmd.bdelete()
+-----------------------------interacting with notes-----------------------------
+vim.api.nvim_create_user_command('NewNote', function()
+    local obj = vim.system({"newnote"}, {}):wait()
+    -- there's a trailing newline; remove it
+    local filename = string.sub(obj.stdout, 1, -2)
+    vim.cmd.edit(filename)
 end, {})
 vim.api.nvim_create_user_command('Mainnote', function()
     if vim.bo.modified then
@@ -220,14 +216,16 @@ vim.api.nvim_create_user_command('Inboxnote', function()
     vim.cmd.bdelete()
     vim.cmd.edit("~/notes/inbox/" .. file_path)
 end, {})
+vim.api.nvim_create_user_command('Deletenote', function()
+    if vim.bo.modified then
+        print("must save note before moving")
+        return
+    end
+    vim.cmd("!mv '%' ~/notes/.trash/")
+    vim.cmd.bdelete()
+end, {})
 vim.api.nvim_create_user_command('TagNotes', function()
     vim.cmd("!~/notes/maketags.sh")
-end, {})
-vim.api.nvim_create_user_command('NewNote', function()
-    local obj = vim.system({"zk"}, {}):wait()
-    -- there's a trailing newline; remove it
-    local filename = string.sub(obj.stdout, 1, -2)
-    vim.cmd.edit(filename)
 end, {})
 vim.api.nvim_create_user_command('RandomNote', function()
     local obj = vim.system({"randomnote"}, {}):wait()
@@ -260,23 +258,6 @@ end, {
     desc = "source selected lua code",
     range = 2, -- nvim needs this to allow this user command to accept a range
 })
-
--- peak laziness
-vim.api.nvim_create_user_command('Subij', function()
-    vim.cmd("s/i/j/g")
-    vim.cmd.nohlsearch()
-end, {
-    desc = "substitute i for j, used in for-loops",
-})
-
--- textobject for the whole buffer
-vim.keymap.set("x", "gG", function()
-    local num_lines_in_buf = #vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    vim.api.nvim_buf_set_mark(0, "<", 1, 0, {})
-    vim.api.nvim_buf_set_mark(0, ">", num_lines_in_buf, 999999, {})
-    vim.api.nvim_feedkeys("gv", "n", true)
-end)
-vim.keymap.set("o", "gG", ":normal vgG<cr>")
 
 
 

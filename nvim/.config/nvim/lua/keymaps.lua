@@ -30,8 +30,8 @@ vim.keymap.set("n", "<c-q>", "<nop>")
 vim.keymap.set("n", "U", "<nop>")
 vim.keymap.set("n", "gs", "<nop>")
 vim.keymap.set("n", "gQ", "<nop>")
--- vim.keymap.set("n", "zg", "<nop>")
--- vim.keymap.set("n", "zw", "<nop>")
+vim.keymap.set("n", "zg", "<nop>")
+vim.keymap.set("n", "zw", "<nop>")
 vim.keymap.set("n", "<C-'>", '<nop>') -- i don't even know what this is but it conflicts with my qmk combos
 
 -- insert mode "leader key" style bindings. snippets for dummies. note that the
@@ -56,17 +56,11 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 vim.keymap.set("c", "<c-x>t", "~")
 -- TODO read :h cmdline-char and define bindings that are exclusive to regular
 -- command mode
-vim.keymap.set("c", "<C-o>", "lua=vim.api.nvim_")
+vim.keymap.set("c", "<c-o>", "lua=vim.api.nvim_")
 -- searchy command mode
-vim.keymap.set("c", "<C-x>k", [[\(.*\)]])
-vim.keymap.set("c", "<C-x>n", [[\d\+]])
+vim.keymap.set("c", "<c-x>k", [[\(.*\)]])
+vim.keymap.set("c", "<c-x>n", [[\d\+]])
 vim.keymap.set("c", "<c-x>w", [[\<\><left><left>]])
-
--- escape terminal mode (because the default mapping is weird)
-vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
-
--- default <space>A applies the A to the next line, i find this more intuitive
-vim.keymap.set("n", "<leader>A", "A")
 
 -- (recall that the + register is the windows/macos clipboard, while the * reg is
 -- the X11 middle click thing. i only ever use + and never use *)
@@ -79,24 +73,9 @@ vim.keymap.set({ "n", "v", }, "gY", "\"+Y")
 vim.keymap.set({ "n", "v", }, "gp", "\"+p")
 vim.keymap.set({ "n", "v", }, "gP", "\"+P")
 
-vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)
-
 -- movement should work how you expect even if a line is wrapped
 vim.keymap.set("n", "j", "gj")
 vim.keymap.set("n", "k", "gk")
-
--- -- easier navigation between windows (not needed if vim-tmux-navigator present)
--- trying to get rid of these because <c-w> is good enough and i prefer fullscreen over splits these days
--- vim.keymap.set("n", "<c-h>", "<c-w>h")
--- vim.keymap.set("n", "<c-j>", "<c-w>j")
--- vim.keymap.set("n", "<c-k>", "<c-w>k")
--- vim.keymap.set("n", "<c-l>", "<c-w>l")
-
--- i like closing buffers as soon as, i'm done with them, this makes it easier
-vim.keymap.set("n", "<bs>", "<cmd>bd<cr>")
-
--- turn previous file into split, handy for comparisons
-vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>")
 
 -- scroll up and down without getting disoriented
 vim.keymap.set("n", "<c-f>", "<c-f>zz")
@@ -114,14 +93,11 @@ vim.keymap.set("n", "<s-down>", "<c-d>zz")
 vim.keymap.set({ "n", "v" }, "n", "/<c-r>/<cr>zz")
 vim.keymap.set({ "n", "v" }, "N", "?<c-r>/<cr>zz")
 
--- alternate file (this also fixes the c-^ vs c-6 discrepancy between terminals)
-vim.keymap.set("n", "<leader>a", "<cmd>b#<cr>", { desc = "alternate file" })
-
 -- slide text left and right whhheeeeeeeeeeeee!!! nrrooooooooom!!!
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
--- recall that @: executes the : register, which contains the previous command
+-- (recall that @: executes the : register, which contains the previous command)
 vim.keymap.set({ "n", "v" }, "<leader>.", "<cmd>@:<cr>", { desc = "execute previous command" })
 
 -- change settings
@@ -131,17 +107,10 @@ vim.keymap.set("n", "<leader>sn", "<cmd>set number!<cr>")
 vim.keymap.set("n", "<leader>sr", "<cmd>set relativenumber!<cr>")
 vim.keymap.set("n", "<leader>sw", "<cmd>set wrap!<cr>")
 vim.keymap.set("n", "<leader>ss", "<cmd>set spell!<cr>")
-vim.keymap.set("n", "<leader>st", function()
-    vim.o.laststatus = 2 - vim.o.laststatus
-end, { desc = "set laststatus to whatever" })
-vim.keymap.set("n", "<leader>sc", function()
-    vim.o.cmdheight = 1 - vim.o.cmdheight
-end, { desc = "set cmdheight to whatever" })
-vim.keymap.set("n", "<leader>sf", function()
-    -- note that this errors if foldcolumn is not 0 or 1, which is totally
-    -- possible. this type of error might appear all throughout my dotfiles TODO
-    vim.o.foldcolumn = "" .. 1 - vim.o.foldcolumn
-end, { desc = "set foldcolumn to whatever" })
+vim.keymap.set("n", "<leader>st", function() vim.o.laststatus = 2 - vim.o.laststatus end, { desc = "toggle statusline" })
+vim.keymap.set("n", "<leader>sc", function() vim.o.cmdheight = 1 - vim.o.cmdheight end, { desc = "set cmdheight to whatever" })
+vim.keymap.set("n", "<leader>sf", function() vim.o.foldcolumn = "" .. 1 - vim.o.foldcolumn end, { desc = "toggle foldcolumn" })
+vim.keymap.set('n', '<leader>so', function() vim.o.conceallevel = 3 - vim.o.conceallevel end, { desc = "toggle conceallevel" })
 vim.keymap.set("n", "<leader>sx", function()
     if vim.o.textwidth == 80 then
       vim.o.textwidth = 100
@@ -149,9 +118,6 @@ vim.keymap.set("n", "<leader>sx", function()
       vim.o.textwidth = 80
     end
 end, { desc = "set textwidth to whatever" })
-vim.keymap.set('n', '<leader>so', function()
-    vim.o.conceallevel = 3 - vim.o.conceallevel
-end, { desc = "toggle conceallevel" })
 
 -- square bracket fun time [ [ [ ] ] ]
 vim.keymap.set("n", "[b", vim.cmd.bprevious, { desc = "prev buffer" })
@@ -164,31 +130,21 @@ vim.keymap.set("n", "[t", "gT", { desc = "prev tab" })
 vim.keymap.set("n", "]t", "gt", { desc = "next tab" })
 vim.keymap.set("n", "[T", function() vim.cmd.tabmove("-1") end, { desc = "move tab left" })
 vim.keymap.set("n", "]T", function() vim.cmd.tabmove("+1") end, { desc = "move tab right" })
--- vim.keymap.set("n", "[g", vim.cmd.tprev, { desc = "prev tag" })
--- vim.keymap.set("n", "]g", vim.cmd.tnext, { desc = "next tag" })
 
-vim.keymap.set("n", "<leader>gh", function()
-    vim.cmd("cd %:h")
-end, { desc = "go here - change cwd to match current buffer" })
-
+-- it's annoying for search results highlighted all the time, so i press this occasionally
+vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>")
 -- display current buffer in new tab. unlike <c-w>T because it keeps the old
 -- window where it was
 vim.keymap.set("n", "<c-w>t", "<cmd>tabnew %<cr>", { desc = "create new tab"})
 
-vim.keymap.set("n", "<c-w>u", "<c-w>p")
-vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
-
--- it's annoying for search results highlighted all the time, so i press this occasionally
-vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>")
-
+-- open fileTYpe plugin
 vim.keymap.set("n", "<leader>ty", function()
     local ftplugin_path = "~/.config/nvim/after/ftplugin/" .. vim.bo.filetype .. ".lua"
     -- i would rather :edit the file but it messes up whitespace settings (sw,
     -- ts, sts) when you do that so instead i'm gonna :vsplit
     vim.cmd.vsplit(ftplugin_path)
-end, { desc = "open FiletYpe plugin"})
-
--- filetype specific docs
+end, { desc = "open fileTYpe plugin"})
+-- open filetype specific docs
 vim.keymap.set("n", "gX", function()
     local url = vim.b.sam_documentation_url
     if url then
@@ -218,7 +174,10 @@ vim.keymap.set("n", "^", "0^")
 -- my own lil' cheatsheet
 vim.keymap.set("n", "<leader>?", "<cmd>vsplit ~/notes/main/vim_reminders.md<cr>")
 
--- misc mappings
+-- alternate file (this also fixes the c-^ vs c-6 discrepancy between terminals)
+vim.keymap.set("n", "<leader>a", "<cmd>b#<cr>", { desc = "alternate file" })
+
+-- misc one-off mappings
 vim.keymap.set("n", "gG", "ggVG", { desc = "select entire buffer" })
 vim.keymap.set("n", "gQ", "gggqG<c-o><c-o>", { desc = "format (gq) entire buffer" })
 vim.keymap.set("n", "<leader>o", vim.cmd.options, { desc = "show vim options" })
@@ -232,14 +191,18 @@ vim.keymap.set("n", "<leader><leader>s", function()
     print("sourced! hooray!")
     vim.cmd.source()
 end, { desc = "source" })
+vim.keymap.set("n", "<leader>gh", function() vim.cmd("cd %:h") end, { desc = "go here - change cwd to match current buffer" })
 vim.keymap.set("n", "<leader><leader>m", "<cmd>messages<cr>")
 vim.keymap.set("n", "<leader><leader>p", "<cmd>pwd<cr>")
 vim.keymap.set("n", "gC", "guiw~e", { desc = "capitalize first character of word" })
-
 vim.keymap.set("n", "g=", "g+") -- (redo, alias for g+)
-
--- 's' in visual mode is redundant (use 'c' instead), use 's' for substitution
-vim.keymap.set("v", "s", ":s")
+vim.keymap.set("n", "<c-w>u", "<c-w>p")
+vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
+vim.keymap.set("v", "s", ":s") -- default 's' in visual mode is redundant (use 'c' instead)
+vim.keymap.set("n", "<bs>", "<cmd>bd<cr>", { desc = "delete buffer" })
+vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>", { desc = "vsplit previous buffer" })
+vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)
+vim.keymap.set("t", "<esc>", [[<C-\><C-n>]]) -- escape terminal mode (because the default mapping is weird)
 
 
 
@@ -296,3 +259,11 @@ vim.keymap.set("v", "s", ":s")
 -- use this if you want ctrl-c to be exactly like pressing escape
 -- vim.keymap.set('i', '<C-c>', '<cmd>stopinsert<cr>')
 -- vim.keymap.set({ "i", "x", "c" }, "<c-space>", "<esc>") -- experimental ctrl+space mode switching
+-- default <space>A applies the A to the next line, i find this more intuitive
+-- vim.keymap.set("n", "<leader>A", "A")
+-- -- easier navigation between windows (not needed if vim-tmux-navigator present)
+-- trying to get rid of these because <c-w> is good enough and i prefer fullscreen over splits these days
+-- vim.keymap.set("n", "<c-h>", "<c-w>h")
+-- vim.keymap.set("n", "<c-j>", "<c-w>j")
+-- vim.keymap.set("n", "<c-k>", "<c-w>k")
+-- vim.keymap.set("n", "<c-l>", "<c-w>l")

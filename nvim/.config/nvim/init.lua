@@ -1,11 +1,3 @@
-function GetCurrentLine()
-    local current_cursor_row_number, current_cursor_col_number = unpack(vim.api.nvim_win_get_cursor(0))
-    -- oh my god WHY ARE COLUMNS ZERO BASED WHEN LINE NUMBERS ARE 1 BASED (i am
-    -- going to attack somebody)
-    local current_line = vim.api.nvim_buf_get_lines(0, current_cursor_row_number - 1, current_cursor_row_number, false)
-    return current_line[1] -- ew. [1].
-end
-
 math.randomseed(os.time())
 local function print_random_startup_message()
     local messages = {
@@ -145,14 +137,6 @@ require("lazy").setup({
             "nvim-lua/plenary.nvim",
         },
     },
-    -- yeah i just don't use this
-    -- {
-    --     "debugloop/telescope-undo.nvim",
-    --     dependencies = {
-    --         "nvim-telescope/telescope.nvim",
-    --         "nvim-lua/plenary.nvim",
-    --     },
-    -- },
     "ThePrimeagen/vim-be-good",
     {
         "echasnovski/mini.nvim",
@@ -160,15 +144,14 @@ require("lazy").setup({
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
 
-    -- my custom plugins
-    "sammy-kablammy/nvim_plugin_template",
+    -- my plugins!!! hooray!!!
+    -- "sammy-kablammy/nvim_plugin_template",
     {
         "sammy-kablammy/simpletodo.nvim",
         init = function()
             require("simpletodo").setup({})
         end,
     },
-
     {
         "sammy-kablammy/linkma.nvim",
         config = function()
@@ -187,37 +170,16 @@ require("lazy").setup({
             })
         end,
     },
-
-    -- { dir = '~/my_neovim_plugins/showcase.nvim' },
-    -- { dir = '~/my_neovim_plugins/simpletodo.nvim' },
-    -- { dir = '~/my_neovim_plugins/commentma.nvim' },
 })
 
--- ...and these are my config files :)
 require("plugins")
 require("vim_settings")
 require("keymaps")
 require("statusline")
 require("abbreviations")
 require("crunner")
-
--- this really belongs somewhere else
--- huh?
--- inspired by wtf.nvim (https://github.com/piersolenski/wtf.nvim)
-vim.api.nvim_create_user_command("Huh", function()
-    local diag = vim.diagnostic.get_next()
-    if not diag then
-        print("no diagnostics to search")
-        return
-    end
-    -- there may be some URL characters that aren't escaped properly
-    local formatted_msg = vim.fn.substitute(diag.message, " ", "%20", "g")
-    formatted_msg = vim.fn.substitute(formatted_msg, ";", "%3b", "g")
-    local ddg = [[https://duckduckgo.com/?t=lm&q=]]
-    local search_query = ddg .. vim.bo.filetype .. "%20" .. formatted_msg
-    vim.print(search_query)
-    vim.ui.open(ddg .. search_query)
-end, {})
+require("text_objects")
+require("user_commands")
 
 -- for cleaner screen demos, TODO make a user command for toggling this
 -- vim.o.colorcolumn = ""
