@@ -38,6 +38,7 @@ alias 'py'='python3'
 alias 'bt'='bluetoothctl'
 alias 'xc'='xclip -selection clipboard -rmlastnl'
 alias 'wat'='watch -ctn 0.2'
+alias 'gr'='grep -i'
 
 # cd to multiple places at once; easier up-a-dir
 c () {

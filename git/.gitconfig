@@ -26,6 +26,8 @@
     verbose = true
 [url "https://github.com/"]
     insteadOf = gh:
+[advice]
+    ; detachedHead = false
 [alias]
     alias = "!f() { git config --list | grep 'alias'; }; f"
     b = "branch -vv"
@@ -37,10 +39,11 @@
     fq = "fetch --quiet"
     fs = "!f() { git fetch && git status --short --branch; }; f"
     fst = "!f() { git fetch && git status; }; f"
-    l = "log --all --graph --decorate --oneline -10"
+    l = "log --all --graph --decorate --oneline -7"
     ls = "ls-files"
     mt = "mergetool"
     ref = "reflog --date=short"
+    rl = "reflog"
     s = "status --short --branch"
     sh = "show -5 --pretty=oneline"
     st = "status"
