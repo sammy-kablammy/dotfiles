@@ -215,6 +215,8 @@ bind '"\C-xb": "``\C-b"'
 bind '"\C-x\C-b": "\C-xb"'
 bind '"\C-xh": "--help"'
 bind '"\C-x\C-h": "\C-xh"'
+bind '"\C-xv": "--version"'
+bind '"\C-x\C-v": "\C-xv"'
 bind '"\C-xf": "\"$(fzf)\""'
 bind '"\C-x\C-f": "\C-xf"'
 bind '"\C-x?": "man bash | less -p \"Commands for Moving\"\n"' # (open keybind reference)

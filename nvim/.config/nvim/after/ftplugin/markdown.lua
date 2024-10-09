@@ -8,7 +8,7 @@ vim.cmd("inoreabbrev <buffer> hr ---")
 
 -- hide backticks, asterisks, and probably some others (this depends on treesitter)
 -- vim.o.conceallevel = 2
--- vim.o.conceallevel = 3
+vim.o.conceallevel = 3
 
 vim.keymap.set('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link to Alternate file", buffer = true })
 vim.keymap.set('n', '<leader>mc', 'I[<esc>A]<esc>jI(<esc>A)<esc>kJx', { desc = "markdown: Create link", buffer = true })

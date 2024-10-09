@@ -1,1 +1,19 @@
-windowizer
+#!/bin/bash
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$({
+        find ~ -mindepth 0 -maxdepth 3 -type d \
+            -not -path "*/.*" \
+            -not -path "$HOME/dotfiles/*" \
+            -not -path "$HOME/qmk_firmware/*"
+        find ~/dotfiles -mindepth 3 -type d -not -path "*/.git/*"
+    } | fzf)
+fi
+
+if [ -z $selected ]; then
+    exit 1
+fi
+
+tmux new-window -c "$selected"

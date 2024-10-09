@@ -9,4 +9,4 @@ vim.keymap.set(
 
 InsertMap("p", "printf(\"\\n\");<left><left><left><left><left>")
 InsertMap("f", "for (i = 0; i < len; i++) {\n}<esc>O")
-InsertMap("m", "int main(void) {<cr>}<esc>O")
+InsertMap("m", "int main(int argc, char **argv) {<cr>return 0;<cr>}<esc>kO")
