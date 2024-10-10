@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# (OLD, use notesearch instead)
+
 # some notes
 # get title of a note:
 # head --lines=1 --quiet 1 some_long_note_name.md

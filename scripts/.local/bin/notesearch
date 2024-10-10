@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# new note searching program, supports tags this time :)
+# this one doesn't use fzf. it opens every match and relies on telescope search
+
+cd /home/sam/notes
+
+if [ $# -eq 0 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    echo "Search and edit notes by content"
+    echo ""
+    echo "Options:"
+    echo "  -t tagname        Restrict search to notes containing tagname"
+    exit 1
+fi
+
+if [ "$1" = "-t" ]; then
+    tag="$2"
+    shift 2
+    query=$(echo "$@" | sed 's/ /[[:space:]]/g')
+    matches=$(grep -il "^#$tag$" main/20*.md | xargs grep -il "$query")
+else
+    query=$(echo "$@" | sed 's/ /[[:space:]]/g')
+    matches=$(grep -il "$query" main/20*.md)
+fi
+
+echo "$matches" | xargs nvim

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ls ~/notes/main | sort -R | head -1 | sed 's/^/~\/notes\/main\//'
