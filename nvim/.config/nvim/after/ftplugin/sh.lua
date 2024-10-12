@@ -5,3 +5,6 @@ InsertMap("w", "while ; do<cr>done<esc>k$3hi")
 -- not yet sure which mnemonic to choose for "shebang"
 InsertMap("s", "#!/bin/bash")
 InsertMap("h", "#!/bin/bash")
+
+vim.bo.makeprg = "shellcheck -f gcc %"
+vim.keymap.set("n", "<leader><enter>", vim.cmd.make, { buffer = true })

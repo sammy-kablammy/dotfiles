@@ -28,6 +28,8 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
 
+vim.o.termguicolors = true
+
 -- note: you can do config = true and lazy will do default plugin setup
 
 require("lazy").setup({
@@ -142,6 +144,12 @@ require("lazy").setup({
         "echasnovski/mini.nvim",
         version = "*",
         dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
+    {
+        "norcalli/nvim-colorizer.lua",
+        init = function()
+            require("colorizer").setup()
+        end,
     },
 
     -- my plugins!!! hooray!!!

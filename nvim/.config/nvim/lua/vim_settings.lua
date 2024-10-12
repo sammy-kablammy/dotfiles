@@ -191,7 +191,7 @@ vim.o.signcolumn = "yes" -- i would use "number" but gitsigns signs are too comm
 
 -----------------------------interacting with notes-----------------------------
 vim.api.nvim_create_user_command('NewNote', function()
-    local obj = vim.system({"newnote"}, {}):wait()
+    local obj = vim.system({"notenew"}, {}):wait()
     -- there's a trailing newline; remove it
     local filename = string.sub(obj.stdout, 1, -2)
     vim.cmd.edit(filename)
@@ -228,7 +228,7 @@ vim.api.nvim_create_user_command('TagNotes', function()
     vim.cmd("!~/notes/maketags.sh")
 end, {})
 vim.api.nvim_create_user_command('RandomNote', function()
-    local obj = vim.system({"randomnote"}, {}):wait()
+    local obj = vim.system({"noterandom"}, {}):wait()
     -- there's a trailing newline; remove it
     local filename = string.sub(obj.stdout, 1, -2)
     vim.cmd.edit(filename)
