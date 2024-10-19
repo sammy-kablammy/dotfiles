@@ -194,7 +194,15 @@ vim.api.nvim_create_user_command('NewNote', function()
     local obj = vim.system({"notenew"}, {}):wait()
     -- there's a trailing newline; remove it
     local filename = string.sub(obj.stdout, 1, -2)
-    vim.cmd.edit(filename)
+    -- editing the file based on the full path is annoying because it messes up
+    -- links, but it's fine if you're just doing a quick note. (this annoyance
+    -- resets once reopening nvim, so the fix only matters for longer sessions)
+    if vim.fn.getcwd() == "/home/sam/notes" then
+        local basename = vim.fs.basename(filename)
+        vim.cmd.edit("main/" .. basename)
+    else
+        vim.cmd.edit(filename)
+    end
 end, {})
 vim.api.nvim_create_user_command('Mainnote', function()
     if vim.bo.modified then
@@ -217,6 +225,13 @@ vim.api.nvim_create_user_command('Inboxnote', function()
     vim.cmd.edit("~/notes/inbox/" .. file_path)
 end, {})
 vim.api.nvim_create_user_command('Deletenote', function()
+    local link = vim.api.nvim_buf_get_name(0)
+    local basename = vim.fs.basename(link)
+    vim.cmd("silent grep " .. basename)
+    if #vim.fn.getqflist() ~= 0 then
+        print("can't delete this note, it has backlinks!")
+        return
+    end
     if vim.bo.modified then
         print("must save note before moving")
         return
@@ -228,7 +243,7 @@ vim.api.nvim_create_user_command('TagNotes', function()
     vim.cmd("!~/notes/maketags.sh")
 end, {})
 vim.api.nvim_create_user_command('RandomNote', function()
-    local obj = vim.system({"noterandom"}, {}):wait()
+    local obj = vim.system({ "noterandom" }, {}):wait()
     -- there's a trailing newline; remove it
     local filename = string.sub(obj.stdout, 1, -2)
     vim.cmd.edit(filename)
@@ -257,6 +272,16 @@ vim.api.nvim_create_user_command('SourceLua', function()
 end, {
     desc = "source selected lua code",
     range = 2, -- nvim needs this to allow this user command to accept a range
+})
+
+-- i like to :bd my buffers but sometimes i want to reopen them. the default
+-- behavior is for buffers deleted in this way to stay 'unlisted' forever. i
+-- think if i reopen a buffer, it should re-list itself. this might affect help
+-- pages, idk though
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function()
+        -- vim.bo.buflisted = true
+    end,
 })
 
 

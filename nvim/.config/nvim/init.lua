@@ -122,7 +122,8 @@ require("lazy").setup({
         },
         config = function()
             require("icon-picker").setup({ disable_legacy_commands = true })
-        end
+        end,
+        lazy = true,
     },
     {
         "ThePrimeagen/harpoon",
@@ -148,7 +149,9 @@ require("lazy").setup({
     {
         "norcalli/nvim-colorizer.lua",
         init = function()
-            require("colorizer").setup()
+            require("colorizer").setup({
+                "css"
+            })
         end,
     },
 

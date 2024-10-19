@@ -30,7 +30,7 @@ vim.keymap.set("n", "<c-q>", "<nop>")
 vim.keymap.set("n", "U", "<nop>")
 vim.keymap.set("n", "gs", "<nop>")
 vim.keymap.set("n", "gQ", "<nop>")
-vim.keymap.set("n", "zg", "<nop>")
+-- vim.keymap.set("n", "zg", "<nop>") -- remember: zug to undo zg
 vim.keymap.set("n", "zw", "<nop>")
 vim.keymap.set("n", "<C-'>", '<nop>') -- i don't even know what this is but it conflicts with my qmk combos
 
@@ -203,6 +203,14 @@ vim.keymap.set("n", "<bs>", "<cmd>bd<cr>", { desc = "delete buffer" })
 vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>", { desc = "vsplit previous buffer" })
 vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]]) -- escape terminal mode (because the default mapping is weird)
+vim.keymap.set("n", "<c-q>", function()
+    if vim.bo.buftype == "quickfix" then
+        vim.cmd.cclose()
+    else
+        vim.cmd.copen()
+    end
+end)
+vim.keymap.set("n", "<leader>q", "<c-q>")
 
 
 

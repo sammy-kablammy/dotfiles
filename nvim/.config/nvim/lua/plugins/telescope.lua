@@ -70,3 +70,6 @@ end, "my notes, backlinks search")
 
 -- require("telescope").load_extension("undo")
 -- vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>")
+
+-- always ignore "tags" files, this makes my note backlink search work properly
+vim.go.grepprg = "rg --vimgrep -uu --glob '!tags'"

@@ -140,7 +140,7 @@ end
 function Unlistify()
     -- todo use this substitution command: s/\s*- /
 end
-vim.keymap.set("n", "gl", function()
+vim.keymap.set({ "n", "v" }, "gl", function()
     -- this is ugly but i don't know of a better way
     vim.o.operatorfunc = "v:lua.Listify"
     vim.api.nvim_feedkeys("g@", "n", false)
