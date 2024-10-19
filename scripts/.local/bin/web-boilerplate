@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ -f index.html -o -f index.css -o -f index.js ]; then
+if [ -f index.html ] || [ -f index.css ] || [ -f index.js ]; then
     echo "uhh... files already exist, you probably don't want to overwrite them"
-    exit 1;
+    exit 1
 fi
 
 cat >index.html <<EOL

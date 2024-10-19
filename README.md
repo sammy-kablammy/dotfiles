@@ -1,11 +1,12 @@
-# how to use stow for dotfile wizardry
+# using stow for dotfile wizardry
 
 - create some packages. these can be named whatever you want.
 
-- dotfiles that belong in ~ (like your .vimrc) can just go directly in the package
+- dotfiles that belong in `~` (like `.vimrc`) can just go directly in the
+  package
 
-- dotfiles that belong in .config (like your tmux.conf) need the path relative to
-~ to be recreated inside of the package's directory
+- dotfiles that belong in `.config` (like `tmux.conf`) need the path relative to
+  `~` to be recreated inside of the package's directory
 
 ```
 ├── nvim
@@ -24,9 +25,9 @@
     └── .vimrc
 ```
 
-in this example, "vim" is the package name you use when you type the "stow vim"
-command. since the .vimrc file belongs in ~, no extra structure is needed.
-compare this to tmux.conf, which belongs in ~/.config/tmux/tmux.conf.
+in this example, "vim" is the package name you use when you type `stow vim`.
+since `.vimrc` belongs in `~`, no extra structure is needed. compare this
+to `tmux.conf`, which belongs in `~/.config/tmux/tmux.conf`.
 
 - `stow <package name>` to add a package
 - `stow -D <package name>` to delete a package

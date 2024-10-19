@@ -1,1 +1,4 @@
-zk
+#!/bin/bash
+
+timestamp=$(date +"%F_%H-%M-%S")
+echo "$HOME/notes/main/$timestamp.md"

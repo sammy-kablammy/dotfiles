@@ -1,0 +1,2 @@
+#!/bin/bash
+bluetoothctl remove 7f:df:38:c9:84:e5

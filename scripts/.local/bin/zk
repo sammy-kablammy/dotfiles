@@ -1,9 +1,4 @@
 #!/bin/bash
 
-# timestamp=$(date +"%a%b%d_%G_%H-%M-%S")
 timestamp=$(date +"%F_%H-%M-%S")
-
-# i don't need to touch the file if i'm about to edit it, right? this might
-# break some other things though
-# touch "$HOME/notes/inbox/$timestamp.md"
-echo "$HOME/notes/inbox/$timestamp.md"
+echo "$HOME/notes/main/$timestamp.md"
