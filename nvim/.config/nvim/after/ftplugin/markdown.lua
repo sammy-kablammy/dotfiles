@@ -72,28 +72,12 @@ function UpdateNoteTitles()
     ClearNoteTitles()
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     for linenum, line in ipairs(lines) do
-
-        -- two types of links are supported: standard markdown links and wikilinks:
-        local start_idx, end_idx, filename, virt_text_pos
-        local start_idx1, end_idx1 = string.find(line, [[%[%]%(.*%.md*%)]]) -- [](note_title_here)
-        local start_idx2, end_idx2 = string.find(line, "%[%[.*%.md*%]%]") -- [[note_title_here]]
-        if start_idx1 then
-            start_idx = start_idx1
-            end_idx = end_idx1
-            filename = notes_dir .. string.sub(line, start_idx + #"[](main/", end_idx - 1)
-            virt_text_pos = "inline"
-        elseif start_idx2 then
-            start_idx = start_idx2
-            end_idx = end_idx2
-            filename = notes_dir .. string.sub(line, start_idx + #"[[main/", end_idx - 2)
-            virt_text_pos = "eol"
-        end
-        -- lua doesn't have a 'continue' keyword. kill me.
+        local start_idx, end_idx = string.find(line, [[%d%d%d%d%-%d%d%-%d%d_%d%d%-%d%d%-%d%d%.md]])
         if start_idx then
+            local filename = notes_dir .. string.sub(line, start_idx, end_idx)
             local fd = io.open(filename, "r")
             local title
             if fd == nil then
-                -- print("ruh roh, note '" .. filename .. "' not found")
                 title = "UNKNOWN NOTE :("
             else
                 local full_title = fd:read("*l")
@@ -108,7 +92,7 @@ function UpdateNoteTitles()
                         "TabLineSel",
                     },
                 },
-                virt_text_pos = virt_text_pos,
+                virt_text_pos = "eol",
             })
         end
     end
