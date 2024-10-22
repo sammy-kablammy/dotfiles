@@ -1,4 +1,3 @@
-#eymap
 CLI
 CRLF
 DIY
@@ -46,6 +45,7 @@ interoperability
 interoperate
 keybind
 keybinds
+keymap
 leaderboard
 linter
 linters
@@ -67,6 +67,7 @@ performant
 personalization
 phatic
 plaintext
+prerequires
 programmatically
 prototyped
 pseudocode

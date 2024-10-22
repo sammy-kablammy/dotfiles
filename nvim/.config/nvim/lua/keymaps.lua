@@ -119,6 +119,25 @@ vim.keymap.set("n", "<leader>sx", function()
     end
 end, { desc = "set textwidth to whatever" })
 
+-- for cleaner screen demos
+vim.api.nvim_create_user_command("Zenma", function()
+    if vim.g.zenma_is_enabled then
+        vim.o.colorcolumn = vim.g.zenma_colorcolumn
+        vim.o.laststatus = vim.g.zenma_laststatus
+        vim.o.cmdheight = vim.g.cmdheight
+        vim.g.zenma_is_enabled = false
+        return
+    end
+    vim.g.zenma_colorcolumn = vim.o.colorcolumn
+    vim.g.zenma_laststatus = vim.o.laststatus
+    vim.g.zenma_cmdheight = vim.o.cmdheight
+    vim.o.colorcolumn = ""
+    vim.o.laststatus = 0
+    vim.o.cmdheight = 0
+    vim.g.zenma_is_enabled = true
+end, {})
+vim.keymap.set("n", "<leader>sz", "<cmd>Zenma<cr>", { desc = "bruh" })
+
 -- square bracket fun time [ [ [ ] ] ]
 vim.keymap.set("n", "[b", vim.cmd.bprevious, { desc = "prev buffer" })
 vim.keymap.set("n", "]b", vim.cmd.bnext, { desc = "next buffer" })
@@ -198,7 +217,7 @@ vim.keymap.set("n", "gC", "guiw~e", { desc = "capitalize first character of word
 vim.keymap.set("n", "g=", "g+") -- (redo, alias for g+)
 vim.keymap.set("n", "<c-w>u", "<c-w>p")
 vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
-vim.keymap.set("v", "s", ":s") -- default 's' in visual mode is redundant (use 'c' instead)
+vim.keymap.set("v", "s", ":s/") -- default 's' in visual mode is redundant (use 'c' instead)
 vim.keymap.set("n", "<bs>", "<cmd>bd<cr>", { desc = "delete buffer" })
 vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>", { desc = "vsplit previous buffer" })
 vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)

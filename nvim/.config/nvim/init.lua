@@ -200,14 +200,13 @@ require("crunner")
 require("text_objects")
 require("user_commands")
 
--- for cleaner screen demos, TODO make a user command for toggling this
--- vim.o.colorcolumn = ""
--- vim.o.laststatus = 0
-
--- vim.cmd("packadd termdebug")
--- vim.keymap.set("n", "<leader>Da", "<cmd>Asm<cr>", { desc = "Debug: Asm" })
--- vim.keymap.set("n", "<leader>Db", "<cmd>Break<cr>", { desc = "Debug: Breakpoint (:Clear to undo)" })
--- vim.keymap.set("n", "<leader>Dc", "<cmd>Continue<cr>", { desc = "Debug: Continue" })
--- vim.keymap.set("n", "<leader>De", "<cmd>Evaluate<cr>", { desc = "Debug: Evaluate" })
--- vim.keymap.set("n", "<leader>Dn", "<cmd>Over<cr>", { desc = "Debug: Next (step over)" })
--- vim.keymap.set("n", "<leader>Ds", "<cmd>Step<cr>", { desc = "Debug: Step (step into)" })
+-- i rarely use termdebug, so best to leave it unloaded until it's actually needed
+vim.api.nvim_create_user_command("TermThatDebugMyGuy", function()
+    vim.cmd("packadd termdebug")
+    vim.keymap.set("n", "<leader>da", "<cmd>Asm<cr>", { desc = "Debug: Asm" })
+    vim.keymap.set("n", "<leader>db", "<cmd>Break<cr>", { desc = "Debug: Breakpoint (:Clear to undo)" })
+    vim.keymap.set("n", "<leader>dc", "<cmd>Continue<cr>", { desc = "Debug: Continue" })
+    vim.keymap.set("n", "<leader>de", "<cmd>Evaluate<cr>", { desc = "Debug: Evaluate" })
+    vim.keymap.set("n", "<leader>dn", "<cmd>Over<cr>", { desc = "Debug: Next (step over)" })
+    vim.keymap.set("n", "<leader>ds", "<cmd>Step<cr>", { desc = "Debug: Step (step into)" })
+end, {})
