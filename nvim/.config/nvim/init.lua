@@ -62,24 +62,20 @@ require("lazy").setup({
     {
         {
             "L3MON4D3/LuaSnip",
-            lazy = false,
             dependencies = {
                 "rafamadriz/friendly-snippets",
                 "saadparwaiz1/cmp_luasnip",
             },
-        },
-        {
-            "hrsh7th/cmp-nvim-lsp",
-            lazy = false,
-            config = true,
+            event = "InsertEnter", -- this doesn't seem to work
         },
         {
             "hrsh7th/nvim-cmp",
-            lazy = false,
             dependencies = {
-                "hrsh7th/cmp-path",
+                -- "hrsh7th/cmp-path", -- mehhhhh just use <c-x><c-f> instead
                 "hrsh7th/cmp-buffer",
+                "hrsh7th/cmp-nvim-lsp",
             },
+            event = "InsertEnter", -- this doesn't seem to work
         },
     },
     {
@@ -90,7 +86,7 @@ require("lazy").setup({
     },
     {
         "folke/lazydev.nvim",
-        ft = "lua", -- only load on lua files
+        ft = "lua",
         opts = {
             library = {
                 -- See the configuration section for more details
@@ -108,14 +104,26 @@ require("lazy").setup({
                 group_index = 0, -- set group index to 0 to skip loading LuaLS completions
             })
         end,
+        event = "InsertEnter",
     },
     {
         "tpope/vim-surround",
         dependencies = {
             "tpope/vim-repeat",
         },
+        event = "CursorMoved",
     },
     {
+        'Wansmer/treesj',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
+    },
+    {
+        -- (for the pretty vim.ui.input box used for LSP renaming; i could live without this one)
+        "stevearc/dressing.nvim",
+        event = "CursorMoved",
+    },
+    {
+        -- TODO find an alternative
         "ziontee113/icon-picker.nvim",
         dependencies = {
             "stevearc/dressing.nvim",
@@ -123,7 +131,7 @@ require("lazy").setup({
         config = function()
             require("icon-picker").setup({ disable_legacy_commands = true })
         end,
-        lazy = true,
+        event = "InsertEnter",
     },
     {
         "ThePrimeagen/harpoon",
@@ -148,10 +156,9 @@ require("lazy").setup({
     },
     {
         "norcalli/nvim-colorizer.lua",
-        init = function()
-            require("colorizer").setup({
-                "css"
-            })
+        ft = "css", -- lazy load this plugin in css files (and then stay loaded for all files afterward)
+        config = function()
+            return { "css", } -- once lazy loaded, only apply colorization to css files
         end,
     },
 
@@ -180,6 +187,7 @@ require("lazy").setup({
                 end,
             })
         end,
+        ft = "markdown",
     },
 })
 
