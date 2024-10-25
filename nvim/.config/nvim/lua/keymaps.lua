@@ -193,7 +193,7 @@ end, { desc = "display extended file info" })
 vim.keymap.set("n", "^", "0^")
 
 -- my own lil' cheatsheet
-vim.keymap.set("n", "<leader>?", "<cmd>vsplit ~/notes/main/vim_reminders.md<cr>")
+vim.keymap.set("n", "<leader>?", "<cmd>vsplit ~/notes/main/2024-03-20_14-45-16.md<cr>")
 
 -- alternate file (this also fixes the c-^ vs c-6 discrepancy between terminals)
 vim.keymap.set("n", "<leader>a", "<cmd>b#<cr>", { desc = "alternate file" })
