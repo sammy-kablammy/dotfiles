@@ -85,14 +85,14 @@ function UpdateNoteTitles()
                 title = string.sub(full_title, 3) -- (remove "# ")
             end
             local ns_id = vim.api.nvim_create_namespace("markdown_link_note_title")
-            vim.api.nvim_buf_set_extmark(0, ns_id, linenum - 1, start_idx, {
+            vim.api.nvim_buf_set_extmark(0, ns_id, linenum - 1, end_idx, {
                 virt_text = {
                     {
-                        title,
-                        "TabLineSel",
+                        " " .. title .. " ",
+                        "MatchParen",
                     },
                 },
-                virt_text_pos = "eol",
+                virt_text_pos = "inline",
             })
         end
     end
