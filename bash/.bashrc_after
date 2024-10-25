@@ -160,8 +160,10 @@ if [ -z $TMUX ]; then
     PS1="(no tmux) $PS1"
 fi
 
-alias 'mann'='man --pager="nvim +Man!"'
-alias 'mn'='man --pager="nvim +Man!"'
+# i don't need this many
+alias 'Man'='man --pager="nvim +Man!"'
+alias 'mann'='Man'
+alias 'mn'='Man'
 mansec () {
     man --pager="less -p $2" $1
 }
@@ -175,25 +177,15 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
 --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
 
-# note: these bash settings are measured in LINES. see bash(1). also yeah
-# history is still gonna be wiped occasionally. sorry.
-# TODO research HISTCONTROL
-export HISTSIZE=10000
+# fun bash facts: with the default value of HISTCONTROL, you can run a command
+# with a space at the front to prevent it from appearing in history. this is
+# handy for dangerous commands that you don't want to accidentally reuse.
 export HISTFILESIZE=1000000
-
-# share tmux history throughout all tmux panes/windows/sessions. see post:
+# share tmux history throughout all tmux panes/windows/sessions. see these posts:
 # https://stackoverflow.com/questions/12247777/share-history-between-panes-windows
-export PROMPT_COMMAND="history -a; history -n"
-# from man bash (read these, i'm just plopping them here real quick):
-# -a     Append the ``new'' history lines to the history file. These are history
-#          lines entered since the beginning of the current bash session, but
-#          not already appended to the history file.
-# -n     Read the history lines not already read from the history file into the
-#          current history list. These are lines appended to the history file
-#          since the beginning of the current bash session
-
-# TODO try this option and see what it does:
-# shopt -s histappend
+# https://web.archive.org/web/20170104092506/http://briancarper.net/blog/248.html
+shopt -s histappend
+export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 
 # this is supposed to fix the terminal freezing and showing a ';' character,
 # then needed like seventeen ctrl+c inputs to unfreeze it. especially on WSL.
@@ -204,7 +196,6 @@ shopt -s no_empty_cmd_completion
 
 export VISUAL=nvim
 export EDITOR=nvim
-
 # i don't like vi mode but it's here if you want
 # set -o vi
 
@@ -226,22 +217,6 @@ bind '"\C-x?": "man bash | less -p \"Commands for Moving\"\n"' # (open keybind r
 if [ -z XDG_CONFIG_HOME ]; then
     export XDG_CONFIG_HOME=$HOME/.config/
 fi
-
-# useful with 'tree' to monitor file system for changes
-watchthis () {
-    echo "use 'watch -ctn 0.2' instead"
-    # while true; do
-    #     clear
-    #     $@
-    #     sleep 0.1
-    # done
-    # instead of the above, you could also use the 'watch' command. however, i
-    # can't get the colors right.
-    # watch --no-title --color --interval 0.2 tree
-    # watch -ctn 0.2 tree
-    # NO WAIT i can get the colors to work it's just that 'watch' invokes the
-    # default command ('ls') instead of my alias ('ls --color=auto')
-}
 
 # the classic "find | fzf" wombo combo
 SAM_F_MAX_DEPTH=6
