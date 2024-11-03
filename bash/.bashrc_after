@@ -40,6 +40,7 @@ alias 'xc'='xclip -selection clipboard -rmlastnl'
 alias 'wat'='watch -ctn 0.2'
 alias 'gr'='grep -i'
 alias 'pg'='pgrep -i'
+alias 'tldr'='tldr --theme base16'
 
 # cd to multiple places at once; easier up-a-dir
 c () {
@@ -170,6 +171,7 @@ mansec () {
 # nvim is slower than less for some reason so less can stay default for now
 # export MANPAGER='nvim +Man!'
 # export MANWIDTH=999
+alias mans='man man | sed -n "22,30p"'
 
 # fzf catppuccin theme (https://github.com/catppuccin/fzf)
 export FZF_DEFAULT_OPTS=" \
