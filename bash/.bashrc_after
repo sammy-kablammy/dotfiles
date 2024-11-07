@@ -142,7 +142,7 @@ markthis() {
 
 # open tmux on startup!!! we love tmux!!!
 if [ -z "$TMUX" ]; then
-    tmux new-session
+    tmux attach || tmux new-session
 else
     tmux set status off
 fi
@@ -236,7 +236,7 @@ f () {
         return 1
     fi
     # use --dereference as to not mistreat symlinks as files
-    if [ "$(file --brief --dereference "$selected")" == "directory" ]; then
+    if [ "$(file --brief --dereference "$selected")" = "directory" ]; then
         cd "$selected"
     else
         # eventually, it would be good to xdg-open any images, videos, and so on
