@@ -88,11 +88,11 @@ function UpdateNoteTitles()
             vim.api.nvim_buf_set_extmark(0, ns_id, linenum - 1, end_idx, {
                 virt_text = {
                     {
-                        " " .. title .. " ",
+                        "  " .. title .. "  ",
                         "MatchParen",
                     },
                 },
-                virt_text_pos = "inline",
+                virt_text_pos = "eol",
             })
         end
     end
