@@ -7,6 +7,8 @@ FPGA
 GUIs
 IETF
 IMAP
+IPv4
+IPv6
 NAND
 PCBs
 SMTP
@@ -25,6 +27,8 @@ checksums
 connectionless
 cryptographic
 customizable
+datagram
+datagrams
 datasheets
 demultiplexing
 dereference
@@ -60,6 +64,7 @@ numpad
 onboarding
 overfitting
 overlayed
+parallelize
 parameterize
 parameterized
 parametrically
@@ -73,8 +78,10 @@ prototyped
 pseudocode
 pseudorandom
 qualia
+queueing
 retransmission
 retransmitted
+runtime
 screensaver
 screensharing
 shader
@@ -82,11 +89,17 @@ stickerless
 subconsciously
 subdirectories
 subdirectory
+subexpressions
 submenu
 submenus
+subnet
+subnets
 subtractive
+superset
 themself
 timestamp
+unary
 understandability
 viewable
 viewport
+virtualization
