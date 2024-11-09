@@ -251,28 +251,5 @@ alias CCCC='f ../../../..'
 
 
 
-# packages i usually install (make a script to download these for new machines):
-# git
-# tmux
-# tree
-# tldr
-# exa
-# batcat
-# python3
-# pip
-# nodejs
-# npm (is this separate from nodejs?)
-# emacs
-# nvim (though i usually build it from source these days)
-# neofetch
-# pandoc
-# pdftotext (for pdf viewing with 'less')
-# some latex stuff?
-# java (specifically, apt package openjdk-17-jdk)
-# w3m
-# and some more that i'm forgetting
-
-
-
 # note: you don't include "set" in modelines; just put the option and value
 # vim: filetype=sh
