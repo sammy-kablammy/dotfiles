@@ -41,6 +41,7 @@ alias 'wat'='watch -ctn 0.2'
 alias 'gr'='grep -i'
 alias 'pg'='pgrep -i'
 alias 'tldr'='tldr --theme base16'
+alias 's'='sessionizer'
 
 # cd to multiple places at once; easier up-a-dir
 c () {
