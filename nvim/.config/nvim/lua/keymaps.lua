@@ -90,8 +90,8 @@ vim.keymap.set("n", "<s-down>", "<c-d>zz")
 -- this way, 'n' will always search downward, 'N' will always search upward.
 -- (the default behavior is that 'n' always searches in the same direction of
 -- the most recent search, and 'N' is the opposite direction)
-vim.keymap.set({ "n", "v" }, "n", "/<c-r>/<cr>zz")
-vim.keymap.set({ "n", "v" }, "N", "?<c-r>/<cr>zz")
+vim.keymap.set({ "n", "v" }, "n", "/<c-r>/<cr>")
+vim.keymap.set({ "n", "v" }, "N", "?<c-r>/<cr>")
 
 -- slide text left and right whhheeeeeeeeeeeee!!! nrrooooooooom!!!
 vim.keymap.set("v", "<", "<gv")
