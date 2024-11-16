@@ -22,6 +22,7 @@ alias 'lt'='ls -lt' # doesn't seem to work with exa
 # note: you can use cp -P to not follow symlinks. can significantly shorten copies, if that's what you mean to do
 alias 'cp'='cp --interactive'
 alias 'rm'='rm --interactive'
+alias 'mv'='mv --interactive'
 alias 'mkdir'='mkdir --parents'
 alias 'symlink'='ln -s'
 alias 'g'='git'

@@ -78,8 +78,6 @@ vim.keymap.set("n", "j", "gj")
 vim.keymap.set("n", "k", "gk")
 
 -- scroll up and down without getting disoriented
-vim.keymap.set("n", "<c-f>", "<c-f>zz")
-vim.keymap.set("n", "<c-b>", "<c-b>zz")
 vim.keymap.set("n", "<c-d>", "<c-d>zz")
 vim.keymap.set("n", "<c-u>", "<c-u>zz")
 vim.keymap.set("n", "<c-up>", "<c-u>zz")
@@ -232,6 +230,9 @@ vim.keymap.set("n", "<c-q>", function()
     end
 end)
 vim.keymap.set("n", "<leader>q", "<c-q>")
+vim.keymap.set("n", "<leader>tm", "<cmd>silent !tmux split -h -c '%:p:h'<cr>", { desc = "open directory in tmux split" })
+vim.keymap.set("n", "<leader>x", "<cmd>silent !xdg-open '%:p:h'<cr>", { desc = "open directory in file explorer" })
+
 
 
 
@@ -296,3 +297,5 @@ vim.keymap.set("n", "<leader>q", "<c-q>")
 -- vim.keymap.set("n", "<c-j>", "<c-w>j")
 -- vim.keymap.set("n", "<c-k>", "<c-w>k")
 -- vim.keymap.set("n", "<c-l>", "<c-w>l")
+-- vim.keymap.set("n", "<c-f>", "<c-f>zz") -- this doesn't work
+-- vim.keymap.set("n", "<c-b>", "<c-b>zz") -- this doesn't work

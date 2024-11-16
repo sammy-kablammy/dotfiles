@@ -52,6 +52,9 @@ require("mason-lspconfig").setup_handlers({
 	end,
 })
 
+-- setup servers that aren't from mason
+require("lspconfig").dartls.setup({})
+
 -- global LSP mappings
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "previous diagnostic" })
