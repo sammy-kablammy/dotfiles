@@ -10,7 +10,6 @@
 
 -- always show statusline
 vim.o.laststatus = 2
-vim.o.showcmdloc = "statusline"
 vim.o.ruler = false
 
 local errorcolor = vim.api.nvim_get_hl(0, { name = "ErrorMsg" }).fg
@@ -40,10 +39,29 @@ function StatusLineNoteTitle()
     end
     return vim.fn.getline(1)
 end
--- TODO split this long string out into several more reasonably named strings
--- e.g.:
--- local readonly_flag = "%r"
-vim.o.statusline = [[ %f%< %m%r %{luaeval("StatusLineNoteTitle()")} %=%S %{%luaeval("LspStatusline()")%} (%l,%c) ]]
+
+local filename = '%{expand("%:.")}'
+local cutoff_point = "%< "
+local modified_flag = "%m"
+local readonly_flag = "%r"
+local padding = " %= "
+local note_title = '%{luaeval("StatusLineNoteTitle()")}'
+local lsp = '%{%luaeval("LspStatusline()")%}'
+local position = "(%l,%c) "
+vim.o.statusline = " " .. filename .. cutoff_point .. modified_flag .. readonly_flag .. padding .. note_title .. " " .. lsp .. " " .. position
+
+-- i haven't yet figured out how to make 'showcmdloc' use the statusline's %S
+-- instead of the command line at the bottom line of the screen. when i try, it
+-- just displays a : and nothing else. this would be nice though.
+
+-- this is the part of the statusline that shows the name of the current file.
+-- my statusline used to use %f (path relative to current directory), but this
+-- doesn't properly relativize full paths (like with :edit /path/to/new/file).
+-- you could instead use %F (absolute path), but i find this cluttered,
+-- especially when the screen is split. expand("%:.") is a dirty hack to get
+-- around vim's counterintuitive treatment of the % register by forcing the path
+-- to be relative. this fixes the statusline for my purposes, but any other use
+-- of the % register should also be formatted in this way IMO.
 
 
 -- TODO include 'fileformat' whenever it's not "unix"
