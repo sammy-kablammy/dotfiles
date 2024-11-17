@@ -276,12 +276,27 @@ end, {
 
 -- i like to :bd my buffers but sometimes i want to reopen them. the default
 -- behavior is for buffers deleted in this way to stay 'unlisted' forever. i
--- think if i reopen a buffer, it should re-list itself. this might affect help
--- pages, idk though
+-- think if i reopen a buffer, it should re-list itself.
 vim.api.nvim_create_autocmd("BufEnter", {
     callback = function()
-        -- vim.bo.buflisted = true
+        if vim.bo.buftype ~= "help" then
+            vim.bo.buflisted = true
+        end
     end,
+    desc = "re-list deleted buffers when they're reopened",
+})
+
+vim.api.nvim_create_autocmd("BufNew", {
+    callback = function()
+        -- this looks like a no-op but it actually forces paths to be relative.
+        -- example: suppose pwd is /home/sam/. if you :edit file1 and :edit
+        -- /home/sam/file2, then get the name of each file, file1 comes back as
+        -- file1 but file2 comes back as /home/sam/file2. this is
+        -- counterintuitive because they have the same relative path. confused
+        -- yet?
+        vim.cmd("cd .")
+    end,
+    desc = "fix relative path % register behavior",
 })
 
 
