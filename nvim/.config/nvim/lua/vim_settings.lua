@@ -257,23 +257,6 @@ vim.keymap.set("n", "<leader>nr", "<cmd>RandomNote<cr>")
 -- preventing my shell scripts from being found
 vim.cmd("silent !PATH=$PATH:~/.local.bin")
 
--- Source selected lua code in a buffer. Vim's builtin :source is similar but only supports Vimscript.
-vim.api.nvim_create_user_command('SourceLua', function()
-    local start_position = vim.api.nvim_buf_get_mark(0, "<")
-    local end_position = vim.api.nvim_buf_get_mark(0, ">")
-    local text = vim.api.nvim_buf_get_lines(0, start_position[1] - 1, end_position[1], false)
-    local temp_file = vim.fn.tempname()
-    local fd = io.open(temp_file, "w")
-    for _, line in ipairs(text) do
-        fd:write(line .. "\n")
-    end
-    fd:close()
-    vim.cmd.luafile(temp_file)
-end, {
-    desc = "source selected lua code",
-    range = 2, -- nvim needs this to allow this user command to accept a range
-})
-
 -- i like to :bd my buffers but sometimes i want to reopen them. the default
 -- behavior is for buffers deleted in this way to stay 'unlisted' forever. i
 -- think if i reopen a buffer, it should re-list itself.
