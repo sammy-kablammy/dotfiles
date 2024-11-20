@@ -30,7 +30,7 @@ function LspStatusline()
     if diagnostics ~= 0 then
         retval = retval .. " %#SamLspStatusLineError#Diagnostics:" .. diagnostics .. "%#StatusLine#"
     end
-    return retval
+    return retval .. " "
 end
 function StatusLineNoteTitle()
     -- TODO highlight note title with the proper color
@@ -38,6 +38,12 @@ function StatusLineNoteTitle()
         return ""
     end
     return vim.fn.getline(1)
+end
+function StatusLineFileformat()
+    if vim.bo.fileformat == "unix" then
+        return ""
+    end
+    return vim.bo.fileformat .. " "
 end
 
 local filename = '%{expand("%:.")}'
@@ -48,7 +54,8 @@ local padding = " %= "
 local note_title = '%{luaeval("StatusLineNoteTitle()")}'
 local lsp = '%{%luaeval("LspStatusline()")%}'
 local position = "(%l,%c) "
-vim.o.statusline = " " .. filename .. cutoff_point .. modified_flag .. readonly_flag .. padding .. note_title .. " " .. lsp .. " " .. position
+local fileformat = '%{luaeval("StatusLineFileformat()")}'
+vim.o.statusline = " " .. filename .. cutoff_point .. modified_flag .. readonly_flag .. padding .. note_title .. " " .. fileformat .. lsp .. position
 
 -- i haven't yet figured out how to make 'showcmdloc' use the statusline's %S
 -- instead of the command line at the bottom line of the screen. when i try, it

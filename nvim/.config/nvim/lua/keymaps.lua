@@ -134,7 +134,7 @@ vim.api.nvim_create_user_command("Zenma", function()
     vim.o.cmdheight = 0
     vim.g.zenma_is_enabled = true
 end, {})
-vim.keymap.set("n", "<leader>sz", "<cmd>Zenma<cr>", { desc = "bruh" })
+vim.keymap.set("n", "<leader>sz", "<cmd>Zenma<cr>", { desc = "experimental zen mode??👀" })
 
 -- square bracket fun time [ [ [ ] ] ]
 vim.keymap.set("n", "[b", vim.cmd.bprevious, { desc = "prev buffer" })
@@ -232,6 +232,7 @@ end)
 vim.keymap.set("n", "<leader>q", "<c-q>")
 vim.keymap.set("n", "<leader>tm", "<cmd>silent !tmux split -h -c '%:p:h'<cr>", { desc = "open directory in tmux split" })
 vim.keymap.set("n", "<leader>x", "<cmd>silent !xdg-open '%:p:h'<cr>", { desc = "open directory in file explorer" })
+vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>")
 
 
 
