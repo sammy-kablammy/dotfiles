@@ -43,6 +43,7 @@ alias 'gr'='grep -i'
 alias 'pg'='pgrep -i'
 alias 'tldr'='tldr --theme base16'
 alias 's'='sessionizer'
+alias 'ytd'='yt-dlp --write-description --embed-thumbnail --embed-chapters --embed-subs'
 
 # cd to multiple places at once; easier up-a-dir
 c () {
