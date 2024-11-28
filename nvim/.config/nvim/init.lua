@@ -199,6 +199,7 @@ require("abbreviations")
 require("crunner")
 require("text_objects")
 require("user_commands")
+require("capitalize")
 
 -- i rarely use termdebug, so best to leave it unloaded until it's actually needed
 vim.api.nvim_create_user_command("TermThatDebugMyGuy", function()
