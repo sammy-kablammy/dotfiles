@@ -44,6 +44,7 @@ alias 'pg'='pgrep -i'
 alias 'tldr'='tldr --theme base16'
 alias 's'='sessionizer'
 alias 'ytd'='yt-dlp --write-description --embed-thumbnail --embed-chapters --embed-subs'
+alias 'ol'='ollama run llama3.1'
 
 # cd to multiple places at once; easier up-a-dir
 c () {
@@ -60,10 +61,10 @@ alias 'cc'='cd ../..'
 alias 'ccc'='cd ../../..'
 alias 'cccc'='cd ../../../..'
 
-if type "exa" &> /dev/null; then
-    alias 'ls'='exa'
-    alias 'etree'='exa --tree'
-fi
+# if type "exa" &> /dev/null; then
+#     alias 'ls'='exa'
+#     alias 'etree'='exa --tree'
+# fi
 if type "batcat" &> /dev/null; then
     alias 'bat'='batcat'
 fi

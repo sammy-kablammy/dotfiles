@@ -262,7 +262,7 @@ vim.cmd("silent !PATH=$PATH:~/.local.bin")
 -- think if i reopen a buffer, it should re-list itself.
 vim.api.nvim_create_autocmd("BufEnter", {
     callback = function()
-        if vim.bo.buftype ~= "help" then
+        if vim.bo.buftype == "" then
             vim.bo.buflisted = true
         end
     end,

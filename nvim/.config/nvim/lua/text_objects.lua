@@ -6,3 +6,7 @@ vim.keymap.set("x", "gG", function()
     vim.api.nvim_feedkeys("gv", "n", true)
 end)
 vim.keymap.set("o", "gG", ":normal vgG<cr>")
+
+-- bAckticks
+vim.keymap.set("o", "ia", "i`")
+vim.keymap.set("o", "aa", "a`")
