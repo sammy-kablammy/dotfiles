@@ -282,6 +282,30 @@ vim.api.nvim_create_autocmd("BufNew", {
     desc = "fix relative path % register behavior",
 })
 
+-- reuse a vim session, if one is found
+vim.api.nvim_create_user_command("Seshma", function()
+    if vim.fn.glob("Session.vim") ~= "" then
+        vim.ui.select({ "yes", "no" }, {
+            prompt = "A vim session exists, would you like to load and delete it?",
+        }, function(choice)
+            if choice == "yes" then
+                local date = os.date("*t")
+                local filename = date.year .. "-" ..
+                date.month .. "-" ..
+                date.day .. "_" ..
+                date.hour .. "-" ..
+                date.min .. "-" ..
+                date.sec .. ".vim"
+                vim.cmd.source("Session.vim")
+                vim.cmd("!mkdir --parents ~/.local/share/nvim/old_sessions/")
+                vim.cmd("!mv Session.vim ~/.local/share/nvim/old_sessions/deleted_on_" .. filename)
+            end
+        end)
+    else
+        print("No session file found.")
+    end
+end, {})
+
 
 
 -- netrw stuff (unused for now?)
