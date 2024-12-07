@@ -59,7 +59,7 @@ require("nvim-treesitter.configs").setup({
         },
     },
 
-    -- this field is for nvim-treesitter-textobjects
+    -- :h nvim-treesitter-textobjects-modules
     textobjects = {
         move = {
             enable = true,
@@ -79,23 +79,22 @@ require("nvim-treesitter.configs").setup({
         },
         select = {
             enable = true,
-
             -- Automatically jump forward to textobjects, similar to targets.vim
             lookahead = true,
             keymaps = {
-                -- You can use the capture groups defined in textobjects.scm
+                -- capture groups are defined in:
+                -- ~/.local/share/nvim/lazy/nvim-treesitter-textobjects/queries/<language>/textobjects.scm
                 ["af"] = "@function.outer",
                 ["if"] = "@function.inner",
-                -- ["ac"] = "@class.outer",
-                -- you can optionally set descriptions to the mappings (used in the desc parameter of nvim_buf_set_keymap
-                -- ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-
-                -- markdown code blocks. see
-                -- ~/.local/share/nvim/lazy/nvim-treesitter-textobjects/
-                -- and the relevant textobjects.scm file for the correct name
+                ["il"] = "@loop.inner",
+                ["al"] = "@loop.outer",
+                ["io"] = "@conditional.inner",
+                ["ao"] = "@conditional.outer",
+                ["ig"] = "@comment.inner",
+                ["ag"] = "@comment.outer",
+                -- (markdown code blocks)
                 ["ic"] = "@block.inner",
                 ["ac"] = "@block.outer",
-
             },
             -- You can choose the select mode (default is charwise 'v')
             selection_modes = {
@@ -103,23 +102,20 @@ require("nvim-treesitter.configs").setup({
                 ["@function.outer"] = "V", -- linewise
                 -- ["@class.outer"] = "<c-v>", -- blockwise
             },
-            -- If you set this to `true` (default is `false`) then any textobject is
-            -- extended to include preceding or succeeding whitespace. Succeeding
-            -- whitespace has priority in order to act similarly to eg the built-in
-            -- `ap`. Can also be a function (see above).
-            include_surrounding_whitespace = false,
         },
         swap = {
             enable = true,
             swap_previous = {
                 ["<leader>tp"] = "@parameter.inner",
+                ["[a"] = "@parameter.inner",
             },
             swap_next = {
                 ["<leader>tn"] = "@parameter.inner",
+                ["]a"] = "@parameter.inner",
             },
         },
     },
-    -- okay that was nvim-treesitter-textobjects
+
 })
 
 -- (treesj does syntax-aware splitting and joining of lua tables and similar things)
