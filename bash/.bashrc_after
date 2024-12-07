@@ -165,17 +165,11 @@ if [ -z $TMUX ]; then
     PS1="(no tmux) $PS1"
 fi
 
-# i don't need this many
-alias 'Man'='man --pager="nvim +Man!"'
-alias 'mann'='Man'
-alias 'mn'='Man'
-mansec () {
+alias 'mn'='man --pager="nvim +Man!"'
+mansearch () {
     man --pager="less -p $2" $1
 }
-# nvim is slower than less for some reason so less can stay default for now
-# export MANPAGER='nvim +Man!'
-# export MANWIDTH=999
-alias mans='man man | sed -n "22,30p"'
+alias mansections='man man | sed -n "22,30p"'
 
 # fzf catppuccin theme (https://github.com/catppuccin/fzf)
 export FZF_DEFAULT_OPTS=" \
