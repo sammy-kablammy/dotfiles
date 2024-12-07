@@ -177,21 +177,29 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#cad3f5,header:#ed8796,info:#c6a0f6,pointer:#f4dbd6 \
 --color=marker:#f4dbd6,fg+:#cad3f5,prompt:#c6a0f6,hl+:#ed8796"
 
-# fun bash facts: with the default value of HISTCONTROL, you can run a command
-# with a space at the front to prevent it from appearing in history. this is
-# handy for dangerous commands that you don't want to accidentally reuse.
-export HISTFILESIZE=1000000
+# infinite history (based on https://stackoverflow.com/a/19533853/19130514)
+export HISTSIZE=
+export HISTFILESIZE=
+# WARN: you must comment out the definitions of HISTSIZE and HISTFILESIZE in
+# your bashrc! otherwise some shells might clear history (for some reason).
+# because of this, it's good to change the history file, just to be safe:
+export HISTFILE=~/.bash_history_infinite
+export HISTTIMEFORMAT='(%F %T)'
+
 # share tmux history throughout all tmux panes/windows/sessions. see these posts:
 # https://stackoverflow.com/questions/12247777/share-history-between-panes-windows
 # https://web.archive.org/web/20170104092506/http://briancarper.net/blog/248.html
 shopt -s histappend
-export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # (you can search for "history -a" in bash(1) and it'll work)
+# fun bash facts: with the default value of HISTCONTROL, you can run a command
+# with a space at the front to prevent it from appearing in history. this is
+# handy for dangerous commands that you don't want to accidentally reuse.
 
 # this is supposed to fix the terminal freezing and showing a ';' character,
 # then needed like seventeen ctrl+c inputs to unfreeze it. especially on WSL.
 # https://github.com/microsoft/WSL/issues/7292
 shopt -s no_empty_cmd_completion
-# (if you don't experience the afforementioned problem, you might be tempted to
+# (if you don't experience the aforementioned problem, you might be tempted to
 # delete this line. at least leave it commented out in case you need it again)
 
 export VISUAL=nvim
@@ -212,6 +220,8 @@ bind '"\C-x\C-v": "\C-xv"'
 bind '"\C-xf": "\"$(fzf)\""'
 bind '"\C-x\C-f": "\C-xf"'
 bind '"\C-x?": "man bash | less -p \"Commands for Moving\"\n"' # (open keybind reference)
+bind '"\e\C-p":history-search-backward'
+bind '"\e\C-n":history-search-forward'
 
 # WSL might not define the XDG family of environment variables for you
 if [ -z XDG_CONFIG_HOME ]; then
