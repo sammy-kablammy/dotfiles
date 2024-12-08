@@ -32,12 +32,14 @@ function LspStatusline()
     end
     return retval .. " "
 end
+local matchparencolor = vim.api.nvim_get_hl(0, { name = "MatchParen" }).fg
+local matchparenhex = string.format('#%06x', matchparencolor)
+vim.cmd("highlight SamStatusLineNoteTitle guifg=" .. matchparenhex .. " guibg=" .. bgcolorhex)
 function StatusLineNoteTitle()
-    -- TODO highlight note title with the proper color
     if vim.bo.filetype ~= "markdown" then
         return ""
     end
-    return vim.fn.getline(1)
+    return "%#SamStatusLineNoteTitle# (" .. vim.fn.getline(1) .. ")%#StatusLine#"
 end
 function StatusLineFileformat()
     if vim.bo.fileformat == "unix" then
@@ -51,11 +53,11 @@ local cutoff_point = "%< "
 local modified_flag = "%m"
 local readonly_flag = "%r"
 local padding = " %= "
-local note_title = '%{luaeval("StatusLineNoteTitle()")}'
+local note_title = '%{%luaeval("StatusLineNoteTitle()")%}'
 local lsp = '%{%luaeval("LspStatusline()")%}'
 local position = "(%l,%c) "
 local fileformat = '%{luaeval("StatusLineFileformat()")}'
-vim.o.statusline = " " .. filename .. cutoff_point .. modified_flag .. readonly_flag .. padding .. note_title .. " " .. fileformat .. lsp .. position
+vim.o.statusline = " " .. filename .. cutoff_point .. modified_flag .. readonly_flag .. note_title .. padding .. " " .. fileformat .. lsp .. position
 
 -- i haven't yet figured out how to make 'showcmdloc' use the statusline's %S
 -- instead of the command line at the bottom line of the screen. when i try, it
