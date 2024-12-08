@@ -47,9 +47,9 @@ require("mason").setup({})
 require("mason-lspconfig").setup({})
 -- :h mason-lspconfig-automatic-server-setup
 require("mason-lspconfig").setup_handlers({
-	function(server_name)
-		require("lspconfig")[server_name].setup({})
-	end,
+    function(server_name)
+        require("lspconfig")[server_name].setup({})
+    end,
 })
 
 -- setup servers that aren't from mason
@@ -61,7 +61,7 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "previous diagnosti
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "diagnostic float" })
 vim.keymap.set("n", "<leader>D", vim.diagnostic.setloclist, {
-	desc = "populate loclist with diagnostics",
+    desc = "populate loclist with diagnostics",
 })
 vim.keymap.set("n", "<leader>ld", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
@@ -69,37 +69,37 @@ end, { desc = "LSP diagnostic enable/disable" })
 
 -- buffer-local LSP mappings
 vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-	callback = function(ev)
+    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    callback = function(ev)
         local function bufmap(mode, lhs, rhs, desc)
             vim.keymap.set(mode, lhs, rhs, { desc = desc, buffer = ev.buf })
         end
-		-- See `:help vim.lsp.*` for documentation on any of the below functions
+        -- See `:help vim.lsp.*` for documentation on any of the below functions
         -- note: K does LSP hover. this is nvim default behavior now, apparently
         bufmap("n", "gd", vim.lsp.buf.definition, "LSP goto definition")
-		bufmap("n", "gD", vim.lsp.buf.declaration, "LSP goto Declaration")
-		bufmap("n", "gr", vim.lsp.buf.references, "LSP get references")
-		bufmap('n', '<leader>gi', vim.lsp.buf.implementation, "LSP goto implementation")
-		bufmap('n', '<leader>gs', vim.lsp.buf.signature_help, "LSP get signature")
-		bufmap("n", "<leader>gt", vim.lsp.buf.type_definition, "LSP type definition")
-		bufmap("n", "<leader>lr", vim.lsp.buf.rename, "LSP rename")
-		bufmap("n", "<leader>rn", vim.lsp.buf.rename, "LSP rename")
-		bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "code actions")
-		bufmap("i", "<C-h>", vim.lsp.buf.signature_help, "insert mode signature help")
-		bufmap("n", "<leader>lf", function()
-			vim.lsp.buf.format({ async = true })
-		end, "LSP format entire buffer")
-		bufmap("v", "<leader>lf", function()
-			vim.lsp.buf.format({
-				async = true,
-				range = {
-					["start"] = vim.api.nvim_buf_get_mark(0, "<"),
-					["end"] = vim.api.nvim_buf_get_mark(0, ">"),
-				},
-			})
-		end, "LSP format selection")
-		-- print("LSP successfully attached 😊")
-	end,
+        bufmap("n", "gD", vim.lsp.buf.declaration, "LSP goto Declaration")
+        bufmap("n", "gr", vim.lsp.buf.references, "LSP get references")
+        bufmap('n', '<leader>gi', vim.lsp.buf.implementation, "LSP goto implementation")
+        bufmap('n', '<leader>gs', vim.lsp.buf.signature_help, "LSP get signature")
+        bufmap("n", "<leader>gt", vim.lsp.buf.type_definition, "LSP type definition")
+        bufmap("n", "<leader>lr", vim.lsp.buf.rename, "LSP rename")
+        bufmap("n", "<leader>rn", vim.lsp.buf.rename, "LSP rename")
+        bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "code actions")
+        bufmap("i", "<C-h>", vim.lsp.buf.signature_help, "insert mode signature help")
+        bufmap("n", "<leader>lf", function()
+            vim.lsp.buf.format({ async = true })
+        end, "LSP format entire buffer")
+        bufmap("v", "<leader>lf", function()
+            vim.lsp.buf.format({
+                async = true,
+                range = {
+                    ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+                    ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+                },
+            })
+        end, "LSP format selection")
+        -- print("LSP successfully attached 😊")
+    end,
 })
 
 vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>")

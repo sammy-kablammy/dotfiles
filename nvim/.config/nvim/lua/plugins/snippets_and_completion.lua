@@ -46,43 +46,43 @@ vim.keymap.set({ "i", "s" }, "<C-n>", function() luasnip.jump(1) end, { silent =
 vim.keymap.set({ "i", "s" }, "<C-p>", function() luasnip.jump(-1) end, { silent = true })
 
 cmp.setup({
-	enabled = function()
-	    local filetype = vim.o.filetype
-	    return not (filetype == "TelescopePrompt")
-	end,
+    enabled = function()
+        local filetype = vim.o.filetype
+        return not (filetype == "TelescopePrompt")
+    end,
     performance = {
         -- these is supposed to make things faster, idrk
         -- bonkers. why isn't this the default behavior?? so much more usable.
         debounce = 0,
         throttle = 0,
     },
-	-- only offer suggestions on keypress; don't have a popup window constantly
-	-- appearing with suggestions.
-	completion = {
-		autocomplete = false,
-	},
-	window = {
-		documentation = cmp.config.window.bordered(),
-		-- completion = cmp.config.window.bordered(),
-	},
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-	mapping = cmp.mapping.preset.insert({
-		-- (c-n triggers the completion menu - no need to invoke it separately)
-		["<C-y>"] = cmp.mapping.confirm({ select = true }),
-		["<C-e>"] = cmp.mapping.abort(),
-		["<C-u>"] = cmp.mapping.scroll_docs(-4),
-		["<C-d>"] = cmp.mapping.scroll_docs(4),
-	}),
-	sources = cmp.config.sources({
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-		{ name = "path" },
-		{ name = "buffer" },
-	}),
+    -- only offer suggestions on keypress; don't have a popup window constantly
+    -- appearing with suggestions.
+    completion = {
+        autocomplete = false,
+    },
+    window = {
+        documentation = cmp.config.window.bordered(),
+        -- completion = cmp.config.window.bordered(),
+    },
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    },
+    mapping = cmp.mapping.preset.insert({
+        -- (c-n triggers the completion menu - no need to invoke it separately)
+        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<C-u>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-d>"] = cmp.mapping.scroll_docs(4),
+    }),
+    sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "path" },
+        { name = "buffer" },
+    }),
 })
 
 vim.keymap.set("n", "<leader>lc", "<cmd>CmpStatus<cr>")

@@ -23,10 +23,10 @@ vim.keymap.set("n", "<leader><enter>", "<cmd>!go run %<cr>", { buffer = true })
 vim.keymap.set("n", "<leader><leader><enter>", "<cmd>vert new | r!go run #<cr>", { buffer = true })
 
 -- vim.api.nvim_create_autocmd({ "BufWrite" }, {
--- 	pattern = { "*.go" },
--- 	callback = function()
+--     pattern = { "*.go" },
+--     callback = function()
 --         vim.cmd("silent %!gofmt")
--- 	end,
+--     end,
 -- })
 
 vim.cmd([[inoreabbrev ien if err != nil {]])

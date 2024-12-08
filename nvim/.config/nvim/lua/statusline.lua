@@ -1,7 +1,7 @@
 -- i used to use a statusline plugin but honestly vim's builtin statusline is
 -- totally fine. besides, most statusline plugins aren't really hiding any
 -- complexity; they're horizontal abstractions. i'd rather avoid an extra
--- dependency in my config and just use the default one. 
+-- dependency in my config and just use the default one.
 
 -- TODO consider using 'winbar' instead of 'statusline'
 
@@ -24,7 +24,7 @@ function LspStatusline()
     local retval = ""
     local num_servers = #vim.lsp.get_clients()
     local diagnostics = #vim.diagnostic.count()
-	if num_servers ~= 0 then
+    if num_servers ~= 0 then
         retval = retval .. "%#SamLspStatusLineTitle#LSPs:" .. num_servers .. "%#StatusLine#"
     end
     if diagnostics ~= 0 then
@@ -32,6 +32,7 @@ function LspStatusline()
     end
     return retval .. " "
 end
+
 local matchparencolor = vim.api.nvim_get_hl(0, { name = "MatchParen" }).fg
 local matchparenhex = string.format('#%06x', matchparencolor)
 vim.cmd("highlight SamStatusLineNoteTitle guifg=" .. matchparenhex .. " guibg=" .. bgcolorhex)
@@ -41,6 +42,7 @@ function StatusLineNoteTitle()
     end
     return "%#SamStatusLineNoteTitle# (" .. vim.fn.getline(1) .. ")%#StatusLine#"
 end
+
 function StatusLineFileformat()
     if vim.bo.fileformat == "unix" then
         return ""
