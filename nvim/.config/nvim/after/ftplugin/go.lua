@@ -37,3 +37,4 @@ vim.b.sam_documentation_url = "https://pkg.go.dev/std"
 InsertMap("f", "for i := 0; i < len; i++ {\n}<esc>O")
 InsertMap("m", "func main() {<cr>}<esc>O")
 InsertMap("p", 'fmt.Println("")<left><left>')
+InsertMap("a", 'slice = append(slice, val)')

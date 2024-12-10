@@ -232,7 +232,8 @@ vim.keymap.set("n", "<leader>q", "<c-q>")
 vim.keymap.set("n", "<leader>tm", "<cmd>silent !tmux split -h -c '%:p:h'<cr>", { desc = "open directory in tmux split" })
 vim.keymap.set("n", "<leader>x", "<cmd>silent !xdg-open '%:p:h'<cr>", { desc = "open directory in file explorer" })
 vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>")
-
+vim.keymap.set("c", "<c-h>", "<left>")
+vim.keymap.set("c", "<c-l>", "<right>")
 
 
 

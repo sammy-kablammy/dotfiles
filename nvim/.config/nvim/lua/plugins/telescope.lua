@@ -10,8 +10,10 @@ local utils = require("telescope.utils")
 telescope.setup({
     defaults = {
         layout_config = {
-            width = 0.95, -- (this is a percentage)
-            height = 0.95,
+            -- width = 0.99, -- (this is a percentage)
+            -- height = 0.99,
+            width = vim.o.columns,
+            height = vim.o.lines,
             preview_cutoff = 5,
         },
         mappings = {

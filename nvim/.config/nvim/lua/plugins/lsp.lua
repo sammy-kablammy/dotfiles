@@ -80,8 +80,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         bufmap("n", "gD", vim.lsp.buf.declaration, "LSP goto Declaration")
         bufmap("n", "gr", vim.lsp.buf.references, "LSP get references")
         bufmap('n', '<leader>gi', vim.lsp.buf.implementation, "LSP goto implementation")
-        bufmap('n', '<leader>gs', vim.lsp.buf.signature_help, "LSP get signature")
-        bufmap("n", "<leader>gt", vim.lsp.buf.type_definition, "LSP type definition")
         bufmap("n", "<leader>lr", vim.lsp.buf.rename, "LSP rename")
         bufmap("n", "<leader>rn", vim.lsp.buf.rename, "LSP rename")
         bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "code actions")
@@ -98,6 +96,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 },
             })
         end, "LSP format selection")
+        bufmap("i", "<leader>lh", function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+        end, "toggle inlay hints")
         -- print("LSP successfully attached 😊")
     end,
 })
