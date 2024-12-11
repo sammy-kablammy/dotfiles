@@ -17,7 +17,7 @@ if [ "$1" = "-t" ]; then
     tag="$2"
     shift 2
     query=$(echo "$@" | sed 's/ /[[:space:]]/g')
-    matches=$(grep -il "^#$tag$" main/20*.md | xargs grep -il "$query")
+    matches=$(grep -il "^#$tag.*$" main/20*.md | xargs grep -il "$query")
 else
     query=$(echo "$@" | sed 's/ /[[:space:]]/g')
     matches=$(grep -il "$query" main/20*.md)
