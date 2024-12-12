@@ -76,9 +76,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
         -- See `:help vim.lsp.*` for documentation on any of the below functions
         -- note: K does LSP hover. this is nvim default behavior now, apparently
-        bufmap("n", "gd", vim.lsp.buf.definition, "LSP goto definition")
-        bufmap("n", "gD", vim.lsp.buf.declaration, "LSP goto Declaration")
         bufmap("n", "gr", vim.lsp.buf.references, "LSP get references")
+        bufmap("n", "<leader>gr", vim.lsp.buf.references, "LSP get references")
+        -- i think i want the option to use the dumber (but potentially faster)
+        -- goto-definition that's built into vim
+        bufmap("n", "<leader>gd", vim.lsp.buf.definition, "LSP goto definition")
+        bufmap("n", "<leader>gD", vim.lsp.buf.declaration, "LSP goto Declaration")
         bufmap('n', '<leader>gi', vim.lsp.buf.implementation, "LSP goto implementation")
         bufmap("n", "<leader>lr", vim.lsp.buf.rename, "LSP rename")
         bufmap("n", "<leader>rn", vim.lsp.buf.rename, "LSP rename")
@@ -96,7 +99,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 },
             })
         end, "LSP format selection")
-        bufmap("i", "<leader>lh", function()
+        bufmap("n", "<leader>lh", function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end, "toggle inlay hints")
         -- print("LSP successfully attached 😊")

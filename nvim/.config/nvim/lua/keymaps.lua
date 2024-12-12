@@ -91,6 +91,9 @@ vim.keymap.set("n", "<s-down>", "<c-d>zz")
 vim.keymap.set({ "n", "v" }, "n", "/<c-r>/<cr>")
 vim.keymap.set({ "n", "v" }, "N", "?<c-r>/<cr>")
 
+vim.keymap.set({ "n", "v" }, "gd", "gd<cmd>nohlsearch<cr>")
+vim.keymap.set({ "n", "v" }, "gD", "gd<cmd>nohlsearch<cr>")
+
 -- slide text left and right whhheeeeeeeeeeeee!!! nrrooooooooom!!!
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")

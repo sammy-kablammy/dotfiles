@@ -46,7 +46,7 @@ mini_files.setup({
         -- permanent_delete = true,
         permanent_delete = false,
         -- Whether to use for editing directories
-        use_as_default_explorer = true,
+        use_as_default_explorer = false,
     },
 
     -- Customization of explorer windows
