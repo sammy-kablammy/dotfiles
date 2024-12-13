@@ -40,6 +40,7 @@
     fq = "fetch --quiet"
     fs = "!f() { git fetch && git status --short --branch; }; f"
     fst = "!f() { git fetch && git status; }; f"
+    grepall = "!f() { git grep -i \"$1\" $(git rev-list --all); }; f"
     l = "log --all --graph --decorate --oneline -7"
     ls = "ls-files"
     mt = "mergetool"
