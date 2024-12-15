@@ -306,6 +306,12 @@ vim.api.nvim_create_user_command("Seshma", function()
     end
 end, {})
 
+vim.filetype.add({
+    ["*.bash"] = "sh",
+    [".bashrc_after"] = "sh",
+})
+
+
 
 
 -- netrw stuff (unused for now?)

@@ -1,1 +1,0 @@
-/home/sam/.config/nvim/after/ftplugin/sh.lua

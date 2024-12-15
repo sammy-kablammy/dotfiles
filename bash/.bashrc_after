@@ -45,6 +45,7 @@ alias 'tldr'='tldr --theme base16'
 alias 's'='sessionizer'
 alias 'ytd'='yt-dlp --write-description --embed-thumbnail --embed-chapters --embed-subs'
 alias 'ol'='ollama run llama3.1'
+alias 'gccw'='-Wall -Werror'
 
 # cd to multiple places at once; easier up-a-dir
 c () {
@@ -160,6 +161,12 @@ shopt -s cdspell
 # for this section, check out the PROMPTING heading in bash(1)
 export PROMPT_DIRTRIM=3
 export PS1="\[\e[0;36m\]\w\[\e[0;37m\]$ \[\e[0m\]"
+if [ ! -z $REMOTE ]; then
+    # different color prompt so that i remember i'm on a remote machine
+    export PS1="\[\e[0;35m\]\w\[\e[0;37m\]$ \[\e[0m\]"
+    # alternative prefix so local tmux doesn't conflict with remote tmux
+    tmux set -g prefix C-space
+fi
 export PS2="> "
 if [ -z $TMUX ]; then
     PS1="(no tmux) $PS1"
@@ -259,5 +266,4 @@ alias CCCC='f ../../../..'
 
 
 
-# note: you don't include "set" in modelines; just put the option and value
 # vim: filetype=sh
