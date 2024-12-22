@@ -161,20 +161,24 @@ shopt -s cdspell
 # for this section, check out the PROMPTING heading in bash(1)
 export PROMPT_DIRTRIM=3
 export PS1="\[\e[0;36m\]\w\[\e[0;37m\]$ \[\e[0m\]"
-if [ ! -z $REMOTE ]; then
+if [ ! -z "$REMOTE" ]; then
     # different color prompt so that i remember i'm on a remote machine
     export PS1="\[\e[0;35m\]\w\[\e[0;37m\]$ \[\e[0m\]"
     # alternative prefix so local tmux doesn't conflict with remote tmux
     tmux set -g prefix C-space
 fi
 export PS2="> "
-if [ -z $TMUX ]; then
+if [ -z "$TMUX" ]; then
     PS1="(no tmux) $PS1"
 fi
 
 alias 'mn'='man --pager="nvim +Man!"'
 mansearch () {
-    man --pager="less -p $2" $1
+    if [ $# -eq 0 ]; then
+        echo 'Example: mansearch bash expansion'
+        return
+    fi
+    man --pager="less -p $2" "$1"
 }
 alias mansections='man man | sed -n "22,30p"'
 
@@ -191,7 +195,7 @@ export HISTFILESIZE=
 # your bashrc! otherwise some shells might clear history (for some reason).
 # because of this, it's good to change the history file, just to be safe:
 export HISTFILE=~/.bash_history_infinite
-export HISTTIMEFORMAT='(%F %T)'
+export HISTTIMEFORMAT='(%F %T)  '
 
 # share tmux history throughout all tmux panes/windows/sessions. see these posts:
 # https://stackoverflow.com/questions/12247777/share-history-between-panes-windows
