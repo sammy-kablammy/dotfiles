@@ -153,6 +153,24 @@ vim.keymap.set("n", "]t", "gt", { desc = "next tab" })
 vim.keymap.set("n", "[T", function() vim.cmd.tabmove("-1") end, { desc = "move tab left" })
 vim.keymap.set("n", "]T", function() vim.cmd.tabmove("+1") end, { desc = "move tab right" })
 
+-- some more quickfix stuff
+vim.keymap.set("n", "<c-q>", function()
+    local current_qf_idx = vim.fn.getqflist({idx = 0}).idx
+    local qf_len = vim.fn.len(vim.fn.getqflist())
+    if current_qf_idx == qf_len then
+        -- this is the last quickfix entry; don't go any further
+        return
+    end
+    vim.cmd.cnext()
+end, { desc = "next quickfix entry, but don't go off the edge" })
+vim.keymap.set("n", "<leader>q", function()
+    if vim.bo.buftype == "quickfix" then
+        vim.cmd.cclose()
+    else
+        vim.cmd.copen()
+    end
+end)
+
 -- it's annoying for search results highlighted all the time, so i press this occasionally
 vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>")
 -- display current buffer in new tab. unlike <c-w>T because it keeps the old
@@ -228,14 +246,6 @@ vim.keymap.set("n", "<bs>", "<cmd>bd<cr>", { desc = "delete buffer" })
 vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>", { desc = "vsplit previous buffer" })
 vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]]) -- escape terminal mode (because the default mapping is weird)
-vim.keymap.set("n", "<c-q>", function()
-    if vim.bo.buftype == "quickfix" then
-        vim.cmd.cclose()
-    else
-        vim.cmd.copen()
-    end
-end)
-vim.keymap.set("n", "<leader>q", "<c-q>")
 vim.keymap.set("n", "<leader>tm", "<cmd>silent !tmux split -h -c '%:p:h'<cr>", { desc = "open directory in tmux split" })
 vim.keymap.set("n", "<leader>x", "<cmd>silent !xdg-open '%:p:h'<cr>", { desc = "open directory in file explorer" })
 vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>")
