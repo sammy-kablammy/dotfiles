@@ -153,7 +153,7 @@ require("lazy").setup({
     {
         "echasnovski/mini.nvim",
         version = "*",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+        -- dependencies = { "nvim-tree/nvim-web-devicons" },
     },
     {
         "norcalli/nvim-colorizer.lua",

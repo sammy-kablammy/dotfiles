@@ -1,12 +1,22 @@
--- i would rather just use netrw but boy... the ability to preview files is
--- really useful. telescope's live_grep feature kinda does this but it requires
--- a search query. also just having the browser be a popup that supports vim
--- motions for editing files is nice.
+--[[
+
+i don't like relying on so many plugins but this one is just too convenient.
+if you're ever considering switching to something else, consider these benefits:
+- edit the file system like a text buffer
+- the multi-column view of several layers of directories at once is really nice
+  (i don't think oil supports this)
+- automatically open a file preview window when hovering over a file
+- opens in a popup so :bdel works properly without closing windows you want to
+  keep open
+
+--]]
+
+-- use mini.icons instead of web-devicons
+require("mini.icons").mock_nvim_web_devicons()
 
 local mini_files = require("mini.files")
 
-vim.keymap.set("n", "<leader>eee", function()
-    print("try not to rely on this so much")
+vim.keymap.set("n", "<leader>ee", function()
     mini_files.open(vim.api.nvim_buf_get_name(0), false)
 end)
 
