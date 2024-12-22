@@ -1,6 +1,15 @@
 -- https://github.com/lewis6991/gitsigns.nvim
 
-require('gitsigns').setup {
+local gitsigns = require("gitsigns")
+
+vim.keymap.set("n", "[g", function()
+    gitsigns.nav_hunk("prev")
+end)
+vim.keymap.set("n", "]g", function()
+    gitsigns.nav_hunk("next")
+end)
+
+gitsigns.setup {
     signs = {
         add          = { text = '┃' },
         change       = { text = '┃' },
