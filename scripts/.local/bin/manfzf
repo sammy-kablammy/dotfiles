@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# dear lord someone please take regexes away from me
+
+# recall that "find -regex" patterns must match the entire line (i.e. there's an
+# implicit ^...$ surrounding your pattern)
+find /usr/share/man -regextype posix-egrep -regex '/usr/share/man/man[1-8]/.*' |
+    sed 's/\/usr\/share\/man\/man[1-8]\///' |
+    fzf |
+    sed 's/\(.*\)\.[1-8]\.gz/\1/' |
+    xargs man
