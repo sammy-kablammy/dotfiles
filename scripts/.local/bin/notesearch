@@ -3,24 +3,37 @@
 # new note searching program, supports tags this time :)
 # this one doesn't use fzf. it opens every match and relies on telescope search
 
-cd /home/sam/notes
+cd /home/sam/notes/main
 
 if [ $# -eq 0 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo "Search and edit notes by content"
     echo ""
     echo "Options:"
     echo "  -t tagname        Restrict search to notes containing tagname"
+    echo "  -n                Output matching files instead of opening them"
     exit 1
+fi
+
+if [ "$1" = "-n" ]; then
+    # we're inside nvim right now, don't edit the files, just output them so
+    # nvim can scoop 'em up
+    shift 1
+    output="true"
 fi
 
 if [ "$1" = "-t" ]; then
     tag="$2"
     shift 2
     query=$(echo "$@" | sed 's/ /[[:space:]]/g')
-    matches=$(grep -il "^#$tag.*$" main/20*.md | xargs grep -il "$query")
+    matches=$(grep -il "^#$tag.*$" ./20*.md | xargs grep -il "$query")
 else
     query=$(echo "$@" | sed 's/ /[[:space:]]/g')
-    matches=$(grep -il "$query" main/20*.md)
+    matches=$(grep -il "$query" ./20*.md)
 fi
 
-echo "$matches" | xargs nvim
+if [ -z "$output" ]; then
+    # populate the quickfix list with matches
+    echo "$matches" | xargs nvim +"silent vimgrep /$query/ ##"
+else
+    echo "$matches"
+fi
