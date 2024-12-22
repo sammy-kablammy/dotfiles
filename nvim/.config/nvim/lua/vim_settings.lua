@@ -11,7 +11,7 @@ but seems to break when opening multiple files from the command line:
 ("vim file1 file2 file3"). only the first buffer will receive these top-level
 settings. for this case, you'll want to use a BufEnter autocommand / ftplugin
 (or just NEVER EVER open multiple files at once from the command line and you
-should be fine).
+should be fine but that's a bit extreme).
 --]]
 
 --[[

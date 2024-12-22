@@ -216,6 +216,10 @@ end, { desc = "source" })
 vim.keymap.set("n", "<leader>gh", function() vim.cmd("cd %:h") end, { desc = "go here - change cwd to match current buffer" })
 vim.keymap.set("n", "<leader><leader>m", "<cmd>messages<cr>")
 vim.keymap.set("n", "<leader><leader>p", "<cmd>pwd<cr>")
+vim.keymap.set("n", "<leader><leader>y", function()
+    local name = vim.fn.expand("%:t")
+    vim.fn.setreg("", name)
+end, { desc = "yank current file name" })
 vim.keymap.set("n", "g=", "g+") -- (redo, alias for g+)
 vim.keymap.set("n", "<c-w>u", "<c-w>p")
 vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
@@ -237,6 +241,8 @@ vim.keymap.set("n", "<leader>x", "<cmd>silent !xdg-open '%:p:h'<cr>", { desc = "
 vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>")
 vim.keymap.set("c", "<c-h>", "<left>")
 vim.keymap.set("c", "<c-l>", "<right>")
+vim.keymap.set("n", "<leader><leader>x", "<cmd>%!xxd<cr>")
+vim.keymap.set("i", "<c-b>", "`")
 
 
 

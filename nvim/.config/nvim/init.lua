@@ -7,6 +7,7 @@ local function print_random_startup_message()
         'welcome to vscode',
         'kama pona tawa ilo Neowin',
         'Welcome to GNU Emacs, one component of the GNU/Linux operating system.',
+        'ed (the standard text editor)',
     }
     print(messages[math.random(#messages)])
 end

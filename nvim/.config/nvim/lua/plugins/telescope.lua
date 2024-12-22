@@ -44,6 +44,7 @@ telescope_map("c", builtin.command_history, "command history")
 telescope_map("k", builtin.keymaps, "keymaps")
 telescope_map("s", builtin.grep_string, "grep_string") -- note, this does a simple inclusive search, not \<\> search
 telescope_map("y", builtin.lsp_document_symbols, "LSP document symbols")
+telescope_map("Y", builtin.lsp_dynamic_workspace_symbols, "LSP dynamic workspace symbols")
 telescope_map("i", builtin.vim_options, "vim options")
 telescope_map("t", builtin.builtin, "telescope builtin")
 telescope_map("r", builtin.resume, "telescope resume")
