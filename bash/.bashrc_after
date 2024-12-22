@@ -74,7 +74,7 @@ fi
 set -o noclobber
 
 # quickly simulate WSL with `tmux new-window -e WSL_DISTRO_NAME=Ubuntu`
-if [ ! -z $WSL_DISTRO_NAME ]; then
+if [ ! -z "$WSL_DISTRO_NAME" ]; then
     alias 'x'='explorer.exe'
     # on WSL, you should download the wslu package to get `wslview`, which is similar to xdg-open
 else
@@ -92,36 +92,36 @@ fi
 
 # combine these and just detect whether the selection is a file or directory
 cf () {
-    target_directory=$(find -type d -not -path "*/.git/*" 2>/dev/null | fzf)
-    if [ ! -z $target_directory ]; then
-        cd $target_directory
+    target_directory=$(find . -type d -not -path "*/.git/*" 2>/dev/null | fzf)
+    if [ ! -z "$target_directory" ]; then
+        cd "$target_directory"
     fi
 }
 nf () {
-    target_file=$(find -not -path "*/.git/*" 2>/dev/null | fzf)
-    if [ ! -z $target_file ]; then
-        nvim $target_file
+    target_file=$(find . -not -path "*/.git/*" 2>/dev/null | fzf)
+    if [ ! -z "$target_file" ]; then
+        nvim "$target_file"
     fi
 }
 
 cl () {
-    cd $1 && ls
+    cd "$1" && ls
 }
 
 # shorter pushd, suppresses the "dirs"-like message that pushd normally outputs
 pd() {
-    if [ -z $1 ]; then
-        pushd $HOME 1>/dev/null
+    if [ -z "$1" ]; then
+        pushd "$HOME" 1>/dev/null
     else
-        pushd $1 1>/dev/null
+        pushd "$1" 1>/dev/null
     fi
 }
 
 # make and then cd into directory
 mcd () {
     if [ $# -eq 1 ]; then
-        mkdir -p $1
-        cd $1
+        mkdir -p "$1"
+        cd "$1"
     else
         echo "Expected name of directory to make. Ex: 'mcd myproject'"
     fi
@@ -226,12 +226,13 @@ bind '"\C-xv": "--version"'
 bind '"\C-x\C-v": "\C-xv"'
 bind '"\C-xf": "\"$(fzf)\""'
 bind '"\C-x\C-f": "\C-xf"'
+bind '"\C-xd": ">/dev/null"'
 bind '"\C-x?": "man bash | less -p \"Commands for Moving\"\n"' # (open keybind reference)
 bind '"\e\C-p":history-search-backward'
 bind '"\e\C-n":history-search-forward'
 
 # WSL might not define the XDG family of environment variables for you
-if [ -z XDG_CONFIG_HOME ]; then
+if [ -z "$XDG_CONFIG_HOME" ]; then
     export XDG_CONFIG_HOME=$HOME/.config/
 fi
 
