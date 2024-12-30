@@ -57,8 +57,12 @@ require("lspconfig").dartls.setup({})
 
 -- global LSP mappings
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "previous diagnostic" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
+vim.keymap.set("n", "[d", function()
+    vim.diagnostic.goto_prev({ wrap = false })
+end, { desc = "previous diagnostic" })
+vim.keymap.set("n", "]d", function()
+    vim.diagnostic.goto_next({ wrap = false})
+end, { desc = "next diagnostic" })
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "diagnostic float" })
 vim.keymap.set("n", "<leader>D", vim.diagnostic.setqflist, {
     desc = "populate qflist with diagnostics",
@@ -106,7 +110,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
-vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>")
-vim.keymap.set("n", "<leader>ll", "<cmd>LspLog<cr>")
-vim.keymap.set("n", "<leader>la", "<cmd>LspStart<cr>")
-vim.keymap.set("n", "<leader>ls", "<cmd>LspStop<cr>")
+vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "Lsp Info" })
+vim.keymap.set("n", "<leader>ll", "<cmd>LspLog<cr>", { desc = "LSP Log" })
+vim.keymap.set("n", "<leader>la", "<cmd>LspStart<cr>", { desc = "LSP stArt" })
+vim.keymap.set("n", "<leader>ls", "<cmd>LspStop<cr>", { desc = "LSP Stop" })

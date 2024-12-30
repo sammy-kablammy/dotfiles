@@ -181,10 +181,10 @@ require("lazy").setup({
                     vim.api.nvim_buf_create_user_command(0, "LinkmaToc", linkma.toc_loclist, {})
                     vim.keymap.set("n", "<enter>", linkma.follow_link, { buffer = 0, desc = "follow link" })
                     -- link text object support
-                    vim.keymap.set("x", "il", linkma.select_link_text_object, { buffer = 0, desc = "inner link" })
-                    vim.keymap.set("o", "il", ":normal vil<cr>", { buffer = 0, desc = "inner link" })
-                    vim.keymap.set("x", "al", function() linkma.select_link_text_object(true) end, { buffer = 0, desc = "around link" })
-                    vim.keymap.set("o", "al", ":normal val<cr>", { buffer = 0, desc = "around link" })
+                    vim.keymap.set("x", "im", linkma.select_link_text_object, { buffer = 0, desc = "inner link" })
+                    vim.keymap.set("o", "im", ":normal vil<cr>", { buffer = 0, desc = "inner link" })
+                    vim.keymap.set("x", "am", function() linkma.select_link_text_object(true) end, { buffer = 0, desc = "around link" })
+                    vim.keymap.set("o", "am", ":normal val<cr>", { buffer = 0, desc = "around link" })
                 end,
             })
         end,

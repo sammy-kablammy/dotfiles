@@ -98,9 +98,17 @@ require("nvim-treesitter.configs").setup({
             },
             -- You can choose the select mode (default is charwise 'v')
             selection_modes = {
-                ["@parameter.outer"] = "v", -- charwise
-                ["@function.outer"] = "V", -- linewise
+                -- ["@parameter.outer"] = "v", -- charwise
+                -- ["@function.outer"] = "V", -- linewise
                 -- ["@class.outer"] = "<c-v>", -- blockwise
+                ["@function.inner"] = "V",
+                ["@function.outer"] = "V",
+                ["@loop.inner"] = "V",
+                ["@loop.outer"] = "V",
+                ["@conditional.inner"] = "V",
+                ["@conditional.outer"] = "V",
+                ["@block.inner"] = "V",
+                ["@block.outer"] = "V",
             },
         },
         swap = {

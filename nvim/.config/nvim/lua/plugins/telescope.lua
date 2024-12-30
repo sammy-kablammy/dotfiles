@@ -28,7 +28,8 @@ local function telescope_map(lhs, rhs, desc)
     vim.keymap.set("n", "<leader>f" .. lhs, rhs, { desc = desc })
 end
 
-telescope_map("f", function() builtin.find_files({ hidden = true }) end, "find files")
+-- telescope_map("f", function() builtin.find_files({ hidden = true }) end, "find files")
+telescope_map("f", function() builtin.find_files() end, "find files")
 telescope_map("F", function() builtin.find_files({ hidden = true, cwd = utils.buffer_dir() }) end, "find files relative to current buffer")
 telescope_map("h", builtin.help_tags, "help")
 telescope_map("b", builtin.buffers, "buffers")
