@@ -10,10 +10,12 @@
 [core]
     editor = nvim
     # git likes to dump a bunch of garbage to stdout when exiting the pager for
-    # commands like 'git log' and 'git show'
-	pager = less -+X # (the + re-enables the option)
+    # commands like 'git log' and 'git show', i don't like this
+	pager = less --LONG-PROMPT --ignore-case -+X # (the + re-enables the option)
 [init]
     defaultBranch = main
+[push]
+    default = simple
 [pull]
     rebase = false
 [diff]
