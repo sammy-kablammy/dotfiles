@@ -23,16 +23,12 @@ vim.cmd("highlight SamLspStatusLineError guifg=" .. errorcolorhex .. " guibg=" .
 function LspStatusline()
     local retval = ""
     local num_servers = #vim.lsp.get_clients()
-    local diagnostics_table = vim.diagnostic.count()
-    local diagnostics_count = 0
-    if #diagnostics_table > 0 then
-        diagnostics_count = diagnostics_table[1]
-    end
+    local diagnostics = #vim.diagnostic.count()
     if num_servers ~= 0 then
         retval = retval .. "%#SamLspStatusLineTitle#LSPs:" .. num_servers .. "%#StatusLine#"
     end
-    if diagnostics_count ~= 0 then
-        retval = retval .. " %#SamLspStatusLineError#Diagnostics:" .. diagnostics_count .. "%#StatusLine#"
+    if diagnostics ~= 0 then
+        retval = retval .. " %#SamLspStatusLineError#Diagnostics:" .. diagnostics .. "%#StatusLine#"
     end
     return retval .. " "
 end
