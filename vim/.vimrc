@@ -11,6 +11,7 @@
 " source otherfile.vim
 
 let mapleader = "<space>"
+nnoremap <leader>/ :nohlsearch<CR>
 color slate
 syntax on
 set number

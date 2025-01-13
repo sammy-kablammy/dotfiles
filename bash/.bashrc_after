@@ -149,7 +149,9 @@ markthis() {
 }
 
 # open tmux on startup!!! we love tmux!!!
-if [ -z "$TMUX" ]; then
+if [ "$REMOTE" ]; then
+    : # (noop)
+elif [ -z "$TMUX" ]; then
     tmux attach || tmux new-session
 else
     tmux set status off
@@ -162,15 +164,17 @@ shopt -s autocd
 shopt -s cdspell
 
 # for this section, check out the PROMPTING heading in bash(1)
-export PROMPT_DIRTRIM=3
-export PS1="\[\e[0;36m\]\w\[\e[0;37m\]$ \[\e[0m\]"
-if [ ! -z "$REMOTE" ]; then
-    # different color prompt so that i remember i'm on a remote machine
-    export PS1="\[\e[0;35m\]\w\[\e[0;37m\]$ \[\e[0m\]"
+# different prompt so i remember when i'm on a remote machine
+if [ "$REMOTE" ]; then
+    # export PS1="\[\e[0;35m\]\w\[\e[0;37m\]$ \[\e[0m\]"
     # alternative prefix so local tmux doesn't conflict with remote tmux
     tmux set -g prefix C-space
+else
+    export PROMPT_DIRTRIM=3
+    export PS1="\[\e[0;36m\]\w\[\e[0;37m\]$ \[\e[0m\]"
+    export PS2="> "
 fi
-export PS2="> "
+
 if [ -z "$TMUX" ]; then
     PS1="(no tmux) $PS1"
 fi

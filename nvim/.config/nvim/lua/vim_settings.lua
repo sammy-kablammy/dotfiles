@@ -184,7 +184,8 @@ vim.o.colorcolumn = "+0"
 vim.o.cursorline = true
 -- i used to use scrolloff=5, then 3, but these days i think i prefer none. i
 -- use motions like H M L <c-e> <c-y> zt zz zb to scroll around
-vim.o.scrolloff = 0
+-- NOPE scrolloff 0 is really annoying
+vim.o.scrolloff = 1
 vim.o.sidescrolloff = 3
 vim.o.signcolumn = "yes" -- i would use "number" but gitsigns signs are too common
 
