@@ -10,7 +10,6 @@ vim.bo.formatprg = "gofmt"
 
 -- integrate vim's :make command and quickfix list with go
 vim.cmd("compiler go")
--- i prefer "go run" to "go build" as "go run" won't produce a binary
 vim.o.makeprg = "go run"
 
 vim.keymap.set("n", "<leader>ts", "<cmd>!go test<cr>", { buffer = true })

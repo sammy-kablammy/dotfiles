@@ -42,8 +42,9 @@ require("luasnip.loaders.from_vscode").lazy_load()
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
-vim.keymap.set({ "i", "s" }, "<C-n>", function() luasnip.jump(1) end, { silent = true })
-vim.keymap.set({ "i", "s" }, "<C-p>", function() luasnip.jump(-1) end, { silent = true })
+-- TODO why was this here?
+-- vim.keymap.set({ "i", "s" }, "<C-l>", function() luasnip.jump(1) end, { silent = true })
+-- vim.keymap.set({ "i", "s" }, "<C-p>", function() luasnip.jump(-1) end, { silent = true })
 
 cmp.setup({
     enabled = function()
@@ -71,7 +72,26 @@ cmp.setup({
         end,
     },
     mapping = cmp.mapping.preset.insert({
-        -- (c-n triggers the completion menu - no need to invoke it separately)
+
+        -- Use <c-l> ("L" for "Lsp"). I don't like relying on LSP/snippets when
+        -- the default (string-based) completion will do. Plus, builtin is way
+        -- faster.
+        ["<C-l>"] = cmp.mapping.complete(),
+        ["<C-n>"] = function()
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                vim.api.nvim_input("<c-x><c-n>")
+            end
+        end,
+        ["<C-p>"] = function()
+            if cmp.visible() then
+                cmp.select_prev_item()
+            else
+                vim.api.nvim_input("<c-x><c-p>")
+            end
+        end,
+        
         ["<C-y>"] = cmp.mapping.confirm({ select = true }),
         ["<C-e>"] = cmp.mapping.abort(),
         ["<C-u>"] = cmp.mapping.scroll_docs(-4),

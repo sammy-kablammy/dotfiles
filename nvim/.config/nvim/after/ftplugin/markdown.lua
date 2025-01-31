@@ -13,6 +13,10 @@ vim.keymap.set('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link 
 vim.keymap.set('n', '<leader>mc', 'I[<esc>A]<esc>jI(<esc>A)<esc>kJx', { desc = "markdown: Create link", buffer = true })
 vim.keymap.set('n', '<leader>mn', 'o[[<c-r>#]]<esc>^w', { desc = "markdown: link to Alternate file", buffer = true })
 
+if vim.fn.expand("%:t") == "resume.md" then
+    vim.keymap.set("n", "<leader><enter>", "<cmd>silent make open<enter>", { buffer = true })
+end
+
 InsertMap("a", "**<left>")
 
 -- 'a' option is cool but it messes up lists and basically everything
