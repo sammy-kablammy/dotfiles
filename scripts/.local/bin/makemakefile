@@ -1,16 +1,15 @@
 #!/bin/sh
-#vim:ft=sh
 
 if [ -f Makefile ]; then
-    echo "uhh... files already exist, you probably don't want to overwrite them"
+    echo "uhh... Makefile already exists, you probably don't want to overwrite it" >&2
     exit 1
 fi
 
 cat >Makefile <<EOL
-CC=gcc -Werror -Wall
+CC=gcc -Werror -Wall -Wextra -g -fsanitize=address,undefined,leak
 
 main: main.c
-	\$(CC) -o main main.c -lm
+	\$(CC) -o main main.c
 
 clean:
 	rm main

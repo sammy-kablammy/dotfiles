@@ -45,8 +45,8 @@ alias 'pg'='pgrep -i'
 alias 'tldr'='tldr --theme base16'
 alias 's'='sessionizer'
 alias 'ytd'='yt-dlp --write-description --embed-thumbnail --embed-chapters --embed-subs'
-alias 'ol'='ollama run llama3.1'
-alias 'gccw'='-Wall -Werror'
+alias 'ol'='ollama run deepseek-r1'
+alias 'gccw'='gcc -Wall -Werror -Wextra -g -fsanitize=address,undefined,leak'
 # like "go test" but with colorized output
 alias "gt"="go test ./... | sed 's/^ok/\o033[32mOK\o033[0m/; s/^FAIL/\o033[31mFAIL\o033[0m/'"
 
