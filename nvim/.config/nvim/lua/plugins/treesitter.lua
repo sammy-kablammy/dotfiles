@@ -69,9 +69,13 @@ require("nvim-treesitter.configs").setup({
             },
             goto_next_end = {
                 ["]F"] = "@function.outer",
+                ["]O"] = "@condition.outer",
+                ["]L"] = "@loop.outer",
             },
             goto_previous_start = {
                 ["[f"] = "@function.outer",
+                ["[O"] = "@condition.outer",
+                ["[L"] = "@loop.outer",
             },
             goto_previous_end = {
                 ["[F"] = "@function.outer",
