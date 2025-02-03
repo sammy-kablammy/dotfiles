@@ -50,6 +50,17 @@ function StatusLineFileformat()
     return vim.bo.fileformat .. " "
 end
 
+function StatusLinePosition()
+    local row = vim.fn.line(".")
+    local col = vim.fn.col(".")
+    -- Virtual column might be different for files with tabs
+    local virtcol = vim.fn.virtcol(".")
+    if col == virtcol then
+        return "(" .. row .. "," .. col .. ")"
+    end
+    return "(" .. row .. "," .. col .. "/" .. virtcol .. ")"
+end
+
 local filename = '%{expand("%:.")}'
 local cutoff_point = "%< "
 local modified_flag = "%m"
@@ -57,7 +68,7 @@ local readonly_flag = "%r"
 local padding = " %= "
 local note_title = '%{%luaeval("StatusLineNoteTitle()")%}'
 local lsp = '%{%luaeval("LspStatusline()")%}'
-local position = "(%l,%c) "
+local position = '%{%luaeval("StatusLinePosition()")%}'
 local fileformat = '%{luaeval("StatusLineFileformat()")}'
 vim.o.statusline = " " .. filename .. cutoff_point .. modified_flag .. readonly_flag .. note_title .. padding .. " " .. fileformat .. lsp .. position
 
