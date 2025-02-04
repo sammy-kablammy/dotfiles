@@ -173,6 +173,7 @@ require("lazy").setup({
     },
     {
         "sammy-kablammy/linkma.nvim",
+        -- NOTE: use "dir = '/path/to/local/plugin'" for local plugins
         config = function()
             local linkma = require("linkma")
             vim.api.nvim_create_autocmd({ "BufEnter" }, {
@@ -180,11 +181,14 @@ require("lazy").setup({
                 callback = function()
                     vim.api.nvim_buf_create_user_command(0, "LinkmaToc", linkma.toc_loclist, {})
                     vim.keymap.set("n", "<enter>", linkma.follow_link, { buffer = 0, desc = "follow link" })
-                    -- link text object support
+                    vim.keymap.set("n", "]x", linkma.next_checkbox, { desc = "next checkbox" })
+                    vim.keymap.set("n", "[x", linkma.previous_checkbox, { desc = "previous checkbox" })
+                    vim.keymap.set("n", "<c-x>", linkma.toggle_checkbox, { desc = "toggle checkbox" })
+                    -- text object for links
                     vim.keymap.set("x", "im", linkma.select_link_text_object, { buffer = 0, desc = "inner link" })
-                    vim.keymap.set("o", "im", ":normal vil<cr>", { buffer = 0, desc = "inner link" })
+                    vim.keymap.set("o", "im", ":normal vim<cr>", { buffer = 0, desc = "inner link" })
                     vim.keymap.set("x", "am", function() linkma.select_link_text_object(true) end, { buffer = 0, desc = "around link" })
-                    vim.keymap.set("o", "am", ":normal val<cr>", { buffer = 0, desc = "around link" })
+                    vim.keymap.set("o", "am", ":normal vam<cr>", { buffer = 0, desc = "around link" })
                 end,
             })
         end,
