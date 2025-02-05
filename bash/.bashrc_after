@@ -250,6 +250,12 @@ if [ -z "$XDG_CONFIG_HOME" ]; then
     export XDG_CONFIG_HOME=$HOME/.config/
 fi
 
+export TRASH=~/.local/share/Trash/files
+trash() {
+    mkdir -p "$TRASH"
+    mv -t "$TRASH" "$@"
+}
+
 # the classic "find | fzf" wombo combo
 SAM_F_MAX_DEPTH=6
 f () {
