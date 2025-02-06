@@ -12,21 +12,9 @@ vim.bo.formatprg = "gofmt"
 vim.cmd("compiler go")
 vim.o.makeprg = "go run"
 
-vim.keymap.set("n", "<leader>ts", "<cmd>!go test<cr>", { buffer = true })
-vim.keymap.set("n", "<leader>bn", "<cmd>!go test -bench=.<cr>", { buffer = true })
-vim.keymap.set("n", "<leader>W", "<cmd>%!gofmt<cr><cmd>w<cr>", { buffer = true })
--- NOTE you can't just use <enter> because that messes with the keybind that
--- jumps to a quickfix list element... or does it??? maybe it just wasn't buffer
--- local before... 🤔🤔🤔
-vim.keymap.set("n", "<leader><enter>", "<cmd>!go run %<cr>", { buffer = true })
-vim.keymap.set("n", "<leader><leader><enter>", "<cmd>vert new | r!go run #<cr>", { buffer = true })
-
--- vim.api.nvim_create_autocmd({ "BufWrite" }, {
---     pattern = { "*.go" },
---     callback = function()
---         vim.cmd("silent %!gofmt")
---     end,
--- })
+vim.keymap.set("n", "<leader><enter>", "<cmd>!go run .<cr>", { buffer = true, desc = "run current file" })
+vim.keymap.set("n", "<leader>gt", "<cmd>!go test .<cr>", { buffer = true, desc = "go test" })
+vim.keymap.set("n", "<leader>gb", "<cmd>!go test -bench=.<cr>", { buffer = true, desc = "go benchmark" })
 
 vim.cmd([[inoreabbrev ien if err != nil {]])
 vim.cmd([[inoreabbrev ienf if err != nil {<cr>log.Fatal(err)<cr>}]])
