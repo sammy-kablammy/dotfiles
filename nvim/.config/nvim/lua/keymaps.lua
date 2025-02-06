@@ -142,6 +142,8 @@ vim.keymap.set("n", "<leader>sz", "<cmd>Zenma<cr>", { desc = "experimental zen m
 -- square bracket fun time [ [ [ ] ] ]
 vim.keymap.set("n", "[b", vim.cmd.bprevious, { desc = "prev buffer" })
 vim.keymap.set("n", "]b", vim.cmd.bnext, { desc = "next buffer" })
+vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "prev qflist entry" })
+vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "next qflist entry" })
 vim.keymap.set("n", "[c", vim.cmd.cprev, { desc = "prev qflist entry" })
 vim.keymap.set("n", "]c", vim.cmd.cnext, { desc = "next qflist entry" })
 vim.keymap.set("n", "[C", vim.cmd.colder, { desc = "older qflist" })
@@ -247,11 +249,10 @@ vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>", { desc = "vsplit previous
 vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]]) -- escape terminal mode (because the default mapping is weird)
 vim.keymap.set("n", "<leader>tm", "<cmd>silent !tmux split -h -c '%:p:h'<cr>", { desc = "open directory in tmux split" })
-vim.keymap.set("n", "<leader>x", "<cmd>silent !xdg-open '%:p:h'<cr>", { desc = "open directory in file explorer" })
+vim.keymap.set("n", "<leader><leader>x", "<cmd>silent !xdg-open '%:p:h'<cr>", { desc = "open directory in file explorer" })
 vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>")
 vim.keymap.set("c", "<c-h>", "<left>")
 vim.keymap.set("c", "<c-l>", "<right>")
-vim.keymap.set("n", "<leader><leader>x", "<cmd>%!xxd<cr>")
 vim.keymap.set("i", "<c-b>", "`")
 
 
@@ -319,3 +320,4 @@ vim.keymap.set("i", "<c-b>", "`")
 -- vim.keymap.set("n", "<c-l>", "<c-w>l")
 -- vim.keymap.set("n", "<c-f>", "<c-f>zz") -- this doesn't work
 -- vim.keymap.set("n", "<c-b>", "<c-b>zz") -- this doesn't work
+-- vim.keymap.set("n", "<leader><leader>x", "<cmd>%!xxd<cr>")

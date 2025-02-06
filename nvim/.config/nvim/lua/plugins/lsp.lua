@@ -88,7 +88,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         bufmap("n", "<leader>gD", vim.lsp.buf.declaration, "LSP goto Declaration")
         bufmap('n', '<leader>gi', vim.lsp.buf.implementation, "LSP goto implementation")
         bufmap("n", "<leader>lr", vim.lsp.buf.rename, "LSP rename")
-        bufmap("n", "<leader>rn", vim.lsp.buf.rename, "LSP rename")
         bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "code actions")
         bufmap("i", "<C-h>", vim.lsp.buf.signature_help, "insert mode signature help")
         bufmap("n", "<leader>lf", function()

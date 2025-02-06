@@ -1,5 +1,5 @@
 math.randomseed(os.time())
-local function print_random_startup_message()
+local function shitpost()
     local messages = {
         '🤓🤓 neovim, btw 🤓🤓',
         '👀 hello neovimmers',
@@ -11,7 +11,7 @@ local function print_random_startup_message()
     }
     print(messages[math.random(#messages)])
 end
-print_random_startup_message()
+shitpost()
 
 -- Lazy.nvim bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -153,7 +153,6 @@ require("lazy").setup({
     {
         "echasnovski/mini.nvim",
         version = "*",
-        -- dependencies = { "nvim-tree/nvim-web-devicons" },
     },
     {
         "norcalli/nvim-colorizer.lua",
