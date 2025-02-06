@@ -252,6 +252,7 @@ end, {})
 vim.keymap.set("n", "<leader>nt", "<cmd>TagNotes<cr>")
 vim.keymap.set("n", "<leader>nn", "<cmd>NewNote<cr>")
 vim.keymap.set("n", "<leader>ni", "<cmd>edit ~/notes/main/inbox.md<cr>")
+vim.keymap.set("n", "<leader>na", "<cmd>edit ~/notes/main/agenda.md<cr>")
 vim.keymap.set("n", "<leader>nr", "<cmd>RandomNote<cr>")
 
 -- the path isn't set properly for some reason (at least on chromeos),

@@ -183,7 +183,7 @@ require("lazy").setup({
                     vim.keymap.set("n", "<enter>", linkma.follow_link, { buffer = 0, desc = "follow link" })
                     vim.keymap.set("n", "]x", linkma.next_checkbox, { desc = "next checkbox" })
                     vim.keymap.set("n", "[x", linkma.previous_checkbox, { desc = "previous checkbox" })
-                    vim.keymap.set("n", "<c-x>", linkma.toggle_checkbox, { desc = "toggle checkbox" })
+                    vim.keymap.set("n", "<leader>mx", linkma.toggle_checkbox, { desc = "toggle checkbox" })
                     -- text object for links
                     vim.keymap.set("x", "im", linkma.select_link_text_object, { buffer = 0, desc = "inner link" })
                     vim.keymap.set("o", "im", ":normal vim<cr>", { buffer = 0, desc = "inner link" })

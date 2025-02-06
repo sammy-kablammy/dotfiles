@@ -13,6 +13,8 @@ vim.keymap.set('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link 
 vim.keymap.set('n', '<leader>mc', 'I[<esc>A]<esc>jI(<esc>A)<esc>kJx', { desc = "markdown: Create link", buffer = true })
 vim.keymap.set('n', '<leader>mn', 'o[[<c-r>#]]<esc>^w', { desc = "markdown: link to Alternate file", buffer = true })
 
+vim.keymap.set("i", "<c-x><enter>", "<enter><c-d>- [ ] ", { desc = "create new checkbox" })
+
 if vim.fn.expand("%:t") == "resume.md" then
     vim.keymap.set("n", "<leader><enter>", "<cmd>silent make open<enter>", { buffer = true })
 end
