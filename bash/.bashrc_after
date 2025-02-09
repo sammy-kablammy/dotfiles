@@ -15,6 +15,9 @@
 # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 # nvm install 20
 
+# this should be commented out on my main machine
+REMOTE=yup
+
 alias 'ls'='ls --color=auto'
 alias 'll'='ls -lh'
 alias 'la'='ls -a'
