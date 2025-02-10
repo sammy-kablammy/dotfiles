@@ -46,6 +46,7 @@
     l = "log --all --graph --decorate --oneline -7"
     ls = "ls-files"
     mt = "mergetool"
+    pullr = "pull --rebase=interactive"
     ref = "reflog --date=short"
     rl = "reflog"
     s = "status --short --branch"
