@@ -15,7 +15,6 @@ nnoremap <space>/ :nohlsearch<CR>
 color slate
 syntax on
 set number
-set termguicolors
 set ignorecase smartcase
 set hlsearch incsearch nowrapscan
 set wildmenu
