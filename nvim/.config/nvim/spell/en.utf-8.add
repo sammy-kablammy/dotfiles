@@ -3,6 +3,7 @@ CLI
 CRLF
 DIY
 DNS
+Engelbart
 FOV
 FPGA
 GUIs
@@ -15,6 +16,7 @@ LaTeX
 MongoDB
 MySQL
 NAND
+NLS
 OpenStreetMap
 PCBs
 PostgreSQL
@@ -43,6 +45,8 @@ checkbox
 checkboxes
 checksum
 checksums
+chiral
+chirality
 claymation
 connectionless
 countercultural

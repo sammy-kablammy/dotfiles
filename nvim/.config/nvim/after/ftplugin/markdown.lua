@@ -69,7 +69,10 @@ vim.keymap.set('n', '6gO', function() generate_toc(6, true) end, { buffer = true
 -- virtual text with the first line of a markdown note, used because i don't
 -- title my notes
 
--- TODO move to linkma
+-- TODO move to linkma. in fact, a handy linkma feature would be a function that
+-- simply returns info about all the links in the document. each link could have
+-- a type (named vs wiki), info about where it goes (a local file, the web), and
+-- line number info.
 
 -- this really could use treesitter but ehhhh i don't feel it
 -- you need your title to be of the form [](main/*.md) for title to be inserted
@@ -118,6 +121,54 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
     desc = "update markdown note titles",
 })
 
+-- For any youtube links, show which are not backed up locally.
+function UpdateYoutubeDownloadStatus()
+    local video_backups_dir = "/home/sam/video_backups/"
+    ClearYoutubeDownloadStatus()
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    for linenum, line in ipairs(lines) do
+        -- TODO also support youtu.be links, youtube.com/clip links, etc.
+        local start_idx, end_idx = string.find(line, "youtube.com/watch?")
+        if start_idx then
+            local video_id_start = start_idx + #"youtube.com/watch?v="
+            local id_length = 11 -- it appears all IDs are this long
+            local video_id = string.sub(line, video_id_start, video_id_start + id_length - 1)
+            local files = vim.fs.find(function(name, path)
+                return name:match(".*" .. video_id .. ".*")
+            end, { path = video_backups_dir, type = "file", })
+            local title = "video not downloaded"
+            local hlgroup = "Substitute"
+            if #files > 0 then
+                title = "video downloaded: " .. files[1]
+                hlgroup = "TabLine"
+            end
+            local ns_id = vim.api.nvim_create_namespace("markdown_link_youtube")
+            vim.api.nvim_buf_set_extmark(0, ns_id, linenum - 1, end_idx, {
+                virt_text = {
+                    {
+                        "  " .. title .. "  ",
+                        hlgroup,
+                    },
+                },
+                virt_text_pos = "eol",
+            })
+        end
+    end
+end
+function ClearYoutubeDownloadStatus()
+    local ns_id = vim.api.nvim_create_namespace("markdown_link_youtube")
+    local all_extmarks = vim.api.nvim_buf_get_extmarks(0, ns_id, 0, -1, {})
+    for _, extmark in pairs(all_extmarks) do
+        vim.api.nvim_buf_del_extmark(0, ns_id, extmark[1])
+    end
+end
+-- i choose BufWrite because the act of scanning the entire buffer and
+-- opening/closing several files could turn out very taxing if done frequently
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
+    buffer = 0,
+    callback = UpdateYoutubeDownloadStatus,
+    desc = "update youtube download status",
+})
 
 
 -- markdown listification operator
