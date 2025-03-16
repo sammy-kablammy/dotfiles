@@ -33,6 +33,8 @@ vim.keymap.set("n", "gQ", "<nop>")
 -- vim.keymap.set("n", "zg", "<nop>") -- remember: zug to undo zg
 vim.keymap.set("n", "zw", "<nop>")
 vim.keymap.set("n", "<C-'>", '<nop>') -- i don't even know what this is but it conflicts with my qmk combos
+vim.keymap.set("i", "<c-a>", "<nop>") -- I keep mispressing this and it messes up my undo history
+vim.keymap.set("i", "<c-space>", "<nop>") -- similar to i_CTRL-A, this messes up undo history
 
 -- insert mode "leader key" style bindings. snippets for dummies. note that the
 -- key following <c-x> does NOT have control pressed. those are already used (:h
@@ -247,8 +249,8 @@ vim.keymap.set("v", "s", ":s/") -- default 's' in visual mode is redundant (use 
 vim.keymap.set("n", "<bs>", "<cmd>bd<cr>", { desc = "delete buffer" })
 vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>", { desc = "vsplit previous buffer" })
 vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)
+-- vim.keymap.set("n", "<leader>e", function() vim.cmd("Explore") end)
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]]) -- escape terminal mode (because the default mapping is weird)
-vim.keymap.set("n", "<leader>tm", "<cmd>silent !tmux split -h -c '%:p:h'<cr>", { desc = "open directory in tmux split" })
 vim.keymap.set("n", "<leader><leader>x", "<cmd>silent !xdg-open '%:p:h'<cr>", { desc = "open directory in file explorer" })
 vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>")
 vim.keymap.set("c", "<c-h>", "<left>")
@@ -321,3 +323,4 @@ vim.keymap.set("i", "<c-b>", "`")
 -- vim.keymap.set("n", "<c-f>", "<c-f>zz") -- this doesn't work
 -- vim.keymap.set("n", "<c-b>", "<c-b>zz") -- this doesn't work
 -- vim.keymap.set("n", "<leader><leader>x", "<cmd>%!xxd<cr>")
+-- vim.keymap.set("n", "<leader>tm", "<cmd>silent !tmux split -h -c '%:p:h'<cr>", { desc = "open directory in tmux split" }) -- i don't use vim tmux interop

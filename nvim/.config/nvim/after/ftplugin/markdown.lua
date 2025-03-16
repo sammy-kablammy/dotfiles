@@ -123,7 +123,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
 
 -- For any youtube links, show which are not backed up locally.
 function UpdateYoutubeDownloadStatus()
-    local video_backups_dir = "/home/sam/video_backups/"
+    local video_backups_dir = "/home/sam/Videos/video_backups/"
     ClearYoutubeDownloadStatus()
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     for linenum, line in ipairs(lines) do

@@ -27,6 +27,7 @@ TCP
 UCF
 UDP
 UI
+URI
 UTF-8
 acyclic
 aggregators
@@ -48,6 +49,7 @@ checksums
 chiral
 chirality
 claymation
+combinationally
 connectionless
 countercultural
 counterintuitive
@@ -55,6 +57,8 @@ cryptographic
 customizable
 datagram
 datagrams
+dataset
+datasets
 datasheets
 demultiplexing
 dereference
@@ -131,6 +135,7 @@ queueing
 recency
 relativize
 relativized
+reproducibility
 retransmission
 retransmitted
 rigidities

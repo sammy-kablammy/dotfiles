@@ -41,6 +41,7 @@ telescope_map("O", function() builtin.oldfiles({ cwd_only = true }) end, "Old fi
 telescope_map("q", builtin.quickfix, "quickfix list")
 telescope_map("l", builtin.loclist, "local list")
 telescope_map("m", builtin.diagnostics, "diagnostics")
+telescope_map("d", builtin.diagnostics, "diagnostics")
 telescope_map("c", builtin.command_history, "command history")
 telescope_map("k", builtin.keymaps, "keymaps")
 telescope_map("s", builtin.grep_string, "grep_string") -- note, this does a simple inclusive search, not \<\> search

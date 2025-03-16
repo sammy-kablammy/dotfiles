@@ -16,7 +16,7 @@ require("mini.icons").mock_nvim_web_devicons()
 
 local mini_files = require("mini.files")
 
-vim.keymap.set("n", "<leader>ee", function()
+vim.keymap.set("n", "<leader>e", function()
     mini_files.open(vim.api.nvim_buf_get_name(0), false)
 end)
 
