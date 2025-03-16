@@ -61,16 +61,54 @@ function StatusLinePosition()
     return "(" .. row .. "," .. col .. "/" .. virtcol .. ")"
 end
 
+-- Display typed keys at the bottom of the screen. Useful for screen sharing.
+vim.g.enable_keylogger = "" -- nonempty string to enable, empty string to disable
+local keylogger_size = 15
+local keylog = ""
+local keylog_position = 1
+local onkey_namespace_id = vim.on_key(function(key, typed)
+    local c = typed:byte()
+    if c == nil then
+        return
+    end
+    local is_visible_ascii_character = c >= string.byte(' ' ) and c <= string.byte('~')
+    if not is_visible_ascii_character then
+        return
+    end
+    keylog = keylog .. typed
+    keylog_position = keylog_position + 1
+end, 0)
+function StatusLineKeylogger()
+    if vim.g.enable_keylogger ~= "" then
+        return "→ " .. keylog:sub(keylog_position - keylogger_size) .. " ←"
+    else
+        return ""
+    end
+end
+
 local filename = '%{expand("%:.")}'
 local cutoff_point = "%< "
 local modified_flag = "%m"
 local readonly_flag = "%r"
+local keylog = '%{luaeval("StatusLineKeylogger()")}'
 local padding = " %= "
 local note_title = '%{%luaeval("StatusLineNoteTitle()")%}'
+local fileformat = '%{luaeval("StatusLineFileformat()")}'
 local lsp = '%{%luaeval("LspStatusline()")%}'
 local position = '%{%luaeval("StatusLinePosition()")%}'
-local fileformat = '%{luaeval("StatusLineFileformat()")}'
-vim.o.statusline = " " .. filename .. cutoff_point .. modified_flag .. readonly_flag .. note_title .. padding .. " " .. fileformat .. lsp .. position
+vim.o.statusline = " " ..
+    filename ..
+    cutoff_point ..
+    modified_flag ..
+    readonly_flag ..
+    note_title ..
+    padding ..
+    keylog ..
+    "    " ..
+    " " ..
+    fileformat ..
+    lsp ..
+    position
 
 -- i haven't yet figured out how to make 'showcmdloc' use the statusline's %S
 -- instead of the command line at the bottom line of the screen. when i try, it
