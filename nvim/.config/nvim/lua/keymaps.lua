@@ -87,6 +87,10 @@ vim.keymap.set("n", "<c-down>", "<c-d>zz")
 vim.keymap.set("n", "<s-up>", "<c-u>zz")
 vim.keymap.set("n", "<s-down>", "<c-d>zz")
 
+-- faster scrolling, for funsies
+vim.keymap.set({ "n", "v" }, "<c-j>", "3j")
+vim.keymap.set({ "n", "v" }, "<c-k>", "3k")
+
 -- this way, 'n' will always search downward, 'N' will always search upward.
 -- (the default behavior is that 'n' always searches in the same direction of
 -- the most recent search, and 'N' is the opposite direction)
