@@ -9,9 +9,9 @@ local function shitpost()
         'Welcome to GNU Emacs, one component of the GNU/Linux operating system.',
         'ed (the standard text editor)',
     }
-    print(messages[math.random(#messages)])
+    return messages[math.random(#messages)]
 end
-shitpost()
+print(shitpost())
 
 -- Lazy.nvim bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

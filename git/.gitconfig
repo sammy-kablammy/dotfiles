@@ -51,6 +51,7 @@
     rl = "reflog"
     s = "status --short --branch"
     sh = "show -5 --pretty=oneline"
+    sp = "stash pop"
     st = "status"
     unstage = "restore --staged"
     untrack = "rm --cached" # remove file from repo without deleting from filesystem
