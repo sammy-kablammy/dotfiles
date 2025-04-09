@@ -1,4 +1,5 @@
 CERN
+CFG
 CLI
 CRLF
 DIY
@@ -11,7 +12,9 @@ IETF
 IMAP
 IPv4
 IPv6
+JSON
 LLMs
+LLVM
 LaTeX
 Licklider
 MongoDB
@@ -52,6 +55,7 @@ chirality
 claymation
 combinationally
 connectionless
+corkboard
 countercultural
 counterintuitive
 cryptographic
@@ -130,6 +134,7 @@ prerequires
 procedurally
 programmatically
 prototyped
+prover
 pseudocode
 pseudorandom
 qualia
@@ -152,6 +157,7 @@ stickerless
 subconsciously
 subdirectories
 subdirectory
+subexpression
 subexpressions
 submenu
 submenus
