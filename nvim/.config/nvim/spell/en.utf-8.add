@@ -1,3 +1,4 @@
+ARPANET
 CERN
 CFG
 CLI
@@ -34,10 +35,12 @@ UI
 URI
 UTF-8
 acyclic
+aether
 aggregators
 algorithmically
 allocator
 allocators
+amidst
 amongst
 arcanity
 backend
@@ -53,6 +56,7 @@ checksums
 chiral
 chirality
 claymation
+cofounder
 combinationally
 connectionless
 corkboard
@@ -67,9 +71,11 @@ datasets
 datasheets
 demultiplexing
 dereference
+dereferenced
 deserializing
 designator
 designators
+disassembly
 dotfile
 dotfiles
 downloader
@@ -100,6 +106,7 @@ journaling
 keybind
 keybinds
 keymap
+kludgy
 leaderboard
 linter
 linters
@@ -145,6 +152,8 @@ relativized
 reproducibility
 retransmission
 retransmitted
+rewatch
+rewatching
 rigidities
 runtime
 satisfice
@@ -153,6 +162,7 @@ screensaver
 screensharing
 scrollback
 shader
+siloed
 stickerless
 subconsciously
 subdirectories
@@ -178,5 +188,6 @@ viewable
 viewport
 virtualization
 virtualize
+von Neumann
 whitespace
 x86

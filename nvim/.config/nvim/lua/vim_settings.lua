@@ -49,7 +49,7 @@ else's files, you're just gonna have to make do.
 --]]
 
 vim.o.number = true -- needed for absolute number on current line
-vim.o.relativenumber = true -- relative numbers everywhere else
+-- vim.o.relativenumber = true -- relative numbers everywhere else
 vim.o.expandtab = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4

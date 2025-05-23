@@ -36,6 +36,7 @@ alias 'histn'='history | nvim' # todo filter out first column, prolly with awk
 alias 'hists'='history | sed "s/[0-9]\+//" | sed "s/^\s*//" | nvim' # alternative with sed instead of awk
 alias 'sizema'='du -sh ./* | sort -h' # list sizes of things in current directory
 alias 'peep'='nvim -R' # lol
+alias 'ns'='nvim -S' # lol
 alias 'less'='less --LONG-PROMPT --ignore-case'
 alias 'vimless'='/usr/local/share/nvim/runtime/macros/less.sh --clean'
 alias 'vl'='vimless'
@@ -51,6 +52,9 @@ alias 's'='sessionizer'
 alias 'ytd'='yt-dlp --write-description --embed-thumbnail --embed-chapters --embed-subs'
 alias 'ol'='ollama run llama3.1'
 alias 'gccw'='gcc -Wall -Werror -Wextra -g -fsanitize=address,undefined,leak'
+alias 'aout'='./a.out'
+alias 'tarc'='tar czf'
+alias 'tarx'='tar xzfk'
 # like "go test" but with colorized output
 alias "gt"="go test ./... | sed 's/^ok/\o033[32mOK\o033[0m/; s/^FAIL/\o033[31mFAIL\o033[0m/'"
 
@@ -213,9 +217,10 @@ export HISTTIMEFORMAT='(%F %T)  '
 # https://web.archive.org/web/20170104092506/http://briancarper.net/blog/248.html
 shopt -s histappend
 export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # (you can search for "history -a" in bash(1) and it'll work)
-# fun bash facts: with the default value of HISTCONTROL, you can run a command
-# with a space at the front to prevent it from appearing in history. this is
-# handy for dangerous commands that you don't want to accidentally reuse.
+# fun bash facts: with the default value of HISTCONTROL (ignoreboth), you can
+# run a command with a space at the front to prevent it from appearing in
+# history. this is handy for dangerous commands that you don't want to
+# accidentally reuse.
 
 # this is supposed to fix the terminal freezing and showing a ';' character,
 # then needed like seventeen ctrl+c inputs to unfreeze it. especially on WSL.
