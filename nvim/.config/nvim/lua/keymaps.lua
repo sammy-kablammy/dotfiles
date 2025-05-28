@@ -114,15 +114,22 @@ vim.keymap.set("n", "<leader>sn", "<cmd>set number!<cr>")
 vim.keymap.set("n", "<leader>sr", "<cmd>set relativenumber!<cr>")
 vim.keymap.set("n", "<leader>sw", "<cmd>set wrap!<cr>")
 vim.keymap.set("n", "<leader>ss", "<cmd>set spell!<cr>")
+vim.keymap.set("n", "<leader>sg", function()
+    if vim.o.signcolumn == "yes" then
+        vim.o.signcolumn = "no"
+    else
+        vim.o.signcolumn = "yes"
+    end
+end, { desc = "toggle siGncolumn" })
 vim.keymap.set("n", "<leader>st", function() vim.o.laststatus = 2 - vim.o.laststatus end, { desc = "toggle statusline" })
 vim.keymap.set("n", "<leader>sc", function() vim.o.cmdheight = 1 - vim.o.cmdheight end, { desc = "set cmdheight to whatever" })
 vim.keymap.set("n", "<leader>sf", function() vim.o.foldcolumn = "" .. 1 - vim.o.foldcolumn end, { desc = "toggle foldcolumn" })
 vim.keymap.set('n', '<leader>so', function() vim.o.conceallevel = 3 - vim.o.conceallevel end, { desc = "toggle conceallevel" })
 vim.keymap.set("n", "<leader>sx", function()
     if vim.o.textwidth == 80 then
-      vim.o.textwidth = 100
+        vim.o.textwidth = 100
     elseif vim.o.textwidth == 100 then
-      vim.o.textwidth = 80
+        vim.o.textwidth = 80
     end
 end, { desc = "set textwidth to whatever" })
 
