@@ -263,7 +263,7 @@ trash() {
 }
 
 # the classic "find | fzf" wombo combo
-SAM_F_MAX_DEPTH=6
+SAM_F_MAX_DEPTH=5
 f () {
     if [ $# -eq 0 ]; then
         f_starting_dir="."
@@ -290,6 +290,27 @@ alias C='f ..'
 alias CC='f ../..'
 alias CCC='f ../../..'
 alias CCCC='f ../../../..'
+
+worktree-cd () {
+    if [ $# -ne 1 ]; then
+        echo "Expected name of worktree to cd into." >&2
+        return 1
+    fi
+    path=$(git worktree list | grep "$1" | awk '{print $1}')
+    if [ -z "$path" ]; then
+        echo "Worktree '$1' not found. Available worktrees: $(git worktree list)" >&2
+        return 1
+    fi
+    cd "$path"
+}
+
+worktree-fzf() {
+    path=$(git worktree list | fzf | awk '{print $1}')
+    if [ -z "$path" ]; then
+        return 0
+    fi
+    cd "$path"
+}
 
 
 

@@ -55,4 +55,4 @@
     st = "status"
     unstage = "restore --staged"
     untrack = "rm --cached" # remove file from repo without deleting from filesystem
-    w = "worktree"
+    w = "worktree list"
