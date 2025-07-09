@@ -3,17 +3,9 @@
 #     source ~/.bashrc_after
 # fi
 
-# todo: make a function analogous to the builtin 'help' that explains some of my
-# more common aliases/functions/scripts. add color tho. color pretty
-
 # you can run "exec bash" to reload this file (easier than "source ~/.bashrc")
 
 ################################################################################
-
-# note: nodejs on *some* package managers (apt, i'm looking at you) may be
-# really out of date. this breaks some LSPs. use this to get newer nodejs:
-# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-# nvm install 20
 
 # this should be commented out on my main machine
 REMOTE=yup
@@ -303,6 +295,7 @@ worktree-cd () {
     fi
     cd "$path"
 }
+alias 'wcd'='worktree-cd'
 
 worktree-fzf() {
     path=$(git worktree list | fzf | awk '{print $1}')
@@ -311,6 +304,15 @@ worktree-fzf() {
     fi
     cd "$path"
 }
+alias 'wfzf'='worktree-fzf'
+
+# todo: make a function analogous to the builtin 'help' that explains some of my
+# more common aliases/functions/scripts. add color tho. color pretty
+
+# note: nodejs on *some* package managers (apt, i'm looking at you) may be
+# really out of date. this breaks some LSPs. use this to get newer nodejs:
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+# nvm install 20
 
 
 
