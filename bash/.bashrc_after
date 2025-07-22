@@ -306,6 +306,17 @@ worktree-fzf() {
 }
 alias 'wfzf'='worktree-fzf'
 
+tts() {
+    if [ $# -eq 0 ]; then
+        echo "Expected text to tts-ify" >&2
+        return 1
+    fi
+    ttsfile='/tmp/ttsfile.wav'
+    pico2wave --wave="$ttsfile" "$@" # (pico2wave is in debian package libttspico-utils)
+    aplay "$ttsfile"
+    rm --force "$ttsfile"
+}
+
 # todo: make a function analogous to the builtin 'help' that explains some of my
 # more common aliases/functions/scripts. add color tho. color pretty
 
