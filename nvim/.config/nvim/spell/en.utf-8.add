@@ -1,3 +1,4 @@
+APIs
 ARPANET
 CERN
 CFG
@@ -49,6 +50,7 @@ backticks
 biomes
 bitwise
 bolded
+boolean
 checkbox
 checkboxes
 checksum
@@ -184,6 +186,7 @@ unary
 understandability
 unergonomic
 untowardly
+versioning
 viewable
 viewport
 virtualization
