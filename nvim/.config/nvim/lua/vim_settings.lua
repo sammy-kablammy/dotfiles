@@ -173,7 +173,7 @@ end, {})
 -- highlight on yank (how did i not know this was built in to neovim!?!?!?)
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
-        vim.highlight.on_yank({ timeout = 100 })
+        vim.hl.on_yank({ timeout = 100 })
     end
 })
 

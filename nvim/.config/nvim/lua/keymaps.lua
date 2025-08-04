@@ -153,20 +153,17 @@ end, {})
 vim.keymap.set("n", "<leader>sz", "<cmd>Zenma<cr>", { desc = "experimental zen mode??👀" })
 
 -- square bracket fun time [ [ [ ] ] ]
-vim.keymap.set("n", "[b", vim.cmd.bprevious, { desc = "prev buffer" })
-vim.keymap.set("n", "]b", vim.cmd.bnext, { desc = "next buffer" })
-vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "prev qflist entry" })
-vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "next qflist entry" })
 vim.keymap.set("n", "[c", vim.cmd.cprev, { desc = "prev qflist entry" })
 vim.keymap.set("n", "]c", vim.cmd.cnext, { desc = "next qflist entry" })
 vim.keymap.set("n", "[C", vim.cmd.colder, { desc = "older qflist" })
 vim.keymap.set("n", "]C", vim.cmd.cnewer, { desc = "newer qflist" })
-vim.keymap.set("n", "[l", vim.cmd.lprev, { desc = "prev loclist" })
-vim.keymap.set("n", "]l", vim.cmd.lnext, { desc = "next loclist" })
-vim.keymap.set("n", "[t", "gT", { desc = "prev tab" })
-vim.keymap.set("n", "]t", "gt", { desc = "next tab" })
-vim.keymap.set("n", "[T", function() vim.cmd.tabmove("-1") end, { desc = "move tab left" })
-vim.keymap.set("n", "]T", function() vim.cmd.tabmove("+1") end, { desc = "move tab right" })
+
+-- Nvim 0.11 now uses these mappings for tag stuff, so i need to find
+-- alternatives... TODO
+-- vim.keymap.set("n", "[t", "gT", { desc = "prev tab" })
+-- vim.keymap.set("n", "]t", "gt", { desc = "next tab" })
+-- vim.keymap.set("n", "[T", function() vim.cmd.tabmove("-1") end, { desc = "move tab left" })
+-- vim.keymap.set("n", "]T", function() vim.cmd.tabmove("+1") end, { desc = "move tab right" })
 
 -- some more quickfix stuff
 vim.keymap.set("n", "<c-q>", function()

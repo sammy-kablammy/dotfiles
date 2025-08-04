@@ -22,6 +22,11 @@ setup order requirements:
 
 vim.diagnostic.enable(false)
 
+vim.diagnostic.config({
+    virtual_text = true, -- (display diagnostics as end-of-line virtual text)
+    -- virtual_lines = true, -- (display diagnostics as line-below virtual text)
+})
+
 -- i used to have all the language servers i use in the 'ensure_installed'
 -- fields but they aren't really necessary on most machines i use, so now you're
 -- just gonna have to use this usercommand when you want to install LSPs.
@@ -45,12 +50,6 @@ end, { desc = "install all my preferred language servers" })
 
 require("mason").setup({})
 require("mason-lspconfig").setup({})
--- :h mason-lspconfig-automatic-server-setup
-require("mason-lspconfig").setup_handlers({
-    function(server_name)
-        require("lspconfig")[server_name].setup({})
-    end,
-})
 
 -- setup servers that aren't from mason
 require("lspconfig").dartls.setup({})
@@ -58,10 +57,10 @@ require("lspconfig").dartls.setup({})
 -- global LSP mappings
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set("n", "[d", function()
-    vim.diagnostic.goto_prev({ wrap = false })
+    vim.diagnostic.jump({ count = -1, float = true, wrap = false })
 end, { desc = "previous diagnostic" })
 vim.keymap.set("n", "]d", function()
-    vim.diagnostic.goto_next({ wrap = false})
+    vim.diagnostic.jump({ count = 1, float = true, wrap = false })
 end, { desc = "next diagnostic" })
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "diagnostic float" })
 vim.keymap.set("n", "<leader>D", vim.diagnostic.setqflist, {
