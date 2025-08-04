@@ -4,6 +4,7 @@
 -- make sure you have ripgrep installed
 
 local telescope = require("telescope")
+local actions = require("telescope.actions")
 local builtin = require("telescope.builtin")
 local utils = require("telescope.utils")
 
@@ -18,7 +19,7 @@ telescope.setup({
         },
         mappings = {
             n = {
-                ["X"] = require("telescope.actions").delete_buffer,
+                ["X"] = actions.delete_buffer,
             },
         },
     },

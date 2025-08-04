@@ -230,6 +230,8 @@ vim.keymap.set("n", "<leader>?", "<cmd>vsplit ~/notes/main/2024-03-20_14-45-16.m
 vim.keymap.set("n", "<leader>a", "<cmd>b#<cr>", { desc = "alternate file" })
 
 -- misc one-off mappings
+vim.keymap.set("n", "<c-h>", vim.cmd.bprev)
+vim.keymap.set("n", "<c-l>", vim.cmd.bnext)
 vim.keymap.set("n", "gG", "ggVG", { desc = "select entire buffer" })
 vim.keymap.set("n", "gQ", "gggqG<c-o><c-o>", { desc = "format (gq) entire buffer" })
 vim.keymap.set("n", "<leader>o", vim.cmd.options, { desc = "show vim options" })
@@ -253,6 +255,8 @@ end, { desc = "yank current file name" })
 vim.keymap.set("n", "g=", "g+") -- (redo, alias for g+)
 vim.keymap.set("n", "<c-w>u", "<c-w>p")
 vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
+vim.keymap.set("n", "<c-w>a", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
+vim.keymap.set("n", "<c-w><c-a>", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
 vim.keymap.set("v", "s", ":s/") -- default 's' in visual mode is redundant (use 'c' instead)
 vim.keymap.set("n", "<bs>", "<cmd>bd<cr>", { desc = "delete buffer" })
 vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>", { desc = "vsplit previous buffer" })
