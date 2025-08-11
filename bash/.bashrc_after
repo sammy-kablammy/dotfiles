@@ -263,7 +263,12 @@ f () {
         f_starting_dir="$1"
     fi
     selected=$({
-        find "$f_starting_dir" -maxdepth "$SAM_F_MAX_DEPTH" -not -path "*/.git/*" 2>/dev/null
+        find "$f_starting_dir" \
+            -maxdepth "$SAM_F_MAX_DEPTH" \
+            -not -path "*/.git*" \
+            -not -path "*/.stversions*" \
+            -not -name ".stfolder" \
+            2>/dev/null
         # more 'find' commands can go here
     } | fzf --preview='less {}' --preview-window=right,50%)
     if [ -z "$selected" ]; then
