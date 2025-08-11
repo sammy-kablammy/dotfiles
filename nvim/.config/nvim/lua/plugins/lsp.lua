@@ -62,7 +62,10 @@ end, { desc = "previous diagnostic" })
 vim.keymap.set("n", "]d", function()
     vim.diagnostic.jump({ count = 1, float = true, wrap = false })
 end, { desc = "next diagnostic" })
-vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "diagnostic float" })
+vim.keymap.set("n", "<leader>d", function()
+    vim.diagnostic.open_float()
+    print("You can now use <c-w>d to show diagnostics.")
+end, { desc = "diagnostic float" })
 vim.keymap.set("n", "<leader>D", vim.diagnostic.setqflist, {
     desc = "populate qflist with diagnostics",
 })
