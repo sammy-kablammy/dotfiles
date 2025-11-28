@@ -50,3 +50,20 @@ ever leave your computer for a while but forget to push your changes and then
 have to deal with a bunch of merging when you get back?? haha me neither.
 
 <img src="https://raw.githubusercontent.com/sammy-kablammy/dotfiles/main/statusize.png" width="380" />
+
+## TODO
+
+should implement these one day. (or don't, see if i care 🙄)
+
+- instead of having individual backups commands in cron, use a single backups.sh
+  called once by cron
+- write my own lightweight version of stow instead of relying on actual GNU
+  stow. stow is too finicky. should run in posix shell with no other deps. only
+  needs to support the very small feature set i use for dotfiles; no need to
+  make a general purpose symlink manager.
+- nvim keymap that toggles :diffthis mode on all open windows?
+- add some `ls` colorization to dotfiles
+- move all machine-specific environment variables into one place (e.g. ytdlp
+  path, notes path, shell prompt probably)
+
+i have more todos but they're scattered around other places
