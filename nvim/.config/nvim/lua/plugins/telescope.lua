@@ -16,6 +16,7 @@ telescope.setup({
             -- width = vim.o.columns, -- this breaks when window is resized
             -- height = vim.o.lines,
             preview_cutoff = 5,
+            prompt_position = 'bottom',
         },
         mappings = {
             n = {
@@ -31,7 +32,7 @@ end
 
 -- telescope_map("f", function() builtin.find_files({ hidden = true }) end, "find files")
 telescope_map("f", function() builtin.find_files() end, "find files")
-telescope_map("F", function() builtin.find_files({ hidden = true, cwd = utils.buffer_dir() }) end, "find files relative to current buffer")
+telescope_map("F", function() builtin.find_files({ hidden = true, no_ignore = true, cwd = utils.buffer_dir() }) end, "find files relative to current buffer")
 telescope_map("h", builtin.help_tags, "help")
 telescope_map("b", builtin.buffers, "buffers")
 telescope_map("B", function() builtin.live_grep({ grep_open_files = true }) end, "live grep, only open buffers")

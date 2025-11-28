@@ -1,14 +1,21 @@
-# note: to link to this file from your local bashrc, add this:
-# if [ -f ~/.bashrc_after ]; then
-#     source ~/.bashrc_after
+################################################################################
+
+#                "Why not just put .bashrc in version control?"
+# I use this "after" file because I find it more portable. The default
+# $HOME/.bashrc changes a fair amount from machine to machine and I'd rather not
+# make this file conform to that. Machine-specific stuff just goes in .bashrc.
+
+# to link to this file from your local bashrc, add this:
+# if [ -f  $HOME/.bashrc_after ]; then
+#     source $HOME/.bashrc_after
 # fi
 
-# you can run "exec bash" to reload this file (easier than "source ~/.bashrc")
+# Based bashpillers can do "exec bash" to reload this file.
+# (Cringe version is "source $HOME/.bashrc")
 
 ################################################################################
 
-# this should be commented out on my main machine
-REMOTE=yup
+export PATH=$HOME/.local/sam-bin:$PATH
 
 alias 'ls'='ls --color=auto'
 alias 'll'='ls -lh'
@@ -24,34 +31,47 @@ alias 'g'='git'
 alias 'em'='emacs -nw'
 alias 'ap'='apropos'
 alias 'fzfp'='fzf --preview="less {}"'
-alias 'histn'='history | nvim' # todo filter out first column, prolly with awk
-alias 'hists'='history | sed "s/[0-9]\+//" | sed "s/^\s*//" | nvim' # alternative with sed instead of awk
+alias 'hist'='history | sed "s/[0-9]\+//" | sed "s/^\s*//" | nvim'
 alias 'sizema'='du -sh ./* | sort -h' # list sizes of things in current directory
 alias 'peep'='nvim -R' # lol
-alias 'ns'='nvim -S' # lol
+alias 'ns'='nvim -S' # TODO add tab completion here for lsvim
+alias "lsvim"="ls *.vim" # for easily listing vim sessions
 alias 'less'='less --LONG-PROMPT --ignore-case'
-alias 'vimless'='/usr/local/share/nvim/runtime/macros/less.sh --clean'
+alias 'vimless'='/usr/local/share/nvim/runtime/scripts/less.sh --clean' # I believe this is the right location, though it might be in macros/ instead of scripts/
 alias 'vl'='vimless'
 alias 'py'='python3'
+alias 'python'='python3'
 alias 'bt'='bluetoothctl'
 alias 'xc'='xclip -selection clipboard -rmlastnl'
 alias 'wat'='watch -ctn 0.2'
 alias 'watls'='watch -ctn 0.2 ls --color=always'
 alias 'gr'='grep -i'
 alias 'pg'='pgrep -i'
+alias 'rga'='rg --no-ignore -i' # 'ripgrep all'
 alias 'tldr'='tldr --theme base16'
 alias 's'='sessionizer'
-alias 'ytd'='yt-dlp --write-description --embed-thumbnail --embed-chapters --embed-subs'
 alias 'ol'='ollama run llama3.1'
 alias 'gccw'='gcc -Wall -Werror -Wextra -g -fsanitize=address,undefined,leak'
 alias 'aout'='./a.out'
+alias "gt"="go test ./... | sed 's/^ok/\o033[32mOK\o033[0m/; s/^FAIL/\o033[31mFAIL\o033[0m/'" # like "go test" but with colorized output
+alias "dps"="docker ps -as"
+
+# Merge compile commands for use with clangd.
+merge-compile-commands() {
+    # (use -mindepth as to not include the previous ./compile_commands.json)
+    find -mindepth 2 -name "compile_commands.json" | xargs jq -s add >| compile_commands.json
+    # Also see https://stackoverflow.com/questions/77394438/merge-multiple-compile-command-json-files
+}
+
 alias 'tarc'='tar czf'
 alias 'tarx'='tar xzfk'
-# like "go test" but with colorized output
-alias "gt"="go test ./... | sed 's/^ok/\o033[32mOK\o033[0m/; s/^FAIL/\o033[31mFAIL\o033[0m/'"
+untarto() {
+    mkdir --parents "$1"
+    tar xzf "$2" -C "$1"
+}
 
 # cd to multiple places at once; easier up-a-dir
-c () {
+c() {
     if [ $# -eq 0 ]; then
         cd ".."
     elif [ $# -eq 1 ]; then
@@ -65,10 +85,9 @@ alias 'cc'='cd ../..'
 alias 'ccc'='cd ../../..'
 alias 'cccc'='cd ../../../..'
 
-# if type "exa" &> /dev/null; then
-#     alias 'ls'='exa'
-#     alias 'etree'='exa --tree'
-# fi
+if type "exa" &> /dev/null; then
+    alias 'etree'='exa --tree'
+fi
 if type "batcat" &> /dev/null; then
     alias 'bat'='batcat'
 fi
@@ -84,6 +103,7 @@ else
     alias 'x'='xdg-open'
 fi
 
+# TODO come back to this and get some more binds that don't need <enter> please:
 # not working right now
 # recall: bind -x is like bind but keeps the current command typed out
 # i should expand this quite a bit:
@@ -93,21 +113,23 @@ fi
 # bind -x '"\C-xf":"READLINE_LINE=\$READLINE_LINE find -maxdepth 2 -type d | fzf"'
 # (this escaping is nuts)
 
+# (see bind section in SHELL BUILTIN COMMANDS in man bash)
+
 # combine these and just detect whether the selection is a file or directory
-cf () {
+cf() {
     target_directory=$(find . -type d -not -path "*/.git/*" 2>/dev/null | fzf)
     if [ ! -z "$target_directory" ]; then
         cd "$target_directory"
     fi
 }
-nf () {
+nf() {
     target_file=$(find . -not -path "*/.git/*" 2>/dev/null | fzf)
     if [ ! -z "$target_file" ]; then
         nvim "$target_file"
     fi
 }
 
-cl () {
+cl() {
     cd "$1" && ls
 }
 
@@ -121,7 +143,7 @@ pd() {
 }
 
 # make and then cd into directory
-mcd () {
+mcd() {
     if [ $# -eq 1 ]; then
         mkdir -p "$1"
         cd "$1"
@@ -131,15 +153,15 @@ mcd () {
 }
 
 # eventually, i might want to use w3m instead of the default browser
-ddg () {
+ddg() {
     # xdg-open "https://duckduckgo.com/lite/?q=$@"
     xdg-open "https://duckduckgo.com/?q=$@"
 }
-mdn () {
+mdn() {
     # this doesn't work lol 💀
     xdg-open "https://developer.mozilla.org/en-US/search?q=$1"
 }
-ksearch () {
+ksearch() {
     xdg-open "https://www.kernel.org/doc/html/latest/search.html?q=$1"
 }
 
@@ -152,9 +174,10 @@ markthis() {
 if [ "$REMOTE" ]; then
     : # (noop)
 elif [ -z "$TMUX" ]; then
-    tmux attach || tmux new-session
+    tmux attach || tmux new-session -s "tmuxma"
 else
-    tmux set status off
+    # let's try having the tmux status on for a bit
+    : # tmux set status off
 fi
 
 # check the "shopt" command section in bash(1) for more fun stuff
@@ -171,7 +194,7 @@ if [ "$REMOTE" ]; then
     tmux set -g prefix C-space
 else
     export PROMPT_DIRTRIM=3
-    export PS1="\[\e[0;36m\]\w\[\e[0;37m\]$ \[\e[0m\]"
+    export PS1="\n\[\e[0;36m\]\w\[\e[0;37m\]$ \[\e[0m\]"
     export PS2="> "
 fi
 
@@ -180,7 +203,7 @@ if [ -z "$TMUX" ]; then
 fi
 
 alias 'mn'='man --pager="nvim +Man!"'
-mansearch () {
+mansearch() {
     if [ $# -eq 0 ]; then
         echo 'Example: mansearch bash expansion'
         return
@@ -232,13 +255,13 @@ bind '"\C-xt": "~"'
 bind '"\C-x\C-t": "\C-xt"'
 bind '"\C-xb": "``\C-b"'
 bind '"\C-x\C-b": "\C-xb"'
-bind '"\C-xh": "--help"'
+bind '"\C-xh": " --help"'
 bind '"\C-x\C-h": "\C-xh"'
-bind '"\C-xv": "--version"'
+bind '"\C-xv": " --version"'
 bind '"\C-x\C-v": "\C-xv"'
 bind '"\C-xf": "\"$(fzf)\""'
 bind '"\C-x\C-f": "\C-xf"'
-bind '"\C-xd": ">/dev/null"'
+bind '"\C-xd": " 2>/dev/null"'
 bind '"\C-x?": "man bash | less -p \"Commands for Moving\"\n"' # (open keybind reference)
 bind '"\e\C-p":history-search-backward'
 bind '"\e\C-n":history-search-forward'
@@ -251,12 +274,23 @@ fi
 export TRASH=~/.local/share/Trash/files
 trash() {
     mkdir -p "$TRASH"
-    mv -t "$TRASH" "$@"
+    if [ "$1" = "-i" ] || [ "$1" = "--interactive" ]; then
+        shift
+        for file_to_trash in "$@"; do
+            read -p "trash: move '$file_to_trash' to trash? " response
+            if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
+                mv --force --backup=numbered -t "$TRASH" "$file_to_trash"
+            fi
+        done
+    else
+        mv --force --backup=numbered -t "$TRASH" "$@"
+    fi
 }
 
 # the classic "find | fzf" wombo combo
 SAM_F_MAX_DEPTH=5
 f () {
+    # TODO double check this works. i am currently seeing 'f' open global search.
     if [ $# -eq 0 ]; then
         f_starting_dir="."
     else
@@ -265,7 +299,7 @@ f () {
     selected=$({
         find "$f_starting_dir" \
             -maxdepth "$SAM_F_MAX_DEPTH" \
-            -not -path "*/.git*" \
+            -not -path "*/.git/*" \
             -not -path "*/.stversions*" \
             -not -name ".stfolder" \
             2>/dev/null
@@ -331,5 +365,17 @@ tts() {
 # nvm install 20
 
 
+
+# NOTE make sure you have ffmpeg installed to use yt-dlp.
+
+# A download archive file can be backed up to all my devices via cron. This is
+# pretty useful to have (in case I lose the actual videos) while not taking up
+# countless gigabytes of video across several devices. However, I don't use an
+# archive file because it requires manually deleting videos from both the
+# archive and from the filesystem. Besides, 'ls > archive.txt' on a cronjob is
+# basically the same thing if not more useful.
+export YTDLP_DOWNLOAD_DIR="/home/sam/kablam/media/ytdlp"
+alias "yt-dlp-video"="yt-dlp --embed-metadata --embed-subs --embed-thumbnail --sponsorblock-mark all -o $YTDLP_DOWNLOAD_DIR/'[%(id)s] %(title)s.%(ext)s'"
+alias 'yt-dlp-audio'='yt-dlp --embed-metadata --extract-audio'
 
 # vim: filetype=sh

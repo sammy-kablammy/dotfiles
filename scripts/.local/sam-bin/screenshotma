@@ -1,0 +1,10 @@
+#!/bin/bash
+
+filename="/home/sam/Desktop/$(date +'%F_%H-%M_%S').png"
+
+if [ $# -eq 1 ] && [ $1 = "--area" ]; then
+    gnome-screenshot -f "$filename" --area
+else
+    gnome-screenshot -f "$filename"
+fi
+

@@ -1,0 +1,6 @@
+# vim: syntax=gitignore
+
+Session.vim
+tags
+cscope.out
+compile_commands.json

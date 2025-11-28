@@ -53,6 +53,8 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         -- date. this is so annoying. we have a lua string that turns into a vim command
         -- string that THEN turns into a shell command. like three levels of escaping.
         InsertMap("d", [[<cmd>r! date +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
+        InsertMap("D", [[<cmd>r! date --date=tomorrow +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
+        InsertMap("w", [[<cmd>r! date --date='next monday' +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
     end,
 })
 vim.keymap.set("c", "<c-x>t", "~")
@@ -74,10 +76,19 @@ vim.keymap.set({ "n", "v", }, "gy", "\"+y") -- is gy really unused by default? r
 vim.keymap.set({ "n", "v", }, "gY", "\"+Y")
 vim.keymap.set({ "n", "v", }, "gp", "\"+p")
 vim.keymap.set({ "n", "v", }, "gP", "\"+P")
+-- duplicates of gp/gP. I would like to start using the default gp/gP so prefer
+-- these going forward:
+vim.keymap.set({ "n", "v", }, "gz", "\"+p")
+vim.keymap.set({ "n", "v", }, "gZ", "\"+P")
 
 -- movement should work how you expect even if a line is wrapped
 vim.keymap.set("n", "j", "gj")
 vim.keymap.set("n", "k", "gk")
+-- vim.keymap.set("n", "$", "g$") -- actually i don't like this one either
+-- vim.keymap.set("n", "^", "g^") -- NO, see below.
+-- useful for when you scroll to the right and want to reset view back to the
+-- left, but without manually pressing 0 each time. capisce?
+vim.keymap.set("n", "^", "0^")
 
 -- scroll up and down without getting disoriented
 vim.keymap.set("n", "<c-d>", "<c-d>zz")
@@ -219,10 +230,6 @@ vim.keymap.set("n", "<leader><c-g>", function()
     print(" " .. file_path .. " | Line " .. row .. "/" .. total_lines .. " (" .. percent .. "%) | Col " .. col .. " | " .. wordcount .. " words")
 end, { desc = "display extended file info" })
 
--- useful for when you scroll to the right and want to reset view back to the
--- left, but without manually pressing 0 each time. capisce?
-vim.keymap.set("n", "^", "0^")
-
 -- my own lil' cheatsheet
 vim.keymap.set("n", "<leader>?", "<cmd>vsplit ~/notes/main/2024-03-20_14-45-16.md<cr>")
 
@@ -259,6 +266,12 @@ vim.keymap.set("n", "<c-w>a", "<cmd>vertical sball<cr>", { desc = "Split all buf
 vim.keymap.set("n", "<c-w><c-a>", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
 vim.keymap.set("v", "s", ":s/") -- default 's' in visual mode is redundant (use 'c' instead)
 vim.keymap.set("n", "<bs>", "<cmd>bd<cr>", { desc = "delete buffer" })
+vim.keymap.set("n", "g<bs>", function()
+    -- I would use <leader><bs> but it conflicts with whichkey
+    local bufnr = vim.fn.bufnr()
+    vim.cmd.bnext()
+    vim.api.nvim_buf_delete(bufnr, {})
+end, { desc = "delete buffer without closing window" })
 vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>", { desc = "vsplit previous buffer" })
 vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)
 -- vim.keymap.set("n", "<leader>e", function() vim.cmd("Explore") end)
@@ -268,6 +281,10 @@ vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>")
 vim.keymap.set("c", "<c-h>", "<left>")
 vim.keymap.set("c", "<c-l>", "<right>")
 vim.keymap.set("i", "<c-b>", "`")
+vim.keymap.set("n", "gg", "<cmd>echo 'use go instead of gg'<cr>go")
+vim.keymap.set("n", "<leader>i", "<cmd>IconPickerNormal<cr>")
+vim.keymap.set("v", "<leader>th", ":TOhtml<cr>")
+vim.keymap.set("n", "<leader><leader>rv", ":g/.*/move 0<cr>", { desc = "Reverse buffer" })
 
 
 
@@ -336,3 +353,18 @@ vim.keymap.set("i", "<c-b>", "`")
 -- vim.keymap.set("n", "<c-b>", "<c-b>zz") -- this doesn't work
 -- vim.keymap.set("n", "<leader><leader>x", "<cmd>%!xxd<cr>")
 -- vim.keymap.set("n", "<leader>tm", "<cmd>silent !tmux split -h -c '%:p:h'<cr>", { desc = "open directory in tmux split" }) -- i don't use vim tmux interop
+
+-- -- print operator. select an expression, and it prints it.
+-- function PrintOperatorFunc()
+--     local startpos = vim.api.nvim_buf_get_mark(0, "[")
+--     local endpos = vim.api.nvim_buf_get_mark(0, "]")
+--     if startpos[1] ~= endpos[1] then
+--         return
+--     end
+--     local text = vim.api.nvim_buf_get_text(0, startpos[1] - 1, startpos[2], endpos[1] - 1, endpos[2] + 1, {})[1]
+--     vim.api.nvim_input("o" .. "print(" .. '"' .. text .. '", ' .. text .. ")" .. "<esc>")
+-- end
+-- vim.keymap.set({ "n" }, "<leader>co", function()
+--     vim.o.operatorfunc = "v:lua.PrintOperatorFunc"
+--     vim.api.nvim_feedkeys("g@", "n", false)
+-- end, { desc = "print to COnsole" })

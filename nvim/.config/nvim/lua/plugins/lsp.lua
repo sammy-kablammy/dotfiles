@@ -71,7 +71,7 @@ vim.keymap.set("n", "<leader>D", vim.diagnostic.setqflist, {
 })
 vim.keymap.set("n", "<leader>ld", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-end, { desc = "LSP diagnostic enable/disable" })
+end, { desc = "Toggle LSP diagnostics" })
 
 -- buffer-local LSP mappings
 vim.api.nvim_create_autocmd("LspAttach", {

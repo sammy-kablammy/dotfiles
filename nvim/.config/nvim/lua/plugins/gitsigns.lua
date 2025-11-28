@@ -3,11 +3,22 @@
 local gitsigns = require("gitsigns")
 
 vim.keymap.set("n", "[g", function()
-    gitsigns.nav_hunk("prev")
-end)
+    gitsigns.nav_hunk("prev", { target = 'all' })
+end, { desc = "previous git hunk (including staged hunks)" })
 vim.keymap.set("n", "]g", function()
+    gitsigns.nav_hunk("next", { target = 'all' })
+end, { desc = "next git hunk (including staged hunks)" })
+vim.keymap.set("n", "[G", function()
+    gitsigns.nav_hunk("prev")
+end, { desc = "previous git hunk" })
+vim.keymap.set("n", "]G", function()
     gitsigns.nav_hunk("next")
-end)
+end, { desc = "next git hunk" })
+
+vim.keymap.set("n", "<leader>gb", gitsigns.blame)
+vim.keymap.set("v", "ih", gitsigns.select_hunk, { desc = "inside hunk textobject" })
+vim.keymap.set("o", "ih", gitsigns.select_hunk, { desc = "inside hunk textobject" })
+-- "around hunk" doesn't really make sense so it's not defined here
 
 gitsigns.setup {
     signs = {
@@ -36,7 +47,7 @@ gitsigns.setup {
     },
     auto_attach = true,
     attach_to_untracked = false,
-    current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+    current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
     current_line_blame_opts = {
         virt_text = true,
         virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'

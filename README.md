@@ -1,13 +1,16 @@
-# using stow for dotfile wizardry
+# dotfiles
+
+Don't forget to run `setup.sh`.
+
+## using stow for dotfile wizardry
 
 - create some packages. these can be named whatever you want.
-
 - dotfiles that belong in `~` (like `.vimrc`) can just go directly in the
   package
-
 - dotfiles that belong in `.config` (like `tmux.conf`) need the path relative to
   `~` to be recreated inside of the package's directory
 
+example directory structure:
 ```
 ├── nvim
 │   └── .config

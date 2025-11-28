@@ -1,7 +1,7 @@
--- Capitalize some text. Works best with 'iw' and 'is' motions
+-- Capitalize some text. Works best with 'iw' and 'is' motions.
 --
 --                             this is some text
---                                    ...
+--                                ... gC$ ...
 --                             This Is Some Text
 
 function Capitalize_operatorfunc()

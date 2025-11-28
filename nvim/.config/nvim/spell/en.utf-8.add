@@ -23,6 +23,7 @@ MongoDB
 MySQL
 NAND
 NLS
+NixOS
 OpenStreetMap
 PCBs
 PostgreSQL
@@ -96,6 +97,7 @@ grayscale
 hackathon
 iOS
 impactful
+indirected
 inode
 intentionality
 intercomparison
@@ -151,6 +153,8 @@ queueing
 recency
 relativize
 relativized
+repo
+repos
 reproducibility
 retransmission
 retransmitted
@@ -173,6 +177,8 @@ subexpression
 subexpressions
 submenu
 submenus
+submodule
+submodules
 subnet
 subnets
 subtractive

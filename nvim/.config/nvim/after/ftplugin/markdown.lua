@@ -7,7 +7,7 @@ vim.b.sam_override_whitespace_settings = true
 vim.cmd("inoreabbrev <buffer> hr ---")
 
 -- hide backticks, asterisks, and probably some others (this depends on treesitter)
-vim.o.conceallevel = 3
+vim.o.conceallevel = 0
 
 vim.keymap.set('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link to Alternate file", buffer = true })
 vim.keymap.set('n', '<leader>mc', 'I[<esc>A]<esc>jI(<esc>A)<esc>kJx', { desc = "markdown: Create link", buffer = true })
@@ -123,7 +123,9 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
 
 -- For any youtube links, show which are not backed up locally.
 function UpdateYoutubeDownloadStatus()
-    local video_backups_dir = "/home/sam/Desktop/media/backups/"
+    -- TODO don't just search here, also search the corresponding text file
+    -- TODO make a stink if the text file is not there or is empty
+    local video_backups_dir = "/home/sam/kablam/media/ytdlp/"
     ClearYoutubeDownloadStatus()
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     for linenum, line in ipairs(lines) do
@@ -172,21 +174,10 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
 
 
 -- markdown listification operator
--- TODO what should happen when you apply this to text that is already a list?
--- does it change symbol from - to *? does it remove the symbol? to be
--- concluded...
 function Listify()
     vim.cmd("'[,']normal I- ")
 end
-function Unlistify()
-    -- todo use this substitution command: s/\s*- /
-end
 vim.keymap.set({ "n", "v" }, "gl", function()
-    -- this is ugly but i don't know of a better way
     vim.o.operatorfunc = "v:lua.Listify"
     vim.api.nvim_feedkeys("g@", "n", false)
 end)
-
-
--- TODO use vim.spell.check() to do spell checking across entire file, buffer
--- list, or current directory. print fancy results and/or use quickfix list

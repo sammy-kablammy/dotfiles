@@ -192,7 +192,7 @@ vim.o.signcolumn = "yes" -- i would use "number" but gitsigns signs are too comm
 
 -----------------------------interacting with notes-----------------------------
 vim.api.nvim_create_user_command('NewNote', function()
-    local obj = vim.system({"notenew"}, {}):wait()
+    local obj = vim.system({"/home/sam/.local/sam-bin/notenew"}, {}):wait()
     -- there's a trailing newline; remove it
     local filename = string.sub(obj.stdout, 1, -2)
     -- editing the file based on the full path is annoying because it messes up

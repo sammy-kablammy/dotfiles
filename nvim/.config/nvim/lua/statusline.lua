@@ -3,7 +3,7 @@
 -- complexity; they're horizontal abstractions. i'd rather avoid an extra
 -- dependency in my config and just use the default one.
 
--- TODO consider using 'winbar' instead of 'statusline'
+-- 'winbar' and 'tabline' are similar options that could go here
 
 -- :h statusline
 -- :h lua-eval
@@ -122,9 +122,3 @@ vim.o.statusline = " " ..
 -- around vim's counterintuitive treatment of the % register by forcing the path
 -- to be relative. this fixes the statusline for my purposes, but any other use
 -- of the % register should also be formatted in this way IMO.
-
-
--- TODO include 'fileformat' whenever it's not "unix"
-
--- TODO make a tabline
--- vim.o.tabline = ""
