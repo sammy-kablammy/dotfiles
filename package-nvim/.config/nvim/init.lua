@@ -50,15 +50,15 @@ require("lazy").setup({
     "nvim-treesitter/nvim-treesitter-textobjects",
     "lewis6991/gitsigns.nvim",
     -- LSP
-    "neovim/nvim-lspconfig",
-    "williamboman/mason.nvim",
-    {
-        "williamboman/mason-lspconfig.nvim",
-        dependencies = {
-            "williamboman/mason.nvim",
-            "neovim/nvim-lspconfig",
-        },
-    },
+    -- "neovim/nvim-lspconfig",
+    -- "williamboman/mason.nvim",
+    -- {
+    --     "williamboman/mason-lspconfig.nvim",
+    --     dependencies = {
+    --         "williamboman/mason.nvim",
+    --         "neovim/nvim-lspconfig",
+    --     },
+    -- },
     -- snippets
     {
         {

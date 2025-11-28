@@ -1,66 +1,15 @@
--- https://github.com/neovim/nvim-lspconfig
--- https://github.com/williamboman/mason.nvim
--- https://github.com/williamboman/mason-lspconfig.nvim
+-- LSP configuration file for nvim v0.11 (no longer using lspconfig, mason, or
+-- mason-lspconfig).
 
---[[
+---------- global LSP configuration ----------
 
-what plugins are needed:
-- mason: just a package manager that happens to be inside of neovim (but a
-    package manager specifically for language servers). mason servers aren't
-    added to your path, they're just for nvim (see ~/.local/share/mason/bin).
-- lspconfig: sets up language servers to work with neovim
-- mason-lspconfig: an amalgam of features that make your life easier when
-  working with both mason and lspconfig. the main benefit is automatically
-  setting up servers installed via mason with lspconfig (otherwise you'll have
-  to set each one up individually).
-
-setup order requirements:
-- mason before any language servers
-- mason-lspconfig before lspconfig
-
-TODO To be honest, I would prefer to not use mason and just manually install
-each LSP on each machine. But I just don't use LSPs enough to care right now.
-Ideally, I'd get rid of lspconfig too since it's kinda annoying to override its
-configs when you do want to do that.
-
-]]
-
-vim.diagnostic.enable(false)
-
+vim.diagnostic.enable(false) -- off by default but can toggle
 vim.diagnostic.config({
-    virtual_text = true, -- (display diagnostics as end-of-line virtual text)
+    virtual_text = true,     -- (display diagnostics as end-of-line virtual text)
     -- virtual_lines = true, -- (display diagnostics as line-below virtual text)
 })
+vim.lsp.inlay_hint.enable(true)
 
--- i used to have all the language servers i use in the 'ensure_installed'
--- fields but they aren't really necessary on most machines i use, so now you're
--- just gonna have to use this usercommand when you want to install LSPs.
-vim.api.nvim_create_user_command("LspMe", function()
-    -- note: use mason names here, not lspconfig names
-    local my_servers = {
-        -- careful installing too many things. especially with null-ls.
-        -- they tend to conflict with each other.
-        "lua-language-server",
-        "clangd",
-        "jdtls",
-        "pyright",
-        "typescript-language-server",
-        "css-lsp",
-        "gopls",
-    }
-    for _, server in ipairs(my_servers) do
-        vim.cmd("MasonInstall " .. server)
-    end
-end, { desc = "install all my preferred language servers" })
-
-require("mason").setup({})
-require("mason-lspconfig").setup({})
-
--- setup servers that aren't from mason
-require("lspconfig").dartls.setup({})
-
--- global LSP mappings
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
 vim.keymap.set("n", "[d", function()
     vim.diagnostic.jump({ count = -1, float = true, wrap = false })
 end, { desc = "previous diagnostic" })
@@ -78,25 +27,27 @@ vim.keymap.set("n", "<leader>ld", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle LSP diagnostics" })
 
--- buffer-local LSP mappings
+-- buffer-local LSP configuration
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLspConfig", {}),
     callback = function(ev)
+        -- Nvim has lots of builtin LSP keymaps now (see :h grn for all):
+        -- * grn to rename
+        -- * gra to do code actions
+        -- * grr to get references
+        -- * gri to goto implementation
+        -- * K to hover
         local function bufmap(mode, lhs, rhs, desc)
             vim.keymap.set(mode, lhs, rhs, { desc = desc, buffer = ev.buf })
         end
-        -- See `:help vim.lsp.*` for documentation on any of the below functions
-        -- note: K does LSP hover. this is nvim default behavior now, apparently
-        bufmap("n", "gr", vim.lsp.buf.references, "LSP get references")
-        bufmap("n", "<leader>gr", vim.lsp.buf.references, "LSP get references")
-        -- i think i want the option to use the dumber (but potentially faster)
-        -- goto-definition that's built into vim
+        -- i like having the option to use the dumber (but usually much faster)
+        -- "goto definition" built into vim
         bufmap("n", "<leader>gd", vim.lsp.buf.definition, "LSP goto definition")
         bufmap("n", "<leader>gD", vim.lsp.buf.declaration, "LSP goto Declaration")
-        bufmap('n', '<leader>gi', vim.lsp.buf.implementation, "LSP goto implementation")
-        bufmap("n", "<leader>lr", vim.lsp.buf.rename, "LSP rename")
         bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "code actions")
-        bufmap("i", "<C-h>", vim.lsp.buf.signature_help, "insert mode signature help")
+        bufmap("i", "<C-h>", function()
+            print("Nvim now uses <c-s> in Insert mode for signature help.")
+        end)
         bufmap("n", "<leader>lf", function()
             vim.lsp.buf.format({ async = true })
         end, "LSP format entire buffer")
@@ -116,7 +67,87 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
-vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "Lsp Info" })
-vim.keymap.set("n", "<leader>ll", "<cmd>LspLog<cr>", { desc = "LSP Log" })
-vim.keymap.set("n", "<leader>la", "<cmd>LspStart<cr>", { desc = "LSP stArt" })
-vim.keymap.set("n", "<leader>ls", "<cmd>LspStop<cr>", { desc = "LSP Stop" })
+-- TODO How to replace LspStart? You'd need a way to map the current buffer's
+-- filetype to its server name.
+vim.api.nvim_create_user_command("MyLspStop", function()
+    local current_buffer_clients = vim.lsp.get_clients({ bufnr = 0 })
+    for i, client in ipairs(current_buffer_clients) do
+        vim.lsp.enable(client.name, false)
+    end
+end, {})
+vim.api.nvim_create_user_command("MyLspRestart", function()
+    local current_buffer_clients = vim.lsp.get_clients({ bufnr = 0 })
+    for i, client in ipairs(current_buffer_clients) do
+        vim.lsp.enable(client.name, false)
+        vim.lsp.enable(client.name, true)
+    end
+end, {})
+vim.api.nvim_create_user_command("MyLspInfo", function()
+    vim.cmd("checkhealth vim.lsp")
+    print("Use ':checkhealth vim.lsp' instead.")
+end, {})
+
+---------- example config ----------
+
+-- (as a first pass, these configs were originally copied from lspconfig)
+-- :h lsp-quickstart
+-- :h vim.lsp.Config
+
+-- install luarocks, then 'sudo luarocks install lua-language-server' (this
+-- may be broken on arm though)
+vim.lsp.config["luals"] = {
+    -- extra arguments can be added as separate strings within this table:
+    cmd = { "lua-language-server" },
+    -- automatically attach to these filetypes:
+    filetypes = { "lua" },
+    -- most->least priority (nested tables have equal precedence):
+    root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
+    settings = {
+        Lua = {
+            runtime = {
+                version = "LuaJIT",
+            }
+        }
+    }
+}
+-- 🦐 Shrimply 🍤 comment this line out to disable LSPs
+vim.lsp.enable("luals")
+
+---------- ok here are the rest ----------
+
+-- did you know clangd exists on arm? mason always broke on arm
+vim.lsp.config["clangd"] = {
+    cmd = { "clangd" },
+    filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+    root_markers = { ".clangd", ".clang-tidy", ".clang-format", "compile_commands.json", "compile_flags.txt", "configure.ac", ".git" }
+}
+vim.lsp.enable("clangd")
+
+vim.lsp.config["gopls"] = {
+    cmd = { "gopls" },
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+}
+vim.lsp.enable("gopls")
+
+vim.lsp.config["jdtls"] = {
+    cmd = { "jdtls", "-configuration", "/home/runner/.cache/jdtls/config", "-data", "/home/runner/.cache/jdtls/workspace" },
+    filetypes = { "java" },
+    root_markers = { ".git", "build.gradle", "build.gradle.kts", "build.xml", "pom.xml", "settings.gradle", "settings.gradle.kts" }
+}
+vim.lsp.enable("jdtls")
+
+vim.lsp.config["basedpyright"] = {
+    cmd = { "basedpyright-langserver", "--stdio" },
+    filetypes = { "python" },
+    rorot_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.json", ".git" },
+    settings = {
+        basedpyright = {
+            analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "openFilesOnly",
+                useLibraryCodeForTypes = true
+            }
+        }
+    }
+}
+vim.lsp.enable("basedpyright")
