@@ -18,6 +18,14 @@ if isYes "$response"; then
     done
 fi
 
+# **** set up git stow ****
+read -p "-> Stow packages? " response
+if isYes "$response"; then
+    # TODO don't hardcode apt here
+    sudo apt install -y stow
+    stow -R package*
+fi
+
 # **** install preferred font ****
 # font_install_dir="$HOME/.local/share/fonts/truetype/"
 # font_url="https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/NoLigatures/Regular/JetBrainsMonoNLNerdFontMono-Regular.ttf"
@@ -36,6 +44,7 @@ fi
 read -p "-> Install Neovim? " response
 neovim_checkout_dir="$HOME/checkouts/testneovim"
 if isYes "$response"; then
+    # TODO don't hardcode apt here
     sudo apt install -y ninja-build gettext cmake curl build-essential
     mkdir --verbose --parents "$neovim_checkout_dir"
     git clone "https://github.com/neovim/neovim.git" "$neovim_checkout_dir"

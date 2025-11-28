@@ -18,6 +18,11 @@ setup order requirements:
 - mason before any language servers
 - mason-lspconfig before lspconfig
 
+TODO To be honest, I would prefer to not use mason and just manually install
+each LSP on each machine. But I just don't use LSPs enough to care right now.
+Ideally, I'd get rid of lspconfig too since it's kinda annoying to override its
+configs when you do want to do that.
+
 ]]
 
 vim.diagnostic.enable(false)

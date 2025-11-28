@@ -36,7 +36,15 @@ to `tmux.conf`, which belongs in `~/.config/tmux/tmux.conf`.
 - `stow -D <package name>` to delete a package
 - `stow */` to add all directories
 
-# statusization
+Non-stow-package directories are here, try to remember not to symlink them. Stow
+packages are named `package-xxx` so you can just `stow -R package*` to get them all.
+
+WARNING: GNU Stow's `--dotfiles` flag doesn't work when a directory is a
+dotfile, e.g. `.config/` (Years old, will likely never be fixed
+https://github.com/aspiers/stow/issues/33). One of many janky behaviors that
+make me want to ditch stow in the future.
+
+## statusization
 
 ever leave your computer for a while but forget to push your changes and then
 have to deal with a bunch of merging when you get back?? haha me neither.

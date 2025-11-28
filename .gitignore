@@ -1,4 +1,4 @@
 *.swp
 *.swo
 awesome/.config/awesome/default/
-nvim/.config/nvim/spell/*.spl
+package-nvim/.config/nvim/spell/*.spl
