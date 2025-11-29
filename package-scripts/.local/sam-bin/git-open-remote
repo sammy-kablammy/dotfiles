@@ -1,6 +1,15 @@
 #!/bin/sh
 
-# inspired by https://github.com/SylvanFranklin/.config/blob/main/scripts/open-github.sh
+# inspired by
+# https://github.com/SylvanFranklin/.config/blob/main/scripts/open-github.sh
+# (but trying to be more shell neutral)
 
 url=$(git remote get-url origin)
+
+if echo "$url" | grep -i 'git@'>/dev/null; then
+    url=$(echo "$url" | sed 's/:/\//')
+    url=$(echo "$url" | sed 's/git@/https:\/\//')
+fi
+
+echo "Opening '$url'"
 xdg-open "$url"
