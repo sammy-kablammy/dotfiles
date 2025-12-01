@@ -4,12 +4,14 @@ CERN
 CFG
 CLI
 CRLF
+DHCP
 DIY
 DNS
 Engelbart
 FOV
 FPGA
 GUIs
+HyperCard
 IETF
 IMAP
 IPv4
@@ -162,6 +164,7 @@ rewatch
 rewatching
 rigidities
 runtime
+sandboxing
 satisfice
 satisficing
 screensaver
