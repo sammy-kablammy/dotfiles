@@ -3,7 +3,7 @@
 # new note searching program, supports tags this time :)
 # this one doesn't use fzf. it opens every match and relies on telescope search
 
-cd /home/sam/notes/main
+cd /home/sam/kablam/notes/main
 
 if [ $# -eq 0 ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo "Search and edit notes by content"

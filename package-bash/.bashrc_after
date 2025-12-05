@@ -303,6 +303,13 @@ f () {
             -not -path "*/.stversions*" \
             -not -name ".stfolder" \
             2>/dev/null
+        # TODO this needs to be fixed so that f and F are properly differentiated, also depth and going across filesystems is weird
+        find "/run/media/sam/SN570/kablam/" \
+            -maxdepth "$SAM_F_MAX_DEPTH" \
+            -not -path "*/.git/*" \
+            -not -path "*/.stversions*" \
+            -not -name ".stfolder" \
+            2>/dev/null
         # more 'find' commands can go here
     } | fzf --preview='less {}' --preview-window=right,50%)
     if [ -z "$selected" ]; then

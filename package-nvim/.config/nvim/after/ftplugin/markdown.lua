@@ -77,7 +77,7 @@ vim.keymap.set('n', '6gO', function() generate_toc(6, true) end, { buffer = true
 -- this really could use treesitter but ehhhh i don't feel it
 -- you need your title to be of the form [](main/*.md) for title to be inserted
 function UpdateNoteTitles()
-    local notes_dir = "/home/sam/notes/main/"
+    local notes_dir = vim.g.sam_notes_path .. "/main/"
     ClearNoteTitles()
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     for linenum, line in ipairs(lines) do

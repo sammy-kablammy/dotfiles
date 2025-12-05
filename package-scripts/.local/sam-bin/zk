@@ -1,4 +1,4 @@
 #!/bin/bash
 
 timestamp=$(date +"%F_%H-%M-%S")
-echo "$HOME/notes/main/$timestamp.md"
+echo "/home/sam/kablam/notes/main/$timestamp.md"

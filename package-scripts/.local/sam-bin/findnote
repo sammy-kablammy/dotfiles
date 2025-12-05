@@ -9,7 +9,7 @@
 # grep "^#[a-zA-Z0-9]\+" vim_reminders.md 
 # grep "^#[[:alnum:]]\+" vim_reminders.md 
 
-notes_dir=/home/sam/notes
+notes_dir=/home/sam/kablam/notes
 grep="grep -l"
 if type rg &> /dev/null; then
     grep=rg

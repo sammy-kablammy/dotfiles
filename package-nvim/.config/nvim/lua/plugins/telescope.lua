@@ -56,9 +56,12 @@ telescope_map("v", function() builtin.find_files({ hidden = true, cwd = "$HOME/.
 telescope_map("V", function() builtin.live_grep({ cwd = "~/.config/nvim/" }) end, "live grep relative to dotfiles")
 telescope_map("]", builtin.tags, "telescope tags")
 
+-- can't use vim.g.sam_notes_path here because it isn't defined yet???
+vim.g.telescope_sam_notes_path = "/home/sam/kablam/notes"
+
 local function find_notes()
     builtin.live_grep({
-        cwd = "~/notes/main",
+        cwd = vim.g.telescope_sam_notes_path .. "/main",
         glob_pattern = "*.md",
     })
     -- initial search pattern for ya. this can be modified, unlike grep_string's 'search' field.
@@ -67,7 +70,7 @@ end
 vim.api.nvim_create_user_command("FindNotes", find_notes, {})
 telescope_map("n", find_notes, "my notes, general")
 telescope_map("N", function()
-    builtin.tags({ cwd = "~/notes", ctags_file = "~/notes/tags" })
+    builtin.tags({ cwd = vim.g.telescope_sam_notes_path, ctags_file = vim.g.sam_notes_path .. "/tags" })
 end, "my notes, tags only")
 telescope_map("z", function()
     local link = vim.api.nvim_buf_get_name(0)

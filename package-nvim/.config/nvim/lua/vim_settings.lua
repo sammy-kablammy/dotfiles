@@ -191,6 +191,7 @@ vim.o.signcolumn = "yes" -- i would use "number" but gitsigns signs are too comm
 
 
 -----------------------------interacting with notes-----------------------------
+vim.g.sam_notes_path = "/home/sam/kablam/notes"
 vim.api.nvim_create_user_command('NewNote', function()
     local obj = vim.system({"/home/sam/.local/sam-bin/notenew"}, {}):wait()
     -- there's a trailing newline; remove it
@@ -198,7 +199,7 @@ vim.api.nvim_create_user_command('NewNote', function()
     -- editing the file based on the full path is annoying because it messes up
     -- links, but it's fine if you're just doing a quick note. (this annoyance
     -- resets once reopening nvim, so the fix only matters for longer sessions)
-    if vim.fn.getcwd() == "/home/sam/notes" then
+    if vim.fn.getcwd() == vim.g.sam_notes_path then
         local basename = vim.fs.basename(filename)
         vim.cmd.edit("main/" .. basename)
     else
@@ -211,9 +212,9 @@ vim.api.nvim_create_user_command('Mainnote', function()
         return
     end
     local file_path = vim.fn.expand("%:t")
-    vim.cmd("!mv '%' ~/notes/main/")
+    vim.cmd("!mv '%' " .. vim.g.sam_notes_path .. "/main/")
     vim.cmd.bdelete()
-    vim.cmd.edit("~/notes/main/" .. file_path)
+    vim.cmd.edit(vim.g.sam_notes_path .. "/main/" .. file_path)
 end, {})
 vim.api.nvim_create_user_command('Inboxnote', function()
     if vim.bo.modified then
@@ -221,9 +222,9 @@ vim.api.nvim_create_user_command('Inboxnote', function()
         return
     end
     local file_path = vim.fn.expand("%:t")
-    vim.cmd("!mv '%' ~/notes/inbox/")
+    vim.cmd("!mv '%' " .. vim.g.sam_notes_path .. "/inbox/")
     vim.cmd.bdelete()
-    vim.cmd.edit("~/notes/inbox/" .. file_path)
+    vim.cmd.edit(vim.g.sam_notes_path .. "/inbox/" .. file_path)
 end, {})
 vim.api.nvim_create_user_command('Deletenote', function()
     local link = vim.api.nvim_buf_get_name(0)
@@ -237,11 +238,11 @@ vim.api.nvim_create_user_command('Deletenote', function()
         print("must save note before moving")
         return
     end
-    vim.cmd("!mv '%' ~/notes/.trash/")
+    vim.cmd("!mv '%' " .. vim.g.sam_notes_path .. "/.trash/")
     vim.cmd.bdelete()
 end, {})
 vim.api.nvim_create_user_command('TagNotes', function()
-    vim.cmd("!~/notes/maketags.sh")
+    vim.cmd("!" .. vim.g.sam_notes_path .. "/maketags.sh")
 end, {})
 vim.api.nvim_create_user_command('RandomNote', function()
     local obj = vim.system({ "noterandom" }, {}):wait()
@@ -251,8 +252,8 @@ vim.api.nvim_create_user_command('RandomNote', function()
 end, {})
 vim.keymap.set("n", "<leader>nt", "<cmd>TagNotes<cr>")
 vim.keymap.set("n", "<leader>nn", "<cmd>NewNote<cr>")
-vim.keymap.set("n", "<leader>ni", "<cmd>edit ~/notes/main/inbox.md<cr>")
-vim.keymap.set("n", "<leader>na", "<cmd>edit ~/notes/main/agenda.md<cr>")
+vim.keymap.set("n", "<leader>ni", "<cmd>edit " .. vim.g.sam_notes_path .. "/main/inbox.md<cr>")
+vim.keymap.set("n", "<leader>na", "<cmd>edit " .. vim.g.sam_notes_path .. "/main/agenda.md<cr>")
 vim.keymap.set("n", "<leader>nr", "<cmd>RandomNote<cr>")
 
 -- the path isn't set properly for some reason (at least on chromeos),
