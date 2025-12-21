@@ -46,6 +46,7 @@ neovim_checkout_dir="$HOME/checkouts/testneovim"
 if isYes "$response"; then
     # TODO don't hardcode apt here
     sudo apt install -y ninja-build gettext cmake curl build-essential
+    # sudo dnf -y install ninja-build cmake gcc make gettext curl glibc-gconv-extra git
     mkdir --verbose --parents "$neovim_checkout_dir"
     git clone "https://github.com/neovim/neovim.git" "$neovim_checkout_dir"
     git -C "$neovim_checkout_dir" checkout v0.11.3
@@ -62,3 +63,5 @@ echo "   (I don't know how to automate this)"
 # TODO edit existing .bashrc and remove things as necessary (I know history
 # needs to be changed, for example). Or just copy the existing bashrc to a
 # .old_bashrc
+
+# TODO copy example ssh config to .ssh and maybe do some other stuff there

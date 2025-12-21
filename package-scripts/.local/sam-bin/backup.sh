@@ -1,9 +1,12 @@
 #!/bin/sh
 
+# TODO tar before backing up, this makes backups more portable
+
 # Script to make daily backups. Non-daily intervals will need some modification.
 
 # Currently, if you run multiple backups on the same day, it just keeps the
-# latest one.
+# latest one. So feel free to run this several times a day in a cronjob in case
+# the system is off sometimes.
 
 # For example: when source_dirs is "/foo/bar/whatever /foo/bar/another", you'll
 # get this:
@@ -12,13 +15,12 @@
 #     $backups_dir/01-02-03/backup.log
 
 # These variables are intended to be overridden.
-test -z "$backups_dir" && backups_dir="/home/sam/backups_or_whatever"
+test -z "$backups_dir" && backups_dir="/home/sam/kablam/.sam_backups/"
 test -z "$how_many_days_to_keep" && how_many_days_to_keep=14
 # Dirs to be backed up. (do not put spaces in filenames or else the file-space
 # continuum may collapse into a black hole and kill everyone ok thank you)
 test -z "$source_dirs" && source_dirs="
-/home/sam/.local/share/fonts
-/home/sam/checkouts/testdir
+/home/sam/kablam/notes
 "
 
 ################################################################################

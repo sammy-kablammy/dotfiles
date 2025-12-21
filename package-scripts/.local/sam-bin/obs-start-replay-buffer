@@ -1,0 +1,3 @@
+#!/bin/sh
+
+obs --startreplaybuffer --disable-shutdown-check

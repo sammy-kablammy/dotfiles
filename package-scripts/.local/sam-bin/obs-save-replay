@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# get obs-cmd here https://github.com/grigio/obs-cmd
+
+# NOTE remember to set OBS_PASSWORD
+current_script_dir=$(dirname $(which $0))
+source "$current_script_dir/.env"
+/home/sam/.local/bin/obs-cmd --websocket obsws://localhost:4455/$OBS_PASSWORD replay save

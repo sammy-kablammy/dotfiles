@@ -48,7 +48,7 @@ alias 'watls'='watch -ctn 0.2 ls --color=always'
 alias 'gr'='grep -i'
 alias 'pg'='pgrep -i'
 alias 'rga'='rg --no-ignore -i' # 'ripgrep all'
-alias 'tldr'='tldr --theme base16'
+# alias 'tldr'='tldr --theme base16'
 alias 's'='sessionizer'
 alias 'ol'='ollama run llama3.1'
 alias 'gccw'='gcc -Wall -Werror -Wextra -g -fsanitize=address,undefined,leak'
@@ -232,10 +232,12 @@ export HISTTIMEFORMAT='(%F %T)  '
 # https://web.archive.org/web/20170104092506/http://briancarper.net/blog/248.html
 shopt -s histappend
 export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # (you can search for "history -a" in bash(1) and it'll work)
+
 # fun bash facts: with the default value of HISTCONTROL (ignoreboth), you can
 # run a command with a space at the front to prevent it from appearing in
 # history. this is handy for dangerous commands that you don't want to
-# accidentally reuse.
+# accidentally reuse. here is is though in case it's not the default
+export HISTCONTROL=ignoreboth
 
 # this is supposed to fix the terminal freezing and showing a ';' character,
 # then needed like seventeen ctrl+c inputs to unfreeze it. especially on WSL.
@@ -304,7 +306,7 @@ f () {
             -not -name ".stfolder" \
             2>/dev/null
         # TODO this needs to be fixed so that f and F are properly differentiated, also depth and going across filesystems is weird
-        find "/run/media/sam/SN570/kablam/" \
+        find "/mnt/sn570/kablam/" \
             -maxdepth "$SAM_F_MAX_DEPTH" \
             -not -path "*/.git/*" \
             -not -path "*/.stversions*" \

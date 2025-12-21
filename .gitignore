@@ -2,3 +2,4 @@
 *.swo
 awesome/.config/awesome/default/
 package-nvim/.config/nvim/spell/*.spl
+package-scripts/.local/sam-bin/.env
