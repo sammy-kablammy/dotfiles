@@ -10,10 +10,13 @@ DNS
 Engelbart
 FOV
 FPGA
+GPIO
+GPIOs
 GUIs
 HyperCard
 IETF
 IMAP
+IMU
 IPv4
 IPv6
 JSON
@@ -28,10 +31,12 @@ NLS
 NixOS
 OpenStreetMap
 PCBs
+PID
 PostgreSQL
 SEO
 SIMD
 SMTP
+SystemD
 TCP
 UCF
 UDP
@@ -51,6 +56,7 @@ backend
 backtick
 backticks
 biomes
+bitfield
 bitwise
 bolded
 boolean
@@ -61,6 +67,7 @@ checksums
 chiral
 chirality
 claymation
+codebase
 cofounder
 combinationally
 connectionless
@@ -73,6 +80,7 @@ datagram
 datagrams
 dataset
 datasets
+datasheet
 datasheets
 demultiplexing
 dereference
@@ -98,6 +106,7 @@ fullscreen
 grayscale
 hackathon
 iOS
+ideating
 impactful
 indirected
 inode
@@ -120,6 +129,7 @@ manpage
 manpages
 merch
 metadata
+metaprogramming
 microcontrollers
 microtransactions
 monetization
@@ -133,6 +143,7 @@ overfitting
 overlayed
 parallelizable
 parallelize
+parallelizing
 parameterize
 parameterized
 parametrically
@@ -152,6 +163,9 @@ pseudocode
 pseudorandom
 qualia
 queueing
+rebase
+rebased
+rebasing
 recency
 relativize
 relativized

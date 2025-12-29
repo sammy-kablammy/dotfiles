@@ -17,6 +17,7 @@
     defaultBranch = main
 [push]
     default = simple
+    autoSetupRemote = true # (allows 'git push' on new, upstreamless branches)
 [pull]
     rebase = false
 [diff]
@@ -31,8 +32,10 @@
     insteadOf = gh:
 [url "ssh://git@github.com/"]
     # Push over SSH since I prefer SSH keys to github's auth. Git also supports
-    # 'pushInsteladOf' if you just want this to apply to pushing.
-	insteadOf = https://github.com/
+    # 'pushInsteadOf' if you just want this to apply to pushing.
+	; insteadOf = https://github.com/
+    # Actually you can't do this because it fails when you aren't authorized?
+    # even for public repos? idk
 [advice]
     # detachedHead = false
 [help]
@@ -45,6 +48,8 @@
     b = "branch -vv"
     ca = "commit --amend"
     co = "checkout"
+    conflicts = "!f() { git ls-files | xargs grep -il '<<<<<<<' | $EDITOR; }; f"
+    currentbranch = "rev-parse --abbrev-ref HEAD"
     ds = "diff --stat"
     dt = "difftool --prompt"
     dty = "difftool --prompt -y --trust-exit-code" # (use vim's :cq to end diffing)

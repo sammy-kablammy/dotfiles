@@ -111,7 +111,7 @@ vim.lsp.config["luals"] = {
     }
 }
 -- 🦐 Shrimply 🍤 comment this line out to disable LSPs
-vim.lsp.enable("luals")
+-- vim.lsp.enable("luals")
 
 ---------- ok here are the rest ----------
 
@@ -121,20 +121,20 @@ vim.lsp.config["clangd"] = {
     filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
     root_markers = { ".clangd", ".clang-tidy", ".clang-format", "compile_commands.json", "compile_flags.txt", "configure.ac", ".git" }
 }
-vim.lsp.enable("clangd")
+-- vim.lsp.enable("clangd")
 
 vim.lsp.config["gopls"] = {
     cmd = { "gopls" },
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
 }
-vim.lsp.enable("gopls")
+-- vim.lsp.enable("gopls")
 
 vim.lsp.config["jdtls"] = {
     cmd = { "jdtls", "-configuration", "/home/runner/.cache/jdtls/config", "-data", "/home/runner/.cache/jdtls/workspace" },
     filetypes = { "java" },
     root_markers = { ".git", "build.gradle", "build.gradle.kts", "build.xml", "pom.xml", "settings.gradle", "settings.gradle.kts" }
 }
-vim.lsp.enable("jdtls")
+-- vim.lsp.enable("jdtls")
 
 -- (pip install basedpyright)
 vim.lsp.config["basedpyright"] = {
@@ -151,4 +151,4 @@ vim.lsp.config["basedpyright"] = {
         }
     }
 }
-vim.lsp.enable("basedpyright")
+-- vim.lsp.enable("basedpyright")

@@ -50,6 +50,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         InsertMap("q", '""<left>')
         InsertMap("r", "_")
         InsertMap("t", "~")
+        InsertMap("i", "192.168.")
         -- date. this is so annoying. we have a lua string that turns into a vim command
         -- string that THEN turns into a shell command. like three levels of escaping.
         InsertMap("d", [[<cmd>r! date +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
@@ -147,18 +148,28 @@ end, { desc = "set textwidth to whatever" })
 -- for cleaner screen demos
 vim.api.nvim_create_user_command("Zenma", function()
     if vim.g.zenma_is_enabled then
+        -- revert all options to pre-zen state
+        -- TODO iterate over a global table instead of separate vars 🤔
         vim.o.colorcolumn = vim.g.zenma_colorcolumn
         vim.o.laststatus = vim.g.zenma_laststatus
-        vim.o.cmdheight = vim.g.cmdheight
+        vim.o.cmdheight = vim.g.zenma_cmdheight
+        vim.o.number = vim.g.zenma_number
+        vim.o.signcolumn = vim.g.zenma_signcolumn
         vim.g.zenma_is_enabled = false
         return
     end
+    -- save current options for later
     vim.g.zenma_colorcolumn = vim.o.colorcolumn
     vim.g.zenma_laststatus = vim.o.laststatus
     vim.g.zenma_cmdheight = vim.o.cmdheight
+    vim.g.zenma_number = vim.o.number
+    vim.g.zenma_signcolumn = vim.o.signcolumn
+    -- apply zen options
     vim.o.colorcolumn = ""
     vim.o.laststatus = 0
     vim.o.cmdheight = 0
+    vim.o.number = false
+    vim.o.signcolumn = "no"
     vim.g.zenma_is_enabled = true
 end, {})
 vim.keymap.set("n", "<leader>sz", "<cmd>Zenma<cr>", { desc = "experimental zen mode??👀" })
@@ -168,6 +179,9 @@ vim.keymap.set("n", "[c", vim.cmd.cprev, { desc = "prev qflist entry" })
 vim.keymap.set("n", "]c", vim.cmd.cnext, { desc = "next qflist entry" })
 vim.keymap.set("n", "[C", vim.cmd.colder, { desc = "older qflist" })
 vim.keymap.set("n", "]C", vim.cmd.cnewer, { desc = "newer qflist" })
+
+-- available square bracket motions (but double check before using these):
+-- j k n u v w x y
 
 -- Nvim 0.11 now uses these mappings for tag stuff, so i need to find
 -- alternatives... TODO
@@ -202,6 +216,10 @@ vim.keymap.set("n", "<c-w>t", "<cmd>tabnew %<cr>", { desc = "create new tab"})
 
 -- open fileTYpe plugin
 vim.keymap.set("n", "<leader>ty", function()
+    if vim.bo.filetype == "" then
+        print("This buffer doesn't have a filetype")
+        return
+    end
     local ftplugin_path = "~/.config/nvim/after/ftplugin/" .. vim.bo.filetype .. ".lua"
     -- i would rather :edit the file but it messes up whitespace settings (sw,
     -- ts, sts) when you do that so instead i'm gonna :vsplit
@@ -368,3 +386,7 @@ vim.keymap.set("n", "<leader><leader>rv", ":g/.*/move 0<cr>", { desc = "Reverse 
 --     vim.o.operatorfunc = "v:lua.PrintOperatorFunc"
 --     vim.api.nvim_feedkeys("g@", "n", false)
 -- end, { desc = "print to COnsole" })
+
+-- experimental, might not like this. yeah i don't
+-- vim.keymap.set({ "n", "v" }, "*", "*<cmd>nohlsearch<cr>")
+-- vim.keymap.set({ "n", "v" }, "#", "#<cmd>nohlsearch<cr>")

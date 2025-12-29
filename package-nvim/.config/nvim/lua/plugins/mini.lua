@@ -12,6 +12,7 @@ if you're ever considering switching to something else, consider these benefits:
 --]]
 
 -- use mini.icons instead of web-devicons
+-- (i think only telescope needs this at the moment)
 require("mini.icons").mock_nvim_web_devicons()
 
 local mini_files = require("mini.files")

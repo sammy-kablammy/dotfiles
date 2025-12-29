@@ -156,6 +156,16 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
         vim.o.swapfile = true
         vim.o.undofile = true
+
+        -- Custom filetypes / filetype alises
+        -- TODO this is really slow somehow
+        local filename = vim.fn.expand('%')
+        if not filename or filename == '' or string.find(filename, 'minifiles://') then
+            -- minifiles buffers close after like 1 second. idk. just skip minifiles.
+        elseif string.find(vim.fs.basename(filename), '.service') then
+            vim.bo.filetype = 'systemd'
+        end
+
     end,
 })
 

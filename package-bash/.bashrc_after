@@ -15,6 +15,9 @@
 
 ################################################################################
 
+# TODO environment variables should be defined earlier, need to rethink ordering
+# in this file
+export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.local/sam-bin:$PATH
 
 alias 'ls'='ls --color=auto'
@@ -34,7 +37,8 @@ alias 'fzfp'='fzf --preview="less {}"'
 alias 'hist'='history | sed "s/[0-9]\+//" | sed "s/^\s*//" | nvim'
 alias 'sizema'='du -sh ./* | sort -h' # list sizes of things in current directory
 alias 'peep'='nvim -R' # lol
-alias 'ns'='nvim -S' # TODO add tab completion here for lsvim
+alias 'ns'='nvim -S'
+complete -W '$(lsvim 2>/dev/null)' ns # search 'Programmable Completion' in bash(1)
 alias "lsvim"="ls *.vim" # for easily listing vim sessions
 alias 'less'='less --LONG-PROMPT --ignore-case'
 alias 'vimless'='/usr/local/share/nvim/runtime/scripts/less.sh --clean' # I believe this is the right location, though it might be in macros/ instead of scripts/
@@ -55,7 +59,11 @@ alias 'gccw'='gcc -Wall -Werror -Wextra -g -fsanitize=address,undefined,leak'
 alias 'aout'='./a.out'
 alias "gt"="go test ./... | sed 's/^ok/\o033[32mOK\o033[0m/; s/^FAIL/\o033[31mFAIL\o033[0m/'" # like "go test" but with colorized output
 alias "dps"="docker ps -as"
+alias 'delete-the-fucking-zone-identifiers-windows-you-stupid-piece-of-garbage'='rm -i *:Zone.Identifier'
+# Fix 'Exec format error' from windows programs (like explorer.exe) on WSL:
+alias 'wsl-fix-bin'='sudo systemctl restart systemd-binfmt'
 
+# TODO move to separate script. this file should be bash-specific as much as possible.
 # Merge compile commands for use with clangd.
 merge-compile-commands() {
     # (use -mindepth as to not include the previous ./compile_commands.json)
@@ -97,8 +105,12 @@ set -o noclobber
 
 # quickly simulate WSL with `tmux new-window -e WSL_DISTRO_NAME=Ubuntu`
 if [ ! -z "$WSL_DISTRO_NAME" ]; then
+    # Historically on WSL, I used the wslu package to get `wslview`, which is
+    # similar to xdg-open. But the version in apt is apparently broken or
+    # something? Just use explorer.exe instead.
     alias 'x'='explorer.exe'
-    # on WSL, you should download the wslu package to get `wslview`, which is similar to xdg-open
+    # NOTE: when wsl exes break, use 'sudo systemctl restart systemd-binfmt'
+    # TODO move all WSL things to the same place probably
 else
     alias 'x'='xdg-open'
 fi
@@ -198,9 +210,13 @@ else
     export PS2="> "
 fi
 
+# TODO add number of background jobs to ps1, in case i forget i backgrounded
+# something
 if [ -z "$TMUX" ]; then
     PS1="(no tmux) $PS1"
 fi
+# add OSC 133, indicating the end of a prompt (broken rn)
+# export PROMPT_COMMAND="printf \\"\033]133;A\007\\"; $PROMPT_COMMAND"
 
 alias 'mn'='man --pager="nvim +Man!"'
 mansearch() {
@@ -264,7 +280,12 @@ bind '"\C-x\C-v": "\C-xv"'
 bind '"\C-xf": "\"$(fzf)\""'
 bind '"\C-x\C-f": "\C-xf"'
 bind '"\C-xd": " 2>/dev/null"'
+bind '"\C-x\C-d": "\C-xd"'
+bind '"\C-xi": "192.168."'
+bind '"\C-x\C-i": "\C-xi"'
 bind '"\C-x?": "man bash | less -p \"Commands for Moving\"\n"' # (open keybind reference)
+# ctrl-alt-p to search history *including current command*. Like ctrl-r but you
+# can decide to search history after you've already typed something.
 bind '"\e\C-p":history-search-backward'
 bind '"\e\C-n":history-search-forward'
 
@@ -292,7 +313,8 @@ trash() {
 # the classic "find | fzf" wombo combo
 SAM_F_MAX_DEPTH=5
 f () {
-    # TODO double check this works. i am currently seeing 'f' open global search.
+    # TODO double check this works. i am currently seeing 'f' open global
+    # search. oh duh its because some dirs are included even in lowercase f
     if [ $# -eq 0 ]; then
         f_starting_dir="."
     else
@@ -331,6 +353,16 @@ alias CC='f ../..'
 alias CCC='f ../../..'
 alias CCCC='f ../../../..'
 
+dotfiles_path="$(get-dotfiles-path)"
+dotfiles() {
+    if [ $# -eq 0 ]; then
+        cd "$dotfiles_path"
+    else
+        cd "$dotfiles_path/$1"
+    fi
+}
+complete -W '$(ls $dotfiles_path)' dotfiles
+
 worktree-cd () {
     if [ $# -ne 1 ]; then
         echo "Expected name of worktree to cd into." >&2
@@ -344,6 +376,7 @@ worktree-cd () {
     cd "$path"
 }
 alias 'wcd'='worktree-cd'
+# TODO bash completion for worktree-cd
 
 worktree-fzf() {
     path=$(git worktree list | fzf | awk '{print $1}')
@@ -386,5 +419,12 @@ tts() {
 export YTDLP_DOWNLOAD_DIR="/home/sam/kablam/media/ytdlp"
 alias "yt-dlp-video"="yt-dlp --embed-metadata --embed-subs --embed-thumbnail --sponsorblock-mark all -o $YTDLP_DOWNLOAD_DIR/'[%(id)s] %(title)s.%(ext)s'"
 alias 'yt-dlp-audio'='yt-dlp --embed-metadata --extract-audio'
+
+# TODO make the tmux versions just call these, these can be used both in tmux
+# and manually, so they're more general
+alias "B"="$EDITOR ~/.bashrc_after"
+alias "G"="$EDITOR $XDG_CONFIG_HOME/git/config"
+alias "T"="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
+alias "I"="cd $(get-dotfiles-path)"
 
 # vim: filetype=sh

@@ -21,6 +21,7 @@ telescope.setup({
         mappings = {
             n = {
                 ["X"] = actions.delete_buffer,
+                -- Note that C-space does to_fuzzy_refine (for live_grep)
             },
         },
     },

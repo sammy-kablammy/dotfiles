@@ -5,11 +5,30 @@
 # (but trying to be more shell neutral)
 
 url=$(git remote get-url origin)
+current_branch_name=$(git rev-parse --abbrev-ref HEAD)
 
+# Convert SSH -> HTTPS
 if echo "$url" | grep -i 'git@'>/dev/null; then
     url=$(echo "$url" | sed 's/:/\//')
     url=$(echo "$url" | sed 's/git@/https:\/\//')
 fi
 
+# Handle GitLab URLs
+if echo "$url" | grep -i gitlab 1>/dev/null; then
+    url=$(echo "$url" | sed 's/\.git//') # remove .git
+    url="$url/-/tree/$current_branch_name" # add branch name
+fi
+
+# Handle GitLab URLs
+if echo "$url" | grep -i github 1>/dev/null; then
+    url=$(echo "$url" | sed 's/\.git//') # remove .git
+    url="$url/tree/$current_branch_name" # add branch name
+fi
+
 echo "Opening '$url'"
-xdg-open "$url"
+
+if [ "$WSL_DISTRO_NAME" ]; then
+    explorer.exe "$url"
+else
+    xdg-open "$url"
+fi

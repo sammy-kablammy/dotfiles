@@ -1,0 +1,9 @@
+#!/bin/sh
+
+dotfiles_path="$(realpath $0)"
+dotfiles_path="$(dirname $dotfiles_path)"
+dotfiles_path="$(dirname $dotfiles_path)"
+dotfiles_path="$(dirname $dotfiles_path)"
+dotfiles_path="$(dirname $dotfiles_path)"
+
+echo "$dotfiles_path"

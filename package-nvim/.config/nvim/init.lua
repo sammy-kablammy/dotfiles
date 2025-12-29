@@ -1,3 +1,6 @@
+-- remember to :mkspell on a first installation. spellgood or zg should also work
+-- vim.cmd('silent mkspell! /home/sam/.config/nvim/spell/en.utf-8.add') -- too slow to run every startup (~20ms)
+
 math.randomseed(os.time())
 local function shitpost()
     local messages = {
