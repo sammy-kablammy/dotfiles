@@ -1,0 +1,6 @@
+vim.keymap.set("n", "]]", function()
+    vim.fn.search([[^\a\a*]])
+end, { desc = "Next header" })
+vim.keymap.set("n", "[[", function()
+    vim.fn.search([[^\a\a*]], "b")
+end, { desc = "Previous header" })

@@ -1,3 +1,11 @@
+--------------------------------------------------------------------------------
+--                          Yeah I don't use this 😔                          --
+--------------------------------------------------------------------------------
+
+-- should probably archive the whole file
+
+
+
 -- custom command you can re-run easily. who needs makefiles anyway?
 
 local custom_command_job_id = 0
@@ -30,17 +38,16 @@ vim.keymap.set("n", "<leader>ge", function()
     end)
 end, { desc = "Enter custom command to re-run" })
 
-
-vim.keymap.set("n", "<leader>rr", function()
-    if custom_command_job_id == 0 then
-        print("No custom command string to re-run.")
-        return
-    end
-
-    local is_terminal_hidden = vim.fn.bufwinid(custom_command_buffer_id) == -1
-    if is_terminal_hidden then
-        vim.cmd("vertical sbuffer" .. custom_command_buffer_id)
-    end
-
-    vim.fn.chansend(custom_command_job_id, { custom_command_string .. "\r\n" })
-end, { desc = "re-run custom command" })
+-- vim.keymap.set("n", "<leader>rr", function()
+--     if custom_command_job_id == 0 then
+--         print("No custom command string to re-run.")
+--         return
+--     end
+--
+--     local is_terminal_hidden = vim.fn.bufwinid(custom_command_buffer_id) == -1
+--     if is_terminal_hidden then
+--         vim.cmd("vertical sbuffer" .. custom_command_buffer_id)
+--     end
+--
+--     vim.fn.chansend(custom_command_job_id, { custom_command_string .. "\r\n" })
+-- end, { desc = "re-run custom command" })

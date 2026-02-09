@@ -35,6 +35,8 @@ vim.keymap.set("n", "zw", "<nop>")
 vim.keymap.set("n", "<C-'>", '<nop>') -- i don't even know what this is but it conflicts with my qmk combos
 vim.keymap.set("i", "<c-a>", "<nop>") -- I keep mispressing this and it messes up my undo history
 vim.keymap.set("i", "<c-space>", "<nop>") -- similar to i_CTRL-A, this messes up undo history
+vim.keymap.set("n", "dp", "<nop>") -- this is :diffput, which i don't use
+vim.keymap.set("n", "g]", "<nop>") -- this is :tselect, interferes with frequent git hunk hopping ]g]g]g
 
 -- insert mode "leader key" style bindings. snippets for dummies. note that the
 -- key following <c-x> does NOT have control pressed. those are already used (:h
@@ -50,7 +52,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         InsertMap("q", '""<left>')
         InsertMap("r", "_")
         InsertMap("t", "~")
-        InsertMap("i", "192.168.")
+        -- InsertMap("i", "192.168.") -- i'd rather have 'i' for 'if' in programming filetypes
         -- date. this is so annoying. we have a lua string that turns into a vim command
         -- string that THEN turns into a shell command. like three levels of escaping.
         InsertMap("d", [[<cmd>r! date +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
@@ -177,8 +179,8 @@ vim.keymap.set("n", "<leader>sz", "<cmd>Zenma<cr>", { desc = "experimental zen m
 -- square bracket fun time [ [ [ ] ] ]
 vim.keymap.set("n", "[c", vim.cmd.cprev, { desc = "prev qflist entry" })
 vim.keymap.set("n", "]c", vim.cmd.cnext, { desc = "next qflist entry" })
-vim.keymap.set("n", "[C", vim.cmd.colder, { desc = "older qflist" })
-vim.keymap.set("n", "]C", vim.cmd.cnewer, { desc = "newer qflist" })
+vim.keymap.set("n", "[C", vim.cmd.cfirst, { desc = "cfirst" })
+vim.keymap.set("n", "]C", vim.cmd.clast, { desc = "clast" })
 
 -- available square bracket motions (but double check before using these):
 -- j k n u v w x y
@@ -201,11 +203,14 @@ vim.keymap.set("n", "<c-q>", function()
     vim.cmd.cnext()
 end, { desc = "next quickfix entry, but don't go off the edge" })
 vim.keymap.set("n", "<leader>q", function()
-    if vim.bo.buftype == "quickfix" then
-        vim.cmd.cclose()
-    else
-        vim.cmd.copen()
+    local open_windows = vim.api.nvim_tabpage_list_wins(0)
+    for _, winnr in ipairs(open_windows) do
+        if vim.bo[vim.api.nvim_win_get_buf(winnr)].buftype == "quickfix" then
+            vim.cmd.cclose()
+            return
+        end
     end
+    vim.cmd.copen()
 end)
 
 -- it's annoying for search results highlighted all the time, so i press this occasionally
@@ -275,19 +280,26 @@ vim.keymap.set("n", "<leader><leader>m", "<cmd>messages<cr>")
 vim.keymap.set("n", "<leader><leader>p", "<cmd>pwd<cr>")
 vim.keymap.set("n", "<c-w>y", function()
     local name = vim.fn.expand("%:t")
-    vim.fn.setreg("", name)
+    vim.fn.setreg("", name .. '\n')
 end, { desc = "yank current file name" })
+vim.keymap.set("n", "<c-w>Y", function()
+    local name = vim.fn.expand("%:t")
+    vim.fn.setreg("", "[[" .. name .. "]]\n")
+end, { desc = "yank current file name (+ markdown link)" })
 vim.keymap.set("n", "g=", "g+") -- (redo, alias for g+)
 vim.keymap.set("n", "<c-w>u", "<c-w>p")
 vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
 vim.keymap.set("n", "<c-w>a", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
 vim.keymap.set("n", "<c-w><c-a>", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
+vim.keymap.set("n", "<c-w>z", "<c-w>|<c-w>_", { desc = "Zoom into window" })
+vim.keymap.set("n", "<c-w>*", "<cmd>split<cr>*", { desc = "* in new split" })
+vim.keymap.set("n", "<c-w>#", "<cmd>split<cr>#", { desc = "# in new split" })
 vim.keymap.set("v", "s", ":s/") -- default 's' in visual mode is redundant (use 'c' instead)
 vim.keymap.set("n", "<bs>", "<cmd>bd<cr>", { desc = "delete buffer" })
 vim.keymap.set("n", "g<bs>", function()
     -- I would use <leader><bs> but it conflicts with whichkey
     local bufnr = vim.fn.bufnr()
-    vim.cmd.bnext()
+    vim.cmd.bprev() -- bprev mirrors the behavior of :bd better than bnext
     vim.api.nvim_buf_delete(bufnr, {})
 end, { desc = "delete buffer without closing window" })
 vim.keymap.set("n", "<leader>v", "<cmd>vert sb #<cr>", { desc = "vsplit previous buffer" })
@@ -390,3 +402,6 @@ vim.keymap.set("n", "<leader><leader>rv", ":g/.*/move 0<cr>", { desc = "Reverse 
 -- experimental, might not like this. yeah i don't
 -- vim.keymap.set({ "n", "v" }, "*", "*<cmd>nohlsearch<cr>")
 -- vim.keymap.set({ "n", "v" }, "#", "#<cmd>nohlsearch<cr>")
+
+-- TODO How to do a universal "change reverse" operator? search operatorfunc. i
+-- think we can do a universal one somehow. want to revisit this.

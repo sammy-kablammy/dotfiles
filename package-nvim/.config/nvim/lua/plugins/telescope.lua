@@ -5,6 +5,7 @@
 
 local telescope = require("telescope")
 local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
 local builtin = require("telescope.builtin")
 local utils = require("telescope.utils")
 
@@ -21,7 +22,35 @@ telescope.setup({
         mappings = {
             n = {
                 ["X"] = actions.delete_buffer,
-                -- Note that C-space does to_fuzzy_refine (for live_grep)
+                ["-"] = function()
+                    -- resume telescope (really only intended for find_files) but with cwd set one level up
+                    local bufnr = vim.fn.bufnr()
+                    local query = action_state.get_current_line()
+                    local state = action_state.get_current_picker(bufnr)
+                    if state._selection_entry == nil then
+                        return
+                    end
+                    -- idk if there's a better way to do this
+                    local cwd = action_state.get_current_picker(bufnr)._selection_entry.cwd
+                    -- there isn't a field called "hidden" in the state table, so just hardcode true for now
+                    local include_hidden_files = true
+                    local get_parent_dir = function(dir)
+                        for i = #dir, 1, -1 do
+                            local char = string.sub(dir, i, i)
+                            if char == '/' then
+                                rightmost_slash_idx = i
+                                break
+                            end
+                        end
+                        return string.sub(dir, 1, rightmost_slash_idx)
+                    end
+                    actions.close(bufnr)
+                    builtin.find_files({
+                        cwd = get_parent_dir(cwd),
+                        hidden = true,
+                        no_ignore = true,
+                    })
+                end,
             },
         },
     },

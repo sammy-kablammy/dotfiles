@@ -159,11 +159,16 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
         -- Custom filetypes / filetype alises
         -- TODO this is really slow somehow
+        local is_extension_match = function(filename, extension)
+            return string.find(vim.fs.basename(filename), extension, 1, true)
+        end
         local filename = vim.fn.expand('%')
         if not filename or filename == '' or string.find(filename, 'minifiles://') then
             -- minifiles buffers close after like 1 second. idk. just skip minifiles.
-        elseif string.find(vim.fs.basename(filename), '.service') then
+        elseif is_extension_match(filename, '.service') then
             vim.bo.filetype = 'systemd'
+        elseif is_extension_match(filename, '.shellcheckrc') then
+            vim.bo.commentstring = '# %s'
         end
 
     end,

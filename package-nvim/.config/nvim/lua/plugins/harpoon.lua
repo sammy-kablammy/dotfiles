@@ -22,25 +22,6 @@ end, { desc = "harpoon append" })
 vim.keymap.set("n", "[h", function() harpoon:list():prev() end, { desc = "previous harpoon" })
 vim.keymap.set("n", "]h", function() harpoon:list():next() end, { desc = "next harpoon" })
 
--- basic telescope configuration
-local conf = require("telescope.config").values
-local function toggle_telescope(harpoon_files)
-    local file_paths = {}
-    for _, item in ipairs(harpoon_files.items) do
-        table.insert(file_paths, item.value)
-    end
-
-    require("telescope.pickers").new({}, {
-        prompt_title = "Harpoon",
-        finder = require("telescope.finders").new_table({
-            results = file_paths,
-        }),
-        previewer = conf.file_previewer({}),
-        sorter = conf.generic_sorter({}),
-    }):find()
-end
-vim.keymap.set("n", "<leader>fa", function() toggle_telescope(harpoon:list()) end, { desc = "harpoon list telescope" })
-
 -- create bindings within the harpoon window
 harpoon:extend({
     UI_CREATE = function(cx)
@@ -64,4 +45,3 @@ vim.api.nvim_create_user_command("PoonMe", function()
         harpoon:list():select(i)
     end
 end, { desc = "open all harpoon marked files" })
-

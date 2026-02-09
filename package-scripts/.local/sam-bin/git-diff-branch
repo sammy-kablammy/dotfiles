@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Diff current branch against its starting point, even when the branch it
+# branched from has moved on. Branch branch branch.
+
+upstream_branch="origin/dev"
+if [ $# -ge 1 ]; then
+    upstream_branch="$1"
+fi
+
+local_branch=$(git rev-parse --abbrev-ref HEAD)
+
+branch_point=$(git merge-base "$local_branch" "$upstream_branch")
+
+git difftool --prompt "$branch_point" HEAD $@

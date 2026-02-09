@@ -39,6 +39,7 @@ vim.b.sam_override_formatoptions = true
 
 
 -- TODO split this into its own plugin
+-- TODO turn off inside of (especially shell) code blocks, turn on after
 -- TODO if when gO is pressed, the current buffer type is quickfix, bypass the
 -- vimgrep and instead vimgrep in the previous window
 -- TODO remove filename and line number from the quickfix entry (if possible)
@@ -181,3 +182,59 @@ vim.keymap.set({ "n", "v" }, "gl", function()
     vim.o.operatorfunc = "v:lua.Listify"
     vim.api.nvim_feedkeys("g@", "n", false)
 end)
+
+
+
+-- experimental list item textobject
+
+-- a list item is defined as a line beginning with whitespace then '-', and
+-- ending at the next such line (or a newline) (or EOF)
+--
+-- ...BUT be careful not to reach too far back. if you ever reach a newline you must stop!
+
+-- function assumes 'inner', can override to 'around'
+function select_list_item(is_around)
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local cursor_line = cursor[1]
+    local cursor_col = cursor[2]
+
+    -- search upward until no longer matches, put marker just before
+    local linenum = cursor_line
+    local is_list_item_start = vim.fn.match(vim.fn.getline(linenum), [[^\s*- ]]) >= 0
+    local is_list_item_body = vim.fn.trim(vim.fn.getline(linenum)) ~= ""
+    while not is_list_item_start and is_list_item_body do
+        linenum = linenum - 1
+        is_list_item_start = vim.fn.match(vim.fn.getline(linenum), [[^\s*- ]]) >= 0
+        is_list_item_body = vim.fn.trim(vim.fn.getline(linenum)) ~= ""
+    end
+    if not is_list_item_start then
+        -- The cursor was not actually on a list item to begin with; this is just some random text
+        return
+    end
+    local list_item_start_linenum = linenum
+    -- search downward until no longer matches, put marker just before
+    linenum = cursor_line
+    is_list_item_start = vim.fn.match(vim.fn.getline(linenum + 1), [[^\s*- ]]) >= 0
+    is_list_item_body = vim.fn.trim(vim.fn.getline(linenum)) ~= ""
+    while not is_list_item_start and is_list_item_body do
+        linenum = linenum + 1
+        is_list_item_start = vim.fn.match(vim.fn.getline(linenum), [[^\s*- ]]) >= 0
+        is_list_item_body = vim.fn.trim(vim.fn.getline(linenum)) ~= ""
+    end
+    local list_item_end_linenum = math.max(linenum - 1, cursor_line)
+
+    local startcol = vim.fn.match(vim.fn.getline(list_item_start_linenum), "- ") + #"- "
+    local endcol = #vim.fn.getline(list_item_end_linenum) - 1
+    if is_around then
+        startcol = 0
+        endcol = 9999999
+    end
+
+    vim.api.nvim_buf_set_mark(0, "<", list_item_start_linenum, startcol, {})
+    vim.api.nvim_buf_set_mark(0, ">", list_item_end_linenum, endcol, {})
+    vim.api.nvim_feedkeys("gv", "n", true)
+end
+vim.keymap.set("x", "ix", function() select_list_item(false) end)
+vim.keymap.set("o", "ix", ":normal vix<cr>")
+vim.keymap.set("x", "ax", function() select_list_item(true) end)
+vim.keymap.set("o", "ax", ":normal vax<cr>")

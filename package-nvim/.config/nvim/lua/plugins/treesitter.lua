@@ -40,6 +40,10 @@ require("nvim-treesitter.configs").setup({
             if ok and stats and stats.size > max_filesize then
                 return true
             end
+            -- tmux.conf highlighting is broken for some reason, just skip it
+            if vim.bo.filetype == "tmux" then
+                return true
+            end
         end,
 
         -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
@@ -94,8 +98,10 @@ require("nvim-treesitter.configs").setup({
                 ["al"] = "@loop.outer",
                 ["io"] = "@conditional.inner",
                 ["ao"] = "@conditional.outer",
-                ["ig"] = "@comment.inner",
-                ["ag"] = "@comment.outer",
+                -- Comments don't work for multiline comments, basically useless, i now have my own textobject for this
+                -- ["ig"] = "@comment.inner",
+                -- comment textobjects elsewhere
+                -- ["ag"] = "@comment.outer",
                 -- (markdown code blocks)
                 ["ic"] = "@block.inner",
                 ["ac"] = "@block.outer",

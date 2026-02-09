@@ -17,6 +17,8 @@ require("mini.icons").mock_nvim_web_devicons()
 
 local mini_files = require("mini.files")
 
+-- TODO if current buffer is not a file (e.g. arglist or harpoon or other such
+-- temp buffers), don't open minifiles. just return.
 vim.keymap.set("n", "<leader>e", function()
     mini_files.open(vim.api.nvim_buf_get_name(0), false)
 end)

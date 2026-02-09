@@ -4,6 +4,14 @@
 # https://github.com/SylvanFranklin/.config/blob/main/scripts/open-github.sh
 # (but trying to be more shell neutral)
 
+# TODO if local branch has no corresponding upstream, we should NOT try to open
+# that nonexistant branch in the browser. instead, default to 'dev' or 'main'.
+# i'm sure we can check if a branch has a corresponding remote branch somehow...
+
+# TODO use actual args instead of ordered args. i want to be able to open a
+# specific branch, file, and line. then the nvim :OpenGitRemote will obviously
+# need to be updated to match too
+
 url=$(git remote get-url origin)
 current_branch_name=$(git rev-parse --abbrev-ref HEAD)
 
@@ -19,10 +27,20 @@ if echo "$url" | grep -i gitlab 1>/dev/null; then
     url="$url/-/tree/$current_branch_name" # add branch name
 fi
 
-# Handle GitLab URLs
+# Handle GitHub URLs
 if echo "$url" | grep -i github 1>/dev/null; then
     url=$(echo "$url" | sed 's/\.git//') # remove .git
     url="$url/tree/$current_branch_name" # add branch name
+fi
+
+# Open a specific file, not just a directory
+if [ $# -ge 1 ]; then
+    url="$url/$1"
+fi
+
+# Open to a specific line in the file
+if [ $# -ge 2 ]; then
+    url="$url#L$2"
 fi
 
 echo "Opening '$url'"

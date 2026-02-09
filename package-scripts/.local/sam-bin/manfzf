@@ -7,5 +7,5 @@
 find /usr/share/man -regextype posix-egrep -regex '/usr/share/man/man[1-8]/.*' |
     sed 's/\/usr\/share\/man\/man[1-8]\///' |
     fzf |
-    sed 's/\(.*\)\.[1-8]\.gz/\1/' |
+    sed 's/\(.*\)\.\(.*\)\.gz/\2 \1/' |
     xargs man

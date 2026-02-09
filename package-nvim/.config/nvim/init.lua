@@ -48,9 +48,17 @@ require("lazy").setup({
         -- or                              , branch = '0.1.x',
         dependencies = { "nvim-lua/plenary.nvim" },
     },
-    "numToStr/Comment.nvim",
-    "nvim-treesitter/nvim-treesitter",
-    "nvim-treesitter/nvim-treesitter-textobjects",
+    -- "numToStr/Comment.nvim", -- let's try custom commenting for a bit
+    -- Using master instead of the new main for treesitter because telescope
+    -- breaks when i update and i don't care enough to figure out why
+    {
+        "nvim-treesitter/nvim-treesitter",
+        branch = "master",
+    },
+    {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        branch = "master",
+    },
     "lewis6991/gitsigns.nvim",
     -- LSP
     -- "neovim/nvim-lspconfig",
@@ -137,14 +145,15 @@ require("lazy").setup({
         end,
         event = "InsertEnter",
     },
-    {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2", -- TODO check back when harpoon2 is finished
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
-        },
-    },
+    -- eventually delete harpoon, now using toothpick instead
+    -- {
+    --     "ThePrimeagen/harpoon",
+    --     branch = "harpoon2", -- TODO check back when harpoon2 is finished
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim",
+    --         "nvim-telescope/telescope.nvim",
+    --     },
+    -- },
     {
         "folke/todo-comments.nvim",
         dependencies = {
@@ -219,3 +228,19 @@ vim.api.nvim_create_user_command("TermThatDebugMyGuy", function()
     vim.keymap.set("n", "<leader>dn", "<cmd>Over<cr>", { desc = "Debug: Next (step over)" })
     vim.keymap.set("n", "<leader>ds", "<cmd>Step<cr>", { desc = "Debug: Step (step into)" })
 end, {})
+
+-- TODO maybe it'd be nice to have a utility function in my config that just
+-- dumps a bunch of autocmd info for the given bufnr. something to think
+-- about. or maybe vim has an autocommand debug mode like this builtin?
+-- vim.api.nvim_create_autocmd({ "BufLeave" }, {
+--     callback = function() print"BufLeave" end,
+-- })
+-- vim.api.nvim_create_autocmd({ "BufHidden" }, {
+--     callback = function() print"BufHidden" end,
+-- })
+-- vim.api.nvim_create_autocmd({ "BufUnload" }, {
+--     callback = function() print"BufUnload" end,
+-- })
+-- vim.api.nvim_create_autocmd({ "BufWipeout" }, {
+--     callback = function() print"BufWipeout" end,
+-- })

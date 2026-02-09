@@ -20,10 +20,14 @@
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.local/sam-bin:$PATH
 
-alias 'ls'='ls --color=auto'
+# remember you can 'alias -p' to list active aliases
+alias 'ls'='\ls --color=auto'
 alias 'll'='ls -lh'
 alias 'la'='ls -a'
 alias 'lt'='ls -lt' # doesn't seem to work with exa
+alias 'grep'='\grep --color=auto'
+alias 'egrep'='\egrep --color=auto'
+alias 'fgrep'='\fgrep --color=auto'
 # note: you can use cp -P to not follow symlinks. can significantly shorten copies, if that's what you mean to do
 alias 'cp'='cp --interactive'
 alias 'rm'='rm --interactive'
@@ -31,15 +35,13 @@ alias 'mv'='mv --interactive'
 alias 'mkdir'='mkdir --parents'
 alias 'symlink'='ln -s'
 alias 'g'='git'
+alias 'gc'='git -C'
 alias 'em'='emacs -nw'
 alias 'ap'='apropos'
 alias 'fzfp'='fzf --preview="less {}"'
 alias 'hist'='history | sed "s/[0-9]\+//" | sed "s/^\s*//" | nvim'
 alias 'sizema'='du -sh ./* | sort -h' # list sizes of things in current directory
 alias 'peep'='nvim -R' # lol
-alias 'ns'='nvim -S'
-complete -W '$(lsvim 2>/dev/null)' ns # search 'Programmable Completion' in bash(1)
-alias "lsvim"="ls *.vim" # for easily listing vim sessions
 alias 'less'='less --LONG-PROMPT --ignore-case'
 alias 'vimless'='/usr/local/share/nvim/runtime/scripts/less.sh --clean' # I believe this is the right location, though it might be in macros/ instead of scripts/
 alias 'vl'='vimless'
@@ -51,7 +53,7 @@ alias 'wat'='watch -ctn 0.2'
 alias 'watls'='watch -ctn 0.2 ls --color=always'
 alias 'gr'='grep -i'
 alias 'pg'='pgrep -i'
-alias 'rga'='rg --no-ignore -i' # 'ripgrep all'
+alias 'rga'='rg --no-ignore --hidden -i' # 'ripgrep all', could also do 'rg -uu'
 # alias 'tldr'='tldr --theme base16'
 alias 's'='sessionizer'
 alias 'ol'='ollama run llama3.1'
@@ -59,9 +61,23 @@ alias 'gccw'='gcc -Wall -Werror -Wextra -g -fsanitize=address,undefined,leak'
 alias 'aout'='./a.out'
 alias "gt"="go test ./... | sed 's/^ok/\o033[32mOK\o033[0m/; s/^FAIL/\o033[31mFAIL\o033[0m/'" # like "go test" but with colorized output
 alias "dps"="docker ps -as"
+alias 'mkx'='chmod ugo+x'
 alias 'delete-the-fucking-zone-identifiers-windows-you-stupid-piece-of-garbage'='rm -i *:Zone.Identifier'
 # Fix 'Exec format error' from windows programs (like explorer.exe) on WSL:
 alias 'wsl-fix-bin'='sudo systemctl restart systemd-binfmt'
+
+alias 'sudo-nvim'='sudo EDITOR=nvim visudo'
+
+# alias 'ns'='nvim -S'
+ns() {
+    if [ $# -eq 0 ] && [ ! -f Session.vim ]; then
+        echo "could not find Session.vim" >&2
+        return 1
+    fi
+    nvim -S $@
+}
+complete -W '$(lsvim 2>/dev/null)' ns # search 'Programmable Completion' in bash(1)
+alias "lsvim"="ls *.vim" # for easily listing vim sessions
 
 # TODO move to separate script. this file should be bash-specific as much as possible.
 # Merge compile commands for use with clangd.
@@ -127,6 +143,35 @@ fi
 
 # (see bind section in SHELL BUILTIN COMMANDS in man bash)
 
+# Remember that PARAMETER EXPANSION in bash(1) has all the string operations and
+# whatnot
+
+# experimental bash manual TOC
+manbash () {
+    if [ $# -ne 1 ]; then
+        man bash
+        return
+    fi
+    query=$(echo "$1" | tr A-Z a-z)
+    if [ $query = "array" ] || [ $query = "arrays" ]; then
+        REGEX='^\s*Arrays$'
+    elif [ $query = "expansion" ]; then
+        REGEX='^EXPANSION$'
+    elif [ $query = "if" ]; then
+        REGEX='^CONDITIONAL EXPRESSIONS$'
+    elif [ $query = "builtin" ] || [ $query = "builtins" ]; then
+        REGEX='^SHELL BUILTIN COMMANDS$'
+    elif [ $query = "completion" ]; then
+        REGEX='^\s*Programmable Completion$'
+    fi
+    man --pager="less -p '$REGEX'" bash
+}
+
+# TODO wouldn't it be good to have an offline copy of these docs i can live_grep through?
+sc() {
+    explorer.exe "https://www.shellcheck.net/wiki/SC$1"
+}
+
 # combine these and just detect whether the selection is a file or directory
 cf() {
     target_directory=$(find . -type d -not -path "*/.git/*" 2>/dev/null | fzf)
@@ -176,6 +221,12 @@ mdn() {
 ksearch() {
     xdg-open "https://www.kernel.org/doc/html/latest/search.html?q=$1"
 }
+nixpkg() {
+    xdg-open "https://duckduckgo.com/?q=!nixpkg $@"
+}
+nixopt() {
+    xdg-open "https://search.nixos.org/options?channel=25.11&query=$1"
+}
 
 markthis() {
     echo -e "\e[34m@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\e[0m"
@@ -205,20 +256,27 @@ if [ "$REMOTE" ]; then
     # alternative prefix so local tmux doesn't conflict with remote tmux
     tmux set -g prefix C-space
 else
-    export PROMPT_DIRTRIM=3
+    export PROMPT_DIRTRIM=4
     export PS1="\n\[\e[0;36m\]\w\[\e[0;37m\]$ \[\e[0m\]"
     export PS2="> "
 fi
 
 # TODO add number of background jobs to ps1, in case i forget i backgrounded
 # something
+
+# should probably just add timestamp to PS1. Can put it on the far right so it's
+# out of the way. Maybe there's a good use of `bind -x` with this to run
+# commands or something idk
+
 if [ -z "$TMUX" ]; then
     PS1="(no tmux) $PS1"
 fi
 # add OSC 133, indicating the end of a prompt (broken rn)
+# Note that nvim has a guide in :h terminal-osc133 for setting this up
 # export PROMPT_COMMAND="printf \\"\033]133;A\007\\"; $PROMPT_COMMAND"
 
-alias 'mn'='man --pager="nvim +Man!"'
+# TODO need bash completion of mn to match man, also reconcile manfzf with man and mn. what uses nvim and what uses default?
+alias 'mn'='man --all --pager="nvim +Man!"'
 mansearch() {
     if [ $# -eq 0 ]; then
         echo 'Example: mansearch bash expansion'
@@ -246,6 +304,9 @@ export HISTTIMEFORMAT='(%F %T)  '
 # share tmux history throughout all tmux panes/windows/sessions. see these posts:
 # https://stackoverflow.com/questions/12247777/share-history-between-panes-windows
 # https://web.archive.org/web/20170104092506/http://briancarper.net/blog/248.html
+# WARN: this is very dangerous if you mindlessly up arrow or ctrl-p to run the
+# previous command. the previous command will change underneath you because of
+# activity in other shells.
 shopt -s histappend
 export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # (you can search for "history -a" in bash(1) and it'll work)
 
@@ -416,9 +477,22 @@ tts() {
 # archive file because it requires manually deleting videos from both the
 # archive and from the filesystem. Besides, 'ls > archive.txt' on a cronjob is
 # basically the same thing if not more useful.
-export YTDLP_DOWNLOAD_DIR="/home/sam/kablam/media/ytdlp"
+export YTDLP_DOWNLOAD_DIR="/home/sam/kablam/public/ytdlp"
 alias "yt-dlp-video"="yt-dlp --embed-metadata --embed-subs --embed-thumbnail --sponsorblock-mark all -o $YTDLP_DOWNLOAD_DIR/'[%(id)s] %(title)s.%(ext)s'"
 alias 'yt-dlp-audio'='yt-dlp --embed-metadata --extract-audio'
+
+exif-delete() { # Delete exif data from an image
+    if ! type "exiftool" &> /dev/null; then
+        echo exiftool not installed
+        return 1
+    fi
+    read -p "Are you sure you want to delete ALL exif data? (y/n) " response
+    if [ "$response" = 'y' ]; then
+        exiftool -all='' "$@"
+    else
+        echo "Not deleting exif data"
+    fi
+}
 
 # TODO make the tmux versions just call these, these can be used both in tmux
 # and manually, so they're more general
@@ -426,5 +500,7 @@ alias "B"="$EDITOR ~/.bashrc_after"
 alias "G"="$EDITOR $XDG_CONFIG_HOME/git/config"
 alias "T"="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias "I"="cd $(get-dotfiles-path)"
+alias "H"="$EDITOR ~/.ssh/config"
+alias "N"="nvim +'norm G' ~/notes.md"
 
 # vim: filetype=sh

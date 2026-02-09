@@ -1,4 +1,5 @@
 # sample ssh config. Should go in ~/.ssh/
+
 Host myserver
     HostName 192.168.1.2
     User sam
@@ -7,3 +8,10 @@ Host myserver
 host myserver
     hostname 192.168.1.2
     user sam
+
+# if you want to go through an intermediate node, use proxyjump
+host somerelay
+    # ...
+host somedestination
+    proxyjump somerelay
+    hostname 192.168.123.456

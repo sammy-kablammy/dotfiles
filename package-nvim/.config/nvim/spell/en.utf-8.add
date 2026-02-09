@@ -3,7 +3,10 @@ ARPANET
 CERN
 CFG
 CLI
+CMake
+CNAME
 CRLF
+Cloudflare
 DHCP
 DIY
 DNS
@@ -13,6 +16,7 @@ FPGA
 GPIO
 GPIOs
 GUIs
+HTTPS
 HyperCard
 IETF
 IMAP
@@ -29,15 +33,20 @@ MySQL
 NAND
 NLS
 NixOS
+OSs
 OpenStreetMap
 PCBs
 PID
+POSIX
 PostgreSQL
+SDK
+SDKs
 SEO
 SIMD
 SMTP
 SystemD
 TCP
+TLS
 UCF
 UDP
 UI
@@ -45,6 +54,8 @@ URI
 UTF-8
 acyclic
 aether
+affordance
+affordances
 aggregators
 algorithmically
 allocator
@@ -52,6 +63,7 @@ allocators
 amidst
 amongst
 arcanity
+archetypical
 backend
 backtick
 backticks
@@ -89,6 +101,7 @@ deserializing
 designator
 designators
 disassembly
+discoverability
 dotfile
 dotfiles
 downloader
@@ -167,6 +180,9 @@ rebase
 rebased
 rebasing
 recency
+reimage
+reimaged
+reimaging
 relativize
 relativized
 repo
@@ -186,6 +202,7 @@ screensharing
 scrollback
 shader
 siloed
+stateful
 stickerless
 subconsciously
 subdirectories
@@ -209,6 +226,7 @@ unary
 understandability
 unergonomic
 untowardly
+upgradeable
 versioning
 viewable
 viewport
