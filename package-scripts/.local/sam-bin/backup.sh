@@ -1,9 +1,13 @@
 #!/bin/sh
 
+# TODO replace $0 with basename $0 to make it shorter
+
+# Consider adding a --dry-run that we pass through to rsync or something
+
 HELP_STRING=$(cat <<END
 Make backups, primarily invoked via cron.
 
-Usage: $0 [OPTION] --source SOURCE --dest DEST
+Usage: $0 [OPTION] [--remote-host user@server] --source SOURCE --dest DEST
 
 Options:
 
@@ -57,6 +61,8 @@ SOURCE=""
 BACKUPS_DIR=""
 MAX_VERSIONS=3
 BACKUP_TYPE="archive"
+# TODO allow for remote dest as well. currently we only support remote source
+REMOTE_HOST=""
 
 while [ $# -gt 0 ]; do
     if [ "$1" = "--source" ]; then
@@ -69,6 +75,10 @@ while [ $# -gt 0 ]; do
         shift
     elif [ "$1" = "--max-versions" ]; then
         MAX_VERSIONS="$2"
+        shift
+        shift
+    elif [ "$1" = "--remote-host" ]; then
+        REMOTE_HOST="$2"
         shift
         shift
     elif [ "$1" = "--incremental" ]; then
@@ -149,7 +159,11 @@ mkdir --parents "$NEW_BACKUP_ROOT"
         # (Note that these rsync commands use SOURCE/ instead of SOURCE as to
         # copy contents and not the dir itself.)
         LINKDEST="$BACKUPS_DIR/$PREVIOUS_BACKUP_ROOT$SOURCE" 
-        rsync -av --delete --link-dest="$LINKDEST" "$SOURCE/" "$NEW_BACKUP_ROOT$SOURCE"
+        if [ -z "$REMOTE_HOST" ]; then
+            rsync -av --delete --link-dest="$LINKDEST" "$SOURCE/" "$NEW_BACKUP_ROOT$SOURCE"
+        else
+            rsync -av --delete --link-dest="$LINKDEST" "$REMOTE_HOST:$SOURCE/" "$NEW_BACKUP_ROOT$SOURCE"
+        fi
     elif [ "$BACKUP_TYPE" = 'archive' ]; then
         mkdir --parents "$NEW_BACKUP_ROOT"
         # Using _%_ because having slashes in filenames is nuts
