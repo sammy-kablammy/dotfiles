@@ -11,6 +11,12 @@
 # TODO use actual args instead of ordered args. i want to be able to open a
 # specific branch, file, and line. then the nvim :OpenGitRemote will obviously
 # need to be updated to match too
+#
+# specifically, we want --commit (default current), --branch (default current), --file, --line (requires file)
+
+# Note that github lets you see a specific commit by going to
+# project/commit/<COMMIT SHA HERE> but they don't seem to have a search box in
+# the gui itself
 
 url=$(git remote get-url origin)
 current_branch_name=$(git rev-parse --abbrev-ref HEAD)

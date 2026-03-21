@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# just delete this, i'm not using it
+
 # Make symlinks for my dotfiles. Basically a toy version of GNU Stow
 # And runs in POSIX shell without needing to install whatever else.
 

@@ -42,16 +42,19 @@
     b = "branch -vv"
     ca = "commit --amend"
     co = "checkout"
-    # Should probably use 'git ls-files --unmerged' instead of grepping. TODO test
-    conflicts = "!f() { git ls-files | xargs grep -il '<<<<<<<' | xargs $EDITOR; }; f"
     currentbranch = "rev-parse --abbrev-ref HEAD"
+    remotebranch = "!f() { echo origin/$(git rev-parse --abbrev-ref HEAD) ; }; f"
+    db = "diff-branch"
     ds = "diff --stat"
     dt = "difftool --prompt"
     dty = "difftool --prompt -y --trust-exit-code" # (use vim's :cq to end diffing)
     dts = "difftool --prompt --staged"
-    edit-modified = "modified" # alias for an alias; maybe i'll squash these one day
-    edit-conflicts = "conflicts"
-    edit-untracked = "!f() { git ls-files --others --exclude-standard | xargs $EDITOR; }; f"
+    dtr = "!f() { git dt HEAD origin/$(git rev-parse --abbrev-ref HEAD) ; }; f" # diff current branch against its remote counterpart
+    edit-modified = "!f() { git ls-files --modified | xargs $EDITOR; }; f" # Edit all files that have been modified since previous commit
+    edit-untracked = "!f() { git ls-files --others --exclude-standard | xargs $EDITOR; }; f" # Edit all untracked files
+    edit-modified-and-untracked = "!f() { git ls-files --modified --others --exclude-standard | xargs $EDITOR; }; f"
+    edit-conflicts = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs $EDITOR; }; f" # Edit all files with merge conflicts
+    mark-conflicts-as-resolved = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs 'git-add'; }; f"
     f = "fetch"
     fq = "fetch --quiet"
     fs = "!f() { git fetch && git status --short --branch; }; f"
@@ -64,8 +67,7 @@
     lga = "log --all --graph --decorate -9999"
     laoganma = "!f() { echo '+100 social credit'; }; f"
     ls = "ls-files"
-    # list-ignored = "ls-files --exclude-standard" # this is backwards, the flag is confusingly named though i admit
-    modified = "!f() { git ls-files --modified | xargs $EDITOR; }; f"
+    logbranch = "!f() { git log --oneline "$1~100..$1"; }; f"
     mt = "mergetool"
     pullr = "pull --rebase=interactive"
     pulls = "pull --autostash"
@@ -77,6 +79,7 @@
     sh = "show -5 --pretty=oneline"
     sl = "stash list"
     sp = "stash pop"
+    sa = "!f() { git show stash@{$1} ; }; f" # "stash at", idk it's just annoying to type @{n} all the time
     sst = "submodule status"
     st = "status"
     suf = "submodule update --force" # reset submodule to pinned commit
@@ -86,10 +89,12 @@
     unstage = "restore --staged"
     untrack = "rm --cached" # remove file from repo without deleting from filesystem
     w = "worktree list"
+    open = "open-remote"
+
 
     # Pickaxe should generally be used for searching across history. List
     # commits that added, removed, or changed a given string.
-    pick = "!f() git log -S \"$@\" --pickaxe-regex; f"
+    pick = "!f() { git log -S \"$@\" --pickaxe-regex; }; f"
     pickinsensitive = "!f() git log -i -S \"$@\"; f"
     # This literally greps across the entire history (grepping files, not commit
     # messages or diffs i think). It takes forever but can be useful in dire

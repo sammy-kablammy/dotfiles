@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ################################################################################
 
 #                "Why not just put .bashrc in version control?"
@@ -21,6 +23,7 @@ export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.local/sam-bin:$PATH
 
 # remember you can 'alias -p' to list active aliases
+alias 'nv'='nvim'
 alias 'ls'='\ls --color=auto'
 alias 'll'='ls -lh'
 alias 'la'='ls -a'
@@ -39,10 +42,11 @@ alias 'gc'='git -C'
 alias 'em'='emacs -nw'
 alias 'ap'='apropos'
 alias 'fzfp'='fzf --preview="less {}"'
-alias 'hist'='history | sed "s/[0-9]\+//" | sed "s/^\s*//" | nvim'
+alias 'hist'='history | sed "s/[0-9]\+//" | sed "s/^\s*//" | nvim +"set buftype=nofile"'
 alias 'sizema'='du -sh ./* | sort -h' # list sizes of things in current directory
 alias 'peep'='nvim -R' # lol
 alias 'less'='less --LONG-PROMPT --ignore-case'
+# TODO dynamically compute this based on VIMRUNTIME
 alias 'vimless'='/usr/local/share/nvim/runtime/scripts/less.sh --clean' # I believe this is the right location, though it might be in macros/ instead of scripts/
 alias 'vl'='vimless'
 alias 'py'='python3'
@@ -53,6 +57,8 @@ alias 'wat'='watch -ctn 0.2'
 alias 'watls'='watch -ctn 0.2 ls --color=always'
 alias 'gr'='grep -i'
 alias 'pg'='pgrep -i'
+alias 'r'='rg --hidden --smart-case' # could find a better name for this
+alias 'rgh'='rg --hidden --smart-case'
 alias 'rga'='rg --no-ignore --hidden -i' # 'ripgrep all', could also do 'rg -uu'
 # alias 'tldr'='tldr --theme base16'
 alias 's'='sessionizer'
@@ -64,7 +70,11 @@ alias "dps"="docker ps -as"
 alias 'mkx'='chmod ugo+x'
 alias 'delete-the-fucking-zone-identifiers-windows-you-stupid-piece-of-garbage'='rm -i *:Zone.Identifier'
 # Fix 'Exec format error' from windows programs (like explorer.exe) on WSL:
+# sudo -s and add this to crontab so you don't have to run this all the time
 alias 'wsl-fix-bin'='sudo systemctl restart systemd-binfmt'
+
+alias 'nvim-dev'="$HOME/checkouts/neovim/build/bin/nvim --clean"
+alias 'nvim-dev-fix-scuffed-build'="find $HOME/checkouts/neovim/ -name CMakeCache.txt | xargs rm -i"
 
 alias 'sudo-nvim'='sudo EDITOR=nvim visudo'
 
@@ -140,6 +150,11 @@ fi
 # bind -x '"\C-xf":"find -maxdepth 2 -type d | fzf"'
 # bind -x '"\C-xf":"READLINE_LINE=\$READLINE_LINE find -maxdepth 2 -type d | fzf"'
 # (this escaping is nuts)
+bind -x '"\C-xg":"git currentbranch"'
+
+bindlist() {
+    bind -P | awk '/is not bound to any keys/ { next } { print }'
+}
 
 # (see bind section in SHELL BUILTIN COMMANDS in man bash)
 
@@ -179,6 +194,7 @@ cf() {
         cd "$target_directory"
     fi
 }
+# let's just get rid of this, f and telescope replace this
 nf() {
     target_file=$(find . -not -path "*/.git/*" 2>/dev/null | fzf)
     if [ ! -z "$target_file" ]; then
@@ -276,6 +292,8 @@ fi
 # export PROMPT_COMMAND="printf \\"\033]133;A\007\\"; $PROMPT_COMMAND"
 
 # TODO need bash completion of mn to match man, also reconcile manfzf with man and mn. what uses nvim and what uses default?
+# TODO you can just do apropos "" to list all manpages, no need to do the searchy wearchy thing
+# TODO telescope has a manpage fuzzy finder, could also use that if you can get all sections working correctly
 alias 'mn'='man --all --pager="nvim +Man!"'
 mansearch() {
     if [ $# -eq 0 ]; then
@@ -338,8 +356,8 @@ bind '"\C-xh": " --help"'
 bind '"\C-x\C-h": "\C-xh"'
 bind '"\C-xv": " --version"'
 bind '"\C-x\C-v": "\C-xv"'
-bind '"\C-xf": "\"$(fzf)\""'
-bind '"\C-x\C-f": "\C-xf"'
+# bind '"\C-xf": "\"$(fzf)\""'
+# bind '"\C-x\C-f": "\C-xf"'
 bind '"\C-xd": " 2>/dev/null"'
 bind '"\C-x\C-d": "\C-xd"'
 bind '"\C-xi": "192.168."'
@@ -496,11 +514,15 @@ exif-delete() { # Delete exif data from an image
 
 # TODO make the tmux versions just call these, these can be used both in tmux
 # and manually, so they're more general
-alias "B"="$EDITOR ~/.bashrc_after"
+alias "B"="$EDITOR $HOME/.bashrc_after"
 alias "G"="$EDITOR $XDG_CONFIG_HOME/git/config"
 alias "T"="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias "I"="cd $(get-dotfiles-path)"
-alias "H"="$EDITOR ~/.ssh/config"
-alias "N"="nvim +'norm G' ~/notes.md"
+alias "H"="$EDITOR $HOME/.ssh/config"
+alias "N"="nvim +'norm G' $HOME/notes.md"
+alias "Q"="$EDITOR $(get-dotfiles-path)/quickref.md"
+alias "BB"="cd $HOME/.local/sam-bin/"
+
+alias dy='nvim +Dymaxion'
 
 # vim: filetype=sh

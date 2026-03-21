@@ -6,6 +6,7 @@
 upstream_branch="origin/dev"
 if [ $# -ge 1 ]; then
     upstream_branch="$1"
+    shift
 fi
 
 local_branch=$(git rev-parse --abbrev-ref HEAD)

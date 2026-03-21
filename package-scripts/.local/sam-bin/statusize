@@ -3,7 +3,11 @@
 # this script executes 'git status' on all the git repos found in the given
 # directory. just one level deep. doesn't find repos recursively.
 
+# Could be called git-statusize instead
+
 # TODO look up GNU parallel and run 'git fetch' in parallel
+# (if that's even possible, maybe some remotes only allow one at a time. at the
+# very least there should be a parallel option)
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'

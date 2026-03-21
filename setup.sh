@@ -10,7 +10,7 @@ isYes() {
 }
 
 # **** make common directories ****
-dirs="$HOME/.config $HOME/.local/share/Trash $HOME/.local/bin"
+dirs="$HOME/.config $HOME/.local/share/Trash $HOME/.local/bin $HOME/.ssh"
 read -p "-> Make common directories ($dirs)? " response
 if isYes "$response"; then
     for dir in $dirs; do
