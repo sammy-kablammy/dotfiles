@@ -25,6 +25,8 @@ some notes on keymaps:
 
 --]]
 
+-- TODO should use the function keys and the numpad keys, i totally forgot those exist
+
 -- remove annoying mappings (must be at the top in case i re-add these mappings)
 vim.keymap.set("n", "<c-q>", "<nop>")
 vim.keymap.set("n", "U", "<nop>")
@@ -37,6 +39,27 @@ vim.keymap.set("i", "<c-a>", "<nop>") -- I keep mispressing this and it messes u
 vim.keymap.set("i", "<c-space>", "<nop>") -- similar to i_CTRL-A, this messes up undo history
 vim.keymap.set("n", "dp", "<nop>") -- this is :diffput, which i don't use
 vim.keymap.set("n", "g]", "<nop>") -- this is :tselect, interferes with frequent git hunk hopping ]g]g]g
+vim.keymap.set("i", "<PageDown>", "<nop>") -- i keep pressing this
+vim.keymap.set("i", "<PageUp>", "<nop>") -- i keep pressing this
+
+-- For some reason vim.keymap.del doesn't work here. idk. maybe it doesn't work
+-- unless the keymaps was set through lua?
+
+-- F1 is special because it opens :help, the rest of the F keys are just annoying
+vim.keymap.set({ "n", "i" }, "<F1>", "<nop>")
+vim.keymap.set("i", "<F2>", "<nop>")
+vim.keymap.set("i", "<F3>", "<nop>")
+vim.keymap.set("i", "<F4>", "<nop>")
+vim.keymap.set("i", "<F5>", "<nop>")
+vim.keymap.set("i", "<F6>", "<nop>")
+vim.keymap.set("i", "<F7>", "<nop>")
+vim.keymap.set("i", "<F8>", "<nop>")
+vim.keymap.set("i", "<F9>", "<nop>")
+vim.keymap.set("i", "<F10>", "<nop>")
+vim.keymap.set("i", "<F11>", "<nop>")
+vim.keymap.set("i", "<F12>", "<nop>")
+-- why is F13 read as F15?
+vim.keymap.set("i", "<F15>", "<nop>")
 
 -- insert mode "leader key" style bindings. snippets for dummies. note that the
 -- key following <c-x> does NOT have control pressed. those are already used (:h
@@ -45,7 +68,7 @@ InsertMap = function(lhs, rhs)
     vim.keymap.set("i", "<c-x>" .. lhs, rhs, { buffer = true })
 end
 -- here are some to get ya started. the rest will be defined by ftplugins.
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
+vim.api.nvim_create_autocmd({ "BufEnter" }, { -- TODO consider which BufEnters should be replaced with BufNew
     callback = function()
         InsertMap("b", "``<left>")
         InsertMap("n", "\\n")
@@ -53,11 +76,24 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         InsertMap("r", "_")
         InsertMap("t", "~")
         -- InsertMap("i", "192.168.") -- i'd rather have 'i' for 'if' in programming filetypes
+
         -- date. this is so annoying. we have a lua string that turns into a vim command
         -- string that THEN turns into a shell command. like three levels of escaping.
         InsertMap("d", [[<cmd>r! date +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
         InsertMap("D", [[<cmd>r! date --date=tomorrow +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
+        -- TODO make this not affect all filetypes, that's stupid, we should
+        -- only do this in markdown or at least think of what goes where
         InsertMap("w", [[<cmd>r! date --date='next monday' +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
+        InsertMap(";", ":=")
+    end,
+})
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    callback = function()
+        if vim.bo.filetype == "TelescopePrompt" then
+            -- vim.keymap.del("i", "<c-x>")
+            -- Telescope uses <c-x> for horizontal split
+            return
+        end
     end,
 })
 vim.keymap.set("c", "<c-x>t", "~")
@@ -177,13 +213,28 @@ end, {})
 vim.keymap.set("n", "<leader>sz", "<cmd>Zenma<cr>", { desc = "experimental zen mode??👀" })
 
 -- square bracket fun time [ [ [ ] ] ]
-vim.keymap.set("n", "[c", vim.cmd.cprev, { desc = "prev qflist entry" })
-vim.keymap.set("n", "]c", vim.cmd.cnext, { desc = "next qflist entry" })
+vim.keymap.set("n", "[c", function()
+    -- TODO i want to eventually use q for quickfix, c for Conditions, and O for
+    -- TODOs. Or maybe something else. Point is i need to rethink keymaps
+    -- because they're getting hard to remember
+    print("Use [q instead")
+    vim.cmd.cprev()
+end, { desc = "prev qflist entry" })
+vim.keymap.set("n", "]c", function()
+    print("Use ]q instead")
+    vim.cmd.cnext()
+end, { desc = "next qflist entry" })
 vim.keymap.set("n", "[C", vim.cmd.cfirst, { desc = "cfirst" })
 vim.keymap.set("n", "]C", vim.cmd.clast, { desc = "clast" })
 
+vim.keymap.set("n", "[n", "?<<<<<<<<cr>", { desc = "git coNflict" })
+vim.keymap.set("n", "]n", "/<<<<<<<<cr>", { desc = "git coNflict" })
+vim.keymap.set("n", "[N", "?>>>>>>><cr>", { desc = "git coNflict" })
+vim.keymap.set("n", "]N", "/>>>>>>><cr>", { desc = "git coNflict" })
+
 -- available square bracket motions (but double check before using these):
 -- j k n u v w x y
+-- (x is used in markdown though)
 
 -- Nvim 0.11 now uses these mappings for tag stuff, so i need to find
 -- alternatives... TODO
@@ -294,6 +345,7 @@ vim.keymap.set("n", "<c-w><c-a>", "<cmd>vertical sball<cr>", { desc = "Split all
 vim.keymap.set("n", "<c-w>z", "<c-w>|<c-w>_", { desc = "Zoom into window" })
 vim.keymap.set("n", "<c-w>*", "<cmd>split<cr>*", { desc = "* in new split" })
 vim.keymap.set("n", "<c-w>#", "<cmd>split<cr>#", { desc = "# in new split" })
+vim.keymap.set("n", "<c-w>%", "<cmd>split<cr>%", { desc = "% in new split" })
 vim.keymap.set("v", "s", ":s/") -- default 's' in visual mode is redundant (use 'c' instead)
 vim.keymap.set("n", "<bs>", "<cmd>bd<cr>", { desc = "delete buffer" })
 vim.keymap.set("n", "g<bs>", function()
@@ -311,7 +363,7 @@ vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>")
 vim.keymap.set("c", "<c-h>", "<left>")
 vim.keymap.set("c", "<c-l>", "<right>")
 vim.keymap.set("i", "<c-b>", "`")
-vim.keymap.set("n", "gg", "<cmd>echo 'use go instead of gg'<cr>go")
+-- vim.keymap.set("n", "gg", "<cmd>echo 'use go instead of gg'<cr>go")
 vim.keymap.set("n", "<leader>i", "<cmd>IconPickerNormal<cr>")
 vim.keymap.set("v", "<leader>th", ":TOhtml<cr>")
 vim.keymap.set("n", "<leader><leader>rv", ":g/.*/move 0<cr>", { desc = "Reverse buffer" })
@@ -327,8 +379,6 @@ vim.keymap.set("n", "<leader><leader>rv", ":g/.*/move 0<cr>", { desc = "Reverse 
 -- i had these for a while but simply never used them
 -- vim.keymap.set('i', '<c-f>', '<right>')
 -- vim.keymap.set('i', '<c-b>', '<left>')
--- vim.keymap.set("n", "[g", "?<<<<<<<<cr>")
--- vim.keymap.set("n", "]g", "/<<<<<<<<cr>")
 -- vim.keymap.set("n", "<leader>gp", "<cmd>!echo %:p<cr>", { desc = "get path of current buffer" })
 -- vim.keymap.set("n", "[j", "<c-o>")
 -- vim.keymap.set("n", "]j", "<c-i>")

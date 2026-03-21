@@ -9,3 +9,11 @@ end,
 })<esc>kO]])
 
 vim.b.sam_documentation_url = "https://www.lua.org/manual/5.1/manual.html"
+
+-- i'm defining a section as a line of a bunch of dashes
+vim.keymap.set({ "n", "v" }, "[[", function()
+    vim.fn.search("^---", "b")
+end, { desc = "previous section" })
+vim.keymap.set({ "n", "v" }, "]]", function()
+    vim.fn.search("^---")
+end, { desc = "next section" })

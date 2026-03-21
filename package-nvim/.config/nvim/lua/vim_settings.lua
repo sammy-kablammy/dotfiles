@@ -159,6 +159,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
         -- Custom filetypes / filetype alises
         -- TODO this is really slow somehow
+        -- TODO this might be vim.filetype.add ?
         local is_extension_match = function(filename, extension)
             return string.find(vim.fs.basename(filename), extension, 1, true)
         end
@@ -189,7 +190,9 @@ end, {})
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.hl.on_yank({ timeout = 100 })
-    end
+    end,
+    group = SAM_AUGROUP,
+    desc = "Highlight on yank",
 })
 
 --------------------some "local to window" settings, i guess--------------------

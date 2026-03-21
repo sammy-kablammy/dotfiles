@@ -19,6 +19,9 @@ telescope.setup({
             preview_cutoff = 5,
             prompt_position = 'bottom',
         },
+        cache_picker = {
+            num_pickers = -1,
+        },
         mappings = {
             n = {
                 ["X"] = actions.delete_buffer,
@@ -64,7 +67,7 @@ end
 telescope_map("f", function() builtin.find_files() end, "find files")
 telescope_map("F", function() builtin.find_files({ hidden = true, no_ignore = true, cwd = utils.buffer_dir() }) end, "find files relative to current buffer")
 telescope_map("h", builtin.help_tags, "help")
-telescope_map("b", builtin.buffers, "buffers")
+telescope_map("b", function() builtin.buffers({ sort_mru = true }) end, "buffers")
 telescope_map("B", function() builtin.live_grep({ grep_open_files = true }) end, "live grep, only open buffers")
 telescope_map("g", builtin.live_grep, "live grep")
 telescope_map("G", function() builtin.live_grep({ cwd = utils.buffer_dir() }) end, "live grep relative to current buffer")
@@ -73,18 +76,24 @@ telescope_map("O", function() builtin.oldfiles({ cwd_only = true }) end, "Old fi
 telescope_map("q", builtin.quickfix, "quickfix list")
 telescope_map("l", builtin.loclist, "local list")
 telescope_map("m", builtin.diagnostics, "diagnostics")
+telescope_map("M", function() builtin.man_pages({ sections = { "ALL" } }) end, "man pages")
 telescope_map("d", builtin.diagnostics, "diagnostics")
 telescope_map("c", builtin.command_history, "command history")
 telescope_map("k", builtin.keymaps, "keymaps")
 telescope_map("s", builtin.grep_string, "grep_string") -- note, this does a simple inclusive search, not \<\> search
+telescope_map("S", function() builtin.find_files({ cwd = "/home/sam/.local/sam-bin/" }) end, "scripts")
 telescope_map("y", builtin.lsp_document_symbols, "LSP document symbols")
 telescope_map("Y", builtin.lsp_dynamic_workspace_symbols, "LSP dynamic workspace symbols")
 telescope_map("i", builtin.vim_options, "vim options")
+telescope_map("I", function() builtin.find_files({ cwd = "$HOME/dotfiles", hidden = true, }) end, "dotfiles")
 telescope_map("t", builtin.builtin, "telescope builtin")
 telescope_map("r", builtin.resume, "telescope resume")
+telescope_map("R", function() builtin.resume({ cache_index = 2 }) end, "telescope resume but the one before")
 telescope_map("v", function() builtin.find_files({ hidden = true, cwd = "$HOME/.config/nvim/" }) end, "vim config files")
 telescope_map("V", function() builtin.live_grep({ cwd = "~/.config/nvim/" }) end, "live grep relative to dotfiles")
 telescope_map("]", builtin.tags, "telescope tags")
+telescope_map("p", function() builtin.find_files({ cwd = "$HOME/.local/share/nvim/lazy" }) end, "plugins")
+telescope_map("P", function() builtin.live_grep({ cwd = "$HOME/.local/share/nvim/lazy" }) end, "live grep in Plugins")
 
 -- can't use vim.g.sam_notes_path here because it isn't defined yet???
 vim.g.telescope_sam_notes_path = "/home/sam/kablam/notes"

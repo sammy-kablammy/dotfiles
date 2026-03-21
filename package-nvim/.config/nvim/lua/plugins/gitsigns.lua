@@ -2,20 +2,44 @@
 
 local gitsigns = require("gitsigns")
 
-vim.keymap.set("n", "[g", function()
+-- should h or g be used for hunks?
+-- h. because dih. even though g will no longer be used for comments.
+-- in the meantime we can do both g and h though
+-- using h also means we won't conflict with g] and accidentally follow tag.
+
+vim.keymap.set("n", "[h", function()
     gitsigns.nav_hunk("prev", { target = 'all' })
-end, { desc = "previous git hunk (including staged hunks)" })
-vim.keymap.set("n", "]g", function()
+end, { desc = "previous git Hunk (including staged hunks)" })
+vim.keymap.set("n", "]h", function()
     gitsigns.nav_hunk("next", { target = 'all' })
-end, { desc = "next git hunk (including staged hunks)" })
-vim.keymap.set("n", "[G", function()
+end, { desc = "next git Hunk (including staged hunks)" })
+vim.keymap.set("n", "[H", function()
     gitsigns.nav_hunk("prev")
-end, { desc = "previous git hunk" })
-vim.keymap.set("n", "]G", function()
+end, { desc = "previous git Hunk" })
+vim.keymap.set("n", "]H", function()
     gitsigns.nav_hunk("next")
-end, { desc = "next git hunk" })
+end, { desc = "next git Hunk" })
+
+-- will eventually delete this
+vim.keymap.set("n", "[g", function()
+    -- gitsigns.nav_hunk("prev", { target = 'all' })
+    print("use 'h' for hunks instead")
+end, { desc = "previous git Hunk (including staged hunks)" })
+vim.keymap.set("n", "]g", function()
+    -- gitsigns.nav_hunk("next", { target = 'all' })
+    print("use 'h' for hunks instead")
+end, { desc = "next git Hunk (including staged hunks)" })
+vim.keymap.set("n", "[G", function()
+    -- gitsigns.nav_hunk("prev")
+    print("use 'h' for hunks instead")
+end, { desc = "previous git Hunk" })
+vim.keymap.set("n", "]G", function()
+    -- gitsigns.nav_hunk("next")
+    print("use 'h' for hunks instead")
+end, { desc = "next git Hunk" })
 
 vim.keymap.set("n", "<leader>gb", gitsigns.blame)
+-- this allows for the fabled 'dih' maneuver to delete inside hunk:
 vim.keymap.set("v", "ih", gitsigns.select_hunk, { desc = "inside hunk textobject" })
 vim.keymap.set("o", "ih", gitsigns.select_hunk, { desc = "inside hunk textobject" })
 -- "around hunk" doesn't really make sense so it's not defined here

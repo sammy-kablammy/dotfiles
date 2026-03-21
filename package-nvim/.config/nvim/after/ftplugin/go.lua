@@ -14,7 +14,8 @@ vim.o.makeprg = "go run"
 
 vim.keymap.set("n", "<leader><enter>", "<cmd>!go run .<cr>", { buffer = true, desc = "run current file" })
 vim.keymap.set("n", "<leader>gt", "<cmd>!go test .<cr>", { buffer = true, desc = "go test" })
-vim.keymap.set("n", "<leader>gb", "<cmd>!go test -bench=.<cr>", { buffer = true, desc = "go benchmark" })
+-- gb is git blame right now
+-- vim.keymap.set("n", "<leader>gb", "<cmd>!go test -bench=.<cr>", { buffer = true, desc = "go benchmark" })
 
 vim.cmd([[inoreabbrev ien if err != nil {]])
 vim.cmd([[inoreabbrev ienf if err != nil {<cr>log.Fatal(err)<cr>}]])

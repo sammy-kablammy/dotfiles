@@ -3,3 +3,5 @@ vim.bo.tabstop = 2
 vim.bo.shiftwidth = 2
 vim.bo.softtabstop = 2
 vim.b.sam_override_whitespace_settings = true
+
+-- We should have gl to listify here in yaml.

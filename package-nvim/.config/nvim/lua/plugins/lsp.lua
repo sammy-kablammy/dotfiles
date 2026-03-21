@@ -8,7 +8,7 @@ vim.diagnostic.config({
     virtual_text = true,     -- (display diagnostics as end-of-line virtual text)
     -- virtual_lines = true, -- (display diagnostics as line-below virtual text)
 })
-vim.lsp.inlay_hint.enable(true)
+vim.lsp.inlay_hint.enable(false)
 
 vim.keymap.set("n", "[d", function()
     vim.diagnostic.jump({ count = -1, float = true, wrap = false })
@@ -114,6 +114,9 @@ vim.lsp.config["luals"] = {
 -- vim.lsp.enable("luals")
 
 ---------- ok here are the rest ----------
+
+-- TODO should provide package manager commands to install everything in here,
+-- ideally multiple options
 
 -- did you know clangd exists on arm? mason always broke on arm
 vim.lsp.config["clangd"] = {

@@ -54,6 +54,8 @@ vim.keymap.set("n", "gcA", function()
     vim.fn.setline(cursor[1], current_line .. ' ' .. commentmarker .. ' ')
     vim.api.nvim_feedkeys("A", "n", true)
 end)
+-- TODO allow gca as well
+vim.keymap.set("n", "gca", "gcA")
 vim.keymap.set("n", "gco", function()
     local cursor = vim.api.nvim_win_get_cursor(0)
     local commentmarker = vim.fn.split(vim.bo.commentstring)[1]

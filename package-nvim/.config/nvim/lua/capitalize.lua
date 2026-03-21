@@ -8,7 +8,7 @@ function Capitalize_operatorfunc()
     local startpos = vim.api.nvim_buf_get_mark(0, "[")
     local endpos = vim.api.nvim_buf_get_mark(0, "]")
     -- api-indexing makes this hard to read but it works
-    local text = vim.api.nvim_buf_get_text(0, startpos[1] - 1, startpos[2], endpos[1] - 1, endpos[2] + 1, {})
+    local text = vim.api.nvim_buf_get_text(0, startpos[1] - 1, startpos[2], endpos[1] - 1, endpos[2], {})
     local newtext = {}
     for i, line in ipairs(text) do
         local split = vim.fn.split(line)
@@ -21,7 +21,7 @@ function Capitalize_operatorfunc()
         end
         newtext[i] = vim.fn.join(newline)
     end
-    vim.api.nvim_buf_set_text(0, startpos[1] - 1, startpos[2], endpos[1] - 1, endpos[2] + 1, newtext)
+    vim.api.nvim_buf_set_text(0, startpos[1] - 1, startpos[2], endpos[1] - 1, endpos[2], newtext)
 end
 
 vim.keymap.set("n", "gC", function()

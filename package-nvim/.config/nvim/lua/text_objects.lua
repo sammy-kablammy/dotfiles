@@ -133,6 +133,8 @@ function select_slash(is_around)
     print(startslash, endslash)
 
     -- /test/filepath/here/
+-- ^  ^^^         ^ ^    ^^  test all these cursor starting positions
+-- actually... could we make some kind of testing framework to verify that we don't break this in the future?
 
     if is_around then
         startslash = startslash - 1

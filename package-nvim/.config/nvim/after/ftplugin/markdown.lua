@@ -13,7 +13,10 @@ vim.keymap.set('n', '<leader>ma', 'o[](<c-r>#)<esc>^', { desc = "markdown: link 
 vim.keymap.set('n', '<leader>mc', 'I[<esc>A]<esc>jI(<esc>A)<esc>kJx', { desc = "markdown: Create link", buffer = true })
 vim.keymap.set('n', '<leader>mn', 'o[[<c-r>#]]<esc>^w', { desc = "markdown: link to Alternate file", buffer = true })
 
-vim.keymap.set("i", "<c-x><enter>", "<enter><c-d>- [ ] ", { desc = "create new checkbox" })
+vim.keymap.set("i", "<c-x><enter>", "<enter><c-d>- [ ] ", { desc = "create new checkbox", buffer = true })
+
+-- TODO checkbox <>mx should work in visual mode, check every box in the
+-- selection. if all are checked, uncheck all. if some are checked, check all.
 
 if vim.fn.expand("%:t") == "resume.md" then
     vim.keymap.set("n", "<leader><enter>", "<cmd>silent make open<enter>", { buffer = true })
@@ -35,6 +38,15 @@ vim.b.sam_override_formatoptions = true
 -- vim.opt.com:append("b:-")
 -- vim.opt.com:append("b:1.")
 ----------
+
+
+-- Since diagnostics don't exist in markdown, might as well use d for date:
+local date_regex = [[\a*day \a\a\a \d\d\?, \d\d\d\d]] -- example Tuesday Feb 10, 2026
+vim.keymap.set("n", "[d", function() vim.fn.search(date_regex, "b") end, { desc = "previous Date" })
+vim.keymap.set("n", "]d", function() vim.fn.search(date_regex) end, { desc = "next Date" })
+local monday_regex = [[Monday \a\a\a \d\d\?, \d\d\d\d]]
+vim.keymap.set("n", "[D", function() vim.fn.search(monday_regex, "b") end, { desc = "previous monday" })
+vim.keymap.set("n", "]D", function() vim.fn.search(monday_regex) end, { desc = "next monday" })
 
 
 
@@ -126,7 +138,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
 function UpdateYoutubeDownloadStatus()
     -- TODO don't just search here, also search the corresponding text file
     -- TODO make a stink if the text file is not there or is empty
-    local video_backups_dir = "/home/sam/kablam/media/ytdlp/"
+    local video_backups_dir = "/home/sam/kablam/public/ytdlp/"
     ClearYoutubeDownloadStatus()
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     for linenum, line in ipairs(lines) do

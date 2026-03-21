@@ -24,6 +24,7 @@ if not vim.loop.fs_stat(lazypath) then
         "clone",
         "--filter=blob:none",
         "https://github.com/folke/lazy.nvim.git",
+        -- TODO should pin lazy version
         "--branch=stable", -- latest stable release
         lazypath,
     })
@@ -96,6 +97,7 @@ require("lazy").setup({
             delay = 750,
         }
     },
+    -- TODO remove lazydev
     {
         "folke/lazydev.nvim",
         ft = "lua",
@@ -131,6 +133,7 @@ require("lazy").setup({
     },
     {
         -- (for the pretty vim.ui.input box used for LSP renaming; i could live without this one)
+        -- ...or could rewrite my own vim.ui.input type thing
         "stevearc/dressing.nvim",
         event = "CursorMoved",
     },
@@ -141,6 +144,9 @@ require("lazy").setup({
             "stevearc/dressing.nvim",
         },
         config = function()
+            require("dressing").setup({
+                backend = { "telescope", "builtin" }
+            })
             require("icon-picker").setup({ disable_legacy_commands = true })
         end,
         event = "InsertEnter",
@@ -183,6 +189,7 @@ require("lazy").setup({
         end,
     },
     {
+        -- Can likely remove because of https://github.com/neovim/neovim/pull/28630
         "sammy-kablammy/linkma.nvim",
         -- NOTE: use "dir = '/path/to/local/plugin'" for local plugins
         config = function()
@@ -229,7 +236,24 @@ vim.api.nvim_create_user_command("TermThatDebugMyGuy", function()
     vim.keymap.set("n", "<leader>de", "<cmd>Evaluate<cr>", { desc = "Debug: Evaluate" })
     vim.keymap.set("n", "<leader>dn", "<cmd>Over<cr>", { desc = "Debug: Next (step over)" })
     vim.keymap.set("n", "<leader>ds", "<cmd>Step<cr>", { desc = "Debug: Step (step into)" })
+    vim.keymap.set("n", "<leader>dv", "<cmd>Var<cr>", { desc = "Debug: Show variables" })
 end, {})
+
+-- make gx work on wsl. fckin windows
+local EXECUTABLE_EXISTS = 1
+if vim.fn.executable("explorer.exe") == EXECUTABLE_EXISTS then
+    -- i think this only works for files, not all URIs, but ehh good enough
+    local function get_uri_under_cursor()
+        return vim.fn.expand("<cfile>")
+    end
+    vim.keymap.set("n", "gx", function()
+        local path = get_uri_under_cursor()
+        print("Opening", path, "could take a few seconds though because WSL is literal poop from a butt")
+        vim.ui.open(path, {
+            cmd = { "explorer.exe" }
+        })
+    end)
+end
 
 -- TODO maybe it'd be nice to have a utility function in my config that just
 -- dumps a bunch of autocmd info for the given bufnr. something to think

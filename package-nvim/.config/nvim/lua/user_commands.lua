@@ -43,3 +43,37 @@ end, {
 -- determine the name of the session file to use too. Not sure how to do that
 -- without preserving variables between sessions (maybe we just enable this in
 -- sessionoptions)
+
+-- the impetus for this command is having two files session.md (my notes for the
+-- session) and the vim file itself session.vim. it's easy to tab complete the
+-- md and overwrite the wrong file.
+vim.api.nvim_create_user_command("Mks", function(cmd)
+    session_name = cmd.fargs[1] .. ".vim"
+    print("Session name is", session_name)
+
+    -- if file is there, send existing file to a backup location and make a new session
+    if vim.uv.fs_stat(session_name) then
+        local oldsessions = vim.fn.stdpath("state") .. "/oldsessions/"
+        local obj = vim.system({ "mkdir", "--parents", oldsessions }, {
+            timeout = 1000,
+        }, nil):wait()
+        obj = vim.system({ "mv", "--backup=numbered", session_name, oldsessions }, {
+            timeout = 1000,
+        }, nil):wait()
+    end
+    vim.cmd.mksession(session_name)
+
+end, {
+    -- TODO should we handle no args?
+    nargs = 1,
+    complete = function(arglead, cmdline, cursorpos)
+        local matches = vim.fn.glob(arglead .. "*.vim")
+        -- glob() returns newline separated. we want a list:
+        matches = vim.fn.split(matches)
+        for i, match in ipairs(matches) do
+            -- remove trailing ".vim"
+            matches[i] = string.sub(match, 1, #match - 4)
+        end
+        return matches
+    end,
+})

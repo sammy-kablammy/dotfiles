@@ -35,13 +35,17 @@ require("nvim-treesitter.configs").setup({
         -- disable = { "c", "rust" },
         -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
         disable = function(lang, buf)
-            local max_filesize = 200 * 1024 -- 200 KB
+            local max_filesize = 400 * 1024 -- 400 KB
             local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then
                 return true
             end
-            -- tmux.conf highlighting is broken for some reason, just skip it
             if vim.bo.filetype == "tmux" then
+                -- tmux.conf highlighting is broken for some reason, just skip it
+                return true
+            end
+            if vim.bo.filetype == "dockerfile" then
+                -- dockerfile breaks when you have multiline RUN directives
                 return true
             end
         end,
@@ -56,6 +60,7 @@ require("nvim-treesitter.configs").setup({
     incremental_selection = {
         enable = true,
         keymaps = {
+            -- TODO this makes < act weird, figure out how to properly disable keymaps from nv-tresitter
             init_selection = "<NOP>", -- (default is gnn, which i don't want polluting my keymaps)
             node_incremental = "<c-h>",
             scope_incremental = "<NOP>",
@@ -64,6 +69,7 @@ require("nvim-treesitter.configs").setup({
     },
 
     -- :h nvim-treesitter-textobjects-modules
+    -- TODO i just learned that builtin matchit plugin does a%, which is basically this
     textobjects = {
         move = {
             enable = true,
@@ -103,8 +109,9 @@ require("nvim-treesitter.configs").setup({
                 -- comment textobjects elsewhere
                 -- ["ag"] = "@comment.outer",
                 -- (markdown code blocks)
-                ["ic"] = "@block.inner",
-                ["ac"] = "@block.outer",
+                -- TODO go back to doing this myself. also comments should be on c, not g.
+                -- ["ic"] = "@block.inner",
+                -- ["ac"] = "@block.outer",
             },
             -- You can choose the select mode (default is charwise 'v')
             selection_modes = {

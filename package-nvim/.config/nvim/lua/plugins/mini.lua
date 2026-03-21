@@ -9,6 +9,8 @@ if you're ever considering switching to something else, consider these benefits:
 - opens in a popup so :bdel works properly without closing windows you want to
   keep open
 
+at this point i could just do my own file browser
+
 --]]
 
 -- use mini.icons instead of web-devicons
@@ -59,7 +61,7 @@ mini_files.setup({
         -- permanent_delete = true,
         permanent_delete = false,
         -- Whether to use for editing directories
-        use_as_default_explorer = false,
+        use_as_default_explorer = true,
     },
 
     -- Customization of explorer windows
