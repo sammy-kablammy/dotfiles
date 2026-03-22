@@ -28,6 +28,7 @@ LLMs
 LLVM
 LaTeX
 Licklider
+Memex
 MongoDB
 MySQL
 NAND
@@ -72,6 +73,7 @@ bitfield
 bitwise
 bolded
 boolean
+bytecode
 checkbox
 checkboxes
 checksum
@@ -81,6 +83,7 @@ chirality
 claymation
 codebase
 cofounder
+combinational
 combinationally
 connectionless
 corkboard
@@ -94,6 +97,7 @@ dataset
 datasets
 datasheet
 datasheets
+deduplicate
 demultiplexing
 dereference
 dereferenced
@@ -105,6 +109,7 @@ discoverability
 dotfile
 dotfiles
 downloader
+dymaxion
 else's
 encodings
 enjoyer
@@ -124,6 +129,7 @@ impactful
 indirected
 inode
 intentionality
+intercompare
 intercomparison
 interconnectedness
 interoperability
@@ -146,6 +152,8 @@ metaprogramming
 microcontrollers
 microtransactions
 monetization
+multiway
+mutex
 natively
 nullable
 numpad
@@ -167,6 +175,8 @@ personalization
 phatic
 plaintext
 positivity
+postfix
+preprocessor
 prerequires
 procedurally
 programmatically
@@ -175,6 +185,7 @@ prover
 pseudocode
 pseudorandom
 qualia
+queryable
 queueing
 rebase
 rebased
@@ -183,6 +194,8 @@ recency
 reimage
 reimaged
 reimaging
+reimplement
+reimplemented
 relativize
 relativized
 repo
@@ -190,6 +203,7 @@ repos
 reproducibility
 retransmission
 retransmitted
+reupload
 rewatch
 rewatching
 rigidities
@@ -202,6 +216,7 @@ screensharing
 scrollback
 shader
 siloed
+sousveillance
 stateful
 stickerless
 subconsciously
@@ -225,6 +240,7 @@ ubiquitousness
 unary
 understandability
 unergonomic
+unfuck
 untowardly
 upgradeable
 versioning

@@ -31,6 +31,8 @@ Use `<leader>?` to open quick reference
   - `:argded[upe]` deduplicate, duh
   - `next`, `prev`, `[a`, `]a` to navigate one at a time
   - `argc()` and `argv()` vimscript functions do what you expect
+- redirect errors with `:redir! > ~/vim_errors.txt`, useful when you're seeing
+  errors on VimLeave that disappear too quickly
 
 ## shell (and bash)
 
@@ -42,12 +44,37 @@ Use `<leader>?` to open quick reference
   environment variable and can be used everywhere. Prefer HOME.
 - POSIX if statements: Searching manpages (likely dash) for `test expression` or
   `test condition` will be helpful.
+- see unix timestamp with `date +%s`
+
+### flock
+
+```sh
+# Run the following commands in quick succession. Both sleep for 10 seconds.
+# When the first one exits, it will echo 'hello'
+flock myfile "sleep 10"
+flock myfile "echo hello"
+# With -n, the second command instantly fails instead of waiting for unlock
+flock myfile "sleep 10"
+flock -n myfile "echo hello"
+```
 
 ## git
+
+- check if string is a valid ref: `git check-ref-format 'nocommas,'` (doesn't
+  output anything, must check exit code)
 
 ### Submodules
 
 don't.
+
+### patch files
+
+git-diff's output IS a patch file
+
+```sh
+git diff > myfile.patch
+git apply myfile.patch
+```
 
 ## GitLab CI
 
@@ -55,6 +82,33 @@ don't.
 per-MR basis, it will run when that job is defined in the feature branch. the CI
 jobs in the main branch (AKA the merge target branch) do not run. only the merge
 source branch.
+
+## Makefiles
+
+- Use `make --warn-undefined-variables` when debugging makefiles.
+- Remember that environment variables become make variables.
+
+```make
+# Default value for variable, can be overwritten like "VAR=hello make"
+VAR ?= howdy
+
+# phony job
+.PHONY: help
+help:
+    echo whatever
+
+# conditionally defined job
+ifeq ( $(SOMEVAR), contents )
+this-sometimes-does-not-exist:
+    $(CC) $(CFLAGS) somefile
+endif
+
+# add dependency to existing job
+myjob: extra_file
+myjob: file1 file2 file3
+    do_myjob
+
+```
 
 ## tmux
 

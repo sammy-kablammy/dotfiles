@@ -42,18 +42,29 @@ local function toothpick()
     local ns_id = vim.api.nvim_create_namespace("arglist_title")
     vim.api.nvim_set_hl(ns_id, "ToothpickWindowTitle", { bold = true, })
 
-    local width_scaling_factor = 0.5 -- (scaling factors are 0-1)
-    local height_scaling_factor = 0.5 -- (scaling factors are 0-1)
-    local win_width = vim.api.nvim_list_uis()[1].width local win_height = vim.api.nvim_list_uis()[1].height
-    local width = win_width * width_scaling_factor
-    local height = win_height * height_scaling_factor
-    local col = (win_width - width) / 2
-    local row = (win_height - height) / 2
+    local get_window_dimensions = function()
+        local width_scaling_factor = 0.5 -- (scaling factors are 0-1)
+        local height_scaling_factor = 0.5 -- (scaling factors are 0-1)
+        local win_width = vim.api.nvim_list_uis()[1].width
+        local win_height = vim.api.nvim_list_uis()[1].height
+        local width = math.floor(win_width * width_scaling_factor)
+        local height = math.floor(win_height * height_scaling_factor)
+        local col = (win_width - width) / 2
+        local row = (win_height - height) / 2
+        return {
+            width = width,
+            height = height,
+            col = col,
+            row = row,
+        }
+    end
+
+    local dims = get_window_dimensions()
     local win_id = vim.api.nvim_open_win(bufnr, true, {
-        width=math.floor(width),
-        height=math.floor(height),
-        col=col,
-        row=row,
+        width=dims.width,
+        height=dims.height,
+        col=dims.col,
+        row=dims.row,
         relative='editor',
         border='single',
         title={ { 'Toothpick', 'ToothpickWindowTitle' } },
@@ -103,14 +114,33 @@ local function toothpick()
     vim.keymap.set("n", "q", close_popup, { buffer = bufnr })
     vim.keymap.set("n", "<C-c>", close_popup, { buffer = bufnr })
 
-    local choose_file = function()
+    -- create mappings to edit the selected file
+    local choose_file = function(opener_command)
         local cursor_line = vim.api.nvim_win_get_cursor(0)[1]
         local file_to_edit = vim.fn.getline(cursor_line)
         save_to_arglist()
         close_popup()
-        vim.cmd.edit(file_to_edit)
+        opener_command(file_to_edit)
     end
-    vim.keymap.set("n", "<enter>", choose_file, { buffer = bufnr })
+    vim.keymap.set("n", "<enter>", function() choose_file(vim.cmd.edit) end, { buffer = bufnr })
+    vim.keymap.set("n", "<c-x>", function() choose_file(vim.cmd.split) end, { buffer = bufnr })
+    vim.keymap.set("n", "<c-v>", function() choose_file(vim.cmd.vsplit) end, { buffer = bufnr })
+
+    -- the popup window should resize properly when vim resizes
+    vim.api.nvim_create_autocmd({ "VimResized" }, {
+        buffer = bufnr,
+        callback = function(ev)
+            print("resize")
+            -- vim.print(ev)
+            local dimensions = get_window_dimensions()
+            local config = vim.api.nvim_win_get_config(win_id)
+            config.width = dimensions.width
+            config.height = dimensions.height
+            config.col = dimensions.col
+            config.row = dimensions.row
+            vim.api.nvim_win_set_config(win_id, config)
+        end,
+    })
 
     vim.api.nvim_create_autocmd({ "BufWriteCmd" }, {
         buffer = bufnr,
