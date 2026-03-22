@@ -161,13 +161,6 @@ require("lazy").setup({
     --         "nvim-telescope/telescope.nvim",
     --     },
     -- },
-    {
-        "folke/todo-comments.nvim",
-        dependencies = {
-            "nvim-telescope/telescope.nvim",
-            "nvim-lua/plenary.nvim",
-        },
-    },
     "ThePrimeagen/vim-be-good",
     {
         "echasnovski/mini.nvim",
