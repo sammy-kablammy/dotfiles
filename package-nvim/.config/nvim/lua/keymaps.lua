@@ -61,6 +61,9 @@ vim.keymap.set("i", "<F12>", "<nop>")
 -- why is F13 read as F15?
 vim.keymap.set("i", "<F15>", "<nop>")
 
+-- TODO should reconsider my use of BufEnter (every time entering buffer) vs
+-- BufRead (only first time it's opened)
+
 -- insert mode "leader key" style bindings. snippets for dummies. note that the
 -- key following <c-x> does NOT have control pressed. those are already used (:h
 -- i_CTRL-X_index)
@@ -367,6 +370,10 @@ vim.keymap.set("i", "<c-b>", "`")
 vim.keymap.set("n", "<leader>i", "<cmd>IconPickerNormal<cr>")
 vim.keymap.set("v", "<leader>th", ":TOhtml<cr>")
 vim.keymap.set("n", "<leader><leader>rv", ":g/.*/move 0<cr>", { desc = "Reverse buffer" })
+
+-- this builds on matchit's a% visual mode binding
+vim.keymap.set("o", "a%", ":normal va%<cr>")
+-- (unfortunately, matchit does not support i%)
 
 
 

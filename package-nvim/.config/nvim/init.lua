@@ -16,6 +16,8 @@ local function shitpost()
 end
 print(shitpost())
 
+SAM_AUGROUP = vim.api.nvim_create_augroup("sammy-kablammy", {})
+
 -- Lazy.nvim bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -226,6 +228,12 @@ require("capitalize")
 require("custom_command")
 
 require("dymaxion-chronofile")
+
+-- What if i tried using the mouse for once?
+-- :h popup-menu
+vim.cmd([[menu PopUp.Pop\ Tag\ Stack <cmd>pop<cr>]])
+
+-- to go further, couldn't you have a smalltalk like interface with this system?
 
 -- i rarely use termdebug, so best to leave it unloaded until it's actually needed
 vim.api.nvim_create_user_command("TermThatDebugMyGuy", function()

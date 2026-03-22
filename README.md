@@ -82,7 +82,10 @@ should implement these one day. (or don't, see if i care 🙄)
   - aside from colors do bold, italics, underline, strikethrough, etc.
   - also test some unicode / patched font characters
 - DIY nvim startup profiling? like :Lazy profile but simpler? idk
-- are there any good TUI treemap viewers? if not i could make one.
+- are there any good TUI treemap viewers? something like diskonaut but more
+  unix-y, not just for files
+- could we do a TUI node graph? like obsidian's graph view? it seems doable...
+  would be VERY cool looking
 - write a tags analyzer to break down tags file size by path. that way you can
   see what tags are big and exclude the ones you don't want
 - Need to merge my vim reminders.md into dotfiles so i have it with me. tbh many
@@ -117,21 +120,38 @@ should implement these one day. (or don't, see if i care 🙄)
 - https://stackoverflow.com/questions/782511/case-preserving-substitute-in-vim
   Look into this (someone linked a tpope example plugin) and try to get some
   similar functionality
-- Should visualize marks in the signcolumn
+- Should visualize marks in the signcolumn. who do i care though, i don't even
+  use marks
 - need a git-switch-local that's like git-switch but only autocompletes local
   branches. could be as simple as parsing 'git branch' to get local branch
   names.
 - does zip.vim (the builtin plugin that allows you to view archives) support
-  epubs? try it out. also get PDFs working in my config a bit better.
+  epubs? try it out. also get PDFs working in my config a bit better. would like
+  to revisit a live_grep of all ebooks, or at least of all ebooks below a
+  certain file size
 - make scp not do local copies, it's so annoying. `remote` should be assumed to
   mean `remote:~`
 - there should probably be a script to install nix and install a bunch of
   packages using nix. that way i have something cross-platform
   - add universal ctags (this is a fork from exuberant ctags) to packages list
+- I want some kind of script to search the current terminal screen for git
+  commit hashes (at least 6 hex characters), mark each one with a character
+  (like leap or flash in vim), and on select it should copy that SHA to the
+  system clipboard (or at least the tmux paste buffer).
+  - Try `tmux capture-pane -t TARGET_PANE_NUMBER -p`. Maybe we could walk
+    backwards from the bottom right and just pick the most recent one? bound to
+    prefix g
+- We can use extra mouse buttons in nvim. Search help for X1Mouse and
+  4-leftmouse for extra mousing capabilities. though these might actually only
+  work in a gui
 
 Things to regularly check in on:
 - update readme
 - bump nvim plugin versions
 - sort spellfile and git aliases
-- go through each nvim plugin and update them if they're not working right. i
-  know iconpicker is weird rn
+- go through each nvim plugin, update them if they're not working right, and
+  make sure my config matches their latest config. i know iconpicker is weird
+  rn.
+- shellcheck, finds things like HOME instead of tilde
+- make sure vim keymap set has descriptions
+- need a vim digraph but for more characters...
