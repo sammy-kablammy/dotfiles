@@ -51,7 +51,6 @@ require("lazy").setup({
         -- or                              , branch = '0.1.x',
         dependencies = { "nvim-lua/plenary.nvim" },
     },
-    -- "numToStr/Comment.nvim", -- let's try custom commenting for a bit
     -- Using master instead of the new main for treesitter because telescope
     -- breaks when i update and i don't care enough to figure out why
     {
