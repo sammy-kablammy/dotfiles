@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ -f index.html ] || [ -f index.css ] || [ -f index.js ]; then
     echo "uhh... files already exist, you probably don't want to overwrite them"

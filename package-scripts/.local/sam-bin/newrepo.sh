@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Make a new repo on my pi.
 

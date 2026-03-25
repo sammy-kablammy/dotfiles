@@ -1,2 +1,3 @@
-#!/bin/bash
+#!/bin/sh
+
 bluetoothctl remove 7f:df:38:c9:84:e5

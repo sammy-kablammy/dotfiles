@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # this script executes 'git status' on all the git repos found in the given
 # directory. just one level deep. doesn't find repos recursively.

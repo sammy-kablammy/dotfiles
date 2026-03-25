@@ -21,7 +21,7 @@ selected_name=$(basename "$selected" | tr . _)
 is_tmux_running=$(pgrep tmux)
 
 # tmux not opened yet -> just open tmux
-if [[ -z $TMUX ]] && [[ -z $is_tmux_running ]]; then
+if [ -z $TMUX ] && [ -z $is_tmux_running ]; then
     tmux new-session -s "$selected_name" -c "$selected"
     exit 0
 fi

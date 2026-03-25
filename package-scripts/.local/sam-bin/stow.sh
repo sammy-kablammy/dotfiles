@@ -14,7 +14,7 @@ exit 1
 
 
 
-dotfiles=$(dirname $(readlink -f -- "$0"))
+dotfiles=$(dirname "$(readlink -f -- "$0")")
 
 # first argument should be the target, second is the linkname (this mirrors ln)
 makelink() {
@@ -27,7 +27,7 @@ makelink() {
 
 # (remember to use $HOME as ~ doesn't expand in quotes)
 
-mkdir -p ~/.config/
+mkdir -p "$HOME/.config"
 makelink "$dotfiles/nvim/.config/nvim" "$HOME/.config/nvim2" 
 
 # ... etc.
