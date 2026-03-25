@@ -186,14 +186,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
 })
 
 
--- markdown listification operator
-function Listify()
-    vim.cmd("'[,']normal I- ")
-end
-vim.keymap.set({ "n", "v" }, "gl", function()
-    vim.o.operatorfunc = "v:lua.Listify"
-    vim.api.nvim_feedkeys("g@", "n", false)
-end)
+
+vim.keymap.set({ "n", "v" }, "gl", listify, {
+    desc = "listify",
+    buffer = true,
+})
 
 
 
