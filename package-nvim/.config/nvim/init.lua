@@ -219,6 +219,7 @@ require("operators")
 require("user_commands")
 require("capitalize")
 require("custom_command")
+require("commenting")
 
 require("dymaxion-chronofile")
 
