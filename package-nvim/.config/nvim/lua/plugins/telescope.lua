@@ -6,6 +6,7 @@
 local telescope = require("telescope")
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
+local action_layout = require("telescope.actions.layout")
 local builtin = require("telescope.builtin")
 local utils = require("telescope.utils")
 
@@ -53,6 +54,10 @@ telescope.setup({
                         hidden = true,
                         no_ignore = true,
                     })
+                end,
+                ["<c-r>"] = function()
+                    local bufnr = vim.fn.bufnr()
+                    action_layout.toggle_mirror(bufnr)
                 end,
             },
         },

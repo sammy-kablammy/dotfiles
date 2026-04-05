@@ -49,7 +49,6 @@ end, {
 -- md and overwrite the wrong file.
 vim.api.nvim_create_user_command("Mks", function(cmd)
     session_name = cmd.fargs[1] .. ".vim"
-    print("Session name is", session_name)
 
     -- if file is there, send existing file to a backup location and make a new session
     if vim.uv.fs_stat(session_name) then
@@ -62,6 +61,7 @@ vim.api.nvim_create_user_command("Mks", function(cmd)
         }, nil):wait()
     end
     vim.cmd.mksession(session_name)
+    print("Made session file", session_name)
 
 end, {
     -- TODO should we handle no args?

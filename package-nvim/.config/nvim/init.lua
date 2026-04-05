@@ -54,6 +54,8 @@ require("lazy").setup({
     -- Using master instead of the new main for treesitter because telescope
     -- breaks when i update and i don't care enough to figure out why
     {
+    -- TODO TODO TODO very important, master is broken on 0.12 and now the whole
+    -- project is archived so need to figure something out
         "nvim-treesitter/nvim-treesitter",
         branch = "master",
     },
@@ -98,18 +100,17 @@ require("lazy").setup({
             delay = 750,
         }
     },
-    -- TODO remove lazydev
-    {
-        "folke/lazydev.nvim",
-        ft = "lua",
-        opts = {
-            library = {
-                -- See the configuration section for more details
-                -- Load luvit types when the `vim.uv` word is found
-                { path = "luvit-meta/library", words = { "vim%.uv" } },
-            },
-        },
-    },
+    -- {
+    --     "folke/lazydev.nvim",
+    --     ft = "lua",
+    --     opts = {
+    --         library = {
+    --             -- See the configuration section for more details
+    --             -- Load luvit types when the `vim.uv` word is found
+    --             { path = "luvit-meta/library", words = { "vim%.uv" } },
+    --         },
+    --     },
+    -- },
     { -- optional completion source for require statements and module annotations
         "hrsh7th/nvim-cmp",
         opts = function(_, opts)

@@ -41,25 +41,29 @@ vim.keymap.set("n", "dp", "<nop>") -- this is :diffput, which i don't use
 vim.keymap.set("n", "g]", "<nop>") -- this is :tselect, interferes with frequent git hunk hopping ]g]g]g
 vim.keymap.set("i", "<PageDown>", "<nop>") -- i keep pressing this
 vim.keymap.set("i", "<PageUp>", "<nop>") -- i keep pressing this
+vim.keymap.set("i", "<S-PageDown>", "<nop>") -- i keep pressing this
+vim.keymap.set("i", "<S-PageUp>", "<nop>") -- i keep pressing this
+vim.keymap.set("n", "[f", "<nop>") -- this is overwritten by treesitter
+vim.keymap.set("n", "]f", "<nop>") -- this is overwritten by treesitter
 
 -- For some reason vim.keymap.del doesn't work here. idk. maybe it doesn't work
 -- unless the keymaps was set through lua?
 
 -- F1 is special because it opens :help, the rest of the F keys are just annoying
-vim.keymap.set({ "n", "i" }, "<F1>", "<nop>")
-vim.keymap.set("i", "<F2>", "<nop>")
-vim.keymap.set("i", "<F3>", "<nop>")
-vim.keymap.set("i", "<F4>", "<nop>")
-vim.keymap.set("i", "<F5>", "<nop>")
-vim.keymap.set("i", "<F6>", "<nop>")
-vim.keymap.set("i", "<F7>", "<nop>")
-vim.keymap.set("i", "<F8>", "<nop>")
-vim.keymap.set("i", "<F9>", "<nop>")
-vim.keymap.set("i", "<F10>", "<nop>")
-vim.keymap.set("i", "<F11>", "<nop>")
-vim.keymap.set("i", "<F12>", "<nop>")
+vim.keymap.set({ "n", "i", "c" }, "<F1>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F2>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F3>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F4>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F5>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F6>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F7>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F8>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F9>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F10>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F11>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F12>", "<nop>")
 -- why is F13 read as F15?
-vim.keymap.set("i", "<F15>", "<nop>")
+vim.keymap.set({ "i", "c" }, "<F15>", "<nop>")
 
 -- TODO should reconsider my use of BufEnter (every time entering buffer) vs
 -- BufRead (only first time it's opened)

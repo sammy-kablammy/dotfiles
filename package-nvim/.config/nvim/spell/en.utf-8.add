@@ -73,6 +73,7 @@ bitfield
 bitwise
 bolded
 boolean
+borked
 bytecode
 checkbox
 checkboxes
@@ -104,6 +105,9 @@ dereferenced
 deserializing
 designator
 designators
+desugar
+desugared
+desugaring
 disassembly
 discoverability
 dotfile
@@ -126,6 +130,7 @@ hackathon
 iOS
 ideating
 impactful
+incrementing
 indirected
 inode
 intentionality

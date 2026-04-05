@@ -84,6 +84,7 @@ function select_comment(is_around)
         return
     end
     -- we don't "correctly" parse commentstring, just the first 'token' of it
+    -- TODO use vim.regex instead of string.find, and just replace %s with .*
     local commentmarker = vim.fn.split(vim.bo.commentstring)[1]
     -- print("Comment marker is '" .. commentmarker .. "'")
 
@@ -147,6 +148,8 @@ vim.keymap.set("o", "ac", ":normal vag<cr>")
 
 -- TODO we need a way to delete end of line comments. This should be pretty easy
 -- as a textobject if you just allow matching 'cms' not at the start of the file
+--
+-- should bind to ie? like cie to change or die to delete
 
 
 -- ooOOooooh try gcig it's really cool
@@ -222,6 +225,7 @@ function select_custom_textobject(start_checker, end_checker)
     local cursor = vim.api.nvim_win_get_cursor(0)
     local cursor_line = cursor[1]
     -- +1 because nvim api has 0-based columns but lua string.sub() indices are 1-based:
+    -- (but where is string.sub? this comment is no longer correct)
     local cursor_col = cursor[2] + 1
 
     -- convert string into list/table of chars
@@ -237,7 +241,7 @@ function select_custom_textobject(start_checker, end_checker)
 
     -- Find left boundary of object
     local object_start_col = cursor_col
-    local maxiters = 10
+    local maxiters = 10 -- TODO remove maxiters
     local iters = 0
     while line[object_start_col] ~= nil and start_checker(line[object_start_col]) and iters < maxiters do
         -- what happens if we go off the end of the line?

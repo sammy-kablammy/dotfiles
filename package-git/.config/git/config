@@ -71,6 +71,7 @@
     mt = "mergetool"
     pullr = "pull --rebase=interactive"
     pulls = "pull --autostash"
+    puh = "push" # lmao
     remotes = "remote -v"
     rc = "rebase --continue"
     ref = "reflog --date=short"
