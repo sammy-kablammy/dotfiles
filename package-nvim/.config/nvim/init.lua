@@ -53,7 +53,7 @@ require("lazy").setup({
     },
     {
         "romus204/tree-sitter-manager.nvim",
-        dependencies = {}, -- tree-sitter CLI must be installed system-wide
+        dependencies = {}, -- NOTE tree-sitter CLI must be installed system-wide
     },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -74,16 +74,6 @@ require("lazy").setup({
         'Wansmer/treesj',
     },
     "lewis6991/gitsigns.nvim",
-    -- LSP
-    -- "neovim/nvim-lspconfig",
-    -- "williamboman/mason.nvim",
-    -- {
-    --     "williamboman/mason-lspconfig.nvim",
-    --     dependencies = {
-    --         "williamboman/mason.nvim",
-    --         "neovim/nvim-lspconfig",
-    --     },
-    -- },
     -- snippets
     {
         {
@@ -110,17 +100,6 @@ require("lazy").setup({
             delay = 750,
         }
     },
-    -- {
-    --     "folke/lazydev.nvim",
-    --     ft = "lua",
-    --     opts = {
-    --         library = {
-    --             -- See the configuration section for more details
-    --             -- Load luvit types when the `vim.uv` word is found
-    --             { path = "luvit-meta/library", words = { "vim%.uv" } },
-    --         },
-    --     },
-    -- },
     { -- optional completion source for require statements and module annotations
         "hrsh7th/nvim-cmp",
         opts = function(_, opts)
@@ -159,15 +138,6 @@ require("lazy").setup({
         end,
         event = "InsertEnter",
     },
-    -- eventually delete harpoon, now using toothpick instead
-    -- {
-    --     "ThePrimeagen/harpoon",
-    --     branch = "harpoon2", -- TODO check back when harpoon2 is finished
-    --     dependencies = {
-    --         "nvim-lua/plenary.nvim",
-    --         "nvim-telescope/telescope.nvim",
-    --     },
-    -- },
     "ThePrimeagen/vim-be-good",
     {
         "echasnovski/mini.nvim",
