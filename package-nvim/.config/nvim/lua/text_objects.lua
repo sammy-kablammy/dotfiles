@@ -270,14 +270,15 @@ function select_custom_textobject(start_checker, end_checker)
 end
 
 -- try selecting ints
-vim.keymap.set("x", "in", function()
-    select_custom_textobject(function(char)
+-- "in" Currently conflicts with incremental selection in
+vim.keymap.set("x", "iN", function()
+    select_custom_textobject(false, false, function(char)
         return string.find("0123456789", char) ~= nil
     end, function(char)
         return string.find("0123456789", char) ~= nil
     end)
-end)
-vim.keymap.set("o", "in", ":normal vin<cr>")
+end, { desc = "inside Number implementation" })
+vim.keymap.set("o", "iN", ":normal viN<cr>", { desc = "inside Number" })
 
 -- selecting alphabetic, using the same predicate func for both
 vim.keymap.set("x", "ia", function()

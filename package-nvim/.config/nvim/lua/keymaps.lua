@@ -234,10 +234,11 @@ end, { desc = "next qflist entry" })
 vim.keymap.set("n", "[C", vim.cmd.cfirst, { desc = "cfirst" })
 vim.keymap.set("n", "]C", vim.cmd.clast, { desc = "clast" })
 
-vim.keymap.set("n", "[n", "?<<<<<<<<cr>", { desc = "git coNflict" })
-vim.keymap.set("n", "]n", "/<<<<<<<<cr>", { desc = "git coNflict" })
-vim.keymap.set("n", "[N", "?>>>>>>><cr>", { desc = "git coNflict" })
-vim.keymap.set("n", "]N", "/>>>>>>><cr>", { desc = "git coNflict" })
+-- this conflicts with v0.12 treesitter keymaps now
+-- vim.keymap.set("n", "[n", "?<<<<<<<<cr>", { desc = "git coNflict" })
+-- vim.keymap.set("n", "]n", "/<<<<<<<<cr>", { desc = "git coNflict" })
+-- vim.keymap.set("n", "[N", "?>>>>>>><cr>", { desc = "git coNflict" })
+-- vim.keymap.set("n", "]N", "/>>>>>>><cr>", { desc = "git coNflict" })
 
 -- available square bracket motions (but double check before using these):
 -- j k n u v w x y

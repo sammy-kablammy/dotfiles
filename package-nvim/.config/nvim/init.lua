@@ -51,17 +51,27 @@ require("lazy").setup({
         -- or                              , branch = '0.1.x',
         dependencies = { "nvim-lua/plenary.nvim" },
     },
-    -- Using master instead of the new main for treesitter because telescope
-    -- breaks when i update and i don't care enough to figure out why
     {
-    -- TODO TODO TODO very important, master is broken on 0.12 and now the whole
-    -- project is archived so need to figure something out
-        "nvim-treesitter/nvim-treesitter",
-        branch = "master",
+        "romus204/tree-sitter-manager.nvim",
+        dependencies = {}, -- tree-sitter CLI must be installed system-wide
     },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
-        branch = "master",
+        branch = "main",
+        init = function()
+            -- Disable entire built-in ftplugin mappings to avoid conflicts.
+            -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
+            vim.g.no_plugin_maps = true
+
+            -- Or, disable per filetype (add as you like)
+            -- vim.g.no_python_maps = true
+            -- vim.g.no_ruby_maps = true
+            -- vim.g.no_rust_maps = true
+            -- vim.g.no_go_maps = true
+        end,
+    },
+    {
+        'Wansmer/treesj',
     },
     "lewis6991/gitsigns.nvim",
     -- LSP
@@ -128,10 +138,6 @@ require("lazy").setup({
             "tpope/vim-repeat",
         },
         event = "CursorMoved",
-    },
-    {
-        'Wansmer/treesj',
-        dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
     },
     {
         -- (for the pretty vim.ui.input box used for LSP renaming; i could live without this one)
@@ -221,6 +227,7 @@ require("user_commands")
 require("capitalize")
 require("custom_command")
 require("commenting")
+require("treesitter")
 
 require("dymaxion-chronofile")
 
