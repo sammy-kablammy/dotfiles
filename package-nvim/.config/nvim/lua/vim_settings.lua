@@ -198,7 +198,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 --------------------some "local to window" settings, i guess--------------------
 
 -- i used to use vim.o.colorcolumn = "80" BUT this is hardcoded whereas using +0 sets colorcolumn to be in sync with 'textwidth'
-vim.o.colorcolumn = "+0"
+-- vim.o.colorcolumn = "+0"
+vim.o.colorcolumn = ""
 vim.o.cursorline = true
 -- i used to use scrolloff=5, then 3, but these days i think i prefer none. i
 -- use motions like H M L <c-e> <c-y> zt zz zb to scroll around

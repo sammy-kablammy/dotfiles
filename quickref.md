@@ -51,11 +51,11 @@ Use `<leader>?` to open quick reference
 ```sh
 # Run the following commands in quick succession. Both sleep for 10 seconds.
 # When the first one exits, it will echo 'hello'
-flock myfile "sleep 10"
-flock myfile "echo hello"
+flock myfile sleep 10
+flock myfile echo hello
 # With -n, the second command instantly fails instead of waiting for unlock
-flock myfile "sleep 10"
-flock -n myfile "echo hello"
+flock myfile sleep 10
+flock -n myfile echo hello
 ```
 
 ## git

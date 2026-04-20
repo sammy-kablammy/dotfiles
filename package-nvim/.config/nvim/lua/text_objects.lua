@@ -67,8 +67,9 @@ end)
 vim.keymap.set("o", "gG", ":normal vgG<cr>")
 
 -- bAckticks
-vim.keymap.set("o", "ia", "i`")
-vim.keymap.set("o", "aa", "a`")
+-- This conflicts with alphabetic
+-- vim.keymap.set("o", "ia", "i`")
+-- vim.keymap.set("o", "aa", "a`")
 
 
 
@@ -241,12 +242,11 @@ function select_custom_textobject(start_checker, end_checker)
 
     -- Find left boundary of object
     local object_start_col = cursor_col
-    local maxiters = 10 -- TODO remove maxiters
+    local maxiters = 100000
     local iters = 0
     while line[object_start_col] ~= nil and start_checker(line[object_start_col]) and iters < maxiters do
-        -- what happens if we go off the end of the line?
+        -- what happens if we go off the end of the line? Nothing. it should just work.
         object_start_col = object_start_col - 1
-        print(object_start_col)
         maxiters = maxiters + 1
     end
     -- Find right boundary of object
@@ -258,7 +258,7 @@ function select_custom_textobject(start_checker, end_checker)
         object_end_col = object_end_col + 1
         maxiters = maxiters + 1
     end
-    print(object_start_col, object_end_col)
+    -- print(object_start_col, object_end_col)
 
     -- idk why
     object_end_col = object_end_col - 2

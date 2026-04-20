@@ -53,12 +53,15 @@
     edit-modified = "!f() { git ls-files --modified | xargs $EDITOR; }; f" # Edit all files that have been modified since previous commit
     edit-untracked = "!f() { git ls-files --others --exclude-standard | xargs $EDITOR; }; f" # Edit all untracked files
     edit-modified-and-untracked = "!f() { git ls-files --modified --others --exclude-standard | xargs $EDITOR; }; f"
+    edit-all = "edit-modified-and-untracked"
     edit-conflicts = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs $EDITOR; }; f" # Edit all files with merge conflicts
     mark-conflicts-as-resolved = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs 'git-add'; }; f"
     f = "fetch"
     fq = "fetch --quiet"
     fs = "!f() { git fetch && git status --short --branch; }; f"
     fst = "!f() { git fetch && git status; }; f"
+    # see "PRETTY FORMATS" in git-log(1)
+    get-time-last-touched = "log -1 --pretty='format:%ch'"
     h = "rev-parse HEAD"
     hc = "!f() { git rev-parse HEAD | xclip -selection clipboard -rmlastnl; }; f"
     l = "log --all --graph --decorate --oneline -7"

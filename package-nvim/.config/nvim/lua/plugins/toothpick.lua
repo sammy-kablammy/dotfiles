@@ -157,15 +157,18 @@ local function toothpick()
     })
     -- this is necessary otherwise vim will complain about the toothpick buffer
     -- being unsaved when trying to exit vim
-    vim.api.nvim_create_autocmd({ "ExitPre" }, {
+    vim.api.nvim_create_autocmd({ "QuitPre" }, {
+        -- should NOT be buffer = bufnr here.
         buffer = bufnr,
         callback = function()
-            vim.api.nvim_buf_delete(bufnr, { force = true })
+            if vim.api.nvim_buf_is_valid(bufnr) then
+                vim.api.nvim_buf_delete(bufnr, { force = true })
+            end
         end,
     })
 end
 
--- TODO rename this to 'append' and make it's always appended to the correct sopt
+-- TODO rename this to 'append' and make it's always appended to the correct spot
 local function add_current_buf_to_arglist(file)
     local position = vim.fn.argc()
     vim.cmd(position .. "argadd")
@@ -179,10 +182,10 @@ vim.api.nvim_create_user_command("Toothpick", toothpick, { desc = "Open Toothpic
 vim.keymap.set("n", "<leader>to", toothpick, { desc = "Toothpick Open popup" })
 vim.keymap.set("n", "<leader>ta", add_current_buf_to_arglist, { desc = "Toothpick Add current buffer to arglist" })
 
-vim.keymap.set("n", "<leader>re", toothpick, { desc = "aRglist edit" })
-vim.keymap.set("n", "<leader>ra", add_current_buf_to_arglist, { desc = "aRglist add / ':argadd'" })
+-- vim.keymap.set("n", "<leader>re", toothpick, { desc = "aRglist edit" })
+-- vim.keymap.set("n", "<leader>ra", add_current_buf_to_arglist, { desc = "aRglist add / ':argadd'" })
 
-vim.keymap.set("n", "<leader>0", add_current_buf_to_arglist, { desc = "aRglist add / ':argadd'" }) -- holdover keybind from harpoon, will eventually delete
+-- vim.keymap.set("n", "<leader>0", add_current_buf_to_arglist, { desc = "aRglist add / ':argadd'" }) -- holdover keybind from harpoon, will eventually delete
 
 local function edit_arg_number(num)
     local args = vim.fn.argv()
@@ -190,6 +193,9 @@ local function edit_arg_number(num)
         print("Argument number", num, "is not in the argument list.")
         return
     end
+    -- You can't :edit or :argument the current file when it has unsaved
+    -- changes. This is a vim thing so idk how to get around it. for now this
+    -- behavior is weird.
     vim.cmd.argument(num)
 end
 vim.keymap.set("n", "<leader>1", function() edit_arg_number(1) end, { desc = "argument list 1" })

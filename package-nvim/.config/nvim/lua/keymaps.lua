@@ -27,6 +27,9 @@ some notes on keymaps:
 
 -- TODO should use the function keys and the numpad keys, i totally forgot those exist
 
+-- Preserve <c-a> functionality while making it harder to accidentally press. Do this before unmapping <c-a>
+vim.keymap.set("i", "<c-x><c-a>", "<c-a>")
+
 -- remove annoying mappings (must be at the top in case i re-add these mappings)
 vim.keymap.set("n", "<c-q>", "<nop>")
 vim.keymap.set("n", "U", "<nop>")
@@ -120,6 +123,8 @@ vim.keymap.set({"n", "v"}, "<leader>P", '"0P')
 -- yank/put using system clipboard
 vim.keymap.set({ "n", "v", }, "gy", "\"+y") -- is gy really unused by default? really?
 vim.keymap.set({ "n", "v", }, "gY", "\"+Y")
+vim.keymap.set({ "n", "v", }, "cy", "\"+y") -- Clipboard Yank
+vim.keymap.set({ "n", "v", }, "cY", "\"+Y")
 vim.keymap.set({ "n", "v", }, "gp", "\"+p")
 vim.keymap.set({ "n", "v", }, "gP", "\"+P")
 -- duplicates of gp/gP. I would like to start using the default gp/gP so prefer
@@ -165,7 +170,7 @@ vim.keymap.set("v", ">", ">gv")
 vim.keymap.set({ "n", "v" }, "<leader>.", "<cmd>@:<cr>", { desc = "execute previous command" })
 
 -- change settings
-vim.keymap.set("n", "<leader>sh", "<cmd>set hls!<cr>")
+-- vim.keymap.set("n", "<leader>sh", "<cmd>set hlsearch!<cr>")
 vim.keymap.set("n", "<leader>sl", "<cmd>set list!<cr>")
 vim.keymap.set("n", "<leader>sn", "<cmd>set number!<cr>")
 vim.keymap.set("n", "<leader>sr", "<cmd>set relativenumber!<cr>")
@@ -350,7 +355,21 @@ vim.keymap.set("n", "<c-w>u", "<c-w>p")
 vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
 vim.keymap.set("n", "<c-w>a", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
 vim.keymap.set("n", "<c-w><c-a>", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
-vim.keymap.set("n", "<c-w>z", "<c-w>|<c-w>_", { desc = "Zoom into window" })
+vim.keymap.set("n", "<c-w>z", function()
+    -- Used to just be "<c-w>|<c-w>_",
+    if not vim.g.sam_is_zoomed then
+        vim.b.sam_win_restore = vim.fn.winrestcmd()
+        vim.cmd.wincmd("|")
+        vim.cmd.wincmd("_")
+    else
+        vim.fn.execute(vim.b.sam_win_restore)
+    end
+    vim.g.sam_is_zoomed = not vim.g.sam_is_zoomed
+end, { desc = "Zoom into window" })
+vim.keymap.set("n", "<c-w>=", function()
+    vim.g.sam_is_zoomed = false
+    vim.cmd.wincmd("=")
+end, { desc = "Equalize windows" })
 vim.keymap.set("n", "<c-w>*", "<cmd>split<cr>*", { desc = "* in new split" })
 vim.keymap.set("n", "<c-w>#", "<cmd>split<cr>#", { desc = "# in new split" })
 vim.keymap.set("n", "<c-w>%", "<cmd>split<cr>%", { desc = "% in new split" })

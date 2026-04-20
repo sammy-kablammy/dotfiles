@@ -37,6 +37,35 @@ end, {
     desc = "open local file in remote git repo",
 })
 
+-- Switch between source files and header files (C/C++, maybe we'll find a
+-- similar use for other languages)
+local function toggle_header()
+    local filename = vim.fn.expand('%')
+    local new_filename = nil
+    if vim.fn.match(filename, [[\.c$]]) >= 0 then
+        new_filename = string.sub(filename, 1, -(#".c" + 1)) .. ".h"
+    elseif vim.fn.match(filename, [[\.h$]]) >= 0 then
+        new_filename = string.sub(filename, 1, -(#".h" + 1)) .. ".c"
+    elseif vim.fn.match(filename, [[\.cpp$]]) >= 0 then
+        new_filename = string.sub(filename, 1, -(#".cpp" + 1)) .. ".hpp"
+    elseif vim.fn.match(filename, [[\.hpp$]]) >= 0 then
+        new_filename = string.sub(filename, 1, -(#".hpp" + 1)) .. ".cpp"
+    end
+    if not new_filename then
+        return
+    end
+    if vim.uv.fs_stat(new_filename) then
+        vim.cmd.edit(new_filename)
+        -- We could display a fun popup message here. A little animated sparkly
+        -- thing. don't lose focus of the buffer though. just have a non-focused
+        -- popup
+    else
+        print("Could not find '" .. new_filename .. "', creating new file")
+        vim.cmd.edit(new_filename)
+    end
+end
+vim.keymap.set("n", "<leader>h", toggle_header, { desc = "switch between source and header" })
+
 -- TODO Need :Mks that's basically the same as :mks! but it only overwrites .vim
 -- files. that way if i have a sesh.md and sesh.vim i don't accidentally tab
 -- complete :mks! se<tab> and wipe sesh.md. Ideally it would automatically

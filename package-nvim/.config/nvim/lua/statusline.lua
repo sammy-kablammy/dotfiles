@@ -86,6 +86,18 @@ function StatusLineKeylogger()
     end
 end
 
+vim.cmd("highlight SamStatusLineArgIdx guifg=" .. matchparenhex .. " guibg=" .. bgcolorhex)
+function StatusLineArgIdx()
+    local bufname = vim.fn.expand("%:.")
+    for argidx, arg in pairs(vim.fn.argv()) do
+        if arg == bufname then
+            return "%#SamStatusLineArgIdx#" .. argidx .. ' ' .. "%#StatusLine#"
+        end
+    end
+    return ""
+end
+
+local argidx = '%{%luaeval("StatusLineArgIdx()")%}'
 local filename = '%{expand("%:.")}'
 local cutoff_point = "%< "
 local modified_flag = "%m"
@@ -97,6 +109,7 @@ local fileformat = '%{luaeval("StatusLineFileformat()")}'
 local lsp = '%{%luaeval("LspStatusline()")%}'
 local position = '%{%luaeval("StatusLinePosition()")%}'
 vim.o.statusline = " " ..
+    argidx ..
     filename ..
     cutoff_point ..
     modified_flag ..

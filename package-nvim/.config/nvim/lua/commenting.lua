@@ -46,7 +46,6 @@ local function highlight_todos()
         -- print("No commentstring! Cannot highlight todos") this is really annoying actually
         return
     end
-    local commentstring = vim.bo.commentstring
 
     -- You can get colors from builtin highlight groups like this:
     -- local color = vim.fn.synIDattr(vim.fn.hlID("TermCursor"), "bg#")
@@ -71,7 +70,7 @@ local function highlight_todos()
 
         -- Since the :match regex has slashes, vim gets confused when there are
         -- unescaped slashes in the commentstring
-        commentstring = vim.fn.substitute(commentstring, '/', [[\\/]], "g")
+        local commentstring = vim.fn.substitute(vim.bo.commentstring, '/', [[\\/]], "g")
 
         local pattern = string.gsub(commentstring, "%%s", keyword)
         if pattern == nil then

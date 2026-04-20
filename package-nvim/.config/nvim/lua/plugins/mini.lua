@@ -5,6 +5,8 @@ if you're ever considering switching to something else, consider these benefits:
 - edit the file system like a text buffer
 - the multi-column view of several layers of directories at once is really nice
   (i don't think oil supports this)
+  - Recently learned this way of visualizing hierarchical data is called "Miller
+    Columns", named after Mark Miller of xu88 fame
 - automatically open a file preview window when hovering over a file
 - opens in a popup so :bdel works properly without closing windows you want to
   keep open
