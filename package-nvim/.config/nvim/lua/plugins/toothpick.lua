@@ -1,6 +1,6 @@
 --[[
 
-Toothpick is a minimal, single-file replacement for Harpoon
+Toothpick is a minimal, single-file alternative for Harpoon
 (https://github.com/ThePrimeagen/harpoon)
 
 Vim has a builtin notion of the argument list (:h arglist) to manage frequently
@@ -159,7 +159,6 @@ local function toothpick()
     -- being unsaved when trying to exit vim
     vim.api.nvim_create_autocmd({ "QuitPre" }, {
         -- should NOT be buffer = bufnr here.
-        buffer = bufnr,
         callback = function()
             if vim.api.nvim_buf_is_valid(bufnr) then
                 vim.api.nvim_buf_delete(bufnr, { force = true })
@@ -196,6 +195,16 @@ local function edit_arg_number(num)
     -- You can't :edit or :argument the current file when it has unsaved
     -- changes. This is a vim thing so idk how to get around it. for now this
     -- behavior is weird.
+
+    -- You can't :edit or :argument the current file when it has unsaved
+    -- changes. So we must check for an opened version and noop to prevent this.
+    -- WARN this doesn't work
+    -- print(vim.fn.bufname(0), args[num])
+    -- if vim.fn.bufname(0) == args[num] then
+    --     print('noop', vim.fn.bufname(0), args[num])
+    --     return
+    -- end
+
     vim.cmd.argument(num)
 end
 vim.keymap.set("n", "<leader>1", function() edit_arg_number(1) end, { desc = "argument list 1" })
@@ -216,3 +225,8 @@ vim.keymap.set("n", "<leader>9", function() edit_arg_number(9) end, { desc = "ar
 -- TODO if the current file is 1, and there are unsaved changes, pressing <>1
 -- will error out. This should actually be a noop since you're already in the
 -- right file.
+--
+-- So this is actually just Vim behavior. Not much I can do about that. Working
+-- on this above
+
+-- TODO why are we deleting the buffer on close? That's so weird. just hide it.

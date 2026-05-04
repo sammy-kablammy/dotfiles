@@ -11,6 +11,7 @@ local function shitpost()
         'kama pona tawa ilo Neowin',
         'Welcome to GNU Emacs, one component of the GNU/Linux operating system.',
         'ed (the standard text editor)',
+        'neovim - now including like 50 electron instances',
     }
     return messages[math.random(#messages)]
 end
@@ -47,8 +48,7 @@ require("lazy").setup({
     },
     {
         "nvim-telescope/telescope.nvim",
-        tag = "0.1.8",
-        -- or                              , branch = '0.1.x',
+        tag = "v0.2.2",
         dependencies = { "nvim-lua/plenary.nvim" },
     },
     {
@@ -219,6 +219,11 @@ vim.api.nvim_create_user_command("TermThatDebugMyGuy", function()
     vim.keymap.set("n", "<leader>ds", "<cmd>Step<cr>", { desc = "Debug: Step (step into)" })
     vim.keymap.set("n", "<leader>dv", "<cmd>Var<cr>", { desc = "Debug: Show variables" })
 end, {})
+
+vim.cmd.packadd("nvim.undotree")
+
+-- TODO I think we need to move ftplugins out of after. editorconfig is not
+-- currently working and i think this is why
 
 -- make gx work on wsl. fckin windows
 local EXECUTABLE_EXISTS = 1

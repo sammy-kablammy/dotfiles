@@ -77,6 +77,9 @@ cmp.setup({
         -- the default (string-based) completion will do. Plus, builtin is way
         -- faster.
         ["<C-l>"] = cmp.mapping.complete(),
+        -- NOTE this blocks the native 'complete' option from working, only
+        -- allowing identifiers in the current buffer to be completed. for this
+        -- reason i suggest not using this
         ["<C-n>"] = function()
             if cmp.visible() then
                 cmp.select_next_item()

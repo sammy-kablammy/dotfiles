@@ -52,7 +52,11 @@ vim.keymap.set("n", "]f", "<nop>") -- this is overwritten by treesitter
 -- For some reason vim.keymap.del doesn't work here. idk. maybe it doesn't work
 -- unless the keymaps was set through lua?
 
--- F1 is special because it opens :help, the rest of the F keys are just annoying
+-- F1 is special because it opens :help, the rest of the F keys are just
+-- annoying in insert mode
+-- TODO Could use function keys in normal mode though. Then again using
+-- arbitrary numbers (like F1) instead of mnemonics (like <leader>fh for "find
+-- help") is kinda anti-vim IMO
 vim.keymap.set({ "n", "i", "c" }, "<F1>", "<nop>")
 vim.keymap.set({ "i", "c" }, "<F2>", "<nop>")
 vim.keymap.set({ "i", "c" }, "<F3>", "<nop>")
@@ -70,6 +74,8 @@ vim.keymap.set({ "i", "c" }, "<F15>", "<nop>")
 
 -- TODO should reconsider my use of BufEnter (every time entering buffer) vs
 -- BufRead (only first time it's opened)
+
+-- TODO we have i_ctrl-g !!! tons of possible mappings available :)
 
 -- insert mode "leader key" style bindings. snippets for dummies. note that the
 -- key following <c-x> does NOT have control pressed. those are already used (:h
@@ -123,8 +129,9 @@ vim.keymap.set({"n", "v"}, "<leader>P", '"0P')
 -- yank/put using system clipboard
 vim.keymap.set({ "n", "v", }, "gy", "\"+y") -- is gy really unused by default? really?
 vim.keymap.set({ "n", "v", }, "gY", "\"+Y")
-vim.keymap.set({ "n", "v", }, "cy", "\"+y") -- Clipboard Yank
-vim.keymap.set({ "n", "v", }, "cY", "\"+Y")
+-- Actually this doesn't work in visual mode since 'c' is for change
+-- vim.keymap.set({ "n", "v", }, "cy", "\"+y") -- Clipboard Yank
+-- vim.keymap.set({ "n", "v", }, "cY", "\"+Y")
 vim.keymap.set({ "n", "v", }, "gp", "\"+p")
 vim.keymap.set({ "n", "v", }, "gP", "\"+P")
 -- duplicates of gp/gP. I would like to start using the default gp/gP so prefer
@@ -159,8 +166,8 @@ vim.keymap.set({ "n", "v" }, "<c-k>", "3k")
 vim.keymap.set({ "n", "v" }, "n", "/<c-r>/<cr>")
 vim.keymap.set({ "n", "v" }, "N", "?<c-r>/<cr>")
 
-vim.keymap.set({ "n", "v" }, "gd", "gd<cmd>nohlsearch<cr>")
-vim.keymap.set({ "n", "v" }, "gD", "gd<cmd>nohlsearch<cr>")
+-- vim.keymap.set({ "n", "v" }, "gd", "gd<cmd>nohlsearch<cr>")
+-- vim.keymap.set({ "n", "v" }, "gD", "gd<cmd>nohlsearch<cr>")
 
 -- slide text left and right whhheeeeeeeeeeeee!!! nrrooooooooom!!!
 vim.keymap.set("v", "<", "<gv")
@@ -391,9 +398,12 @@ vim.keymap.set("c", "<c-h>", "<left>")
 vim.keymap.set("c", "<c-l>", "<right>")
 vim.keymap.set("i", "<c-b>", "`")
 -- vim.keymap.set("n", "gg", "<cmd>echo 'use go instead of gg'<cr>go")
-vim.keymap.set("n", "<leader>i", "<cmd>IconPickerNormal<cr>")
+vim.keymap.set("n", "<leader>i", "<cmd>IconPickerNormal emoji<cr>")
+vim.keymap.set("n", "<leader>I", "<cmd>IconPickerNormal<cr>")
 vim.keymap.set("v", "<leader>th", ":TOhtml<cr>")
 vim.keymap.set("n", "<leader><leader>rv", ":g/.*/move 0<cr>", { desc = "Reverse buffer" })
+vim.keymap.set("o", "ir", "i]")
+vim.keymap.set("o", "ar", "a]")
 
 -- this builds on matchit's a% visual mode binding
 vim.keymap.set("o", "a%", ":normal va%<cr>")

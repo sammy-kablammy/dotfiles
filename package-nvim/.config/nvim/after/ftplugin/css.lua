@@ -1,3 +1,5 @@
+-- Don't forget about builtin property omnicompletion! :h ft-css-omni
+
 -- vim.bo.expandtab = true
 -- vim.bo.tabstop = 2
 -- vim.bo.shiftwidth = 2

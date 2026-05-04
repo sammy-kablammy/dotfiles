@@ -19,7 +19,6 @@ https://github.com/Wansmer/treesj
 vim.keymap.set('n', '<leader>ti', '<cmd>InspectTree<cr>')
 vim.keymap.set('n', '<leader>te', '<cmd>EditQuery<cr>')
 vim.keymap.set('n', '<leader>ts', '<cmd>InspectTree<cr><cmd>EditQuery<cr><cmd>wincmd =<cr>')
-vim.keymap.set('n', '<leader>th', '<cmd>TSToggle highlight<cr>')
 
 -- incremental selection is builtin nowadays, that's cool
 -- Not sure which of these bindings to use yet
@@ -67,7 +66,7 @@ tsm.setup({
         "go",
         "gomod",
         -- "java",
-        -- "html",
+        "html", -- this also highlights comments in markdown
         -- "css",
         -- "javascript",
     }, -- list of parsers to install at the start of a neovim session

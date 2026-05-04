@@ -56,6 +56,8 @@ end, { desc = "Create Section" })
 
 -- ok here are my textobjects
 
+-- TODO need ci_ for easily editing snake case names
+
 
 -- the whole buffer
 vim.keymap.set("x", "gG", function()

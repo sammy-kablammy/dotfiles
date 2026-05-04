@@ -140,6 +140,7 @@ vim.lsp.config["jdtls"] = {
 -- vim.lsp.enable("jdtls")
 
 -- (pip install basedpyright)
+-- (nix-env --install basedpyright)
 vim.lsp.config["basedpyright"] = {
     cmd = { "basedpyright-langserver", "--stdio" },
     filetypes = { "python" },
