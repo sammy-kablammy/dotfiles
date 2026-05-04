@@ -38,6 +38,7 @@
 [fetch]
     recurseSubmodules = no
 [alias]
+    # This should be organized by usage, not alphabetically
     alias = "!f() { git config --list | grep 'alias'; }; f"
     b = "branch -vv"
     ca = "commit --amend"
@@ -50,12 +51,12 @@
     dty = "difftool --prompt -y --trust-exit-code" # (use vim's :cq to end diffing)
     dts = "difftool --prompt --staged"
     dtr = "!f() { git dt HEAD origin/$(git rev-parse --abbrev-ref HEAD) ; }; f" # diff current branch against its remote counterpart
-    edit-modified = "!f() { git ls-files --modified | xargs $EDITOR; }; f" # Edit all files that have been modified since previous commit
-    edit-untracked = "!f() { git ls-files --others --exclude-standard | xargs $EDITOR; }; f" # Edit all untracked files
-    edit-modified-and-untracked = "!f() { git ls-files --modified --others --exclude-standard | xargs $EDITOR; }; f"
+    edit-modified = "!f() { git ls-files --modified | xargs -d '\n' $EDITOR; }; f" # Edit all files that have been modified since previous commit
+    edit-untracked = "!f() { git ls-files --others --exclude-standard | xargs -d '\n' $EDITOR; }; f" # Edit all untracked files
+    edit-modified-and-untracked = "!f() { git ls-files --modified --others --exclude-standard | xargs -d '\n' $EDITOR; }; f"
     edit-all = "edit-modified-and-untracked"
-    edit-conflicts = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs $EDITOR; }; f" # Edit all files with merge conflicts
-    mark-conflicts-as-resolved = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs 'git-add'; }; f"
+    edit-conflicts = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs -d '\n' $EDITOR; }; f" # Edit all files with merge conflicts
+    mark-conflicts-as-resolved = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs -d '\n' 'git-add'; }; f"
     f = "fetch"
     fq = "fetch --quiet"
     fs = "!f() { git fetch && git status --short --branch; }; f"

@@ -74,7 +74,9 @@ alias 'delete-the-fucking-zone-identifiers-windows-you-stupid-piece-of-garbage'=
 alias 'wsl-fix-bin'='sudo systemctl restart systemd-binfmt'
 
 alias 'nvim-dev'="$HOME/checkouts/neovim/build/bin/nvim --clean"
-alias 'nvim-dev-fix-scuffed-build'="find $HOME/checkouts/neovim/ -name CMakeCache.txt | xargs rm -i"
+# You need to do some combination of make clean, delete these files, and maybe
+# `cmake -S . -B build` if it complains about not being able to find the cache
+alias 'nvim-dev-fix-scuffed-build'="find $HOME/checkouts/neovim/ -name CMakeCache.txt"
 
 alias 'sudo-nvim'='sudo EDITOR=nvim visudo'
 
@@ -293,6 +295,7 @@ fi
 
 # TODO need bash completion of mn to match man, also reconcile manfzf with man and mn. what uses nvim and what uses default?
 # TODO you can just do apropos "" to list all manpages, no need to do the searchy wearchy thing
+# TODO fzf should preview the hovered manpage
 # TODO telescope has a manpage fuzzy finder, could also use that if you can get all sections working correctly
 alias 'mn'='man --all --pager="nvim +Man!"'
 mansearch() {
