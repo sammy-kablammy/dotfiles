@@ -198,6 +198,7 @@ require("capitalize")
 require("custom_command")
 require("commenting")
 require("treesitter")
+require("surround")
 
 require("dymaxion-chronofile")
 
