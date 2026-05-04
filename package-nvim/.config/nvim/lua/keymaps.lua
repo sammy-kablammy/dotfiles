@@ -157,8 +157,8 @@ vim.keymap.set("n", "<s-up>", "<c-u>zz")
 vim.keymap.set("n", "<s-down>", "<c-d>zz")
 
 -- faster scrolling, for funsies
-vim.keymap.set({ "n", "v" }, "<c-j>", "3j")
-vim.keymap.set({ "n", "v" }, "<c-k>", "3k")
+-- vim.keymap.set({ "n", "v" }, "<c-j>", "3j")
+-- vim.keymap.set({ "n", "v" }, "<c-k>", "3k")
 
 -- this way, 'n' will always search downward, 'N' will always search upward.
 -- (the default behavior is that 'n' always searches in the same direction of
@@ -363,7 +363,7 @@ vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
 vim.keymap.set("n", "<c-w>a", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
 vim.keymap.set("n", "<c-w><c-a>", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
 vim.keymap.set("n", "<c-w>z", function()
-    -- Used to just be "<c-w>|<c-w>_",
+    -- Used to just be "<c-w>|<c-w>_", 
     if not vim.g.sam_is_zoomed then
         vim.b.sam_win_restore = vim.fn.winrestcmd()
         vim.cmd.wincmd("|")
