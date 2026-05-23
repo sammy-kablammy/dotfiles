@@ -201,6 +201,7 @@ require("treesitter")
 require("surround")
 
 require("diagram")
+require("custom_semicolon_repeat") -- I think this might need to be required after all keymaps are created
 
 require("dymaxion-chronofile")
 
