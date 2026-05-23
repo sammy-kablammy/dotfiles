@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# count number of subdirs (recursively) in current directory. useful for finding
+# large subdirectories in syncthing to be manually tarred up (syncthing takes
+# FOREVER to sync large directories)
+
+for dir in ./*; do
+    file_count=$(find "$dir" | wc -l)
+    printf '%s\t%s\n' "$file_count" "$dir"
+done | sort -h
+
+echo ""
+printf 'TOTAL:\t%s' "$(find . | wc -l)"

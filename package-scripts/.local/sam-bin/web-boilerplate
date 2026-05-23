@@ -15,8 +15,8 @@ cat >index.html <<EOL
         <link href="index.css" rel="stylesheet">
     </head>
     <body>
-    <h1>template</h1>
-    <script src="index.js"></script>
+        <h1>template</h1>
+        <script src="index.js"></script>
     </body>
 </html>
 EOL
