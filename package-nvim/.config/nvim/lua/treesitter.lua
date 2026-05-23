@@ -128,15 +128,18 @@ require("nvim-treesitter-textobjects").setup({
 -- You can also use captures from other query groups like `locals.scm` or `folds.scm`
 -- Example: gf this file
 -- ~/.local/share/nvim/lazy/nvim-treesitter-textobjects/queries/lua/textobjects.scm
+-- I also have telescope fq/fQ for this at time of writing
+
+-- TODO keymap descriptions throughout this file (this applies everywhere in my config, just search telescope keymaps for "anonymous"
 
 -- "Select" mappings:
 local selectobj = require("nvim-treesitter-textobjects.select").select_textobject
-vim.keymap.set({ "x", "o" }, "if", function() selectobj("@function.inner", "textobjects") end)
-vim.keymap.set({ "x", "o" }, "af", function() selectobj("@function.outer", "textobjects") end)
-vim.keymap.set({ "x", "o" }, "il", function() selectobj("@loop.inner", "textobjects") end)
-vim.keymap.set({ "x", "o" }, "al", function() selectobj("@loop.outer", "textobjects") end)
-vim.keymap.set({ "x", "o" }, "io", function() selectobj("@conditional.inner", "textobjects") end)
-vim.keymap.set({ "x", "o" }, "ao", function() selectobj("@conditional.outer", "textobjects") end)
+vim.keymap.set({ "x", "o" }, "if", function() selectobj("@function.inner", "textobjects") end, { desc = "treesitter-textobject: inside Function" })
+vim.keymap.set({ "x", "o" }, "af", function() selectobj("@function.outer", "textobjects") end, { desc = "treesitter-textobject: around Function" })
+vim.keymap.set({ "x", "o" }, "il", function() selectobj("@loop.inner", "textobjects") end, { desc = "treesitter-textobject: inside Loop" })
+vim.keymap.set({ "x", "o" }, "al", function() selectobj("@loop.outer", "textobjects") end, { desc = "treesitter-textobject: around Loop" })
+vim.keymap.set({ "x", "o" }, "io", function() selectobj("@conditional.inner", "textobjects") end, { desc = "treesitter-textobject: inside cOnditional" })
+vim.keymap.set({ "x", "o" }, "ao", function() selectobj("@conditional.outer", "textobjects") end, { desc = "treesitter-textobject: around cOnditional" })
 -- Don't know if i want this since 's' conflicts with sentences 🤔
 -- vim.keymap.set({ "x", "o" }, "as", function() selectobj("@local.scope", "locals") end)
 
@@ -146,19 +149,22 @@ vim.keymap.set({ "n", "x", "o" }, "]f", function() move.goto_next_start("@functi
 vim.keymap.set({ "n", "x", "o" }, "]F", function() move.goto_next_end("@function.outer", "textobjects") end)
 vim.keymap.set({ "n", "x", "o" }, "[f", function() move.goto_previous_start("@function.outer", "textobjects") end)
 vim.keymap.set({ "n", "x", "o" }, "[F", function() move.goto_previous_end("@function.outer", "textobjects") end)
--- keymaps [l and ]l are used for location list, so use 'o' for both conditions AND loops:
-vim.keymap.set({ "n", "x", "o" }, "]o", function()
-    move.goto_next_start({ "@conditional.outer", "@loop.outer" }, "textobjects")
-end)
-vim.keymap.set({ "n", "x", "o" }, "]O", function()
-    move.goto_next_end({ "@conditional.outer", "@loop.outer" }, "textobjects")
-end)
-vim.keymap.set({ "n", "x", "o" }, "[o", function()
-    move.goto_previous_start({ "@conditional.outer", "@loop.outer" }, "textobjects")
-end)
-vim.keymap.set({ "n", "x", "o" }, "[O", function()
-    move.goto_previous_end({ "@conditional.outer", "@loop.outer" }, "textobjects")
-end)
+-- keymaps [l and ]l are used for location list, so not using 'l' for loops.
+-- Used to use 'o' for conditions, but now i just use anchor points.
+anchor_points = {
+    "@block.outer",
+    "@class.outer", -- ("class" also applies to enums and structs and stuff)
+
+    -- "@function.outer", -- really slow when this is added :(
+    -- "@case_statement", -- doesn't exist :( perhaps it's under "label" or "goto"?
+}
+vim.keymap.set({ "n", "x", "o" }, "]o", function() move.goto_next_start(anchor_points, "textobjects") end, { desc = "treesitter: next anchor point start" })
+vim.keymap.set({ "n", "x", "o" }, "]O", function() move.goto_next_end(anchor_points, "textobjects") end, { desc = "treesitter: next anchor point end" })
+vim.keymap.set({ "n", "x", "o" }, "[o", function() move.goto_previous_start(anchor_points, "textobjects") end, { desc = "treesitter: previous anchor point start" })
+vim.keymap.set({ "n", "x", "o" }, "[O", function() move.goto_previous_end(anchor_points, "textobjects") end, { desc = "treesitter: previous anchor point end" })
+-- convenience keys
+vim.keymap.set({ "n", "x", "o" }, "<c-j>", "]o", { desc = "treesitter: next anchor point start", remap = true })
+vim.keymap.set({ "n", "x", "o" }, "<c-k>", "[o", { desc = "treesitter: previous anchor point start", remap = true })
 
 -- "Swap" mappings (i haven't really used these)
 local swap = require("nvim-treesitter-textobjects.swap")
