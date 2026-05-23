@@ -200,6 +200,8 @@ require("commenting")
 require("treesitter")
 require("surround")
 
+require("diagram")
+
 require("dymaxion-chronofile")
 
 -- What if i tried using the mouse for once?
