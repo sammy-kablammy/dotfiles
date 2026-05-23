@@ -80,6 +80,21 @@ alias 'nvim-dev-fix-scuffed-build'="find $HOME/checkouts/neovim/ -name CMakeCach
 
 alias 'sudo-nvim'='sudo EDITOR=nvim visudo'
 
+# recall that in fzf, the {} represents the selected line
+alias 'fzfp'='fzf --preview="less {}"'
+# you can also search 'FIELD INDEX EXPRESSION' in fzf(1)
+# need to read man fzf more generally. for example how do i scroll the preview?
+# TODO pipe the git show into either bat or vimless and find a way to get colors
+fzfg3() {
+    rev=$(git log --oneline --decorate --all | fzf --preview="git show {1}")
+    # rev=$(git log --oneline --decorate --all | fzf --ansi --preview="git show {1} | /usr/local/share/nvim/runtime/scripts/less.sh")
+    rev=$(echo "$rev" | awk '{print $1}')
+    if [ -z "$rev" ]; then
+        return
+    fi
+    git rev-parse "$rev"
+}
+
 # alias 'ns'='nvim -S'
 ns() {
     if [ $# -eq 0 ] && [ ! -f Session.vim ]; then
@@ -152,7 +167,33 @@ fi
 # bind -x '"\C-xf":"find -maxdepth 2 -type d | fzf"'
 # bind -x '"\C-xf":"READLINE_LINE=\$READLINE_LINE find -maxdepth 2 -type d | fzf"'
 # (this escaping is nuts)
-bind -x '"\C-xg":"git currentbranch"'
+# bind -x '"\C-xg":"git currentbranch"'
+
+# TODO same thing cxcf for File picker, perhaps c-x c to cd into another dir
+
+bind -x '"\C-xg":"paste-git-local-branches"'
+# List local branches. because the default tab completion for "git switch" lists
+# all refs, and we have >1000 refs
+paste-git-local-branches() {
+    branch=$(git branch -vv | fzf --preview="git show {1}")
+    branch=$(echo "$branch" | awk '{print $1}')
+    if [ "$branch" = '*' ]; then
+        # Git puts a * before the current branch. So the selected branch is
+        # already checked out.
+        return
+    fi
+    if [ -z "$branch" ]; then
+        # fzf was canceled
+        return
+    fi
+    READLINE_LINE="$READLINE_LINE$branch"
+    # advance cursor to end of line
+    branch_name_strlen=${#branch}
+    READLINE_POINT=$((READLINE_POINT + $branch_name_strlen + 1))
+}
+
+# need to reorganize to put all binds, aliases, and funcs in a better order.
+# ideally after settings
 
 bindlist() {
     bind -P | awk '/is not bound to any keys/ { next } { print }'
@@ -321,6 +362,8 @@ export HISTFILESIZE=
 # because of this, it's good to change the history file, just to be safe:
 export HISTFILE=~/.bash_history_infinite
 export HISTTIMEFORMAT='(%F %T)  '
+# can we add the current directory and other useful information to
+# histtimeformat? perhaps git branch? would be useful for dymaxion chronofilification
 
 # share tmux history throughout all tmux panes/windows/sessions. see these posts:
 # https://stackoverflow.com/questions/12247777/share-history-between-panes-windows
@@ -328,8 +371,15 @@ export HISTTIMEFORMAT='(%F %T)  '
 # WARN: this is very dangerous if you mindlessly up arrow or ctrl-p to run the
 # previous command. the previous command will change underneath you because of
 # activity in other shells.
+#
+# export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
+#
+# actually i'm deciding this should be manual
 shopt -s histappend
-export PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND" # (you can search for "history -a" in bash(1) and it'll work)
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND" # (you can search for "history -a" in bash(1) and it'll work)
+bash-sync-history() {
+    history -n
+}
 
 # fun bash facts: with the default value of HISTCONTROL (ignoreboth), you can
 # run a command with a space at the front to prevent it from appearing in
@@ -502,6 +552,7 @@ export YTDLP_DOWNLOAD_DIR="/home/sam/kablam/public/ytdlp"
 alias "yt-dlp-video"="yt-dlp --embed-metadata --embed-subs --embed-thumbnail --sponsorblock-mark all -o $YTDLP_DOWNLOAD_DIR/'[%(id)s] %(title)s.%(ext)s'"
 alias 'yt-dlp-audio'='yt-dlp --embed-metadata --extract-audio'
 
+# Now this guy right here could easily be moved to a separate file
 exif-delete() { # Delete exif data from an image
     if ! type "exiftool" &> /dev/null; then
         echo exiftool not installed
@@ -528,4 +579,4 @@ alias "BB"="cd $HOME/.local/sam-bin/"
 
 alias dy='nvim +Dymaxion'
 
-# vim: filetype=sh
+# vim: filetype=bash
