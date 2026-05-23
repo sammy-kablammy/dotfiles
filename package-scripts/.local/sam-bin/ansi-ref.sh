@@ -8,6 +8,9 @@
 
 # TODO include some helpful unicode block/arrow/shape characters in addition to just colors
 
+# TODO this only works with bash, why? why is echo broken with sh? I'm seeing a
+# literal "-en" in the output because of the echo -en commands
+
 BOLD='\e[1m'
 CLEAR='\e[0m'
 

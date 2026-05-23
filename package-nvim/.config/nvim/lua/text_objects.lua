@@ -204,22 +204,42 @@ function select_slash(is_around)
     vim.api.nvim_buf_set_mark(0, ">", cursor_line, endslash, {})
     vim.api.nvim_feedkeys("gv", "n", true)
 end
-vim.keymap.set("x", "i/", function() select_slash(false) end)
-vim.keymap.set("o", "i/", ":normal vi/<cr>")
-vim.keymap.set("x", "a/", function() select_slash(true) end)
+-- vim.keymap.set("x", "i/", function() select_slash(false) end)
+-- vim.keymap.set("o", "i/", ":normal vi/<cr>")
+-- vim.keymap.set("x", "a/", function() select_slash(true) end)
+-- vim.keymap.set("o", "a/", ":normal va/<cr>")
+function new_select_slash()
+    select_custom_textobject(false, false, function(char)
+        return char ~= '/'
+    end)
+end
+-- TODO all text objects need descriptions!!!
+vim.keymap.set("x", "i/", function() new_select_slash(false) end)
+-- TODO i think the reason my textobjects are broken in some filetypes is
+-- because of a : vs <cmd> difference.
+vim.keymap.set("o", "i/", "<cmd>normal vi/<cr>")
+vim.keymap.set("x", "a/", function() new_select_slash(true) end)
 vim.keymap.set("o", "a/", ":normal va/<cr>")
+-- Bruh /some/filepath/
 
 
 
 -- Only works for 'inside' objects and only works on a single line.
 -- Need to think about how we want to match multiline objects
-function select_custom_textobject(start_checker, end_checker)
+--
+-- Adding is_around and is_multiline
+--
+-- Multiline objects will have to re-call getline() as they encounter \n's.
+-- Shouldn't be too bad
+function select_custom_textobject(is_around, is_multiline, start_checker, end_checker)
 
     -- basically the plan is to move the cursor left while start_checker returns
     -- true, and move right while end_checker returns true.
     --
     -- The checker functions should take in the current character and return
     -- true if that character is part of the object.
+
+    -- Default to 'inner', but can override to 'around'
 
     if end_checker == nil then
         end_checker = start_checker
@@ -273,6 +293,7 @@ end
 
 -- try selecting ints
 -- "in" Currently conflicts with incremental selection in
+-- Test here abc123def
 vim.keymap.set("x", "iN", function()
     select_custom_textobject(false, false, function(char)
         return string.find("0123456789", char) ~= nil
@@ -282,16 +303,26 @@ vim.keymap.set("x", "iN", function()
 end, { desc = "inside Number implementation" })
 vim.keymap.set("o", "iN", ":normal viN<cr>", { desc = "inside Number" })
 
--- selecting alphabetic, using the same predicate func for both
-vim.keymap.set("x", "ia", function()
-    select_custom_textobject(function(char)
-        local f = vim.fn.char2nr
-        local ch = f(char)
-        return (ch >= f'A' and ch <= f'Z') or (ch >= f'a' and ch <= f'z')
-    end)
-end)
-vim.keymap.set("o", "ia", ":normal via<cr>")
+local select_inside_underscore = function(char)
+    local f = vim.fn.char2nr
+    local ch = f(char)
+    return (ch >= f'A' and ch <= f'Z') or (ch >= f'a' and ch <= f'z')
+end
 
+-- selecting alphabetic, using the same predicate func for both left and right
+-- TODO this should work for snake_HERE_case but also camelHERECase
+-- For some reason, this breaks in long-lived buffers. I have no clue.
+vim.keymap.set("x", "ia", function()
+    select_custom_textobject(false, false, select_inside_underscore)
+end, { desc = "inside Alphabetic" })
+vim.keymap.set("o", "ia", ":normal via<cr>", { desc = "inside Alphabetic" })
+vim.keymap.set("x", "i_", function()
+    select_custom_textobject(false, false, select_inside_underscore)
+end, { desc = "inside underscore" })
+vim.keymap.set("o", "i_", ":normal vi_<cr>", { desc = "inside underscore" })
 -- TODO add 'inside number' and 'around number' objects that match words yes but
 -- also decimal points and the negative sign. used in foo(hi, -1.23) to match
 -- only the number without the closing paren or comma
+
+-- Want ci_ for changing parts of snake case names
+-- Want ciA perhaps for changing parts of camel case names, like oneChangemeTwo

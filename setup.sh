@@ -114,7 +114,7 @@ if isYes "$response"; then
     # sudo dnf -y install ninja-build cmake gcc make gettext curl glibc-gconv-extra git
     mkdir --verbose --parents "$neovim_checkout_dir"
     git clone "https://github.com/neovim/neovim.git" "$neovim_checkout_dir"
-    git -C "$neovim_checkout_dir" checkout v0.11.3
+    git -C "$neovim_checkout_dir" checkout v0.12.1
     make -C "$neovim_checkout_dir" CMAKE_BUILD_TYPE=Release
     sudo make -C "$neovim_checkout_dir" install
 fi

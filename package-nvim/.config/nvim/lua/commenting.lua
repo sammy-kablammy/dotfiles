@@ -14,13 +14,13 @@ vim.keymap.set("n", "gco", function()
     local commentmarker = vim.fn.split(vim.bo.commentstring)[1]
     vim.fn.append(cursor[1], commentmarker .. ' ')
     vim.api.nvim_feedkeys("=jjA", "n", true)
-end)
+end, { desc = "open comment below" })
 vim.keymap.set("n", "gcO", function()
     local cursor = vim.api.nvim_win_get_cursor(0)
     local commentmarker = vim.fn.split(vim.bo.commentstring)[1]
     vim.fn.append(cursor[1] - 1, commentmarker .. ' ')
     vim.api.nvim_feedkeys("=kA", "n", true)
-end)
+end, { desc = "Open comment above" })
 
 --[[
 

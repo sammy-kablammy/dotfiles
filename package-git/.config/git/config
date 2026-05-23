@@ -57,6 +57,7 @@
     edit-all = "edit-modified-and-untracked"
     edit-conflicts = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs -d '\n' $EDITOR; }; f" # Edit all files with merge conflicts
     mark-conflicts-as-resolved = "!f() { git ls-files --unmerged --format '%(path)' | uniq | xargs -d '\n' 'git-add'; }; f"
+    edit-staged = "!f() { git diff --name-only --staged | xargs -d '\n' $EDITOR; }; f"
     f = "fetch"
     fq = "fetch --quiet"
     fs = "!f() { git fetch && git status --short --branch; }; f"
