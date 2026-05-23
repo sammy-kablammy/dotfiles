@@ -105,6 +105,7 @@ local readonly_flag = "%r"
 local keylog = '%{luaeval("StatusLineKeylogger()")}'
 local padding = " %= "
 local note_title = '%{%luaeval("StatusLineNoteTitle()")%}'
+-- TODO backlink count
 local fileformat = '%{luaeval("StatusLineFileformat()")}'
 local lsp = '%{%luaeval("LspStatusline()")%}'
 local position = '%{%luaeval("StatusLinePosition()")%}'

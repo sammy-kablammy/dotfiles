@@ -256,6 +256,8 @@ vim.keymap.set("n", "]C", vim.cmd.clast, { desc = "clast" })
 -- j k n u v w x y
 -- (x is used in markdown though)
 
+-- g> is unused btw
+
 -- Nvim 0.11 now uses these mappings for tag stuff, so i need to find
 -- alternatives... TODO
 -- vim.keymap.set("n", "[t", "gT", { desc = "prev tab" })
@@ -288,6 +290,8 @@ end)
 vim.keymap.set("n", "<leader>/", "<cmd>nohlsearch<cr>")
 -- display current buffer in new tab. unlike <c-w>T because it keeps the old
 -- window where it was
+-- TODO stop using this, it overwrites a default keybinding (select top-left
+-- window, this mirrors the c-w b mapping too)
 vim.keymap.set("n", "<c-w>t", "<cmd>tabnew %<cr>", { desc = "create new tab"})
 
 -- open fileTYpe plugin
@@ -326,6 +330,7 @@ end, { desc = "display extended file info" })
 
 -- my own lil' cheatsheet
 vim.keymap.set("n", "<leader>?", "<cmd>vsplit " .. vim.g.sam_notes_path .. "/main/2024-03-20_14-45-16.md<cr>")
+-- vim.keymap.set("n", "<leader>?", "<cmd>vsplit ~/dotfiles/quickref.md<cr>")
 
 -- alternate file (this also fixes the c-^ vs c-6 discrepancy between terminals)
 vim.keymap.set("n", "<leader>a", "<cmd>b#<cr>", { desc = "alternate file" })
@@ -346,9 +351,14 @@ vim.keymap.set("n", "<leader><leader>s", function()
     print("sourced! hooray!")
     vim.cmd.source()
 end, { desc = "source" })
-vim.keymap.set("n", "<leader>gh", function() vim.cmd("cd %:h") end, { desc = "go here - change cwd to match current buffer" })
+vim.keymap.set("n", "<leader>gh", function()
+    local old = vim.uv.cwd()
+    print("Changing directory to", vim.fn.expand("%:h"), "from", old)
+    vim.cmd("cd %:h")
+end, { desc = "go here - change cwd to match current buffer" })
 vim.keymap.set("n", "<leader><leader>m", "<cmd>messages<cr>")
 vim.keymap.set("n", "<leader><leader>p", "<cmd>pwd<cr>")
+vim.keymap.set("n", "<leader><leader>u", "<cmd>Undotree<cr>")
 vim.keymap.set("n", "<c-w>y", function()
     local name = vim.fn.expand("%:t")
     vim.fn.setreg("", name .. '\n')
@@ -409,6 +419,7 @@ vim.keymap.set("o", "ar", "a]")
 vim.keymap.set("o", "a%", ":normal va%<cr>")
 -- (unfortunately, matchit does not support i%)
 
+-- TODO matchit % should jump between git conflict markers
 
 
 ---------- keymap graveyard ----------

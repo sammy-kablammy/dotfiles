@@ -127,6 +127,9 @@ vim.o.hls = true
 vim.o.showmode = false
 vim.o.timeout = false
 vim.o.foldcolumn = "1"
+vim.o.tagcase = "match"
+vim.o.tildeop = true -- Experimental using tilde as op, I may not like this
+vim.o.dictionary = "/usr/share/dict/american-english" -- on debian this package is called "wamerican"
 vim.o.dictionary = "/usr/share/dict/american-english"
 
 
@@ -168,6 +171,8 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
             -- minifiles buffers close after like 1 second. idk. just skip minifiles.
         elseif is_extension_match(filename, '.service') then
             vim.bo.filetype = 'systemd'
+        elseif is_extension_match(filename, '.mount') then
+            vim.bo.filetype = 'systemd'
         elseif is_extension_match(filename, '.shellcheckrc') then
             vim.bo.commentstring = '# %s'
         end
@@ -207,7 +212,6 @@ vim.o.cursorline = true
 vim.o.scrolloff = 1
 vim.o.sidescrolloff = 3
 vim.o.signcolumn = "yes" -- i would use "number" but gitsigns signs are too common
-
 
 -----------------------------interacting with notes-----------------------------
 vim.g.sam_notes_path = "/home/sam/kablam/notes"
@@ -304,6 +308,7 @@ vim.api.nvim_create_autocmd("BufNew", {
     desc = "fix relative path % register behavior",
 })
 
+-- TODO delete this
 -- reuse a vim session, if one is found
 vim.api.nvim_create_user_command("Seshma", function()
     if vim.fn.glob("Session.vim") ~= "" then
