@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Delete exif data from an image
+
+if ! type "exiftool" &> /dev/null; then
+    echo exiftool not installed
+    return 1
+fi
+read -p "Are you sure you want to delete ALL exif data? (y/n) " response
+if [ "$response" = 'y' ]; then
+    exiftool -all='' "$@"
+else
+    echo "Not deleting exif data"
+fi

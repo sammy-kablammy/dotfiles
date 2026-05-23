@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# experimental bash manual TOC
+
+if [ $# -ne 1 ]; then
+    man bash
+    return
+fi
+query=$(echo "$1" | tr A-Z a-z)
+if [ $query = "array" ] || [ $query = "arrays" ]; then
+    REGEX='^\s*Arrays$'
+elif [ $query = "expansion" ]; then
+    REGEX='^EXPANSION$'
+elif [ $query = "if" ]; then
+    REGEX='^CONDITIONAL EXPRESSIONS$'
+elif [ $query = "builtin" ] || [ $query = "builtins" ]; then
+    REGEX='^SHELL BUILTIN COMMANDS$'
+elif [ $query = "completion" ]; then
+    REGEX='^\s*Programmable Completion$'
+fi
+man --pager="less -p '$REGEX'" bash

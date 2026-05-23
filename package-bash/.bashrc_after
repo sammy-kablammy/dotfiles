@@ -106,20 +106,12 @@ ns() {
 complete -W '$(lsvim 2>/dev/null)' ns # search 'Programmable Completion' in bash(1)
 alias "lsvim"="ls *.vim" # for easily listing vim sessions
 
-# TODO move to separate script. this file should be bash-specific as much as possible.
-# Merge compile commands for use with clangd.
-merge-compile-commands() {
-    # (use -mindepth as to not include the previous ./compile_commands.json)
-    find -mindepth 2 -name "compile_commands.json" | xargs jq -s add >| compile_commands.json
-    # Also see https://stackoverflow.com/questions/77394438/merge-multiple-compile-command-json-files
-}
-
 alias 'tarc'='tar czf'
 alias 'tarx'='tar xzfk'
-untarto() {
-    mkdir --parents "$1"
-    tar xzf "$2" -C "$1"
-}
+# untarto() {
+#     mkdir --parents "$1"
+#     tar xzf "$2" -C "$1"
+# }
 
 # cd to multiple places at once; easier up-a-dir
 c() {
@@ -203,27 +195,6 @@ bindlist() {
 
 # Remember that PARAMETER EXPANSION in bash(1) has all the string operations and
 # whatnot
-
-# experimental bash manual TOC
-manbash () {
-    if [ $# -ne 1 ]; then
-        man bash
-        return
-    fi
-    query=$(echo "$1" | tr A-Z a-z)
-    if [ $query = "array" ] || [ $query = "arrays" ]; then
-        REGEX='^\s*Arrays$'
-    elif [ $query = "expansion" ]; then
-        REGEX='^EXPANSION$'
-    elif [ $query = "if" ]; then
-        REGEX='^CONDITIONAL EXPRESSIONS$'
-    elif [ $query = "builtin" ] || [ $query = "builtins" ]; then
-        REGEX='^SHELL BUILTIN COMMANDS$'
-    elif [ $query = "completion" ]; then
-        REGEX='^\s*Programmable Completion$'
-    fi
-    man --pager="less -p '$REGEX'" bash
-}
 
 # TODO wouldn't it be good to have an offline copy of these docs i can live_grep through?
 sc() {
@@ -519,17 +490,6 @@ worktree-fzf() {
 }
 alias 'wfzf'='worktree-fzf'
 
-tts() {
-    if [ $# -eq 0 ]; then
-        echo "Expected text to tts-ify" >&2
-        return 1
-    fi
-    ttsfile='/tmp/ttsfile.wav'
-    pico2wave --wave="$ttsfile" "$@" # (pico2wave is in debian package libttspico-utils)
-    aplay "$ttsfile"
-    rm --force "$ttsfile"
-}
-
 # todo: make a function analogous to the builtin 'help' that explains some of my
 # more common aliases/functions/scripts. add color tho. color pretty
 
@@ -551,20 +511,6 @@ tts() {
 export YTDLP_DOWNLOAD_DIR="/home/sam/kablam/public/ytdlp"
 alias "yt-dlp-video"="yt-dlp --embed-metadata --embed-subs --embed-thumbnail --sponsorblock-mark all -o $YTDLP_DOWNLOAD_DIR/'[%(id)s] %(title)s.%(ext)s'"
 alias 'yt-dlp-audio'='yt-dlp --embed-metadata --extract-audio'
-
-# Now this guy right here could easily be moved to a separate file
-exif-delete() { # Delete exif data from an image
-    if ! type "exiftool" &> /dev/null; then
-        echo exiftool not installed
-        return 1
-    fi
-    read -p "Are you sure you want to delete ALL exif data? (y/n) " response
-    if [ "$response" = 'y' ]; then
-        exiftool -all='' "$@"
-    else
-        echo "Not deleting exif data"
-    fi
-}
 
 # TODO make the tmux versions just call these, these can be used both in tmux
 # and manually, so they're more general

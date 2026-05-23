@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Merge compile commands (for use with clangd)
+
+# (use -mindepth as to not include the previous ./compile_commands.json)
+find -mindepth 2 -name "compile_commands.json" | xargs jq -s add >| compile_commands.json
+# Also see https://stackoverflow.com/questions/77394438/merge-multiple-compile-command-json-files
