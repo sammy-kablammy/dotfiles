@@ -19,6 +19,13 @@ if isYes "$response"; then
 fi
 echo ""
 
+# **** Nix ❄️ ****
+read -p "-> Install Nix? " response
+if isYes "$response"; then
+    sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+fi
+echo ""
+
 # **** set up git stow ****
 read -p "-> Stow packages? " response
 if isYes "$response"; then
