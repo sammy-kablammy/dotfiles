@@ -1,0 +1,48 @@
+#!/bin/sh
+
+this_program=$(basename $0)
+HELP=$(cat <<END
+$this_program: show status of several Git repos in one go
+
+Usage: $this_program [path]
+END
+)
+
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+    echo "$HELP"
+    exit 0
+fi
+
+CYAN='\033[0;36m'
+RESET='\033[0m'
+
+# TODO recursive .git dir finding
+
+statusize_in_dir() {
+    dir_containing_repos="$1"
+    for dir in "$dir_containing_repos"/*/; do
+        if [ ! -d "$dir" ] || [ ! -d "$dir/.git" ]; then
+            continue
+        fi
+
+        CMD=$(cat <<END
+        git fetch
+        echo -e "$CYAN$dir$RESET"
+        git status --short --branch
+        echo ''
+END
+        )
+
+        # (start a subshell so we don't have to cd back out afterwards)
+        sh -c "cd $dir && $CMD"
+
+    done
+}
+
+if [ $# -eq 0 ]; then
+    statusize_in_dir '.'
+else
+    for arg in $*; do
+        statusize_in_dir "$arg"
+    done
+fi
