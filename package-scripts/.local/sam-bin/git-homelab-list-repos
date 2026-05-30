@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# make sure your SSH config is up to date!
+SERVER='nix'
+
+ssh git@"$SERVER" 'cd ~/repos; for repo in *; do du -sh "$repo"; done'
