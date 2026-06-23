@@ -181,7 +181,6 @@ function change_surround(old_ch, new_ch)
     local line = vim.fn.getline(start_row)
     -- First try to search before cursor
     for i = cursor_col + 1 - #old_start_ch, 1, -1 do -- +1 because fuck you
-        -- print("Start iter", i)
         local does_line_have_start_ch = string.sub(line, i, i + #old_start_ch - 1) == old_start_ch
         if does_line_have_start_ch then
             start_col = i
@@ -203,30 +202,12 @@ function change_surround(old_ch, new_ch)
         print("Did not find surrounding " .. old_ch)
         return
     end
-    -- print("Found start", start_row, start_col)
     -- Set cursor position because search()/searchpos() always start searching
     -- from cursor position:
     vim.api.nvim_win_set_cursor(0, { start_row, start_col + 1 })
     local end_pos = vim.fn.searchpos(old_end_ch, "cnWz")
     local end_row = end_pos[1]
     local end_col = end_pos[2]
-        -- Old, not using searchpos():
-                -- local end_col = start_col + 1
-                -- if pos == cursor_row then
-                --     -- start search at cursor position, not beginning of line
-                --     end_col = cursor_col
-                -- end
-                -- local line = vim.fn.getline(end_row)
-                -- for i = cursor_col, #line, 1 do
-                --     if string.sub(line, i, i + #old_end_ch - 1) == old_end_ch then
-                --         end_col = i
-                --         break
-                --     end
-                -- end
-                -- if end_col == nil then
-                --     print("Some weird shit goin on in surround, vim.fn.search() lied?")
-                --     return
-                -- end
     if end_row == 0 and end_col == 0 then
         -- searchpos() returns (0, 0) when it fails, so there must not be an
         -- end. Bail.
@@ -236,7 +217,6 @@ function change_surround(old_ch, new_ch)
     if end_row < start_row or (end_row == start_row and end_col <= start_col) then
         print("(surround) Somehow end position is before start position?")
     end
-    -- print("Found end", end_row, end_col)
 
     -- change old start ch to new start ch
     local old_start_text = vim.fn.getline(start_row)
