@@ -31,7 +31,6 @@ vim.keymap.set("n", "dgc", function()
         if string.sub(line, i, i + #commentmarker - 1) == commentmarker then
             -- clamp bottom to 0 to support the entire line being a comment:
             local new_line = string.sub(line, 1, math.max(0, i - 2))
-            print(new_line)
             vim.fn.setline(cursor[1], new_line)
             -- Now move cursor to end of line because I think this feels more vimmy
             vim.api.nvim_win_set_cursor(0, { cursor[1], #new_line - 1 })
@@ -76,7 +75,6 @@ local function highlight_todos()
             vim.fn.matchdelete(match.id, 0)
         end
     end
-    -- vim.print(#vim.fn.getmatches(0))
 
     local blue = "gui=bold guifg=#ffffff guibg=#227799"
     local yellow = "gui=bold guifg=#ffffff guibg=#888800"

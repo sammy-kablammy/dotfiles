@@ -84,6 +84,7 @@
     rc = "rebase --continue"
     ref = "reflog --date=short"
     rl = "reflog"
+    recents = "list-recent-branches" # (this is one of my scripts)
     s = "status --short --branch"
     sh = "show -5 --pretty=oneline"
     sl = "stash list"
