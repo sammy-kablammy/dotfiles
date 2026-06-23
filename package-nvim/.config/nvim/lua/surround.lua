@@ -5,6 +5,11 @@ working title "ilo sike"
 
 --]]
 
+-- TODO handle nested parens (and other nestables). For example, the surrounding
+-- parens here are NOT ("n"...function(). The function should be skipped over,
+-- and we should match the final paren.
+--     vim.keymap.set("n", "<leader><leader>ds", function())
+
 -- When the user types dot, we don't call the result of the mapping; instead,
 -- vim calls the recent 'operatorfunc' directly. That's how you can tell the
 -- difference between a genuine operator and dot-repeated operator. So to handle
@@ -33,6 +38,9 @@ local function get_input_ch()
     return ch
 end
 
+-- Note that vim-surround also supports these:
+--     'f' for "func(obj)"
+--     '<' or 't' for "<tag>obj</tag>"
 function desugar_ch(ch)
     local start_ch = ch
     local end_ch = ch
@@ -162,55 +170,87 @@ function change_surround(old_ch, new_ch)
     local cursor_col = cursor[2]
 
     -- search backward for ch, save pos
+    -- At first i thought we'd search up line by line for the start ch. But
+    -- after some thought i think that's basically useless. The furthest back
+    -- we'll ever search is the start of the current line. This might make more
+    -- sense for different things, i.e. "change surround quotes" should
+    -- prioritize a single-line surround while "change surrounding XML tag"
+    -- would want to the above lines for the start tag.
     local start_row = cursor_row
-    local start_col
-    while start_row > 0 do
-        local line = vim.fn.getline(start_row)
-        local found_it = false
-        for i = #line - #old_start_ch, 1, -1 do
+    local start_col = nil
+    local line = vim.fn.getline(start_row)
+    -- First try to search before cursor
+    for i = cursor_col + 1 - #old_start_ch, 1, -1 do -- +1 because fuck you
+        -- print("Start iter", i)
+        local does_line_have_start_ch = string.sub(line, i, i + #old_start_ch - 1) == old_start_ch
+        if does_line_have_start_ch then
+            start_col = i
+            break
+        end
+    end
+    if start_col == nil then
+        -- Didn't find it before cursor, so now search after cursor.
+        for i = cursor_col, #line, 1 do
             local does_line_have_start_ch = string.sub(line, i, i + #old_start_ch - 1) == old_start_ch
             if does_line_have_start_ch then
                 start_col = i
-                found_it = true
                 break
             end
         end
-        if found_it then
-            break
-        end
-        start_row = start_row - 1
     end
-    -- Now trying with vim's builtin search
-    local end_row = vim.fn.search(old_end_ch, "cnWz")
-    local end_col = 0
-    if pos == cursor_row then
-        -- start search at cursor position, not beginning of line
-        end_col = cursor_col
-    end
-    local line = vim.fn.getline(end_row)
-    for i = cursor_col, #line, 1 do
-        if string.sub(line, i, i + #old_end_ch - 1) == old_end_ch then
-            end_col = i
-            break
-        end
-    end
-
-    if end_col == nil then
-        print("Some weird shit goin on in surround, vim.fn.search() lied?")
+    if start_col == nil then
+        -- Still didn't find it, bail entirely
+        print("Did not find surrounding " .. old_ch)
         return
     end
+    -- print("Found start", start_row, start_col)
+    -- Set cursor position because search()/searchpos() always start searching
+    -- from cursor position:
+    vim.api.nvim_win_set_cursor(0, { start_row, start_col + 1 })
+    local end_pos = vim.fn.searchpos(old_end_ch, "cnWz")
+    local end_row = end_pos[1]
+    local end_col = end_pos[2]
+        -- Old, not using searchpos():
+                -- local end_col = start_col + 1
+                -- if pos == cursor_row then
+                --     -- start search at cursor position, not beginning of line
+                --     end_col = cursor_col
+                -- end
+                -- local line = vim.fn.getline(end_row)
+                -- for i = cursor_col, #line, 1 do
+                --     if string.sub(line, i, i + #old_end_ch - 1) == old_end_ch then
+                --         end_col = i
+                --         break
+                --     end
+                -- end
+                -- if end_col == nil then
+                --     print("Some weird shit goin on in surround, vim.fn.search() lied?")
+                --     return
+                -- end
+    if end_row == 0 and end_col == 0 then
+        -- searchpos() returns (0, 0) when it fails, so there must not be an
+        -- end. Bail.
+        return
+    end
+    -- Assert end is actually after start
+    if end_row < start_row or (end_row == start_row and end_col <= start_col) then
+        print("(surround) Somehow end position is before start position?")
+    end
+    -- print("Found end", end_row, end_col)
 
     -- change old start ch to new start ch
     local old_start_text = vim.fn.getline(start_row)
     local new_start_text =
         string.sub(old_start_text, 1, start_col - 1) ..
         new_start_ch ..
-        string.sub(old_start_text, start_col + #new_start_ch)
+        -- Max with 1 because a replacement of "" (for delete-surround) should
+        -- still delete at least one character
+        string.sub(old_start_text, start_col + math.max(#new_start_ch, 1))
     vim.fn.setline(start_row, new_start_text)
 
     -- account for len(newch) != len(oldch)
     if start_row == end_row then
-        new_end_col = end_col + (#new_start_ch - #old_start_ch)
+        end_col = end_col + (#new_start_ch - #old_start_ch)
     end
 
     -- change old end ch to new end ch
@@ -218,22 +258,33 @@ function change_surround(old_ch, new_ch)
     local new_end_text =
         string.sub(old_end_text, 1, end_col - 1) ..
         new_end_ch ..
-        string.sub(old_end_text, end_col + #new_end_ch)
+        -- Max with 1, same as above
+        string.sub(old_end_text, end_col + math.max(#new_end_ch, 1))
     vim.fn.setline(end_row, new_end_text)
+
+    -- Put cursor at start_ch position (this mirrors vim-surround's behavior)
+    vim.api.nvim_win_set_cursor(0, { start_row, start_col - #old_start_ch })
 end
 vim.keymap.set("n", "<leader><leader>cs", function()
     local old_ch = get_input_ch()
-    if ch == vim.keycode("<esc>") then
+    if old_ch == vim.keycode("<esc>") then
         return
     end
     local new_ch = get_input_ch()
-    if ch == vim.keycode("<esc>") then
+    if new_ch == vim.keycode("<esc>") then
         return
     end
     change_surround(old_ch, new_ch)
 end, { desc = "change surround" })
 
--- "delete surround" will just be "change surround" but changing to empty string
 function delete_surround(old_ch)
     change_surround(old_ch, "")
 end
+
+vim.keymap.set("n", "<leader><leader>ds", function()
+    local ch = get_input_ch()
+    if ch == vim.keycode("<esc>") then
+        return
+    end
+    delete_surround(ch)
+end, { desc = "delete surround" })
