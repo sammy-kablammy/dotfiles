@@ -21,6 +21,25 @@ vim.keymap.set("n", "gcO", function()
     vim.fn.append(cursor[1] - 1, commentmarker .. ' ')
     vim.api.nvim_feedkeys("=kA", "n", true)
 end, { desc = "Open comment above" })
+-- should this be a textobject or is "delete end of line" enough?
+vim.keymap.set("n", "dgc", function()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local commentmarker = vim.fn.split(vim.bo.commentstring)[1]
+    local line = vim.fn.getline(cursor[1])
+    for i = #line, 0, -1 do
+        -- print(i, string.sub(line, i, i + #commentmarker - 1))
+        if string.sub(line, i, i + #commentmarker - 1) == commentmarker then
+            -- clamp bottom to 0 to support the entire line being a comment:
+            local new_line = string.sub(line, 1, math.max(0, i - 2))
+            print(new_line)
+            vim.fn.setline(cursor[1], new_line)
+            -- Now move cursor to end of line because I think this feels more vimmy
+            vim.api.nvim_win_set_cursor(0, { cursor[1], #new_line - 1 })
+            return
+        end
+    end
+    -- Didn't find an end of line comment; do nothing
+end, { desc = "delete trailing comment on current line" })
 
 --[[
 
@@ -49,6 +68,15 @@ local function highlight_todos()
 
     -- You can get colors from builtin highlight groups like this:
     -- local color = vim.fn.synIDattr(vim.fn.hlID("TermCursor"), "bg#")
+
+    -- Clear old matches
+    local existing_matches = vim.fn.getmatches(0)
+    for _, match in pairs(existing_matches) do
+        if string.match(match.group, "SamHighlight") then
+            vim.fn.matchdelete(match.id, 0)
+        end
+    end
+    -- vim.print(#vim.fn.getmatches(0))
 
     local blue = "gui=bold guifg=#ffffff guibg=#227799"
     local yellow = "gui=bold guifg=#ffffff guibg=#888800"

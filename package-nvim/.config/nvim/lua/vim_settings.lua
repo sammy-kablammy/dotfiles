@@ -160,23 +160,6 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         vim.o.swapfile = true
         vim.o.undofile = true
 
-        -- Custom filetypes / filetype alises
-        -- TODO this is really slow somehow
-        -- TODO this might be vim.filetype.add ?
-        local is_extension_match = function(filename, extension)
-            return string.find(vim.fs.basename(filename), extension, 1, true)
-        end
-        local filename = vim.fn.expand('%')
-        if not filename or filename == '' or string.find(filename, 'minifiles://') then
-            -- minifiles buffers close after like 1 second. idk. just skip minifiles.
-        elseif is_extension_match(filename, '.service') then
-            vim.bo.filetype = 'systemd'
-        elseif is_extension_match(filename, '.mount') then
-            vim.bo.filetype = 'systemd'
-        elseif is_extension_match(filename, '.shellcheckrc') then
-            vim.bo.commentstring = '# %s'
-        end
-
     end,
 })
 
@@ -334,8 +317,15 @@ vim.api.nvim_create_user_command("Seshma", function()
 end, {})
 
 vim.filetype.add({
-    ["*.bash"] = "sh",
-    [".bashrc_after"] = "sh",
+    extension = {
+        ["bash"] = "sh",
+        ["service"] = "systemd",
+        ["mount"] = "systemd",
+    },
+    filename = {
+        [".bashrc_after"] = "sh", -- Mayhaps should be bash instead of sh
+        [".shellcheckrc"] = "conf",
+    },
 })
 
 

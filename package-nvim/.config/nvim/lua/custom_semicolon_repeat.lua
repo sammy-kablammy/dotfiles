@@ -49,6 +49,15 @@ local keymaps_using_custom_semicolon_repeat = {
         "]l",
         "[b",
         "]b",
+        "[f",
+        "]f",
+        "[d", -- TODO date maps don't repeat rn
+        "]d",
+        "[D",
+        "]D",
+        -- These don't work but probably should
+        -- "]]",
+        -- "[[",
     },
     -- v = {
     --     "[h",

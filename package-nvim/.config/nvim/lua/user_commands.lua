@@ -66,6 +66,9 @@ local function toggle_header()
 end
 vim.keymap.set("n", "<leader>h", toggle_header, { desc = "switch between source and header" })
 
+-- Store current session name in variable
+vim.opt.sessionoptions:append("globals")
+
 -- TODO Need :Mks that's basically the same as :mks! but it only overwrites .vim
 -- files. that way if i have a sesh.md and sesh.vim i don't accidentally tab
 -- complete :mks! se<tab> and wipe sesh.md. Ideally it would automatically
@@ -77,7 +80,18 @@ vim.keymap.set("n", "<leader>h", toggle_header, { desc = "switch between source 
 -- session) and the vim file itself session.vim. it's easy to tab complete the
 -- md and overwrite the wrong file.
 vim.api.nvim_create_user_command("Mks", function(cmd)
-    session_name = cmd.fargs[1] .. ".vim"
+    local session_name = ""
+    if #cmd.fargs == 1 then
+        session_name = cmd.fargs[1]
+        vim.g.SamSessionName = session_name
+    elseif vim.g.SamSessionName ~= nil then
+        -- If no name provided, inherit the name from the previous Mks.
+        -- This vim.g variable must start with capital letter to be preserved (:h sessionoptions)
+        session_name = vim.g.SamSessionName
+    else
+        session_name = "Session"
+    end
+    session_name = session_name .. ".vim"
 
     -- if file is there, send existing file to a backup location and make a new session
     if vim.uv.fs_stat(session_name) then
@@ -93,8 +107,7 @@ vim.api.nvim_create_user_command("Mks", function(cmd)
     print("Made session file", session_name)
 
 end, {
-    -- TODO should we handle no args?
-    nargs = 1,
+    nargs = "?",
     complete = function(arglead, cmdline, cursorpos)
         local matches = vim.fn.glob(arglead .. "*.vim")
         -- glob() returns newline separated. we want a list:
