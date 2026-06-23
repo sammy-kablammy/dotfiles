@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# List n last checked out refs. because i can't remember all the ticket numbers
+# i've been using recently.
+
+# @{-1}
+# @{-2}
+
+how_many_recents_to_show=5
+if [ $# -ge 1 ]; then
+    how_many_recents_to_show=$1
+fi
+
+git reflog |
+    # grep, sed, awk. the holy trinity
+    grep 'checkout:' |
+    sed 's/.*checkout: moving from \(.*\) to \(.*\)/\1/' |
+    awk '!a[$0]++' | # awk incantation to uniq-without-needing-to-sort-first
+    head -n "$how_many_recents_to_show"

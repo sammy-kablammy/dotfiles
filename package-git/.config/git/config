@@ -48,6 +48,7 @@
     db = "diff-branch"
     ds = "diff --stat"
     dt = "difftool --prompt"
+    dn = "diff --name-only"
     dty = "difftool --prompt -y --trust-exit-code" # (use vim's :cq to end diffing)
     dts = "difftool --prompt --staged"
     dtr = "!f() { git dt HEAD origin/$(git rev-parse --abbrev-ref HEAD) ; }; f" # diff current branch against its remote counterpart
@@ -69,9 +70,11 @@
     l = "log --all --graph --decorate --oneline -7"
     la = "log --all --graph --decorate --oneline -9999"
     lb = "log --graph --decorate --oneline HEAD~7..HEAD" # "log branch"
+    lba = "log --graph --decorate --oneline HEAD~999..HEAD" # "log branch all"
     lga = "log --all --graph --decorate -9999"
     laoganma = "!f() { echo '+100 social credit'; }; f"
     ls = "ls-files"
+    ls-untracked = "ls-files --others --exclude-standard"
     logbranch = "!f() { git log --oneline "$1~100..$1"; }; f"
     mt = "mergetool"
     pullr = "pull --rebase=interactive"
@@ -91,6 +94,7 @@
     suf = "submodule update --force" # reset submodule to pinned commit
     sup = "submodule update --remote" # checkout submodule to what's in .gitmodules
     sw = "switch"
+    sz = "statusize"
     type = "!f() { git config --list | grep ^alias.$1; }; f" # like the "type" shell builtin but for git
     unstage = "restore --staged"
     untrack = "rm --cached" # remove file from repo without deleting from filesystem
