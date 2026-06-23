@@ -1,0 +1,6 @@
+vim.keymap.set({ "n", "v" }, "[[", function()
+    vim.fn.search("^\\S", "b")
+end, { desc = "previous section", buffer = true })
+vim.keymap.set({ "n", "v" }, "]]", function()
+    vim.fn.search("\\S")
+end, { desc = "next section", buffer = true })
