@@ -199,6 +199,7 @@ require("custom_command")
 require("commenting")
 require("treesitter")
 require("surround")
+require("sitelen")
 
 require("diagram")
 require("custom_semicolon_repeat") -- I think this might need to be required after all keymaps are created
