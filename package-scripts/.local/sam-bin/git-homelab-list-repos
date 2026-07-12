@@ -1,6 +1,9 @@
 #!/bin/sh
 
-# make sure your SSH config is up to date!
-SERVER='nix'
+# make sure your SSH config is up to date so the server name resolves!
+if [ -z "$SERVER" ]; then
+    SERVER='pi'
+    # SERVER='nix'
+fi
 
 ssh git@"$SERVER" 'cd ~/repos; for repo in *; do du -sh "$repo"; done'

@@ -2,8 +2,11 @@
 
 # Initialize a bare repo on my homelab.
 
-# make sure your SSH config is up to date!
-SERVER='nix'
+# make sure your SSH config is up to date so the server name resolves!
+if [ -z "$SERVER" ]; then
+    SERVER='pi'
+    # SERVER='nix'
+fi
 
 if [ $# -ne 1 ]; then
     echo "Expected name of repo to make." 1>&2
@@ -12,3 +15,5 @@ fi
 REPO_NAME="\"$1\""
 
 ssh git@"$SERVER" "mkdir ~/repos/$REPO_NAME && git init --bare ~/repos/$REPO_NAME"
+
+echo "Attempted to create 'git@$SERVER:/home/git/repos/$REPO_NAME'"
