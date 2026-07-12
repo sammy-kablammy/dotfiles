@@ -26,8 +26,15 @@ local symbols = {
     "🤷 shrug",
     "💩 poop",
     "👉👈 pointing | pwetty pwease",
+    "👆 pointing up | ermm actually",
     "🐋 whale | docker",
     "🐳 squirty whale | docker",
+    "✨ sparkles",
+    "🦇 bat",
+    "🚨 alarm | siren | wee woo",
+    "🦐 shrimp",
+    "🍤 fried shrimp",
+    "🔥 fire",
 }
 -- Could possibly parse vim.fn.digraph_getlist(true) for more
 
