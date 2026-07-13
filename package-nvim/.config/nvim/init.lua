@@ -206,6 +206,8 @@ require("custom_semicolon_repeat") -- I think this might need to be required aft
 
 require("dymaxion-chronofile")
 
+require("snippets")
+
 -- What if i tried using the mouse for once?
 -- :h popup-menu
 vim.cmd([[menu PopUp.Pop\ Tag\ Stack <cmd>pop<cr>]])
