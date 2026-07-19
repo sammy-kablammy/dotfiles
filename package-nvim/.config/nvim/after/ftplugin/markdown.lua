@@ -5,6 +5,8 @@ vim.bo.softtabstop = 2
 vim.b.sam_override_whitespace_settings = true
 
 vim.cmd("inoreabbrev <buffer> hr ---")
+-- Could perchance be a snippet instead
+vim.keymap.set("ia", "cdb", "```\n```<up>", { desc = "Markdown code block" })
 
 -- hide backticks, asterisks, and probably some others (this depends on treesitter)
 vim.o.conceallevel = 0

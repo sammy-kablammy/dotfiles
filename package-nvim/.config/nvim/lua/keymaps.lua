@@ -26,6 +26,7 @@ some notes on keymaps:
 --]]
 
 -- TODO should use the function keys and the numpad keys, i totally forgot those exist
+-- Also use i_ctrl-/ (Actually c-_) for something
 
 -- Preserve <c-a> functionality while making it harder to accidentally press. Do this before unmapping <c-a>
 -- TODO this is overwritten by lua ftplugin's snippet thing to create autocommands

@@ -51,12 +51,55 @@ why moving away from stow:
 - because stow only supports relative paths, the dotfiles repo must be close to
   the eventual symlink location. otherwise your package paths are super long.
 
-## statusization
+## Fun git things
 
 ever leave your computer for a while but forget to push your changes and then
 have to deal with a bunch of merging when you get back?? haha me neither.
 
 <img src="https://raw.githubusercontent.com/sammy-kablammy/dotfiles/main/statusize.png" width="380" />
+
+```sh
+git rebase -i origin/dev
+# brace for inevitable conflicts
+git edit-conflicts
+# editor now opens with all files, use ]n to navigate conflicts
+git mark-conflicts-as-resolved
+git rebase --continue
+
+# use git-open-remote to xdg-open the current branch's remote's webpage
+git open-remote
+# shorthand:
+git open
+```
+
+## Neovim custom operators and objects
+
+some examples
+
+markdown/yaml listification operator:
+```markdown
+    one
+    two
+    three
+
+    --> glip -->
+
+    - one
+    - two
+    - three
+```
+
+"inside slash" object:
+```text
+    /some/file/path/
+           ^ cursor is there
+
+    --> ci/other<esc> -->
+
+    /some/other/path/
+```
+
+Custom surround, basically vim-surround for now
 
 ## TODO
 
@@ -144,6 +187,14 @@ should implement these one day. (or don't, see if i care 🙄)
 - We can use extra mouse buttons in nvim. Search help for X1Mouse and
   4-leftmouse for extra mousing capabilities. though these might actually only
   work in a gui
+- ctags should be cached. at least like the past 100 tags i jump to. cache them
+  and use the modified time on the tags file to invalidate. or maybe we just
+  evaluate every tag asynchronously but use the cached value immediately. This
+  should be simple to implement: just rebind tag keys to my own func that
+  first checks a per-session cache file, and failing that invokes `:tag`.
+- g= should execute code. MiniOperators does this as an operator. stock nvim
+  uses g== to run the code block under the cursor.
+  - MiniOperators also uses gs as a "sort" operator, could be coo
 
 Things to regularly check in on:
 - update readme
@@ -155,3 +206,4 @@ Things to regularly check in on:
 - shellcheck, finds things like HOME instead of tilde
 - make sure vim keymap set has descriptions
 - need a vim digraph but for more characters...
+- add snippets to ftplugins

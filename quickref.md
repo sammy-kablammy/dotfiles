@@ -9,10 +9,25 @@ shell function. maybe nvim `<leader>?` since i'm already using that
 
 programming gooder and faster yes ok thank you
 
+- Generally have one fullscreen thing at a time
+- Try to do things in the terminal for portability, scriptability, and speed
+- Prefer intentional single-purpose completion (`ctrl-n` for words, `ctrl-x f`
+  for file paths, `ctrl-x ctrl-o` for LSP) instead of magic tab-does-everything
+  autocomplete. It's quicker to search through a short completion list than a
+  mega list, and you avoid the painfully slow LSP completion in most cases.
+- Telescope to fuzzy find files or to live grep for file content
+- Frequently accessed files bound to hotkeys (previously Harpoon, now custom)
+- Prefer operators & text objects to per-character manipulation Vim is not a
+  structured editor. But text objects approximate the experience of a structured
+  editor in many cases: "take this semantic chunk and put it over there" instead
+  of "start selection, move cursor, end selection, copy, move cursor, paste"
+
 ## vim (and neovim)
 
 Use `<leader>?` to open quick reference
 
+- `i_CTRL-F` will re-indent the current line, I think it's like `=` but from
+  insert mode
 - Telescope's live_grep has `C-<space>` to "lock in" part of a search, allowing
   you to layer a second search query on top.
 - `CTRL-W_P` to switch to previously accessed window
@@ -35,6 +50,7 @@ Use `<leader>?` to open quick reference
   errors on VimLeave that disappear too quickly
 - `g<` to re-show the previous command output
 - use `<enter>` to go to the beginning of the next line. easier than `j^`
+- Remember `g<` to re-show the previous command output
 
 ## shell (and bash)
 
@@ -48,7 +64,29 @@ Use `<leader>?` to open quick reference
   `test condition` will be helpful.
 - see unix timestamp with `date +%s`
 
-### flock
+## tmux
+
+I see basically no downside to be in tmux at all times. However, tmux default
+behavior makes it pretty easy to accidentally detach, e.g. if you close your
+terminal window. I do the following things to always stay attached:
+- This in bashrc to always attach to tmux:
+  - `if [ -z "$TMUX" ]; then tmux attach || tmux new-session; fi`
+- This in tmux config to switch to next session when one session exits (the
+  default behavior is to detach even if there are other sessions available):
+  - `set -g detach-on-destroy off`
+- This in bashrc to create an annoying warning if you do somehow detach:
+  - `if [ -z "$TMUX" ]; then PS1="(no tmux) $PS1"; fi`
+
+## cat
+
+`cat -v` to show control characters
+
+## less
+
+press F to follow a file, basically like `journalctl --follow` or like tail in a
+watch loop
+
+### flock (f-lock, not the surveillance company)
 
 ```sh
 # Run the following commands in quick succession. Both sleep for 10 seconds.
@@ -64,10 +102,16 @@ flock -n myfile echo hello
 
 - check if string is a valid ref: `git check-ref-format 'nocommas,'` (doesn't
   output anything, must check exit code)
+- set upstream without pushing: `git branch -u remotename localname`
 
 ### Submodules
 
 don't.
+
+But if you must...
+- sync submodules to the commits listed in the `.gitmodules` file:
+  `git submodule update --remote`
+- sync submodules with their pinned commits: `git submodule update --force`
 
 ### patch files
 
@@ -161,6 +205,21 @@ const int *ptr; // pointer to a const int
 int const *ptr; // pointer to a const int
 int * const ptr; // const pointer to an int
 int const *const ptr; // const pointer to a const int
+
+// Read a file line by line
+FILE *fp = fopen(filename, "r");
+assert(fp != NULL);
+char buf[10000];
+while (fgets(buf, sizeof(buf), fp) != NULL) {
+    // do the thing
+}
+
+// inlined struct definition
+foo(100, (struct some_type){ 1, false });
+
+// Discard unused return value by negating and casting to void. Otherwise your
+// compiler might complain about disobeying [[nodiscard]]
+(void)!function_with_return_value();
 ```
 
 ## Lua
@@ -179,10 +238,20 @@ end
 
 universal-ctags is a maintained version. exuberant-ctags may be older
 
+Build tags file with `ctags -R .`
+
 you can add tags for local variables like `ctags --kind-C=+l`. but you can also
 just do vim's default `gd`.
 
 `ctags -o -` to output to stdout instead of creating tags file
+
+## cscope
+
+used interactively, not just for "goto definition" like ctags
+
+- `cscope -R`
+- type the name of an identifier
+- type `?` for help
 
 ## top
 
@@ -194,4 +263,51 @@ just do vim's default `gd`.
 
 ## networking shi
 
-list Listening Tcp ports `netstat -lt`
+- list Listening Tcp ports `netstat -lt`
+- show mac address with `ifconfig`
+
+## unix users, permissions, filesystem, stuff like that
+
+```sh
+groups sam # list the groups a user is in
+
+# add user to a group (can use the stereotypical docker example)
+
+# see users online right now
+who
+# see recent logins
+last
+```
+
+## windows fixes
+
+Microsoft 🪟 (derogatory)
+
+### Windows update is broken
+
+- Stop the windows update service (just search for anything with "update")
+- delete everything in `C:/Windows/SoftwareDistribution`
+- Start the windows update service
+
+### the "Turn Windows features on or off" menu is hanging
+
+```
+Dism /Online /Enable-Feature /FeatureName:HypervisorPlatform /All
+Dism /Online /Enable-Feature /FeatureName:VirtualMachinePlatform /All
+```
+
+### Reclaim space from WSL
+
+https://gist.github.com/janderudder/e90d3348650811ecb75beefaf593bf62
+
+## oops! i no longer have root in my docker container!
+
+if your default container user doesn't have sudo, just log in with UID 0:
+```sh
+docker exec -u 0 -it mycontainer
+```
+
+## creating makefiles
+
+some nice debug flags
+`make --warn-undefined-variables --quiet`
