@@ -329,8 +329,7 @@ vim.keymap.set("n", "<leader><c-g>", function()
     -- i don't know how to get the [Modified] message. yeah idk.
     -- example: " /home/sam/foo/bar.txt | [Modified] | Line 320/1572 (20%) | Column 42 | 10293 words
     local file_path = vim.api.nvim_buf_get_name(0)
-    local pos = vim.api.nvim_win_get_cursor(0)
-    local row, col = pos[1], pos[2]
+    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
     local total_lines = vim.api.nvim_buf_line_count(0)
     local percent = math.floor((row / total_lines) * 100)
     local wordcount = vim.fn.wordcount().words

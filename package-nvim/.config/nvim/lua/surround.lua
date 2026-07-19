@@ -165,9 +165,7 @@ function change_surround(old_ch, new_ch)
     local old_start_ch, old_end_ch = desugar_ch(old_ch)
     local new_start_ch, new_end_ch = desugar_ch(new_ch)
 
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local cursor_row = cursor[1]
-    local cursor_col = cursor[2]
+    local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
 
     -- search backward for ch, save pos
     -- At first i thought we'd search up line by line for the start ch. But

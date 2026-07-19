@@ -39,9 +39,7 @@ local symbols = {
 -- Could possibly parse vim.fn.digraph_getlist(true) for more
 
 local function insert_string_at_cursor(str)
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local cursor_line = cursor[1]
-    local cursor_col = cursor[2]
+    local cursor_line, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
     if vim.api.nvim_get_mode().mode == "n" then
         -- insert at RIGHT edge of cursor block, not left edge. This more
         -- closely mirrors putting text with 'p'.

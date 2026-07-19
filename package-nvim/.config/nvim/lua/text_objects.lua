@@ -78,9 +78,7 @@ vim.keymap.set("o", "gG", ":normal vgG<cr>")
 -- experimental comment objects
 -- function assumes 'inner', can override to 'around'
 function select_comment(is_around)
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local cursor_line = cursor[1]
-    local cursor_col = cursor[2]
+    local cursor_line, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
 
     if vim.bo.commentstring == "" then
         print("No commentstring!")

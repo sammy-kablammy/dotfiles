@@ -203,9 +203,7 @@ vim.keymap.set({ "n", "v" }, "gl", listify, {
 
 -- function assumes 'inner', can override to 'around'
 function select_list_item(is_around)
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local cursor_line = cursor[1]
-    local cursor_col = cursor[2]
+    local cursor_line, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
 
     -- search upward until no longer matches, put marker just before
     local linenum = cursor_line
