@@ -1,14 +1,15 @@
 -- remember to :mkspell on a first installation. spellgood or zg should also work
 -- vim.cmd('silent mkspell! /home/sam/.config/nvim/spell/en.utf-8.add') -- too slow to run every startup (~20ms)
 
-math.randomseed(os.time())
+local seconds, mseconds = vim.uv.gettimeofday()
+math.randomseed(mseconds)
 local function shitpost()
     local messages = {
         '🤓🤓 neovim, btw 🤓🤓',
         '👀 hello neovimmers',
         'any neovimmers?? 👀👀',
         'welcome to vscode',
-        'kama pona tawa ilo Neowin',
+        'o kama pona tawa ilo Neowin. o lukin! kijetesantakalu li lon a! 🦝',
         'Welcome to GNU Emacs, one component of the GNU/Linux operating system.',
         'ed (the standard text editor)',
         'neovim - now including like 50 electron instances',
@@ -49,11 +50,14 @@ require("lazy").setup({
     {
         "nvim-telescope/telescope.nvim",
         tag = "v0.2.2",
+        -- TODO plenary might be archived?
         dependencies = { "nvim-lua/plenary.nvim" },
     },
     {
-        "romus204/tree-sitter-manager.nvim",
-        dependencies = {}, -- NOTE tree-sitter CLI must be installed system-wide
+        -- "romus204/tree-sitter-manager.nvim",
+        dir = "/home/sam/checkouts/tree-sitter-manager.nvim/",
+        dependencies = {}, -- NOTE tree-sitter CLI must be installed system-wide. don't need this warning here, it's in checkhealth
+
     },
     {
         "nvim-treesitter/nvim-treesitter-textobjects",
@@ -121,6 +125,7 @@ require("lazy").setup({
     {
         -- (for the pretty vim.ui.input box used for LSP renaming; i could live without this one)
         -- ...or could rewrite my own vim.ui.input type thing
+        -- TODO dressing might be archived?
         "stevearc/dressing.nvim",
         event = "CursorMoved",
     },
@@ -136,13 +141,15 @@ require("lazy").setup({
             })
             require("icon-picker").setup({ disable_legacy_commands = true })
         end,
-        event = "InsertEnter",
+        -- event = "InsertEnter",
     },
     "ThePrimeagen/vim-be-good",
     {
         "echasnovski/mini.nvim",
         version = "*",
     },
+    -- TODO remove, i don't do webdev, i think this might even be builtin nowadays?
+    -- Or could just recreate myself. wouldn't be too hard
     {
         "norcalli/nvim-colorizer.lua",
         ft = "css", -- lazy load this plugin in css files (and then stay loaded for all files afterward)

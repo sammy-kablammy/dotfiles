@@ -48,7 +48,7 @@ tsm.setup({
         "make",
         -- -- Dotfiles
         "git_config",
-        "ssh_config",
+        -- "ssh_config", -- Might be broken
         -- "tmux", -- Tmux is broken for some reason
         -- -- For work 💼
         "cpp",
@@ -145,10 +145,10 @@ vim.keymap.set({ "x", "o" }, "ao", function() selectobj("@conditional.outer", "t
 
 -- "Move" mappings:
 local move = require("nvim-treesitter-textobjects.move")
-vim.keymap.set({ "n", "x", "o" }, "]f", function() move.goto_next_start("@function.outer", "textobjects") end)
-vim.keymap.set({ "n", "x", "o" }, "]F", function() move.goto_next_end("@function.outer", "textobjects") end)
-vim.keymap.set({ "n", "x", "o" }, "[f", function() move.goto_previous_start("@function.outer", "textobjects") end)
-vim.keymap.set({ "n", "x", "o" }, "[F", function() move.goto_previous_end("@function.outer", "textobjects") end)
+vim.keymap.set({ "n", "x", "o" }, "]f", function() move.goto_next_start("@function.outer", "textobjects") end, { desc = "treesitter-textobject: next function start" })
+vim.keymap.set({ "n", "x", "o" }, "]F", function() move.goto_next_end("@function.outer", "textobjects") end, { desc = "treesitter-textobject: next function end" })
+vim.keymap.set({ "n", "x", "o" }, "[f", function() move.goto_previous_start("@function.outer", "textobjects") end, { desc = "treesitter-textobject: previous function start" })
+vim.keymap.set({ "n", "x", "o" }, "[F", function() move.goto_previous_end("@function.outer", "textobjects") end, { desc = "treesitter-textobject: previous function end" })
 -- keymaps [l and ]l are used for location list, so not using 'l' for loops.
 -- Used to use 'o' for conditions, but now i just use anchor points.
 anchor_points = {

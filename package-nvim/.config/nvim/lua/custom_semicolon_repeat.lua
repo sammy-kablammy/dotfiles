@@ -8,7 +8,7 @@
 -- in my treesitter.lua file for example, at the definition site of those
 -- mappings.
 
--- working title "ilo-sin"
+-- working title "ilo-sin" or "ilo-alasa"
 
 is_custom_repeat = false
 
@@ -37,6 +37,14 @@ function get_keymap_rhs_callback(mode, lhs)
     return map.callback
 end
 
+function list_existing_bracket_keymaps()
+    for _, map in pairs(vim.fn.maplist()) do
+        if string.sub(map.lhs, 1, 1) == "[" then
+            vim.print(map.lhs)
+        end
+    end
+end
+
 -- Could probably use maplist() or nvim_get_keymap() to automatically build this
 -- table based on which LHSs start with a bracket, but for now manual is ok
 local keymaps_using_custom_semicolon_repeat = {
@@ -55,6 +63,10 @@ local keymaps_using_custom_semicolon_repeat = {
         "]d",
         "[D",
         "]D",
+        "[q",
+        "]q",
+        "[x",
+        "]x",
         -- These don't work but probably should
         -- "]]",
         -- "[[",
@@ -112,3 +124,9 @@ end
 -- TODO "include guard"... basically a way to ensure this file's setup only ever
 -- happens once. if it happens multiple times that would be VERY BAD and would
 -- likely cause infinitely recursive keymaps
+--
+-- Wait why would this be a problem? Seems fine rn, no?
+
+-- TODO do the same thing for , as for ;
+
+-- TODO use setcharsearch and getcharsearch() for something?

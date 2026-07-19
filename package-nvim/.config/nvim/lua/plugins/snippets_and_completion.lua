@@ -73,6 +73,8 @@ cmp.setup({
     },
     mapping = cmp.mapping.preset.insert({
 
+        -- Mehhh just use omni complete with <c-x><c-o>. It's builtin.
+
         -- Use <c-l> ("L" for "Lsp"). I don't like relying on LSP/snippets when
         -- the default (string-based) completion will do. Plus, builtin is way
         -- faster.

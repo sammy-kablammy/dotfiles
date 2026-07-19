@@ -59,6 +59,8 @@ local function toothpick()
         }
     end
 
+    -- TODO window height should be determined by how many elements there are?
+
     local dims = get_window_dimensions()
     local win_id = vim.api.nvim_open_win(bufnr, true, {
         width=dims.width,

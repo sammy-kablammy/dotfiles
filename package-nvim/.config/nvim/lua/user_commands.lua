@@ -69,6 +69,8 @@ vim.keymap.set("n", "<leader>h", toggle_header, { desc = "switch between source 
 -- Store current session name in variable
 vim.opt.sessionoptions:append("globals")
 
+-- Could move to its own file. sessions.lua
+
 -- TODO Need :Mks that's basically the same as :mks! but it only overwrites .vim
 -- files. that way if i have a sesh.md and sesh.vim i don't accidentally tab
 -- complete :mks! se<tab> and wipe sesh.md. Ideally it would automatically
@@ -95,16 +97,19 @@ vim.api.nvim_create_user_command("Mks", function(cmd)
 
     -- if file is there, send existing file to a backup location and make a new session
     if vim.uv.fs_stat(session_name) then
-        local oldsessions = vim.fn.stdpath("state") .. "/oldsessions/"
+        local oldsessions = vim.fs.joinpath(vim.fn.stdpath("state"), "/oldsessions/")
         local obj = vim.system({ "mkdir", "--parents", oldsessions }, {
             timeout = 1000,
         }, nil):wait()
         obj = vim.system({ "mv", "--backup=numbered", session_name, oldsessions }, {
             timeout = 1000,
         }, nil):wait()
+        vim.cmd.mksession(session_name)
+        print("Made session file", session_name, "(Overrwrote " .. session_name .. ")")
+    else
+        vim.cmd.mksession(session_name)
+        print("Made session file", session_name)
     end
-    vim.cmd.mksession(session_name)
-    print("Made session file", session_name)
 
 end, {
     nargs = "?",

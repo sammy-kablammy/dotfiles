@@ -36,6 +36,8 @@ accordingly
 
 Drawing may overwrite existing text in the buffer. Undo is your friend.
 
+Use "co" for "change bOx" etc. unless i can find a better mnemonic.
+
 --]]
 
 -- Create an empty box, appending after the given line num.

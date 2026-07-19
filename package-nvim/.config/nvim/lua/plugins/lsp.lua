@@ -27,6 +27,8 @@ vim.keymap.set("n", "<leader>ld", function()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle LSP diagnostics" })
 
+-- Stock nvim uses insert mode <c-x><c-o> for lsp omnifunc these days
+
 -- buffer-local LSP configuration
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -69,6 +71,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- TODO How to replace LspStart? You'd need a way to map the current buffer's
 -- filetype to its server name.
+--
+-- You could just use vim.lsp.get_configs() and search for the current filetype.
 vim.api.nvim_create_user_command("MyLspStop", function()
     local current_buffer_clients = vim.lsp.get_clients({ bufnr = 0 })
     for i, client in ipairs(current_buffer_clients) do

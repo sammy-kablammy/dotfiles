@@ -63,6 +63,8 @@ vim.api.nvim_create_autocmd("BufEnter", {
             vim.o.softtabstop = 4
         end
     end,
+    group = SAM_AUGROUP,
+    desc = "Set default whitespace options. Filetype plugins should override this",
 })
 function FixStupidVimIndentationSettings()
     vim.bo.tabstop = 4

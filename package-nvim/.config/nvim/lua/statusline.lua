@@ -55,6 +55,9 @@ function StatusLinePosition()
     local col = vim.fn.col(".")
     -- Virtual column might be different for files with tabs
     local virtcol = vim.fn.virtcol(".")
+    if row == 420 and col == 69 then
+        return "(Nice)"
+    end
     if col == virtcol then
         return "(" .. row .. "," .. col .. ")"
     end
@@ -105,7 +108,7 @@ local readonly_flag = "%r"
 local keylog = '%{luaeval("StatusLineKeylogger()")}'
 local padding = " %= "
 local note_title = '%{%luaeval("StatusLineNoteTitle()")%}'
--- TODO backlink count
+-- TODO backlink count, should be computed in a separate thread obvi
 local fileformat = '%{luaeval("StatusLineFileformat()")}'
 local lsp = '%{%luaeval("LspStatusline()")%}'
 local position = '%{%luaeval("StatusLinePosition()")%}'

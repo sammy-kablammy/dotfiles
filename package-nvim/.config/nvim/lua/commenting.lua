@@ -100,9 +100,9 @@ local function highlight_todos()
 
         local pattern = string.gsub(commentstring, "%%s", keyword)
         if pattern == nil then
-            -- this would mean commentstring didn't contain %s, which i believe
-            -- should be guaranteed?
-            print("does this ever happen?")
+            -- This would mean commentstring didn't contain %s. Nvim is supposed
+            -- to require this.
+            print("'commentstring' does not contain %s, cannot highlight TODOs")
             return
         end
         pattern = pattern .. '.*$'

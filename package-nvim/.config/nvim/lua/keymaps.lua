@@ -28,6 +28,7 @@ some notes on keymaps:
 -- TODO should use the function keys and the numpad keys, i totally forgot those exist
 
 -- Preserve <c-a> functionality while making it harder to accidentally press. Do this before unmapping <c-a>
+-- TODO this is overwritten by lua ftplugin's snippet thing to create autocommands
 vim.keymap.set("i", "<c-x><c-a>", "<c-a>")
 
 -- remove annoying mappings (must be at the top in case i re-add these mappings)
@@ -99,8 +100,13 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, { -- TODO consider which BufEnters s
         InsertMap("D", [[<cmd>r! date --date=tomorrow +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
         -- TODO make this not affect all filetypes, that's stupid, we should
         -- only do this in markdown or at least think of what goes where
+        --
+        -- Actually i think it should work everywhere
         InsertMap("w", [[<cmd>r! date --date='next monday' +"\%A \%b \%d, \%Y"<cr><esc>kJA]])
         InsertMap(";", ":=")
+        -- TODO date keymaps should use nvim_paste at the cursor position so
+        -- that they work even in the middle of a line. currently they put it on
+        -- the next line or end of the current line or something weird
     end,
 })
 vim.api.nvim_create_autocmd({ "FileType" }, {
@@ -232,21 +238,24 @@ end, {})
 vim.keymap.set("n", "<leader>sz", "<cmd>Zenma<cr>", { desc = "experimental zen mode??👀" })
 
 -- square bracket fun time [ [ [ ] ] ]
-vim.keymap.set("n", "[c", function()
-    -- TODO i want to eventually use q for quickfix, c for Conditions, and O for
-    -- TODOs. Or maybe something else. Point is i need to rethink keymaps
-    -- because they're getting hard to remember
-    print("Use [q instead")
-    vim.cmd.cprev()
-end, { desc = "prev qflist entry" })
-vim.keymap.set("n", "]c", function()
-    print("Use ]q instead")
-    vim.cmd.cnext()
-end, { desc = "next qflist entry" })
-vim.keymap.set("n", "[C", vim.cmd.cfirst, { desc = "cfirst" })
-vim.keymap.set("n", "]C", vim.cmd.clast, { desc = "clast" })
+
+-- NOTE Vim has [q and ]q builtin now, don't need these warnings anymore
+-- vim.keymap.set("n", "[c", function()
+--     -- TODO i want to eventually use q for quickfix, c for Conditions, and O for
+--     -- TODOs. Or maybe something else. Point is i need to rethink keymaps
+--     -- because they're getting hard to remember
+--     print("Use [q instead")
+--     vim.cmd.cprev()
+-- end, { desc = "prev qflist entry" })
+-- vim.keymap.set("n", "]c", function()
+--     print("Use ]q instead")
+--     vim.cmd.cnext()
+-- end, { desc = "next qflist entry" })
+-- vim.keymap.set("n", "[C", vim.cmd.cfirst, { desc = "cfirst" })
+-- vim.keymap.set("n", "]C", vim.cmd.clast, { desc = "clast" })
 
 -- this conflicts with v0.12 treesitter keymaps now
+-- Well actually only in x mode but whatever
 -- vim.keymap.set("n", "[n", "?<<<<<<<<cr>", { desc = "git coNflict" })
 -- vim.keymap.set("n", "]n", "/<<<<<<<<cr>", { desc = "git coNflict" })
 -- vim.keymap.set("n", "[N", "?>>>>>>><cr>", { desc = "git coNflict" })
@@ -341,6 +350,7 @@ vim.keymap.set("n", "<c-l>", vim.cmd.bnext)
 vim.keymap.set("n", "gG", "ggVG", { desc = "select entire buffer" })
 vim.keymap.set("n", "gQ", "gggqG<c-o><c-o>", { desc = "format (gq) entire buffer" })
 vim.keymap.set("n", "<leader>o", vim.cmd.options, { desc = "show vim options" })
+-- TODO clean up and rebind to g>, should also be an operator
 vim.keymap.set("v", "<leader>col", "!column -t<cr>", { desc = "columnize selection" })
 vim.keymap.set("v", "<leader>qmk", "!column -t<cr>gv>gv>", { desc = "columnize selection and shift, for qmk keymaps" })
 vim.keymap.set('n', 'ciq', 'ci"')
@@ -358,7 +368,18 @@ vim.keymap.set("n", "<leader>gh", function()
 end, { desc = "go here - change cwd to match current buffer" })
 vim.keymap.set("n", "<leader><leader>m", "<cmd>messages<cr>")
 vim.keymap.set("n", "<leader><leader>p", "<cmd>pwd<cr>")
-vim.keymap.set("n", "<leader><leader>u", "<cmd>Undotree<cr>")
+vim.keymap.set("n", "<leader><leader>u", function()
+    require("undotree").open({
+        command = "40vnew",
+    })
+end)
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    -- Undo tree buffers should not show line numbers
+    pattern = "Undo tree for *",
+    callback = function()
+        vim.bo.number = false
+    end,
+})
 vim.keymap.set("n", "<c-w>y", function()
     local name = vim.fn.expand("%:t")
     vim.fn.setreg("", name .. '\n')
@@ -412,13 +433,15 @@ vim.keymap.set("n", "<leader>i", "<cmd>IconPickerNormal emoji<cr>")
 vim.keymap.set("n", "<leader>I", "<cmd>IconPickerNormal<cr>")
 vim.keymap.set("v", "<leader>th", ":TOhtml<cr>")
 vim.keymap.set("n", "<leader><leader>rv", ":g/.*/move 0<cr>", { desc = "Reverse buffer" })
-vim.keymap.set("o", "ir", "i]")
-vim.keymap.set("o", "ar", "a]")
+vim.keymap.set({ "o", "x" }, "ir", "i]")
+vim.keymap.set({ "o", "x" }, "ar", "a]")
 
 -- this builds on matchit's a% visual mode binding
 vim.keymap.set("o", "a%", ":normal va%<cr>")
 -- (unfortunately, matchit does not support i%)
 
+-- TODO consolidate autocmds. I really only need like one BufNew for the vast
+-- majority of things
 -- TODO matchit % should jump between git conflict markers
 
 
