@@ -35,12 +35,16 @@ local SNIPPET_LEADER = "<c-g>"
 -- Universal snippets. These apply to all filetypes but can be overwritten.
 local global_snippets = {
     ['h'] = 'hello',
+    ['-'] = '->',
+    [';'] = ':=',
 }
 for lhs, rhs in pairs(global_snippets) do
     vim.keymap.set("i", SNIPPET_LEADER .. lhs, function()
         vim.snippet.expand(rhs)
     end, { desc = "global snippet: " .. rhs })
 end
+
+-- TODO check for overriding of global snippets and warn about it
 
 -- Filetype local snippets.
 create_filetype_snippets = function(snippets)
@@ -57,6 +61,7 @@ end
 -- })
 
 -- Navigate snippets
+-- Can't use <c-g>p because that's used for [p]rint.
 vim.keymap.set({ "i", "v" }, "<c-g>p", function() vim.snippet.jump(-1) end)
 vim.keymap.set({ "i", "v" }, "<c-g>n", function() vim.snippet.jump(1) end)
 vim.keymap.set({ "i", "v" }, "<c-g><c-p>", function() vim.snippet.jump(-1) end)
