@@ -1,4 +1,7 @@
 #!/bin/sh
 
+# TODO delete all these notes scripts, do a scrub through neovim, also all
+# neovim note things should be put in a single file so i know what uses my notes
+
 timestamp=$(date +"%F_%H-%M-%S")
 echo "/home/sam/kablam/notes/main/$timestamp.md"

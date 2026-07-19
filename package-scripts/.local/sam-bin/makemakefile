@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# TODO this only works with bash, why? why is echo broken with sh? I'm seeing a
+# literal "-en" in the output because of the echo -en commands
+
 # vim: ft=sh
 
 if [ -f Makefile ]; then

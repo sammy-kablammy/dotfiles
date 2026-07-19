@@ -19,6 +19,11 @@
 
 # TODO environment variables should be defined earlier, need to rethink ordering
 # in this file
+# I think a good order would be environment variables,
+# sets/shopts/binds/aliases/functions can really go in any order. But again try
+# to order by functionality not by implementation. Super common stuff like bash
+# settings, history, that all can go at the top. Experimental weirdness in the
+# middle. Work-specific near the bottom.
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.local/sam-bin:$PATH
 
@@ -36,9 +41,9 @@ alias 'cp'='cp --interactive'
 alias 'rm'='rm --interactive'
 alias 'mv'='mv --interactive'
 alias 'mkdir'='mkdir --parents'
-alias 'symlink'='ln -s'
-alias 'g'='git'
-alias 'gc'='git -C'
+# alias 'symlink'='ln -s'
+# alias 'g'='git'
+# alias 'gc'='git -C'
 alias 'em'='emacs -nw'
 alias 'ap'='apropos'
 alias 'fzfp'='fzf --preview="less {}"'
@@ -46,8 +51,9 @@ alias 'hist'='history | sed "s/[0-9]\+//" | sed "s/^\s*//" | nvim +"set buftype=
 alias 'sizema'='du -sh ./* | sort -h' # list sizes of things in current directory
 alias 'peep'='nvim -R' # lol
 alias 'less'='less --LONG-PROMPT --ignore-case'
-# TODO dynamically compute this based on VIMRUNTIME
-alias 'vimless'='/usr/local/share/nvim/runtime/scripts/less.sh --clean' # I believe this is the right location, though it might be in macros/ instead of scripts/
+# Do we need --clean? I would like colorscheme if possible
+alias "vimless"="nvim --clean +'runtime! scripts/less.vim'"
+# alias 'vimless'='/usr/local/share/nvim/runtime/scripts/less.sh --clean' # I believe this is the right location, though it might be in macros/ instead of scripts/
 alias 'vl'='vimless'
 alias 'py'='python3'
 alias 'python'='python3'
@@ -68,10 +74,16 @@ alias 'aout'='./a.out'
 alias "gt"="go test ./... | sed 's/^ok/\o033[32mOK\o033[0m/; s/^FAIL/\o033[31mFAIL\o033[0m/'" # like "go test" but with colorized output
 alias "dps"="docker ps -as"
 alias 'mkx'='chmod ugo+x'
+alias 'devicetree-decompile'='dtc -I dtb -O dts'
 alias 'delete-the-fucking-zone-identifiers-windows-you-stupid-piece-of-garbage'='rm -i *:Zone.Identifier'
 # Fix 'Exec format error' from windows programs (like explorer.exe) on WSL:
 # sudo -s and add this to crontab so you don't have to run this all the time
 alias 'wsl-fix-bin'='sudo systemctl restart systemd-binfmt'
+
+edit-script() {
+    $EDITOR $(which $*)
+}
+complete -c edit-script
 
 alias 'nvim-dev'="$HOME/checkouts/neovim/build/bin/nvim --clean"
 # You need to do some combination of make clean, delete these files, and maybe
@@ -164,6 +176,7 @@ fi
 # TODO same thing cxcf for File picker, perhaps c-x c to cd into another dir
 
 bind -x '"\C-xg":"paste-git-local-branches"'
+bind -x '"\C-x\C-g":"paste-git-local-branches"'
 # List local branches. because the default tab completion for "git switch" lists
 # all refs, and we have >1000 refs
 paste-git-local-branches() {
@@ -187,7 +200,7 @@ paste-git-local-branches() {
 # need to reorganize to put all binds, aliases, and funcs in a better order.
 # ideally after settings
 
-bindlist() {
+bash-list-available-keybinds() {
     bind -P | awk '/is not bound to any keys/ { next } { print }'
 }
 
@@ -198,7 +211,14 @@ bindlist() {
 
 # TODO wouldn't it be good to have an offline copy of these docs i can live_grep through?
 sc() {
-    explorer.exe "https://www.shellcheck.net/wiki/SC$1"
+    xdg-open "https://www.shellcheck.net/wiki/SC$1"
+    # Also note that most docs are on their github:
+    # https://github.com/koalaman/shellcheck/wiki/Directive
+}
+# TODO why aren't we running shellcheck on this file?
+cppc() {
+    cppcheck --errorlist | grep -i $1
+    # now extract the msg field from it
 }
 
 # combine these and just detect whether the selection is a file or directory
@@ -303,7 +323,9 @@ if [ -z "$TMUX" ]; then
 fi
 # add OSC 133, indicating the end of a prompt (broken rn)
 # Note that nvim has a guide in :h terminal-osc133 for setting this up
-# export PROMPT_COMMAND="printf \\"\033]133;A\007\\"; $PROMPT_COMMAND"
+#
+# Broken in tmux right now but works in nvim terminal with [[ and ]]
+export PROMPT_COMMAND="printf '\033]133;A\007'; $PROMPT_COMMAND"
 
 # TODO need bash completion of mn to match man, also reconcile manfzf with man and mn. what uses nvim and what uses default?
 # TODO you can just do apropos "" to list all manpages, no need to do the searchy wearchy thing
@@ -370,6 +392,8 @@ export EDITOR=nvim
 # i don't like vi mode but it's here if you want
 # set -o vi
 
+# Should unbind all F-keys because they show up as ~ (or worse) and that's annoying
+
 bind '"\C-xq": "\"\"\C-b"' # this usually works
 bind '"\C-x\C-q": "\C-q"' # this might not work on some terminals
 bind '"\C-xt": "~"'
@@ -380,8 +404,24 @@ bind '"\C-xh": "--help"'
 bind '"\C-x\C-h": "\C-xh"'
 bind '"\C-xv": "--version"'
 bind '"\C-x\C-v": "\C-xv"'
-bind '"\C-xf": "\"$(fzf)\""'
-bind '"\C-x\C-f": "\C-xf"'
+
+paste-f-local-files-and-stuff() {
+    return
+    # TODO f changes dir or opens a file. it doesn't currently just output the
+    # file. this should be reorganized
+    # selection=$(f)
+    if [ -z "$selection" ]; then
+        # fzf was canceled
+        return
+    fi
+    READLINE_LINE="$READLINE_LINE$selection"
+    # advance cursor to end of line
+    selection_strlen=${#selection}
+    READLINE_POINT=$((READLINE_POINT + $selection_strlen + 1))
+}
+bind -x '"\C-xf":"paste-f-local-files-and-stuff"'
+bind -x '"\C-x\C-f":"paste-f-local-files-and-stuff"'
+
 bind '"\C-xd": "2>/dev/null"'
 bind '"\C-x\C-d": "\C-xd"'
 bind '"\C-xi": "192.168."'
@@ -455,6 +495,10 @@ alias C='f ..'
 alias CC='f ../..'
 alias CCC='f ../../..'
 alias CCCC='f ../../../..'
+f-implementation() {
+    # Like f but only returns the thing, doesn't directly open it
+    echo pass
+}
 
 dotfiles_path="$(get-dotfiles-path)"
 dotfiles() {
@@ -520,9 +564,12 @@ alias "T"="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
 alias "I"="cd $(get-dotfiles-path)"
 alias "H"="$EDITOR $HOME/.ssh/config"
 alias "N"="nvim +'norm G' $HOME/notes.md"
+# Could also use ? in addition to Q
 alias "Q"="$EDITOR $(get-dotfiles-path)/quickref.md"
 alias "BB"="cd $HOME/.local/sam-bin/"
 
 alias dy='nvim +Dymaxion'
+
+# TODO export more things so they're usable from vim ! cmdline
 
 # vim: filetype=bash

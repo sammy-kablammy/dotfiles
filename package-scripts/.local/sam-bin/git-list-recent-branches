@@ -11,6 +11,9 @@ if [ $# -ge 1 ]; then
     how_many_recents_to_show=$1
 fi
 
+# TODO output should include timestamp of when branch was last touched
+# ...if that's even possible with reflog
+
 git reflog |
     # grep, sed, awk. the holy trinity
     grep 'checkout:' |

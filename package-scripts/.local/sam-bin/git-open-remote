@@ -56,3 +56,6 @@ if [ "$WSL_DISTRO_NAME" ]; then
 else
     xdg-open "$url"
 fi
+
+# TODO if branch does not have a remote counterpart, just open the remote in
+# dev/main. You can find whether there's a remote with with `git branch -vv`

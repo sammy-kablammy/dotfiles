@@ -7,6 +7,7 @@ if [ $# -eq 1 ]; then
     selected=$1
 else
     selected=$({
+        find /mnt/sn570/kablam/ -maxdepth 3 -type d -not -path "*/.git/*"
         find ~ -mindepth 0 -maxdepth 3 -type d -not -path "*/.*"
         find ~/dotfiles -mindepth 3 -type d -not -path "*/.git/*"
     } | fzf)
