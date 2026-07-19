@@ -160,3 +160,11 @@ vim.lsp.config["basedpyright"] = {
     }
 }
 -- vim.lsp.enable("basedpyright")
+
+-- (rustup component add rust-analyzer)
+vim.lsp.config["rust-analyzer"] = {
+    cmd = { "rust-analyzer" },
+    filetypes = { "rust" },
+    root_markers = { "Cargo.toml", ".git" },
+}
+vim.lsp.enable("rust-analyzer")

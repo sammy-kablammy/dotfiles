@@ -11,6 +11,18 @@ M.check = function()
         vim.health.ok("found valid notes directory")
     end
 
+    vim.health.start("are LSPs installed?")
+    local all_configs = vim.lsp.config._configs
+    for name, config in pairs(all_configs) do
+        local cmd = config.cmd[1]
+        local COMMAND_IS_EXECUTABLE = 1
+        if cmd and vim.fn.executable(cmd) == COMMAND_IS_EXECUTABLE then
+            vim.health.ok("LSP server `" .. cmd .. "` (`" .. name .. "`) is executable 🤓")
+        else
+            vim.health.warn("LSP server `" .. cmd .. "` (`" .. name .. "`) is NOT executable")
+        end
+    end
+
 end
 
 return M
