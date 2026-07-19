@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Meh the auto doesn't work, don't really care
+
+# Tmux builtin layouts
+layouts="even-vertical even-horizontal main-vertical main-horizontal main-tiled"
+# Custom layouts
+layouts="$layouts auto-vertical auto-horizontal"
+
+choice=$(echo "$layouts" | tr ' ' '\n' | fzf)
+
+if [ "$choice" = "auto-vertical" ] || [ "$choice" = "auto-horizontal" ]; then
+    # tmux set-hook -t after-split-window select-layout "$choice"
+    # tmux set-hook -t pane-exited select-layout "$choice"
+    # tmux set-hook -g pane-focus
+else
+    # tmux set-hook -u -t . after-split-window
+    # tmux set-hook -u -t . pane-exited "$choice"
+fi
+
+tmux select-layout "$choice"
