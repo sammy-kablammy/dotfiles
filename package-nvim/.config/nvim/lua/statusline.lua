@@ -33,9 +33,9 @@ function LspStatusline()
     return retval .. " "
 end
 
-local matchparencolor = vim.api.nvim_get_hl(0, { name = "MatchParen" }).fg
-local matchparenhex = string.format('#%06x', matchparencolor)
-vim.cmd("highlight SamStatusLineNoteTitle guifg=" .. matchparenhex .. " guibg=" .. bgcolorhex)
+
+local orange = "#ffaa7f"
+vim.cmd("highlight SamStatusLineNoteTitle guifg=" .. orange .. " guibg=" .. bgcolorhex)
 function StatusLineNoteTitle()
     if vim.bo.filetype ~= "markdown" then
         return ""
@@ -89,7 +89,7 @@ function StatusLineKeylogger()
     end
 end
 
-vim.cmd("highlight SamStatusLineArgIdx guifg=" .. matchparenhex .. " guibg=" .. bgcolorhex)
+vim.cmd("highlight SamStatusLineArgIdx guifg=" .. orange .. " guibg=" .. bgcolorhex)
 function StatusLineArgIdx()
     local bufname = vim.fn.expand("%:.")
     for argidx, arg in pairs(vim.fn.argv()) do

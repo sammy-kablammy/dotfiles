@@ -43,11 +43,6 @@ vim.o.termguicolors = true
 
 require("lazy").setup({
     {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        priority = 1000,
-    },
-    {
         "nvim-telescope/telescope.nvim",
         tag = "v0.2.2",
         -- TODO plenary might be archived?
@@ -164,6 +159,7 @@ vim.opt.packpath:append("/home/sam/.local/share/nvim/site/")
 vim.pack.add({
     github("ThePrimeagen/vim-be-good"),
     github("folke/which-key.nvim"),
+    github("catppuccin/nvim"),
 })
 
 vim.cmd.packadd("vim-be-good")
