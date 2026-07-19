@@ -70,17 +70,6 @@ require("lazy").setup({
         end,
     },
     {
-        'Wansmer/treesj',
-    },
-    "lewis6991/gitsigns.nvim",
-    {
-        "tpope/vim-surround",
-        dependencies = {
-            "tpope/vim-repeat",
-        },
-        event = "CursorMoved",
-    },
-    {
         -- (for the pretty vim.ui.input box used for LSP renaming; i could live without this one)
         -- ...or could rewrite my own vim.ui.input type thing
         -- TODO dressing might be archived?
@@ -100,10 +89,6 @@ require("lazy").setup({
             require("icon-picker").setup({ disable_legacy_commands = true })
         end,
         -- event = "InsertEnter",
-    },
-    {
-        "echasnovski/mini.nvim",
-        version = "*",
     },
     -- TODO remove, i don't do webdev, i think this might even be builtin nowadays?
     -- Or could just recreate myself. wouldn't be too hard
@@ -157,12 +142,23 @@ vim.go.packpath = vim.go.packpath .. ',' .. "/home/sam/.local/share/nvim/site/"
 local github = function(str) return "https://github.com/" .. str end
 vim.opt.packpath:append("/home/sam/.local/share/nvim/site/")
 vim.pack.add({
+
     github("ThePrimeagen/vim-be-good"),
     github("folke/which-key.nvim"),
     github("catppuccin/nvim"),
+    github("lewis6991/gitsigns.nvim"),
+
+    github('Wansmer/treesj'),
+
+    github("tpope/vim-repeat"), -- needed by vim-surround
+    github("tpope/vim-surround"),
+
+    github("echasnovski/mini.nvim"),
+
 })
 
 vim.cmd.packadd("vim-be-good")
+vim.cmd.packadd("vim-surround")
 require("which-key").setup({
     delay = 750,
 })
