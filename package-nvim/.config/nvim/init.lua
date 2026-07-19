@@ -78,43 +78,6 @@ require("lazy").setup({
         'Wansmer/treesj',
     },
     "lewis6991/gitsigns.nvim",
-    -- snippets
-    {
-        {
-            "L3MON4D3/LuaSnip",
-            dependencies = {
-                "rafamadriz/friendly-snippets",
-                "saadparwaiz1/cmp_luasnip",
-            },
-            event = "InsertEnter", -- this doesn't seem to work
-        },
-        {
-            "hrsh7th/nvim-cmp",
-            dependencies = {
-                -- "hrsh7th/cmp-path", -- mehhhhh just use <c-x><c-f> instead
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-nvim-lsp",
-            },
-            event = "InsertEnter", -- this doesn't seem to work
-        },
-    },
-    {
-        "folke/which-key.nvim",
-        opts = {
-            delay = 750,
-        }
-    },
-    { -- optional completion source for require statements and module annotations
-        "hrsh7th/nvim-cmp",
-        opts = function(_, opts)
-            opts.sources = opts.sources or {}
-            table.insert(opts.sources, {
-                name = "lazydev",
-                group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-            })
-        end,
-        event = "InsertEnter",
-    },
     {
         "tpope/vim-surround",
         dependencies = {
