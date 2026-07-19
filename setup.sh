@@ -55,6 +55,8 @@ make_symlink() {
 
 }
 
+# NOTE (april 2026) Yeah i think this is all working, ship it! Need to update
+# dotfiles structure to make it work, but that's basically it.
 # **** make symlinks ****
 read -p "-> EXPERIMENTAL create symlinks? " response
 if isYes "$response"; then
@@ -95,15 +97,14 @@ if isYes "$response"; then
 fi
 echo ""
 
+# we basically just need to do a detection of apt/dnf/nix, and have lists of
+# common package names for each
+#
+# should distinguish between dev environment (eza, batcat, find) and desktop
+# (ffmpeg, ytdlp, protonupqt)
 
+# tldr debian name is tealdeer
 
-# **** install preferred font ****
-# font_install_dir="$HOME/.local/share/fonts/truetype/"
-# font_url="https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/JetBrainsMono/NoLigatures/Regular/JetBrainsMonoNLNerdFontMono-Regular.ttf"
-# read -p "-> Install font to $font_install_dir? " response
-# if isYes "$response"; then
-#     curl --create-dirs --output-dir "$font_install_dir" -LO "$font_url"
-# fi
 font_install_dir="$HOME/.local/share/fonts/truetype/"
 read -p "-> Install fonts to $font_install_dir? " response
 if isYes "$response"; then
@@ -142,3 +143,6 @@ echo "   (I don't know how to automate this)"
 
 # TODO need tree-sitter-cli for tree-sitter-manager to compile grammars or
 # something idk
+
+# TODO add step to set a simple crontab. just a basic backer-upper should be
+# enough.
