@@ -56,23 +56,24 @@ local function insert_string_at_cursor(str)
 end
 
 function iconpick()
-    -- vim.ui.select(symbols, {
-    custom_select_func(symbols, {
-        prompt = "Pick symbol",
-    }, function(choice)
-        local symbol = vim.fn.split(choice)[1]
-        -- print('choice:', symbol)
-        if symbol == "v:null" then
+    vim.ui.select(symbols, {
+        prompt = "o wile e sitelen | Choose symbol",
+    }, function(choice, idx)
+        if choice == nil or not vim.bo.modifiable then
             return
         end
-        -- insert_string_at_cursor(symbol)
+        local symbol = vim.fn.split(choice)[1]
+        -- why was this here?
+        -- if symbol == "v:null" then
+        --     return
+        -- end
         vim.api.nvim_paste(symbol, false, -1)
     end)
 end
 
 -- TODO use these arguments to better mirror vim.ui.select
-function custom_select_func(items, opts, on_confirm)
-    -- todo make popup, calling on_confirm when done, and override vim.ui.input with this func
+function custom_select_func(items, opts, on_choice)
+    -- todo make popup, calling on_choice when done, and override vim.ui.input with this func
     local bufnr = vim.api.nvim_create_buf(false, true)
     vim.bo[bufnr].bufhidden = "wipe"
     local revert_to_normal_mode_when_done = false
@@ -100,7 +101,7 @@ function custom_select_func(items, opts, on_confirm)
         row=(win_height - height) / 2,
         relative='editor',
         border='single',
-        title={ { 'selection window', 'Title' } },
+        title={ { ' select ', 'Title' } },
         title_pos='center',
     })
     vim.api.nvim_set_option_value("signcolumn", "no", { win = win_id })
@@ -113,9 +114,10 @@ function custom_select_func(items, opts, on_confirm)
             vim.api.nvim_feedkeys(vim.keycode("<esc>"), "n", true)
         end
         vim.api.nvim_buf_delete(bufnr, {})
-        on_confirm(selection)
+        local idx = vim.fn.index(items, selection)
+        on_choice(selection)
     end
-    vim.keymap.set("n", "<c-c>", close_popup, { buffer = bufnr })
+    vim.keymap.set({ "n", "i" }, "<c-c>", close_popup, { buffer = bufnr })
     vim.keymap.set("n", "<esc>", close_popup, { buffer = bufnr })
 
     vim.api.nvim_create_autocmd("BufLeave", {
@@ -179,3 +181,15 @@ end
 
 vim.keymap.set("i", "<c-q>", iconpick, { desc = "sitelen" })
 vim.keymap.set("n", "<leader><leader>i", iconpick, { desc = "sitelen" })
+
+local prev_select = vim.ui.select
+vim.ui.select = custom_select_func
+
+
+
+-- TODO split this file into vim.ui.select and the actual emoji picker thing.
+-- Also make the vim.ui.select window resize when VimResized. see toothpick for
+-- reference. Also do vim.ui.input while we're at it. Goes in vim_ui.lua.
+
+-- TODO programming language nerd font icons. Also put those in the toothpick
+-- signcolumn if possible
