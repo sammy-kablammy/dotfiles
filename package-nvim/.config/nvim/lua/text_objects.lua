@@ -221,6 +221,10 @@ vim.keymap.set("o", "a/", ":normal va/<cr>")
 -- Bruh /some/filepath/
 
 
+-- Maybe the better API for handling "around" is not a single bool, but a
+-- start/end/row/col 4-tuple of offsets to be applied. That way linewise objects
+-- can just do "end_row_offset = 1" and single-line objects cana do
+-- "end_col_offset=1, start_col_offset=1" (or maybe -1)
 
 -- Only works for 'inside' objects and only works on a single line.
 -- Need to think about how we want to match multiline objects
@@ -292,6 +296,7 @@ end
 -- try selecting ints
 -- "in" Currently conflicts with incremental selection in
 -- Test here abc123def
+-- WARN 'in' is taken by "inner node"
 vim.keymap.set("x", "iN", function()
     select_custom_textobject(false, false, function(char)
         return string.find("0123456789", char) ~= nil

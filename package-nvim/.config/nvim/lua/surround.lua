@@ -1,7 +1,11 @@
 --[[
 
 custom vim surround
-working title "ilo sike"
+working title "ilo sike" or "ilo sijelo"
+
+perhaps one part of a larger collection of tools -- ilo-lili (like mini.nvim)
+
+Mostly for manipulating text on one line but maybe works across multiple lines
 
 --]]
 
@@ -10,14 +14,22 @@ working title "ilo sike"
 -- and we should match the final paren.
 --     vim.keymap.set("n", "<leader><leader>ds", function())
 
+-- TODO (this might be the same) when searching leftward for 'delete surround'
+-- we are undershooting sometimes. Consider this:
+--    Something ( ( Some more things ) And also these things)
+--                                        ^ dsb fails here. Should match the
+--                                        outer parens, instead it matches the
+--                                        inside.
+
 -- When the user types dot, we don't call the result of the mapping; instead,
 -- vim calls the recent 'operatorfunc' directly. That's how you can tell the
 -- difference between a genuine operator and dot-repeated operator. So to handle
 -- dot-repeat with surround operators, we maintain this state table between
--- calls. When the user types a surround operator, the state's is_dot is reset;
--- but when the user types dot, the is_dot retains its previous value and ch.
-local dot_repeat_state = {
-    is_dot = false,
+-- calls. When the user types a surround operator, the state's
+-- did_just_add_surround is reset; but when the user types dot, the
+-- did_just_add_surround retains its previous value and ch.
+local add_surround_dot_repeat_state = {
+    did_just_add_surround = false,
     dot_char = '',
 }
 
@@ -56,23 +68,33 @@ function desugar_ch(ch)
     elseif ch == '<' or ch == '>' or ch == 'a' then
         start_ch = '<'
         end_ch = '>'
+    elseif ch == 'q' then
+        -- To better mimic mini.surround, q could do the first match of " ' `
+        -- (for now just doing double quotes though)
+        start_ch = '"'
+        end_ch = '"'
     end
     return start_ch, end_ch
 end
 
+-- TODO Currently we make two calls to setline() -- one for the start line and
+-- one for the end line. This is *odd* in the common case when there's only one
+-- line being changed, but it's also broken because we get two undo states (one
+-- for each setline) for a single logical operation.
+
 function add_surround(start_line_num, start_col_num, end_line_num, end_col_num)
     -- Get character to surround object with.
     -- Currently 'ch' is only one character.
-    local ch = dot_repeat_state.dot_char
-    if not dot_repeat_state.is_dot then
+    local ch = add_surround_dot_repeat_state.dot_char
+    if not add_surround_dot_repeat_state.did_just_add_surround then
         ch = get_input_ch()
         if ch == vim.keycode("<esc>") then
             return
         end
     end
     -- Save dot repeat state for later
-    dot_repeat_state.is_dot = true
-    dot_repeat_state.dot_char = ch
+    add_surround_dot_repeat_state.did_just_add_surround = true
+    add_surround_dot_repeat_state.dot_char = ch
     -- For paired ch's, split ch into start and end
     local start_ch, end_ch = desugar_ch(ch)
 
@@ -126,12 +148,26 @@ function _custom_operatorfunc_surround()
     -- Do the surround
     add_surround(start_line_num, start_col_num, end_line_num, end_col_num)
 end
+-- So the REAL nicest way to do this is to have
+-- <surround><character><textobject>. This is backwards from vim-surround. But
+-- it *should* make the implementation easier and also feel a bit more
+-- consistent with vim's <action><object> syntax.
+--
+-- I think yr "yurround" would be nice and less easy to conflate with ys.
 vim.keymap.set("n", "<leader><leader>ys", function()
-    dot_repeat_state.is_dot = false
+    add_surround_dot_repeat_state.did_just_add_surround = false
 
     vim.o.operatorfunc = "v:lua._custom_operatorfunc_surround"
     vim.api.nvim_feedkeys("g@", "n", false)
 end, { desc = "add surround" })
+
+-- vim.keymap.set("n", "<leader><leader>yw", "_<leader><leader>ys", { remap = true })
+
+-- I think the simplest way to do this is to, after getchar, just detect when an
+-- 's' is typed and do linewise then. basically what i'm saying is this: the
+-- getchar should be in the keymap logic, not add_surround. add_surround should
+-- be a pure text manipulation function, no input.
+-- vim.keymap.set("n", "<leader><leader>yss", function() print("Please") end, { remap = true })
 
 -- TODO for some reason this breaks <leader><leader>ys
 -- vim.keymap.set("n", "<leader><leader>yss", function()
@@ -161,7 +197,53 @@ end, { desc = "add surround" })
 --     -- vim.api.nvim_feedkeys("^", "n", false)
 -- end)
 
+-- test with cursor inside the surrounding thing, test cursor BEFORE the
+-- surrounding thing, cursor AFTER the surrounding thing (this one should likely
+-- no-op)
+--
+-- Basically cursor inside the thing should be the main use case, but ideally
+-- most things would also support having the cursor before. Quotes should NOT
+-- search above the cursor line, but something like "dsB" should. idk how to
+-- make that elegant
+
+
+
+-- Because change/delete surround are not operators (while add_surround is), dot
+-- repeat will have to be handled differently. I think the easiest way (this is
+-- what vim-repeat does) is to just remap '.' to a wrapper that calls the
+-- default dot in most cases
+local change_surround_dot_repeat_state = {
+    did_just_change_surround = false,
+    old_ch = '',
+    new_ch = '',
+}
+-- -- This works for surround but breaks default dot repeat :(
+-- vim.keymap.set("n", ".", function()
+--
+--     -- this flag is the problem. who sets it and when?
+--     -- Unfortunately i think this approach will not work without using on_key or similar
+--     -- change_surround_dot_repeat_state.did_just_change_surround = false
+--
+--     if not change_surround_dot_repeat_state.did_just_change_surround then
+--         print("Default repeat")
+--         -- Fall back on vim's builtin dot repeat
+--         change_surround_dot_repeat_state.did_just_change_surround = false
+--         vim.api.nvim_feedkeys(".", "n", false)
+--         return
+--     end
+--     -- Repeat change_surround
+--     print("Surround repeat")
+--     local old_ch = change_surround_dot_repeat_state.old_ch
+--     local new_ch = change_surround_dot_repeat_state.new_ch
+--     change_surround(old_ch, new_ch)
+-- end, { remap = true, desc = "Repeat last change (wrapper created by surround)" })
+
+
+
 function change_surround(old_ch, new_ch)
+    change_surround_dot_repeat_state.old_ch = old_ch
+    change_surround_dot_repeat_state.new_ch = new_ch
+
     local old_start_ch, old_end_ch = desugar_ch(old_ch)
     local new_start_ch, new_end_ch = desugar_ch(new_ch)
 
@@ -242,8 +324,11 @@ function change_surround(old_ch, new_ch)
 
     -- Put cursor at start_ch position (this mirrors vim-surround's behavior)
     vim.api.nvim_win_set_cursor(0, { start_row, start_col - #old_start_ch })
+
+    change_surround_dot_repeat_state.did_just_change_surround = true
 end
 vim.keymap.set("n", "<leader><leader>cs", function()
+    change_surround_dot_repeat_state.did_just_change_surround = false
     local old_ch = get_input_ch()
     if old_ch == vim.keycode("<esc>") then
         return
@@ -260,6 +345,7 @@ function delete_surround(old_ch)
 end
 
 vim.keymap.set("n", "<leader><leader>ds", function()
+    change_surround_dot_repeat_state.did_just_change_surround = false
     local ch = get_input_ch()
     if ch == vim.keycode("<esc>") then
         return
