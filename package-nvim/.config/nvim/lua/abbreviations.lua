@@ -2,9 +2,12 @@
 -- use :abbreviate (:ab) for both insert and command modes.
 -- :cab for command mode only, :iab for insert mode only.
 
+-- These should really be in ftplugins
 vim.cmd([[
-    inoreabbrev cdb ```<cr>```<up>
-    noreabbrev functino function
-    noreabbrev serach search
-    noreabbrev seraching searching
+    " inoreabbrev cdb ```<cr>```<up>
+    " noreabbrev functino function
+    " noreabbrev serach search
+    " noreabbrev seraching searching
 ]])
+
+-- remember: by default use i_CTRL-] to trigger abbreviations

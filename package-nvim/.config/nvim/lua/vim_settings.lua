@@ -132,7 +132,6 @@ vim.o.foldcolumn = "1"
 vim.o.tagcase = "match"
 vim.o.tildeop = true -- Experimental using tilde as op, I may not like this
 vim.o.dictionary = "/usr/share/dict/american-english" -- on debian this package is called "wamerican"
-vim.o.dictionary = "/usr/share/dict/american-english"
 
 
 ---------------------------"local to buffer" settings---------------------------
@@ -292,6 +291,23 @@ vim.api.nvim_create_autocmd("BufNew", {
     end,
     desc = "fix relative path % register behavior",
 })
+
+
+
+-- this doesn't work
+-- (I added this because trying to git-diff new or deleted files in multiple
+-- tmux panes at once causes nvim to complain about /dev/null swapfiles)
+vim.api.nvim_create_autocmd("SwapExists", {
+    -- pattern = { "/dev/null" },
+    callback = function()
+        -- print(vim.fn.bufname(0))
+        -- print("Sup")
+        -- vim.v.swapchoice = "c"
+    end,
+    desc = "Ignore swapfiles for certain files",
+})
+
+
 
 -- TODO delete this
 -- reuse a vim session, if one is found

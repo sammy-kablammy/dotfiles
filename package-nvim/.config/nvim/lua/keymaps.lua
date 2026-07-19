@@ -442,6 +442,31 @@ vim.keymap.set("o", "a%", ":normal va%<cr>")
 -- TODO consolidate autocmds. I really only need like one BufNew for the vast
 -- majority of things
 -- TODO matchit % should jump between git conflict markers
+-- aka /^>>>/
+--
+-- grr why no worky
+--
+-- This one can't be BufNew (too early).
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    callback = function()
+        -- Only trigger this autocmd one time per buffer (otherwise we'd
+        -- repeatedly extend b:match_words and slow matchit to a crawl)
+        if vim.b.sam_was_match_words_already_updated then
+            return
+        end
+
+        git_conflict_pattern = "^<<<<<<<:^>>>>>>>"
+        if vim.b.match_words == nil then
+            vim.b.match_words = git_conflict_pattern
+        else
+            vim.b.match_words = vim.b.match_words .. "," .. git_conflict_pattern
+        end
+
+        vim.b.sam_was_match_words_already_updated = true
+    end,
+    desc = "Update matchit to match git conflicts",
+})
+
 
 
 ---------- keymap graveyard ----------
@@ -526,6 +551,3 @@ vim.keymap.set("o", "a%", ":normal va%<cr>")
 -- experimental, might not like this. yeah i don't
 -- vim.keymap.set({ "n", "v" }, "*", "*<cmd>nohlsearch<cr>")
 -- vim.keymap.set({ "n", "v" }, "#", "#<cmd>nohlsearch<cr>")
-
--- TODO How to do a universal "change reverse" operator? search operatorfunc. i
--- think we can do a universal one somehow. want to revisit this.
