@@ -1,5 +1,8 @@
 # vim: syntax=gitignore
 
+# TODO Should make :Mks have a special name pattern, like MySession__Session.vim
+# (that way i can un-ignore genuine vim scripts and only ignore the sessions)
+
 Session.vim
 tags
 cscope.out

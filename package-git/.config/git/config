@@ -82,9 +82,12 @@
     puh = "push" # lmao
     remotes = "remote -v"
     rc = "rebase --continue"
+    mc = "merge --continue"
+    cpc = "cherry-pick --continue"
     ref = "reflog --date=short"
     rl = "reflog"
     recents = "list-recent-branches" # (this is one of my scripts)
+    r = "recents"
     s = "status --short --branch"
     sh = "show -5 --pretty=oneline"
     sl = "stash list"
