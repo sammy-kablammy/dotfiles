@@ -20,5 +20,5 @@ vim.keymap.set("n", "<c-p>", function()
     vim.api.nvim_set_current_win(window)
 end, { buffer = true })
 
--- TODO use vim.cmd.file() to read the name of the buffer and branch depending
--- on quickfix vs location list
+-- TODO this doesn't work in the loclist. use vim.cmd.file() to read the name of
+-- the buffer and branch depending on quickfix vs location list.

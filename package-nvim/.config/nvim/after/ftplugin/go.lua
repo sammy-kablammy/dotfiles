@@ -1,10 +1,29 @@
 -- we love golang!!! hooray!!!
 
-vim.bo.expandtab = false
-vim.bo.tabstop = 4
-vim.bo.shiftwidth = 4
-vim.bo.softtabstop = 4
-vim.b.sam_override_whitespace_settings = true
+
+
+-- vim.bo.expandtab = false
+-- vim.bo.tabstop = 4
+-- vim.bo.shiftwidth = 4
+-- vim.bo.softtabstop = 4
+-- vim.b.sam_override_whitespace_settings = true
+override_whitespace_settings = function(kind, thickness)
+    if kind == "tabs" then
+        vim.bo.expandtab = false
+    elseif kind == "spaces" then
+        vim.bo.expandtab = true
+    else
+        print("Unknown indentation kind: '" .. kind .. "'")
+    end
+    vim.bo.tabstop = thickness
+    vim.bo.shiftwidth = thickness
+    vim.bo.softtabstop = thickness
+    vim.b.sam_override_whitespace_settings = true
+end
+-- Yep this works :) time to port to all filetypes
+override_whitespace_settings("tabs", 3)
+
+
 
 vim.bo.formatprg = "gofmt"
 
