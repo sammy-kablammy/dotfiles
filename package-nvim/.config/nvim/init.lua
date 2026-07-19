@@ -106,7 +106,6 @@ require("lazy").setup({
         end,
         -- event = "InsertEnter",
     },
-    "ThePrimeagen/vim-be-good",
     {
         "echasnovski/mini.nvim",
         version = "*",
@@ -154,6 +153,37 @@ require("lazy").setup({
         ft = "markdown",
     },
 })
+
+-- New v0.12 vim.pack hooray!!! yippee!!!
+
+-- Ensure packpath is reachable, this is supposed to be the default but for some
+-- reason it isn't sometimes:
+vim.go.packpath = vim.go.packpath .. ',' .. "/home/sam/.local/share/nvim/site/"
+local github = function(str) return "https://github.com/" .. str end
+vim.opt.packpath:append("/home/sam/.local/share/nvim/site/")
+vim.pack.add({
+    github("ThePrimeagen/vim-be-good"),
+    github("folke/which-key.nvim"),
+})
+
+vim.cmd.packadd("vim-be-good")
+require("which-key").setup({
+    delay = 750,
+})
+
+-- Lazy load these whenever vim gets around to it
+vim.schedule(function()
+    vim.cmd.packadd("nvim.undotree")
+end)
+
+-- vim.pack.add does the download
+-- ":packadd name" or require("name") loads it. this allows for lazy loading
+-- ^^^This only applies to init.lua though; everywhere else loading is auto.
+-- Alternative you can use opts.load=true in package spec
+
+vim.api.nvim_create_user_command("PackOpenUI", function()
+    vim.pack.update(nil, { offline = true })
+end, {})
 
 require("plugins")
 require("vim_settings")
