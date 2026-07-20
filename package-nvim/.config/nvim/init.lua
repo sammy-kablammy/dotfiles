@@ -42,16 +42,6 @@ vim.o.termguicolors = true
 -- note: you can do config = true and lazy will do default plugin setup
 
 require("lazy").setup({
-    -- TODO remove, i don't do webdev, i think this might even be builtin nowadays?
-    -- Or could just recreate myself. wouldn't be too hard
-    {
-        "norcalli/nvim-colorizer.lua",
-        ft = "css", -- lazy load this plugin in css files (and then stay loaded for all files afterward)
-        config = function()
-            return { "css", } -- once lazy loaded, only apply colorization to css files
-        end,
-    },
-
 })
 
 -- New v0.12 vim.pack hooray!!! yippee!!!
