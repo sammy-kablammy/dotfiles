@@ -15,6 +15,10 @@ at this point i could just do my own file browser
 
 --]]
 
+vim.pack.add({
+    "https://github.com/echasnovski/mini.nvim",
+})
+
 -- use mini.icons instead of web-devicons
 -- (i think only telescope needs this at the moment)
 require("mini.icons").mock_nvim_web_devicons()

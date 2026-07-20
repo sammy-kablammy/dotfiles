@@ -97,16 +97,9 @@ vim.pack.add({
 
     github("ThePrimeagen/vim-be-good"),
     github("folke/which-key.nvim"),
-    github("lewis6991/gitsigns.nvim"),
-
-    github("romus204/tree-sitter-manager.nvim"),
-    github("nvim-treesitter/nvim-treesitter-textobjects"),
-    github('Wansmer/treesj'),
 
     github("tpope/vim-repeat"), -- needed by vim-surround
     github("tpope/vim-surround"),
-
-    github("echasnovski/mini.nvim"),
 
     github("ziontee113/icon-picker.nvim"),
 

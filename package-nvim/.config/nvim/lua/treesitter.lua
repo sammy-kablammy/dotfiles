@@ -4,15 +4,18 @@ RIP nvim-treesitter
 
 Now using tree-sitter-manager to install parsers and keep track of grammars.
 Open :TSManager and install parsers with 'i'
-https://github.com/romus204/tree-sitter-manager.nvim
 
 Still relying on tree-sitter-textobjects because it's 🔥🔥🔥
-https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 
 ...and treesj because i use it sometimes
-https://github.com/Wansmer/treesj
 
 --]]
+
+vim.pack.add({
+    "https://github.com/romus204/tree-sitter-manager.nvim",
+    "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+    "https://github.com/Wansmer/treesj",
+})
 
 --------------------------------- stock neovim ---------------------------------
 
