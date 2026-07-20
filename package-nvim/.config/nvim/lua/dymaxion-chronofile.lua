@@ -1,10 +1,35 @@
-
 --[[
+
+Carrying on Bucky's legacy
 
 proposed file structure:
 - Initial logs are stored in ~/.local/nvim/state/dymaxion-chronofile/
 - Once logs are completed (i.e. the corresponding vim instance exited
   successfully), they are moved to /completed
+- once a whole week is analyzed, we move it into that week's folder, for example
+  the week starting on sunday march 1 2026 is /2026/03/01 (This is like ISO 8601)
+  - This means we'll need a function to find the date of the most recent monday
+
+/   -->   /completed   -->   /year/week
+or maybe
+/   -->   /completed   -->   /analyzed
+
+where "completed" means a full log including VimLeave
+and "analyzed" means each file name is listed only once, with its total time
+
+mehhh i think the granularity of "a single vim session" is best. doesn't have to
+deal with timezones or crossing week boundaries or anything like that.
+
+I need a good way of collapsing these files. I've found that I make several
+hundred vim instances in a single week. And that's just normal usage, not even
+fancy scripting stuff. Reading files could really slow down the analysis phase
+(or lead to inode problems). Maybe each week we keep all the complete files, but
+tar them and keep them in an archive somewhere, along with a simple file
+displaying all the totals.
+
+By the way, a "week" should be defined as all the vim sessions that STARTED
+during that week. If a vim session remains open across sunday at midnight, it
+will count for the previous week. That's how to get around week crossing issues
 
 Separate files, one per vim session. Each time you open vim, that's a new
 file. There will be a separate bit of logic (possibly shell script, possibly vim
@@ -35,23 +60,26 @@ Example "pretty" data readout:
 - branch2:file1.txt
 - branch2:file4.txt
 
-We might actually only want to go as precise as a minute in the readout. We can
-store seconds but it's not useful to show seconds
-
-Also any time you open a buffer for say 2 seconds, don't edit or write the
-buffer, then leave, that should be ignored. You were obviously just cycling
-through the buffers.
-
-how is this gonna work with time zones? if we always request timestamps as a
-single time zone, since we mostly only care about the relative times, it will be
-fine.
+TODO need to canonicalize files and branches. See how README.md is counted
+twice. We can fix by getting the git branch NOT from vim's pwd, but from the
+parent directory of the FILE's pwd.
+{
+  ["<NO_GIT_BRANCH>:/home/sam/dotfiles/package-nvim/.config/nvim/lua/dymaxion-chronofile.lua"] = 3,
+  ["<NO_GIT_BRANCH>:/opt/projects/README.md"] = 13,
+  ["<NO_GIT_BRANCH>:<NO_FILE>"] = 27,
+  ["SomeBranch:/home/sam/dotfiles/package-nvim/.config/nvim/lua/dymaxion-chronofile.lua"] = 286,
+  ["SomeBranch:/opt/projects/README.md"] = 4,
+  ["SomeBranch:<NO_FILE>"] = 218
+}
 
 Logs should ignore files with 0 seconds, also anything in /tmp/ (or at least
 make it configurable to ignore things in /tmp/), and .git/COMMIT_EDITMSG
 
---]]
+Should be able to select any file and open a detailed log, sorted reverse
+chronologically, "you edited this file on this day for this much time", then
+"this day spent this much time"
 
--- TODO rename these to something better
+--]]
 
 -- In addition to timestamp, we use PID in case multiple nvim sessions were
 -- created in the same second (unlikely but might as well handle it)
