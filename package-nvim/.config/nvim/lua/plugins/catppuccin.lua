@@ -1,5 +1,10 @@
 -- https://github.com/catppuccin/nvim
 
+vim.pack.add({{
+    src = "https://github.com/catppuccin/nvim",
+    name = "catppuccin",
+}})
+
 require("catppuccin").setup({
     flavour = "macchiato", -- latte, frappe, macchiato, mocha
     background = { -- :h background
@@ -67,6 +72,7 @@ require("catppuccin").setup({
             indentscope_color = "",
         },
         -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+        telescope = true,
     },
 })
 

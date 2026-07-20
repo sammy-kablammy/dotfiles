@@ -1,8 +1,16 @@
 {
   "plugins": {
+    "catppuccin": {
+      "rev": "058e83dc009e4dd62f30807054de9cc849699e27",
+      "src": "https://github.com/catppuccin/nvim"
+    },
     "gitsigns.nvim": {
       "rev": "31d6fb2d618bca1482b9f274751ead5f03461408",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "icon-picker.nvim": {
+      "rev": "3ee9a0ea9feeef08ae35e40c8be6a2fa2c20f2d3",
+      "src": "https://github.com/ziontee113/icon-picker.nvim"
     },
     "mini.nvim": {
       "rev": "a35f08f63b73f0ffac045cd175fb2a22e167c39c",
@@ -15,6 +23,14 @@
     "nvim-treesitter-textobjects": {
       "rev": "898ee307df58f854d11cd7edd06472574d48014e",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+    },
+    "plenary.nvim": {
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "telescope.nvim": {
+      "rev": "427b576c16792edad01a92b89721d923c19ad60f",
+      "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
     "tree-sitter-manager.nvim": {
       "rev": "09e3a321eea8100cacd2e759c3a6c9d350295fab",

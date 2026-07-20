@@ -97,7 +97,6 @@ vim.pack.add({
 
     github("ThePrimeagen/vim-be-good"),
     github("folke/which-key.nvim"),
-    github("catppuccin/nvim"),
     github("lewis6991/gitsigns.nvim"),
 
     github("romus204/tree-sitter-manager.nvim"),
