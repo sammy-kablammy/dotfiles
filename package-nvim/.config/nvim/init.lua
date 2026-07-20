@@ -49,27 +49,6 @@ require("lazy").setup({
         dependencies = { "nvim-lua/plenary.nvim" },
     },
     {
-        -- "romus204/tree-sitter-manager.nvim",
-        dir = "/home/sam/checkouts/tree-sitter-manager.nvim/",
-        dependencies = {}, -- NOTE tree-sitter CLI must be installed system-wide. don't need this warning here, it's in checkhealth
-
-    },
-    {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        branch = "main",
-        init = function()
-            -- Disable entire built-in ftplugin mappings to avoid conflicts.
-            -- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
-            vim.g.no_plugin_maps = true
-
-            -- Or, disable per filetype (add as you like)
-            -- vim.g.no_python_maps = true
-            -- vim.g.no_ruby_maps = true
-            -- vim.g.no_rust_maps = true
-            -- vim.g.no_go_maps = true
-        end,
-    },
-    {
         -- (for the pretty vim.ui.input box used for LSP renaming; i could live without this one)
         -- ...or could rewrite my own vim.ui.input type thing
         -- TODO dressing might be archived?
@@ -148,6 +127,8 @@ vim.pack.add({
     github("catppuccin/nvim"),
     github("lewis6991/gitsigns.nvim"),
 
+    github("romus204/tree-sitter-manager.nvim"),
+    github("nvim-treesitter/nvim-treesitter-textobjects"),
     github('Wansmer/treesj'),
 
     github("tpope/vim-repeat"), -- needed by vim-surround
