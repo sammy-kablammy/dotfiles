@@ -6,7 +6,8 @@ jeez i need descriptions for lots of these mappings
 
 some notes on keymaps:
 
-- <leader> needs to be set up in init.lua, right before setting up lazy.
+- <leader> needs to be set up in init.lua, as early as possible so that plugins
+  work correctly with laz
 - for notation, see :h keycodes
 - if some keys aren't working, see :h map-special-keys
   for example, <C-m> is treated as a carriage return (not to be confused with a
@@ -424,7 +425,9 @@ vim.keymap.set("n", "<leader>E", function() vim.cmd("Explore") end)
 -- vim.keymap.set("n", "<leader>e", function() vim.cmd("Explore") end)
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]]) -- escape terminal mode (because the default mapping is weird)
 vim.keymap.set("n", "<leader><leader>x", "<cmd>silent !xdg-open '%:p:h'<cr>", { desc = "open directory in file explorer" })
-vim.keymap.set("n", "<leader>lz", "<cmd>Lazy<cr>")
+vim.keymap.set("n", "<leader>lz", function()
+    vim.pack.update(nil, { offline = true })
+end)
 vim.keymap.set("c", "<c-h>", "<left>")
 vim.keymap.set("c", "<c-l>", "<right>")
 vim.keymap.set("i", "<c-b>", "`")

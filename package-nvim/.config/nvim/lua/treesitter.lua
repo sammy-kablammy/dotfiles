@@ -140,7 +140,7 @@ require("nvim-treesitter-textobjects").setup({
 -- You can use the capture groups defined in `textobjects.scm`
 -- You can also use captures from other query groups like `locals.scm` or `folds.scm`
 -- Example: gf this file
--- ~/.local/share/nvim/lazy/nvim-treesitter-textobjects/queries/lua/textobjects.scm
+-- ~/.local/share/nvim/site/pack/core/opt/nvim-treesitter-textobjects/queries/lua/textobjects.scm
 -- I also have telescope fq/fQ for this at time of writing
 
 -- TODO keymap descriptions throughout this file (this applies everywhere in my config, just search telescope keymaps for "anonymous"

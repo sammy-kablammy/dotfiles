@@ -105,8 +105,8 @@ telescope_map("V", function() builtin.live_grep({ cwd = "~/.config/nvim/" }) end
 telescope_map("]", builtin.tags, "telescope tags")
 telescope_map("p", function() builtin.find_files({ cwd = vim.fn.stdpath("data") .. "/site/pack/core/opt" }) end, "plugins")
 telescope_map("P", function() builtin.live_grep({ cwd = vim.fn.stdpath("data") .. "/site/pack/core/opt" }) end, "live grep in Plugins")
-telescope_map("q", function() builtin.find_files({ cwd = "/home/sam/.local/share/nvim/site/queries/" }) end, "treesitter Queries")
-telescope_map("Q", function() builtin.find_files({ cwd = "$HOME/.local/share/nvim/lazy/nvim-treesitter-textobjects/queries/" }) end, "treesitter Queries (textobjects)")
+telescope_map("q", function() builtin.find_files({ cwd = "$HOME/.local/share/nvim/site/queries/" }) end, "treesitter Queries")
+telescope_map("Q", function() builtin.find_files({ cwd = "$HOME/.local/share/nvim/site/pack/core/opt/nvim-treesitter-textobjects/queries" }) end, "treesitter Queries (textobjects)")
 
 -- can't use vim.g.sam_notes_path here because it isn't defined yet???
 vim.g.telescope_sam_notes_path = "/home/sam/kablam/notes"
