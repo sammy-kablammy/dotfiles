@@ -105,6 +105,9 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
 
 require("plugins")
+require("git")
+require("lsp")
+require("toothpick")
 require("vim_settings")
 require("keymaps")
 require("statusline")

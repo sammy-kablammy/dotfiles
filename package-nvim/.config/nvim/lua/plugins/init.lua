@@ -1,7 +1,3 @@
 require("plugins.catppuccin")
-require("plugins.gitsigns")
-require("plugins.lsp")
 require("plugins.mini")
--- require("plugins.snippets_and_completion")
 require("plugins.telescope")
-require("plugins.toothpick")
