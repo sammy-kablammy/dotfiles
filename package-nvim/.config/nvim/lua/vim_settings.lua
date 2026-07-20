@@ -101,6 +101,9 @@ trying to keep my config as minimal as possible, so this will have to do ðŸ˜ ðŸ’
 
 --]]
 
+-- TODO should reconsider my use of BufEnter (every time entering buffer) vs
+-- BufRead (only first time it's opened)
+
 --------------------------------global settings---------------------------------
 
 -- 'wrap' is soft wrap. it's visual and won't insert any newline characters.

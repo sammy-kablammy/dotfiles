@@ -1,3 +1,14 @@
+--[[
+
+the eternal struggle to have the perfect nvim config
+
+- ftplugins should have much less code. markdown i'm looking at you. define
+  those things globally or in lua modules, then have ftplugins call out to them
+- each lua file should be as independent as possible. this means plugin
+  installation, configuration, and mappings belong in one file, top to bottom
+
+--]]
+
 -- remember to :mkspell on a first installation. spellgood or zg should also work
 -- vim.cmd('silent mkspell! /home/sam/.config/nvim/spell/en.utf-8.add') -- too slow to run every startup (~20ms)
 
@@ -18,6 +29,8 @@ local function shitpost()
 end
 print(shitpost())
 
+-- TODO merge autocommands. we should have a single (likely buf enter) that does
+-- like 99% of what i want.
 SAM_AUGROUP = vim.api.nvim_create_augroup("sammy-kablammy", {})
 
 vim.g.mapleader = " "
