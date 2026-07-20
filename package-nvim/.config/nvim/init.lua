@@ -52,38 +52,6 @@ require("lazy").setup({
         end,
     },
 
-    -- my plugins!!! hooray!!!
-    -- "sammy-kablammy/nvim_plugin_template",
-    {
-        "sammy-kablammy/simpletodo.nvim",
-        init = function()
-            require("simpletodo").setup({})
-        end,
-    },
-    {
-        -- Can likely remove because of https://github.com/neovim/neovim/pull/28630
-        "sammy-kablammy/linkma.nvim",
-        -- NOTE: use "dir = '/path/to/local/plugin'" for local plugins
-        config = function()
-            local linkma = require("linkma")
-            vim.api.nvim_create_autocmd({ "BufEnter" }, {
-                pattern = { "*.md" },
-                callback = function()
-                    vim.api.nvim_buf_create_user_command(0, "LinkmaToc", linkma.toc_loclist, {})
-                    vim.keymap.set("n", "<enter>", linkma.follow_link, { buffer = 0, desc = "follow link" })
-                    vim.keymap.set("n", "]x", linkma.next_checkbox, { desc = "next checkbox" })
-                    vim.keymap.set("n", "[x", linkma.previous_checkbox, { desc = "previous checkbox" })
-                    vim.keymap.set("n", "<leader>mx", linkma.toggle_checkbox, { desc = "toggle checkbox" })
-                    -- text object for links
-                    vim.keymap.set("x", "im", linkma.select_link_text_object, { buffer = 0, desc = "inner link" })
-                    vim.keymap.set("o", "im", ":normal vim<cr>", { buffer = 0, desc = "inner link" })
-                    vim.keymap.set("x", "am", function() linkma.select_link_text_object(true) end, { buffer = 0, desc = "around link" })
-                    vim.keymap.set("o", "am", ":normal vam<cr>", { buffer = 0, desc = "around link" })
-                end,
-            })
-        end,
-        ft = "markdown",
-    },
 })
 
 -- New v0.12 vim.pack hooray!!! yippee!!!
@@ -102,6 +70,11 @@ vim.pack.add({
     github("tpope/vim-surround"),
 
     github("ziontee113/icon-picker.nvim"),
+
+    -- my plugins!!! hooray!!!
+    -- github("sammy-kablammy/nvim_plugin_template"),
+    github("sammy-kablammy/simpletodo.nvim"),
+    github("sammy-kablammy/linkma.nvim"),
 
 })
 
@@ -124,6 +97,29 @@ end)
 vim.api.nvim_create_user_command("PackOpenUI", function()
     vim.pack.update(nil, { offline = true })
 end, {})
+
+-- Configs for my own plugins
+-- require("simpletodo").setup({})
+-- Linkma
+-- Can maybe remove because of https://github.com/neovim/neovim/pull/28630
+local linkma = require("linkma")
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    pattern = { "*.md" },
+    callback = function()
+        vim.api.nvim_buf_create_user_command(0, "LinkmaToc", linkma.toc_loclist, {})
+        vim.keymap.set("n", "<enter>", linkma.follow_link, { buffer = 0, desc = "follow link" })
+        vim.keymap.set("n", "]x", linkma.next_checkbox, { desc = "next checkbox" })
+        vim.keymap.set("n", "[x", linkma.previous_checkbox, { desc = "previous checkbox" })
+        vim.keymap.set("n", "<leader>mx", linkma.toggle_checkbox, { desc = "toggle checkbox" })
+        -- text object for links
+        vim.keymap.set("x", "im", linkma.select_link_text_object, { buffer = 0, desc = "inner link" })
+        vim.keymap.set("o", "im", ":normal vim<cr>", { buffer = 0, desc = "inner link" })
+        vim.keymap.set("x", "am", function() linkma.select_link_text_object(true) end, { buffer = 0, desc = "around link" })
+        vim.keymap.set("o", "am", ":normal vam<cr>", { buffer = 0, desc = "around link" })
+    end,
+})
+
+
 
 require("plugins")
 require("vim_settings")
