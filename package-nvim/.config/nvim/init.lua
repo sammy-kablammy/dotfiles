@@ -20,37 +20,17 @@ print(shitpost())
 
 SAM_AUGROUP = vim.api.nvim_create_augroup("sammy-kablammy", {})
 
--- Lazy.nvim bootstrap
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        -- TODO should pin lazy version
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
-end
-vim.opt.rtp:prepend(lazypath)
-
-vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
+vim.g.mapleader = " "
 
 vim.o.termguicolors = true
 
--- note: you can do config = true and lazy will do default plugin setup
-
-require("lazy").setup({
-})
-
 -- New v0.12 vim.pack hooray!!! yippee!!!
 
--- Ensure packpath is reachable, this is supposed to be the default but for some
--- reason it isn't sometimes:
-vim.go.packpath = vim.go.packpath .. ',' .. "/home/sam/.local/share/nvim/site/"
-local github = function(str) return "https://github.com/" .. str end
-vim.opt.packpath:append("/home/sam/.local/share/nvim/site/")
+-- Default plugin installation follows 'packpath' option and should be:
+--     ~/.local/share/nvim/site/pack/core/
+-- AKA
+--     vim.fn.stdpath("data") .. "/site/path/core/"
+github = function(str) return "https://github.com/" .. str end
 vim.pack.add({
 
     github("ThePrimeagen/vim-be-good"),
