@@ -42,33 +42,6 @@ vim.o.termguicolors = true
 -- note: you can do config = true and lazy will do default plugin setup
 
 require("lazy").setup({
-    {
-        "nvim-telescope/telescope.nvim",
-        tag = "v0.2.2",
-        -- TODO plenary might be archived?
-        dependencies = { "nvim-lua/plenary.nvim" },
-    },
-    {
-        -- (for the pretty vim.ui.input box used for LSP renaming; i could live without this one)
-        -- ...or could rewrite my own vim.ui.input type thing
-        -- TODO dressing might be archived?
-        "stevearc/dressing.nvim",
-        event = "CursorMoved",
-    },
-    {
-        -- TODO find an alternative
-        "ziontee113/icon-picker.nvim",
-        dependencies = {
-            "stevearc/dressing.nvim",
-        },
-        config = function()
-            require("dressing").setup({
-                backend = { "telescope", "builtin" }
-            })
-            require("icon-picker").setup({ disable_legacy_commands = true })
-        end,
-        -- event = "InsertEnter",
-    },
     -- TODO remove, i don't do webdev, i think this might even be builtin nowadays?
     -- Or could just recreate myself. wouldn't be too hard
     {
@@ -136,6 +109,8 @@ vim.pack.add({
 
     github("echasnovski/mini.nvim"),
 
+    github("ziontee113/icon-picker.nvim"),
+
 })
 
 vim.cmd.packadd("vim-be-good")
@@ -180,6 +155,11 @@ require("custom_semicolon_repeat") -- I think this might need to be required aft
 require("dymaxion-chronofile")
 
 require("snippets")
+
+-- icon-picker setup until i remove it fully
+require("icon-picker").setup({ disable_legacy_commands = true })
+vim.keymap.set("n", "<leader><leader>i", "<cmd>IconPickerNormal<cr>")
+vim.keymap.set("n", "<leader><leader>I", "<cmd>IconPickerNormal emoji<cr>")
 
 -- What if i tried using the mouse for once?
 -- :h popup-menu

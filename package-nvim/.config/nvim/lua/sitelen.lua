@@ -178,7 +178,7 @@ function custom_select_func(items, opts, on_choice)
 end
 
 vim.keymap.set("i", "<c-q>", iconpick, { desc = "sitelen" })
-vim.keymap.set("n", "<leader><leader>i", iconpick, { desc = "sitelen" })
+vim.keymap.set("n", "<leader>i", iconpick, { desc = "sitelen" })
 
 local prev_select = vim.ui.select
 vim.ui.select = custom_select_func

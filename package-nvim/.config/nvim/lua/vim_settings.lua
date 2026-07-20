@@ -129,6 +129,7 @@ vim.o.hls = true
 vim.o.showmode = false
 vim.o.timeout = false
 vim.o.foldcolumn = "1"
+vim.opt.fillchars:append("eob: ") -- No more tildes ~ at the end of the buffer
 vim.o.tagcase = "match"
 vim.o.tildeop = true -- Experimental using tilde as op, I may not like this
 vim.o.dictionary = "/usr/share/dict/american-english" -- on debian this package is called "wamerican"
