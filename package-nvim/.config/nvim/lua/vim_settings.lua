@@ -73,6 +73,21 @@ function FixStupidVimIndentationSettings()
 end
 vim.api.nvim_create_user_command('FixStupidVimIndentationSettings', FixStupidVimIndentationSettings, {})
 
+-- This is here to be used by ftplugins e.g. override_whitespace_settings("spaces", 2)
+override_whitespace_settings = function(kind, thickness)
+    if kind == "tabs" then
+        vim.bo.expandtab = false
+    elseif kind == "spaces" then
+        vim.bo.expandtab = true
+    else
+        print("Unknown indentation kind: '" .. kind .. "'")
+    end
+    vim.bo.tabstop = thickness
+    vim.bo.shiftwidth = thickness
+    vim.bo.softtabstop = thickness
+    vim.b.sam_override_whitespace_settings = true
+end
+
 -- recall: autocommands of the same event type will fire in order of definition
 
 --[[

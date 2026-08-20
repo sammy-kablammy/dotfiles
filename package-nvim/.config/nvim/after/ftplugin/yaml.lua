@@ -1,8 +1,4 @@
-vim.bo.expandtab = true
-vim.bo.tabstop = 2
-vim.bo.shiftwidth = 2
-vim.bo.softtabstop = 2
-vim.b.sam_override_whitespace_settings = true
+override_whitespace_settings("spaces", 3)
 
 vim.keymap.set({ "n", "v" }, "gl", listify, {
     desc = "listify",

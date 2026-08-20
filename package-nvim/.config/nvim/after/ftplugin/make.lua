@@ -1,5 +1,1 @@
-vim.bo.expandtab = false
-vim.bo.tabstop = 4
-vim.bo.shiftwidth = 4
-vim.bo.softtabstop = 4
-vim.b.sam_override_whitespace_settings = true
+override_whitespace_settings("tabs", 4)

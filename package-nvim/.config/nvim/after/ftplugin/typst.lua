@@ -1,8 +1,4 @@
-vim.bo.expandtab = true
-vim.bo.tabstop = 2
-vim.bo.shiftwidth = 2
-vim.bo.softtabstop = 2
-vim.b.sam_override_whitespace_settings = true
+override_whitespace_settings("spaces", 2)
 
 vim.bo.formatoptions = "trqnj"
 vim.b.sam_override_formatoptions = true
