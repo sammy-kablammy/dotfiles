@@ -65,6 +65,7 @@ telescope.setup({
                     local bufnr = vim.fn.bufnr()
                     action_layout.toggle_mirror(bufnr)
                 end,
+                ["<c-p>"] = action_layout.toggle_preview,
             },
         },
     },
@@ -77,6 +78,8 @@ end
 -- telescope_map("f", function() builtin.find_files({ hidden = true }) end, "find files")
 telescope_map("f", function() builtin.find_files() end, "find files")
 telescope_map("F", function() builtin.find_files({ hidden = true, no_ignore = true, cwd = utils.buffer_dir() }) end, "find files relative to current buffer")
+telescope_map("a", function() builtin.git_files() end, "git trAcked files")
+telescope_map("e", function() builtin.git_branches() end, "git branchEs")
 telescope_map("h", builtin.help_tags, "help")
 telescope_map("b", function() builtin.buffers({ sort_mru = true }) end, "buffers")
 telescope_map("B", function() builtin.live_grep({ grep_open_files = true }) end, "live grep, only open buffers")

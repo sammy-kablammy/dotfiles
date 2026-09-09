@@ -7,3 +7,6 @@ Session.vim
 tags
 cscope.out
 compile_commands.json
+
+# ewwww who would use macos?
+.DS_Store

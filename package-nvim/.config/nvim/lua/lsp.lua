@@ -46,6 +46,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- "goto definition" built into vim
         bufmap("n", "<leader>gd", vim.lsp.buf.definition, "LSP goto definition")
         bufmap("n", "<leader>gD", vim.lsp.buf.declaration, "LSP goto Declaration")
+        bufmap("n", "<c-w>gd", function()
+            vim.cmd.wincmd("s")
+            vim.lsp.buf.definition()
+        end, "LSP goto definition")
         bufmap("n", "<leader>ca", vim.lsp.buf.code_action, "code actions")
         bufmap("i", "<C-h>", function()
             print("Nvim now uses <c-s> in Insert mode for signature help.")
@@ -66,6 +70,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end, "toggle inlay hints")
         -- print("LSP successfully attached 😊")
+        bufmap("n", "K", function()
+            vim.lsp.buf.hover({
+                -- border = { "+", "-", "+", "|", "+", "-", "+", "|" },
+                -- border = { "╔", "═" ,"╗", "║", "╝", "═", "╚", "║" },
+                -- border = "rounded",
+            })
+        end, "LSP hover with my preferred opts")
     end,
 })
 
@@ -110,17 +121,28 @@ vim.lsp.config["luals"] = {
         Lua = {
             runtime = {
                 version = "LuaJIT",
-            }
-        }
-    }
+            },
+            workspace = {
+                library = {
+                    -- search the following paths for hover, goto-definition:
+                    unpack(vim.opt.packpath:get()), -- plugins
+                    unpack(vim.api.nvim_get_runtime_file('', true)), -- nvim runtime
+                },
+                -- This is supposed to prevent popups like "looks like you're
+                -- using this, apply config?":
+                checkThirdParty = false,
+            },
+        },
+    },
 }
 -- 🦐 Shrimply 🍤 comment this line out to disable LSPs
 -- vim.lsp.enable("luals")
 
 ---------- ok here are the rest ----------
 
--- TODO should provide package manager commands to install everything in here,
--- ideally multiple options
+-- LSP configs should not go in ftplugins because some of them rely on multiple
+-- filetypes e.g. tsc would have to go in both javascript and typescript
+-- ftplugins
 
 -- did you know clangd exists on arm? mason always broke on arm
 vim.lsp.config["clangd"] = {
@@ -168,3 +190,12 @@ vim.lsp.config["rust-analyzer"] = {
     root_markers = { "Cargo.toml", ".git" },
 }
 vim.lsp.enable("rust-analyzer")
+
+-- why tf would anyone use javascript
+-- (brew install tsc)
+vim.lsp.config["tsc"] = {
+    cmd = { "tsc", "--lsp", "--stdio" },
+    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+    root_markers = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" }
+}
+vim.lsp.enable("tsc")

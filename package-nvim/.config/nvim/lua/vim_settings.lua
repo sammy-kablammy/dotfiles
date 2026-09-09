@@ -136,6 +136,9 @@ vim.o.smartcase = true
 -- use this since telescope is better but it's nice to have)
 vim.opt.path:append("**")
 
+-- Global but can be overwritten by LSP, treesitter, color themes, etc.
+vim.o.winborder = "single"
+
 -- just use :h you dingus
 vim.o.inccommand = 'split' -- preview substitutions
 vim.o.updatetime = 500 -- faster autosave for swapfiles (milliseconds)

@@ -1,4 +1,4 @@
-override_whitespace_settings("spaces", 3)
+override_whitespace_settings("spaces", 2)
 
 vim.keymap.set({ "n", "v" }, "gl", listify, {
     desc = "listify",

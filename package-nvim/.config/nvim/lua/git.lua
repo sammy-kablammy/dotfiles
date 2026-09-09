@@ -40,7 +40,10 @@ vim.keymap.set("n", "]G", function()
     print("use 'h' for hunks instead")
 end, { desc = "next git Hunk" })
 
-vim.keymap.set("n", "<leader>gb", gitsigns.blame, { desc = "open Git Blame" })
+vim.keymap.set("n", "<leader>gb", gitsigns.blame, { desc = "git Blame" })
+vim.keymap.set("n", "<leader>ga", gitsigns.stage_hunk, { desc = "git stage (Add) hunk" })
+vim.keymap.set("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "git Unstage hunk" })
+vim.keymap.set("n", "<leader>gr", gitsigns.reset_hunk, { desc = "git Reset hunk" })
 -- this allows for the fabled 'dih' maneuver to delete inside hunk:
 vim.keymap.set("v", "ih", gitsigns.select_hunk, { desc = "inside hunk textobject" })
 vim.keymap.set("o", "ih", gitsigns.select_hunk, { desc = "inside hunk textobject" })

@@ -104,6 +104,7 @@
     untrack = "rm --cached" # remove file from repo without deleting from filesystem
     w = "worktree list"
     open = "open-remote"
+    wheremyhooksat = "rev-parse --git-path hooks"
 
 
     # Pickaxe should generally be used for searching across history. List

@@ -20,7 +20,7 @@ set hlsearch incsearch nowrapscan
 set wildmenu
 set nowrap
 set textwidth=80
-set colorcolumn=+0 " +0 syncs colorcolumn with textwidth
+" set colorcolumn=+0 " +0 syncs colorcolumn with textwidth
 set scrolloff=3 sidescrolloff=3
 set formatoptions=jcrq " this is always in flux but i guess it's fine for now
 set cursorline
@@ -28,6 +28,7 @@ set breakindent
 set noswapfile
 set autoindent
 set laststatus=1
+set mouse=a
 set list lcs=lead:·,trail:·,tab:>-
 	" test tab here
     " test leading/trailing space here  

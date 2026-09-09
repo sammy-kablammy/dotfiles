@@ -3,7 +3,7 @@
 # Diff current branch against its starting point, even when the branch it
 # branched from has moved on. Branch branch branch.
 
-upstream_branch="origin/dev"
+upstream_branch="origin/main"
 if [ $# -ge 1 ]; then
     upstream_branch="$1"
     shift
