@@ -124,3 +124,13 @@ end, {
         return matches
     end,
 })
+
+vim.api.nvim_create_user_command("NukeAlphabeticRegisters", function()
+    for nr = vim.fn.char2nr("a"), vim.fn.char2nr("z"), 1 do
+        local char = vim.fn.nr2char(nr)
+        local current_contents = vim.fn.getreg(char)
+        if current_contents ~= "" then
+            vim.fn.setreg(char, "")
+        end
+    end
+end, {})

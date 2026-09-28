@@ -12,7 +12,9 @@ local symbols = {
     "Ω omega | greek omega",
     "™ TM | trademark",
     "🤓 nerd",
-    "😮 surprise",
+    "😮 surprised",
+    "🙄 eyeroll",
+    "😎 sunglasses | cool",
     "😳 flushed",
     "🤤 drool",
     "🤔 thinking",
@@ -35,6 +37,8 @@ local symbols = {
     "🦐 shrimp",
     "🍤 fried shrimp",
     "🔥 fire",
+    "💣 bomb",
+    "💼 briefcase | suitcase | work",
 }
 -- Could possibly parse vim.fn.digraph_getlist(true) for more
 

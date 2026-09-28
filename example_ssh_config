@@ -15,3 +15,11 @@ host somerelay
 host somedestination
     proxyjump somerelay
     hostname 192.168.123.456
+
+# Relay ssh keys. need some combination of the following:
+Host *
+    IdentityFile ~/.ssh/id_ed25519
+    AddKeysToAgent yes
+    UseKeychain yes
+    ForwardAgent yes
+    # run ssh-add -l to check
