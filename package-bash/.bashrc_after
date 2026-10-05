@@ -37,10 +37,10 @@ alias 'grep'='\grep --color=auto'
 alias 'egrep'='\egrep --color=auto'
 alias 'fgrep'='\fgrep --color=auto'
 # note: you can use cp -P to not follow symlinks. can significantly shorten copies, if that's what you mean to do
-alias 'cp'='cp --interactive'
-alias 'rm'='rm --interactive'
-alias 'mv'='mv --interactive'
-alias 'mkdir'='mkdir --parents'
+alias 'cp'='cp -i'
+alias 'rm'='rm -i'
+alias 'mv'='mv -i'
+alias 'mkdir'='mkdir -p'
 # alias 'symlink'='ln -s'
 # alias 'g'='git'
 # alias 'gc'='git -C'
@@ -151,15 +151,26 @@ fi
 set -o noclobber
 
 # quickly simulate WSL with `tmux new-window -e WSL_DISTRO_NAME=Ubuntu`
-if [ ! -z "$WSL_DISTRO_NAME" ]; then
+if [ -n "$WSL_DISTRO_NAME" ]; then
     # Historically on WSL, I used the wslu package to get `wslview`, which is
     # similar to xdg-open. But the version in apt is apparently broken or
     # something? Just use explorer.exe instead.
-    alias 'x'='explorer.exe'
+    alias 'xdg-open'='explorer.exe'
     # NOTE: when wsl exes break, use 'sudo systemctl restart systemd-binfmt'
-    # TODO move all WSL things to the same place probably
-else
-    alias 'x'='xdg-open'
+elif [ "$(uname)" = "Darwin" ]; then
+    alias 'xdg-open'='open'
+fi
+alias 'x'='xdg-open'
+
+if [ "$(uname)" = "Darwin" ]; then
+    if [ ! -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
+        echo "(sam) Looks like bash-completion isn't installed. Consider 'brew install bash-completion' or bash-completion@2"
+    fi
+
+    if ! command -v gxargs > /dev/null; then
+        echo "(sam) Looks like gxargs isn't installed. MacOS xargs is shitty. Consider 'brew install findutils'"
+    fi
+    alias xargs=gxargs
 fi
 
 # TODO come back to this and get some more binds that don't need <enter> please:
@@ -440,6 +451,13 @@ fi
 export TRASH=~/.local/share/Trash/files
 trash() {
     mkdir -p "$TRASH"
+
+    if [ "$(uname)" = "Darwin" ]; then
+        # mv doesn't support --backup, use a dumber version instead
+        mv -f "$@" "$TRASH"
+        return
+    fi
+
     if [ "$1" = "-i" ] || [ "$1" = "--interactive" ]; then
         shift
         for file_to_trash in "$@"; do
