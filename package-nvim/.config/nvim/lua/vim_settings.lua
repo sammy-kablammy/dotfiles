@@ -220,7 +220,7 @@ vim.o.sidescrolloff = 3
 vim.o.signcolumn = "yes" -- i would use "number" but gitsigns signs are too common
 
 -----------------------------interacting with notes-----------------------------
-vim.g.sam_notes_path = "/home/sam/kablam/notes"
+vim.g.sam_notes_path = vim.fn.expand("~/kablam/notes")
 vim.api.nvim_create_user_command('NewNote', function()
     local obj = vim.system({"/home/sam/.local/sam-bin/notenew"}, {}):wait()
     -- there's a trailing newline; remove it

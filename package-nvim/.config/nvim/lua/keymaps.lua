@@ -392,8 +392,8 @@ end, { desc = "yank current file name (+ markdown link)" })
 vim.keymap.set("n", "g=", "g+") -- (redo, alias for g+)
 vim.keymap.set("n", "<c-w>u", "<c-w>p")
 vim.keymap.set("n", "<c-w><c-u>", "<c-w>p")
-vim.keymap.set("n", "<c-w>a", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
-vim.keymap.set("n", "<c-w><c-a>", "<cmd>vertical sball<cr>", { desc = "Split all buffers" })
+vim.keymap.set("n", "<c-w>a", "<cmd>sball<cr>", { desc = "Split all buffers" })
+vim.keymap.set("n", "<c-w><c-a>", "<cmd>sball<cr>", { desc = "Split all buffers" })
 vim.keymap.set("n", "<c-w>z", function()
     -- Used to just be "<c-w>|<c-w>_", 
     if not vim.g.sam_is_zoomed then
@@ -468,6 +468,21 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     end,
     desc = "Update matchit to match git conflicts",
 })
+
+vim.keymap.set("n", "<leader>r", function()
+    local file = vim.fn.bufname()
+    local line, _ = unpack(vim.api.nvim_win_get_cursor(0))
+    vim.fn.setreg("+", file .. ":" .. line)
+end, { desc = "yank Range" })
+vim.keymap.set("v", "<leader>r", function()
+    local file = vim.fn.bufname()
+    local line1, _ = unpack(vim.api.nvim_win_get_cursor(0))
+    local line2 = vim.fn.getpos("v")[2]
+    -- if you selected backwards, the start and end line numbers might be swapped...
+    local start_line = math.min(line1, line2)
+    local end_line = math.max(line1, line2)
+    vim.fn.setreg("+", file .. ":" .. start_line .. "-" .. end_line)
+end, { desc = "yank Range" })
 
 
 

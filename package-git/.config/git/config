@@ -61,6 +61,7 @@
     edit-staged = "!f() { git diff --name-only --staged | xargs -d '\n' $EDITOR; }; f"
     f = "fetch"
     fq = "fetch --quiet"
+    fp = "fetch --prune"
     fs = "!f() { git fetch && git status --short --branch; }; f"
     fst = "!f() { git fetch && git status; }; f"
     # see "PRETTY FORMATS" in git-log(1)
@@ -90,9 +91,11 @@
     r = "recents"
     s = "status --short --branch"
     sh = "show -5 --pretty=oneline"
+    sm = "show origin/main"
     sl = "stash list"
     sp = "stash pop"
-    sa = "!f() { git show stash@{$1} ; }; f" # "stash at", idk it's just annoying to type @{n} all the time
+    # sa = "!f() { git show stash@{$1:-0} ; }; f" # "stash at", idk it's just annoying to type @{n} all the time
+    sa = "!f() { git diff stash@{$1:-0}~ stash@{$1:-0} ; }; f"
     sst = "submodule status"
     st = "status"
     suf = "submodule update --force" # reset submodule to pinned commit
@@ -103,6 +106,9 @@
     unstage = "restore --staged"
     untrack = "rm --cached" # remove file from repo without deleting from filesystem
     w = "worktree list"
+    # I can never remember if it's "worktree list" or "worktree ls" (ditto remove/rm)
+    wls = "worktree list"
+    wrm = "worktree remove"
     open = "open-remote"
     wheremyhooksat = "rev-parse --git-path hooks"
 

@@ -83,7 +83,8 @@ alias 'wsl-fix-bin'='sudo systemctl restart systemd-binfmt'
 edit-script() {
     $EDITOR $(which $*)
 }
-complete -c edit-script
+alias e=edit-script
+complete -c edit-script e
 
 alias 'nvim-dev'="$HOME/checkouts/neovim/build/bin/nvim --clean"
 # You need to do some combination of make clean, delete these files, and maybe
@@ -125,17 +126,7 @@ alias 'tarx'='tar xzfk'
 #     tar xzf "$2" -C "$1"
 # }
 
-# cd to multiple places at once; easier up-a-dir
-c() {
-    if [ $# -eq 0 ]; then
-        cd ".."
-    elif [ $# -eq 1 ]; then
-        cd "$1"
-    else
-        tmux split -c "$2"
-        cd "$1"
-    fi
-}
+alias 'c'='cd ../..'
 alias 'cc'='cd ../..'
 alias 'ccc'='cd ../../..'
 alias 'cccc'='cd ../../../..'
