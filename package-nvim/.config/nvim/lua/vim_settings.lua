@@ -331,31 +331,6 @@ vim.api.nvim_create_autocmd("SwapExists", {
 
 
 
--- TODO delete this
--- reuse a vim session, if one is found
-vim.api.nvim_create_user_command("Seshma", function()
-    if vim.fn.glob("Session.vim") ~= "" then
-        vim.ui.select({ "yes", "no" }, {
-            prompt = "A vim session exists, would you like to load and delete it?",
-        }, function(choice)
-            if choice == "yes" then
-                local date = os.date("*t")
-                local filename = date.year .. "-" ..
-                date.month .. "-" ..
-                date.day .. "_" ..
-                date.hour .. "-" ..
-                date.min .. "-" ..
-                date.sec .. ".vim"
-                vim.cmd.source("Session.vim")
-                vim.cmd("!mkdir --parents ~/.local/share/nvim/old_sessions/")
-                vim.cmd("!mv Session.vim ~/.local/share/nvim/old_sessions/deleted_on_" .. filename)
-            end
-        end)
-    else
-        print("No session file found.")
-    end
-end, {})
-
 vim.filetype.add({
     extension = {
         ["bash"] = "sh",
