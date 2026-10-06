@@ -69,19 +69,18 @@ vim.keymap.set("n", "<leader>h", toggle_header, { desc = "switch between source 
 -- Store current session name in variable
 vim.opt.sessionoptions:append("globals")
 
--- Could move to its own file. sessions.lua
-
--- TODO Need :Mks that's basically the same as :mks! but it only overwrites .vim
--- files. that way if i have a sesh.md and sesh.vim i don't accidentally tab
--- complete :mks! se<tab> and wipe sesh.md. Ideally it would automatically
--- determine the name of the session file to use too. Not sure how to do that
--- without preserving variables between sessions (maybe we just enable this in
--- sessionoptions)
+-- Could move to its own file. sessions.lua 🤔
 
 -- the impetus for this command is having two files session.md (my notes for the
 -- session) and the vim file itself session.vim. it's easy to tab complete the
 -- md and overwrite the wrong file.
 vim.api.nvim_create_user_command("Mks", function(cmd)
+    if vim.uv.os_uname() ~= nil and vim.uv.os_uname().sysname == "Darwin" then
+        -- Several coreutil flags I'm using are not supported on macos
+        print("Not supported on macos. Use :mks! instead")
+        return
+    end
+
     local session_name = ""
     if #cmd.fargs == 1 then
         session_name = cmd.fargs[1]
