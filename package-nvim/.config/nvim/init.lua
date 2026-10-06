@@ -9,9 +9,6 @@ the eternal struggle to have the perfect nvim config
 
 --]]
 
--- remember to :mkspell on a first installation. spellgood or zg should also work
--- vim.cmd('silent mkspell! /home/sam/.config/nvim/spell/en.utf-8.add') -- too slow to run every startup (~20ms)
-
 local seconds, mseconds = vim.uv.gettimeofday()
 math.randomseed(mseconds)
 local function shitpost()
@@ -127,6 +124,8 @@ require("diagram")
 require("custom_semicolon_repeat") -- I think this might need to be required after all keymaps are created
 
 require("dymaxion-chronofile")
+
+require("experimental/spellfile_updater")
 
 require("snippets")
 
