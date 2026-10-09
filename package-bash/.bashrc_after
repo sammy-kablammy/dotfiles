@@ -164,18 +164,20 @@ if [ "$(uname)" = "Darwin" ]; then
     alias xargs=gxargs
 fi
 
-# TODO come back to this and get some more binds that don't need <enter> please:
-# not working right now
 # recall: bind -x is like bind but keeps the current command typed out
-# i should expand this quite a bit:
-# within fzf, bind a certain key to open in a new tmux window, new tmux session,
-# new tmux pane, cd into it, or just simply paste it on the current readline
-# bind -x '"\C-xf":"find -maxdepth 2 -type d | fzf"'
-# bind -x '"\C-xf":"READLINE_LINE=\$READLINE_LINE find -maxdepth 2 -type d | fzf"'
-# (this escaping is nuts)
-# bind -x '"\C-xg":"git currentbranch"'
 
-# TODO same thing cxcf for File picker, perhaps c-x c to cd into another dir
+bind -x '"\C-xf":"paste-f-result"'
+bind -x '"\C-x\C-f":"paste-f-result"'
+paste-f-result() {
+    selected="$(__f-implementation)"
+    if [ -z "$selected" ]; then
+        return
+    fi
+    READLINE_LINE="$READLINE_LINE$selected"
+    # advance cursor to end of line
+    selected_strlen=${#selected}
+    READLINE_POINT=$((READLINE_POINT + $selected_strlen + 1))
+}
 
 bind -x '"\C-xg":"paste-git-local-branches"'
 bind -x '"\C-x\C-g":"paste-git-local-branches"'
@@ -223,21 +225,7 @@ cppc() {
     # now extract the msg field from it
 }
 
-# combine these and just detect whether the selection is a file or directory
-cf() {
-    target_directory=$(find . -type d -not -path "*/.git/*" 2>/dev/null | fzf)
-    if [ ! -z "$target_directory" ]; then
-        cd "$target_directory"
-    fi
-}
-# let's just get rid of this, f and telescope replace this
-nf() {
-    target_file=$(find . -not -path "*/.git/*" 2>/dev/null | fzf)
-    if [ ! -z "$target_file" ]; then
-        nvim "$target_file"
-    fi
-}
-
+# do i even use this?
 cl() {
     cd "$1" && ls
 }
@@ -407,23 +395,6 @@ bind '"\C-x\C-h": "\C-xh"'
 bind '"\C-xv": "--version"'
 bind '"\C-x\C-v": "\C-xv"'
 
-paste-f-local-files-and-stuff() {
-    return
-    # TODO f changes dir or opens a file. it doesn't currently just output the
-    # file. this should be reorganized
-    # selection=$(f)
-    if [ -z "$selection" ]; then
-        # fzf was canceled
-        return
-    fi
-    READLINE_LINE="$READLINE_LINE$selection"
-    # advance cursor to end of line
-    selection_strlen=${#selection}
-    READLINE_POINT=$((READLINE_POINT + $selection_strlen + 1))
-}
-bind -x '"\C-xf":"paste-f-local-files-and-stuff"'
-bind -x '"\C-x\C-f":"paste-f-local-files-and-stuff"'
-
 bind '"\C-xd": "2>/dev/null"'
 bind '"\C-x\C-d": "\C-xd"'
 bind '"\C-xi": "192.168."'
@@ -464,9 +435,7 @@ trash() {
 
 # the classic "find | fzf" wombo combo
 SAM_F_MAX_DEPTH=5
-f () {
-    # TODO double check this works. i am currently seeing 'f' open global
-    # search. oh duh its because some dirs are included even in lowercase f
+__f-implementation() {
     if [ $# -eq 0 ]; then
         f_starting_dir="."
     else
@@ -487,7 +456,11 @@ f () {
             -not -name ".stfolder" \
             2>/dev/null
         # more 'find' commands can go here
-    } | fzf --preview='less {}' --preview-window=right,50%)
+    } | fzf --preview='test -d {} && ls {}; test -f {} && less {}' --preview-window=right,50%)
+    echo "$selected"
+}
+f () {
+    selected="$(__f-implementation $@)"
     if [ -z "$selected" ]; then
         return 1
     fi
@@ -500,14 +473,11 @@ f () {
     fi
 }
 alias F='f ~'
-alias C='f ..'
-alias CC='f ../..'
-alias CCC='f ../../..'
-alias CCCC='f ../../../..'
-f-implementation() {
-    # Like f but only returns the thing, doesn't directly open it
-    echo pass
-}
+# do i even use these?
+# alias C='f ..'
+# alias CC='f ../..'
+# alias CCC='f ../../..'
+# alias CCCC='f ../../../..'
 
 dotfiles_path="$(get-dotfiles-path)"
 dotfiles() {
