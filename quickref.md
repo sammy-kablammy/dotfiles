@@ -2,9 +2,6 @@
 
 who knows how up to date this is
 
-there should be a quick way of opening this to a particular section, likely 'q'
-shell function. maybe nvim `<leader>?` since i'm already using that
-
 ## workflow
 
 programming gooder and faster yes ok thank you
@@ -220,6 +217,19 @@ foo(100, (struct some_type){ 1, false });
 // Discard unused return value by negating and casting to void. Otherwise your
 // compiler might complain about disobeying [[nodiscard]]
 (void)!function_with_return_value();
+```
+
+Why do you often see multiple levels of macro expansion? Macros are not expanded
+multiple times in one go, so applying a macro on a macro often doesn't give the
+expected result:
+```c
+// Incorrect version:
+#define STR(x) #x
+STR(__LINE__) // "__LINE__", not "25"
+// Correct version:
+#define STR(x) STR_IMPL(x)
+#define STR_IMPL(x) #x
+STR(__LINE__) // "25"
 ```
 
 ## Lua

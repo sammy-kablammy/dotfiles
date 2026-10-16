@@ -84,6 +84,7 @@ local function highlight_todos()
         ["NOTE"] = blue,
         ["WARN"] = yellow,
         ["HACK"] = yellow,
+        ["FIXME"] = yellow,
     }
     for keyword, hlcommand in pairs(keywords) do
         -- note that there is actually a builtin Todo hlgroup in vim if you
