@@ -185,10 +185,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
 
 
 
-vim.keymap.set({ "n", "v" }, "gl", listify, {
-    desc = "listify",
-    buffer = true,
-})
+filetype_create_listify_keymaps()
 
 
 

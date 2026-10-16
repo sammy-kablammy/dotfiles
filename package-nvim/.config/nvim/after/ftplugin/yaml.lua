@@ -1,9 +1,6 @@
 override_whitespace_settings("spaces", 2)
 
-vim.keymap.set({ "n", "v" }, "gl", listify, {
-    desc = "listify",
-    buffer = true,
-})
+filetype_create_listify_keymaps()
 
 -- This only applies to gitlab CI yaml files
 if vim.fs.basename(vim.api.nvim_buf_get_name(0)) == ".gitlab-ci.yml" then
