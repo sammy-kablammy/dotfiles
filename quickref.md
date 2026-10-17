@@ -49,6 +49,45 @@ Use `<leader>?` to open quick reference
 - use `<enter>` to go to the beginning of the next line. easier than `j^`
 - Remember `g<` to re-show the previous command output
 
+## GDB
+
+- remember to compile with debug symbols (C compilers this is `-g`)
+- `file a.out` set executable (only have to do this if it actually changes)
+- `make` invoke make (pretty basic but at least you don't have to leave gdb)
+- `run` or `run arg1 arg2 arg3`
+- `b file:line` or `b function_name` create breakpoint
+  - `clear file:line` clear breakpoint
+  - `info break` list breakpoints
+  - `until linenumber` temporary breakpoint at linenumber
+  - toggle breakpoints with their breakpoint number, not line number
+- `c` continue
+- `s` step into (`si` for instructions)
+- `n` step over to Next line (`ni` for instructions)
+- `finish` step out of current function
+- `p expr` print value of expression. Remember `p *expr` when pointer to struct
+  - `info locals`
+  - `info args`
+- `bt` show backtrace
+- Start the TUI with `gdb --tui`, `tui enable`, or `ctrl-x a`
+  - `layout src` source code
+  - `layout asm` assembly
+  - `layout split` both
+  - `help layout`
+  - scrolling with `ctrl-n`/`ctrl-p` and up/down are different. one scrolls the
+    prompt, one scrolls the source window. set with `focus cmd` or `focus src`
+
+## Termdebug aka vim/GDB integration
+
+- it's not enabled by default so start with `packadd termdebug`
+- `:Termdebug` opens new windows for GDB commands and program IO.
+- use GDB commands like normal: `file a.out`, `run arg1 arg2 arg3`
+- Builtin user commands:
+  - `:Break` add breakpoint at cursor
+  - `:Step` (step into)
+  - `:Over` (step over)
+  - `:Asm` will show you the assembly in a window
+  - `:Evaluate` will show you the value of a variable or maybe expression?
+
 ## shell (and bash)
 
 - you CAN use single parens (no dollar sign) to deal with operator precedence.
@@ -254,6 +293,8 @@ you can add tags for local variables like `ctags --kind-C=+l`. but you can also
 just do vim's default `gd`.
 
 `ctags -o -` to output to stdout instead of creating tags file
+
+The file format is `symbol \t file \t line`. Note that tabs are required.
 
 ## cscope
 

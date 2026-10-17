@@ -2,6 +2,9 @@
 
 # TODO replace $0 with basename $0 to make it shorter
 
+# TODO add optional minimum size assertion to backups. If a backup is created
+# but smaller than the desired size, it likely failed.
+
 # Consider adding a --dry-run that we pass through to rsync or something
 
 HELP_STRING=$(cat <<END

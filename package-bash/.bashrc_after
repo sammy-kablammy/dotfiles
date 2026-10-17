@@ -278,6 +278,7 @@ if [ "$REMOTE" ]; then
     : # (noop)
 elif [ -z "$TMUX" ]; then
     # tmux attach || tmux new-session -s "work"
+    :
 else
     # let's try having the tmux status on for a bit
     : # tmux set status off
