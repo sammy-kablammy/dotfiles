@@ -271,16 +271,16 @@ function select_custom_textobject(is_around, is_multiline, start_checker, end_ch
     while line[object_start_col] ~= nil and start_checker(line[object_start_col]) and iters < maxiters do
         -- what happens if we go off the end of the line? Nothing. it should just work.
         object_start_col = object_start_col - 1
-        maxiters = maxiters + 1
+        iters = iters + 1
     end
     -- Find right boundary of object
     local object_end_col = cursor_col
-    maxiters = 10
+    maxiters = 100000
     iters = 0
     while line[object_end_col] ~= nil and end_checker(line[object_end_col]) and iters < maxiters do
         -- what happens if we go off the end of the line?
         object_end_col = object_end_col + 1
-        maxiters = maxiters + 1
+        iters = iters + 1
     end
     -- print(object_start_col, object_end_col)
 
