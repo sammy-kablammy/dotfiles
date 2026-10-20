@@ -56,17 +56,26 @@ end, { desc = "Create Section" })
 
 -- ok here are my textobjects
 
--- TODO need ci_ for easily editing snake case names
 
+
+select_range = function(start_row, start_col, end_row, end_col)
+    -- Force "v" mode. My old implementation used "gv" to reselect the previous
+    -- selection, which would break when the last used visual mode was V-line or
+    -- v-block mode.
+    if vim.fn.mode() ~= "v" then
+        vim.cmd("normal! v")
+    end
+    vim.api.nvim_win_set_cursor(0, { start_row, start_col })
+    vim.cmd("normal! o") -- "Other" end of visual selection
+    vim.api.nvim_win_set_cursor(0, { end_row, end_col })
+end
 
 -- the whole buffer
 vim.keymap.set("x", "gG", function()
     local num_lines_in_buf = #vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    vim.api.nvim_buf_set_mark(0, "<", 1, 0, {})
-    vim.api.nvim_buf_set_mark(0, ">", num_lines_in_buf, 999999, {})
-    vim.api.nvim_feedkeys("gv", "n", true)
-end)
-vim.keymap.set("o", "gG", ":normal vgG<cr>")
+    select_range(1, 0, num_lines_in_buf, 999999)
+end, { desc = "entire buffer text object" })
+vim.keymap.set("o", "gG", ":normal vgG<cr>", { desc = "entire buffer text object" })
 
 -- bAckticks
 -- This conflicts with alphabetic
@@ -166,59 +175,16 @@ vim.keymap.set("o", "iu", function()
     local url_strings = vim.ui._get_urls()
 end, { desc = "inside URI" })
 
--- function assumes 'inner', can override to 'around'.
--- i think this object would be easiest to use if it only works on current line.
-function select_slash(is_around)
-    local cursor = vim.api.nvim_win_get_cursor(0)
-    local cursor_line = cursor[1]
-    local cursor_col = cursor[2] + 1
-
-    local line = vim.fn.getline(cursor_line)
-
-    -- search leftward until slash or line start, save pos just before
-    local startslash = cursor_col
-    -- TODO is there not a better lua way to get char at string idx?
-    while startslash > 0 and string.sub(line, startslash, startslash) ~= '/' do
-        startslash = startslash - 1
-    end
-    -- search leftward until slash or line start, save pos just before
-    local endslash = cursor_col + 1
-    while endslash < #line and string.sub(line, endslash, endslash) ~= '/' do
-        endslash = endslash + 1
-    end
-    endslash = endslash - 2
-    print(startslash, endslash)
-
-    -- /test/filepath/here/
--- ^  ^^^         ^ ^    ^^  test all these cursor starting positions
--- actually... could we make some kind of testing framework to verify that we don't break this in the future?
-
-    if is_around then
-        startslash = startslash - 1
-        endslash = endslash + 1
-    end
-
-    vim.api.nvim_buf_set_mark(0, "<", cursor_line, startslash, {})
-    vim.api.nvim_buf_set_mark(0, ">", cursor_line, endslash, {})
-    vim.api.nvim_feedkeys("gv", "n", true)
-end
--- vim.keymap.set("x", "i/", function() select_slash(false) end)
--- vim.keymap.set("o", "i/", ":normal vi/<cr>")
--- vim.keymap.set("x", "a/", function() select_slash(true) end)
--- vim.keymap.set("o", "a/", ":normal va/<cr>")
-function new_select_slash()
+function select_slash()
     select_custom_textobject(false, false, function(char)
         return char ~= '/'
     end)
 end
--- TODO all text objects need descriptions!!!
-vim.keymap.set("x", "i/", function() new_select_slash(false) end)
--- TODO i think the reason my textobjects are broken in some filetypes is
--- because of a : vs <cmd> difference.
-vim.keymap.set("o", "i/", "<cmd>normal vi/<cr>")
-vim.keymap.set("x", "a/", function() new_select_slash(true) end)
+vim.keymap.set("x", "i/", function() select_slash(false) end, { desc = "inside slash" })
+vim.keymap.set("o", "i/", ":normal vi/<cr>")
+vim.keymap.set("x", "a/", function() select_slash(true) end, { desc = "inside slash" })
 vim.keymap.set("o", "a/", ":normal va/<cr>")
--- Bruh /some/filepath/
+-- Test this with /some/filepath/here/
 
 
 -- Maybe the better API for handling "around" is not a single bool, but a
@@ -287,10 +253,7 @@ function select_custom_textobject(is_around, is_multiline, start_checker, end_ch
     -- idk why
     object_end_col = object_end_col - 2
 
-    vim.api.nvim_buf_set_mark(0, "<", cursor_line, object_start_col, {})
-    vim.api.nvim_buf_set_mark(0, ">", cursor_line, object_end_col, {})
-    vim.api.nvim_feedkeys("gv", "n", true)
-
+    select_range(cursor_line, object_start_col, cursor_line, object_end_col)
 end
 
 -- try selecting ints
