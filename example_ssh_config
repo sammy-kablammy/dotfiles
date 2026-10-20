@@ -23,3 +23,9 @@ Host *
     UseKeychain yes
     ForwardAgent yes
     # run ssh-add -l to check
+
+# Run a local command before connecting. Useful for reminder messages
+host somehost
+    # ...
+    PermitLocalCommand yes
+    LocalCommand echo '(sam) If this fails, you probably need to connect to tailscale'
