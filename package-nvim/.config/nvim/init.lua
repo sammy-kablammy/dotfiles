@@ -137,6 +137,10 @@ vim.keymap.set("n", "<leader><leader>I", "<cmd>IconPickerNormal emoji<cr>")
 -- What if i tried using the mouse for once?
 -- :h popup-menu
 vim.cmd([[menu PopUp.Pop\ Tag\ Stack <cmd>pop<cr>]])
+-- Doing something on actual mouse hover (without changing cursor position in
+-- the buffer) would basically require re-implementing textDocument/hover client
+-- logic in lua. So my "hover" actually requires a click.
+vim.cmd([[menu PopUp.LSP\ Hover <cmd>lua vim.lsp.buf.hover()<cr>]])
 
 -- to go further, couldn't you have a smalltalk like interface with this system?
 
