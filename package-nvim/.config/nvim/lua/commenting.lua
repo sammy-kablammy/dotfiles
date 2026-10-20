@@ -40,6 +40,22 @@ vim.keymap.set("n", "dgc", function()
     -- Didn't find an end of line comment; do nothing
 end, { desc = "delete trailing comment on current line" })
 
+
+
+-- You can get colors from builtin highlight groups:
+-- local color = vim.fn.synIDattr(vim.fn.hlID("TermCursor"), "bg#")
+-- (vim has a builtin Todo hlgroup but i want mine to be separate)
+local blue = "gui=bold guifg=#ffffff guibg=#227799"
+local yellow = "gui=bold guifg=#ffffff guibg=#888800"
+local comment_highlighting_rules = {
+    ["TO-DO"] = blue,
+    ["TODO"] = blue,
+    ["NOTE"] = blue,
+    ["WARN"] = yellow,
+    ["HACK"] = yellow,
+    ["FIXME"] = yellow,
+}
+
 --[[
 
 Todo highlighting
@@ -58,15 +74,10 @@ things to come back to:
 --]]
 local function highlight_todos()
     if vim.bo.commentstring == "" then
-        -- either the commentstring hasn't been defined yet, or this buffer just
-        -- doesn't have one
-
-        -- print("No commentstring! Cannot highlight todos") this is really annoying actually
+        -- this is really annoying actually
+        -- print("No commentstring! Cannot highlight todos")
         return
     end
-
-    -- You can get colors from builtin highlight groups like this:
-    -- local color = vim.fn.synIDattr(vim.fn.hlID("TermCursor"), "bg#")
 
     -- Clear old matches
     local existing_matches = vim.fn.getmatches(0)
@@ -76,19 +87,7 @@ local function highlight_todos()
         end
     end
 
-    local blue = "gui=bold guifg=#ffffff guibg=#227799"
-    local yellow = "gui=bold guifg=#ffffff guibg=#888800"
-    local keywords = {
-        ["TO-DO"] = blue,
-        ["TODO"] = blue,
-        ["NOTE"] = blue,
-        ["WARN"] = yellow,
-        ["HACK"] = yellow,
-        ["FIXME"] = yellow,
-    }
-    for keyword, hlcommand in pairs(keywords) do
-        -- note that there is actually a builtin Todo hlgroup in vim if you
-        -- wanted to use that
+    for keyword, hlcommand in pairs(comment_highlighting_rules) do
 
         -- create highlight group for the thing
         local hlgroup = "SamHighlight" .. keyword
