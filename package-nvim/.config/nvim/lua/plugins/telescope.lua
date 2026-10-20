@@ -30,6 +30,10 @@ telescope.setup({
             num_pickers = -1,
         },
         mappings = {
+            i = {
+                ["<c-e>"] = actions.preview_scrolling_down,
+                ["<c-y>"] = actions.preview_scrolling_up,
+            },
             n = {
                 ["X"] = actions.delete_buffer,
                 ["-"] = function()
@@ -79,6 +83,11 @@ end
 telescope_map("f", function() builtin.find_files() end, "find files")
 telescope_map("F", function() builtin.find_files({ hidden = true, no_ignore = true, cwd = utils.buffer_dir() }) end, "find files relative to current buffer")
 telescope_map("a", function() builtin.git_files() end, "git trAcked files")
+telescope_map("A", function()
+    local obj = vim.system({ "git", "ls-files" }, { timeout = 1000 }):wait()
+    local files = vim.fn.split(obj.stdout, "\n")
+    builtin.live_grep({ search_dirs = files })
+end, "live grep in git trAcked files")
 telescope_map("e", function() builtin.git_branches() end, "git branchEs")
 telescope_map("h", builtin.help_tags, "help")
 telescope_map("b", function() builtin.buffers({ sort_mru = true }) end, "buffers")
@@ -132,9 +141,6 @@ telescope_map("z", function()
     local basename = vim.fs.basename(link)
     builtin.grep_string({ search = basename })
 end, "my notes, backlinks search")
-
--- require("telescope").load_extension("undo")
--- vim.keymap.set("n", "<leader>fu", "<cmd>Telescope undo<cr>")
 
 -- always ignore "tags" files, this makes my note backlink search work properly
 vim.go.grepprg = "rg --vimgrep -uu --glob '!tags'"
