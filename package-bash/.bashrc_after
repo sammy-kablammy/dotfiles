@@ -85,6 +85,10 @@ edit-script() {
 }
 alias e=edit-script
 complete -c edit-script e
+cat-script() {
+    cat $(which $*)
+}
+complete -c cat-script
 
 alias 'nvim-dev'="$HOME/checkouts/neovim/build/bin/nvim --clean"
 # You need to do some combination of make clean, delete these files, and maybe
