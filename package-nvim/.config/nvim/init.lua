@@ -54,7 +54,6 @@ vim.pack.add({
     -- my plugins!!! hooray!!!
     -- github("sammy-kablammy/nvim_plugin_template"),
     github("sammy-kablammy/simpletodo.nvim"),
-    github("sammy-kablammy/linkma.nvim"),
 
 })
 
@@ -79,6 +78,7 @@ vim.api.nvim_create_user_command("PackOpenUI", function()
 end, {})
 
 -- Configs for my own plugins
+-- (can probably remove simpletodo now)
 -- require("simpletodo").setup({})
 -- Linkma
 -- Can maybe remove because of https://github.com/neovim/neovim/pull/28630
