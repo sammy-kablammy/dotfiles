@@ -2,6 +2,8 @@
 
 diagram/flowcharting tool. no special syntax or directives, just plain text.
 
+no rendering step! it should be easy to read and write as-is. just like markdown
+
 Sorta like venn.nvim but focusing more on textobjects than visual selections
 https://github.com/jbyuki/venn.nvim
 

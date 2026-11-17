@@ -20,6 +20,8 @@ local symbols = {
     "🤔 thinking",
     "😢 crying | tear",
     "🥲 smiling crying | smile with tear",
+    "🤢 gross | nauseous",
+    "🤮 vomit | barf",
     "😈 imp | demon",
     "🧠 brain",
     "🦝 raccoon | kijetesantakalu",
@@ -42,6 +44,7 @@ local symbols = {
     "🔥 fire",
     "💣 bomb",
     "💼 briefcase | suitcase | work",
+    "🐌 snail | gastropod",
 }
 -- Could possibly parse vim.fn.digraph_getlist(true) for more
 

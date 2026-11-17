@@ -136,6 +136,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWrite" }, {
 function UpdateYoutubeDownloadStatus()
     -- TODO don't just search here, also search the corresponding text file
     -- TODO make a stink if the text file is not there or is empty
+    -- TODO youtube handling should exist in its own module
     local video_backups_dir = "/home/sam/kablam/public/ytdlp/"
     ClearYoutubeDownloadStatus()
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)

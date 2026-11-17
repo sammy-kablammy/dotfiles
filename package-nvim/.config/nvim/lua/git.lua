@@ -25,6 +25,8 @@ vim.keymap.set("n", "]H", function()
 end, { desc = "next git Hunk" })
 
 -- will eventually delete this
+-- TODO use [gx for conflict marker, [gf for file markers in diffs ("^--- a" or
+-- "^--- b"), and more [g things for more things
 vim.keymap.set("n", "[g", function()
     -- gitsigns.nav_hunk("prev", { target = 'all' })
     print("use 'h' for hunks instead")

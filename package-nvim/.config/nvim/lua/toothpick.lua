@@ -232,3 +232,7 @@ vim.keymap.set("n", "<leader>9", function() edit_arg_number(9) end, { desc = "ar
 -- on this above
 
 -- TODO why are we deleting the buffer on close? That's so weird. just hide it.
+
+-- TODO ability to add "comments" to file names e.g.:
+--     foo/bar/baz/file.txt # CIDR consts are defined here
+--     foo/bar/file.txt # Useful functions live here

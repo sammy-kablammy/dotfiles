@@ -76,6 +76,8 @@ alias "dps"="docker ps -as"
 alias 'mkx'='chmod ugo+x'
 alias 'devicetree-decompile'='dtc -I dtb -O dts'
 alias 'delete-the-fucking-zone-identifiers-windows-you-stupid-piece-of-garbage'='rm -i *:Zone.Identifier'
+alias 'k'='kubectl'
+alias 'gensecret'='openssl rand -hex 32'
 # Fix 'Exec format error' from windows programs (like explorer.exe) on WSL:
 # sudo -s and add this to crontab so you don't have to run this all the time
 alias 'wsl-fix-bin'='sudo systemctl restart systemd-binfmt'
@@ -284,7 +286,8 @@ elif [ -z "$TMUX" ]; then
     # tmux attach || tmux new-session -s "work"
     :
 else
-    # let's try having the tmux status on for a bit
+    # After trying both ways, I think I prefer status on. Especially if i leave
+    # my machine on for several days. it's hard to remember where things are
     : # tmux set status off
 fi
 
@@ -553,6 +556,9 @@ alias "Q"="$EDITOR $(get-dotfiles-path)/quickref.md"
 alias "BB"="cd $HOME/.local/sam-bin/"
 
 alias dy='nvim +Dymaxion'
+
+# for cross-compiling rust on macos
+alias 'cargo-linux'='cargo zigbuild --workspace --all-targets --target x86_64-unknown-linux-gnu'
 
 # TODO export more things so they're usable from vim ! cmdline
 
