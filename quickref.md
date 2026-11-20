@@ -14,7 +14,7 @@ programming gooder and faster yes ok thank you
   mega list, and you avoid the painfully slow LSP completion in most cases.
 - Telescope to fuzzy find files or to live grep for file content
 - Frequently accessed files bound to hotkeys (previously Harpoon, now custom)
-- Prefer operators & text objects to per-character manipulation Vim is not a
+- Prefer operators & text objects to per-character manipulation. Vim is not a
   structured editor. But text objects approximate the experience of a structured
   editor in many cases: "take this semantic chunk and put it over there" instead
   of "start selection, move cursor, end selection, copy, move cursor, paste"
@@ -139,6 +139,12 @@ flock -n myfile echo hello
 - check if string is a valid ref: `git check-ref-format 'nocommas,'` (doesn't
   output anything, must check exit code)
 - set upstream without pushing: `git branch -u remotename localname`
+
+## github
+
+ignore whitespace changes in PRs
+- add `?w=1` to url
+- this is remembered per PR, there may also be a global checkbox nowadays
 
 ### Submodules
 

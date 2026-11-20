@@ -24,3 +24,5 @@ filetype_create_listify_keymaps = function()
         buffer = true,
     })
 end
+
+-- gll on empty line currently errors. it shouldn't
