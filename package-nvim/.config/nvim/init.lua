@@ -127,6 +127,8 @@ require("dymaxion-chronofile")
 
 require("experimental/spellfile_updater")
 
+require("experimental/blame")
+
 require("snippets")
 
 -- icon-picker setup until i remove it fully
