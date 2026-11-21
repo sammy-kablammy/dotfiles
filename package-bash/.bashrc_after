@@ -59,6 +59,7 @@ alias 'py'='python3'
 alias 'python'='python3'
 alias 'bt'='bluetoothctl'
 alias 'xc'='xclip -selection clipboard -rmlastnl'
+alias 'm'='make --silent'
 alias 'wat'='watch -ctn 0.2'
 alias 'watls'='watch -ctn 0.2 ls --color=always'
 alias 'gr'='grep -i'
@@ -284,6 +285,7 @@ if [ "$REMOTE" ]; then
     : # (noop)
 elif [ -z "$TMUX" ]; then
     # tmux attach || tmux new-session -s "work"
+    tmux attach || tmux new-session
     :
 else
     # After trying both ways, I think I prefer status on. Especially if i leave

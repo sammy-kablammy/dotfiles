@@ -45,6 +45,7 @@ local symbols = {
     "💣 bomb",
     "💼 briefcase | suitcase | work",
     "🐌 snail | gastropod",
+    "💢 anger | angry",
 }
 -- Could possibly parse vim.fn.digraph_getlist(true) for more
 

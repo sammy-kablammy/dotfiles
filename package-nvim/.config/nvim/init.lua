@@ -88,9 +88,9 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     callback = function()
         vim.api.nvim_buf_create_user_command(0, "LinkmaToc", linkma.toc_loclist, {})
         vim.keymap.set("n", "<enter>", linkma.follow_link, { buffer = 0, desc = "follow link" })
-        vim.keymap.set("n", "]x", linkma.next_checkbox, { desc = "next checkbox" })
-        vim.keymap.set("n", "[x", linkma.previous_checkbox, { desc = "previous checkbox" })
-        vim.keymap.set("n", "<leader>mx", linkma.toggle_checkbox, { desc = "toggle checkbox" })
+        vim.keymap.set("n", "]x", linkma.next_checkbox, { buffer = 0, desc = "next checkbox" })
+        vim.keymap.set("n", "[x", linkma.previous_checkbox, { buffer = 0, desc = "previous checkbox" })
+        vim.keymap.set("n", "<leader>mx", linkma.toggle_checkbox, { buffer = 0, desc = "toggle checkbox" })
         -- text object for links
         vim.keymap.set("x", "im", linkma.select_link_text_object, { buffer = 0, desc = "inner link" })
         vim.keymap.set("o", "im", ":normal vim<cr>", { buffer = 0, desc = "inner link" })

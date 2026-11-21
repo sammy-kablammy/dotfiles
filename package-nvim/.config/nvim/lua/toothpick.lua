@@ -69,7 +69,7 @@ local function toothpick()
         row=dims.row,
         relative='editor',
         border='single',
-        title={ { 'Toothpick', 'ToothpickWindowTitle' } },
+        title={ { 'Toothpick🦷', 'ToothpickWindowTitle' } },
         title_pos='center',
         footer='bottom text',
         footer_pos='right',

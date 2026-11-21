@@ -242,3 +242,6 @@ vim.keymap.set("x", "ix", function() select_list_item(false) end)
 vim.keymap.set("o", "ix", ":normal vix<cr>")
 vim.keymap.set("x", "ax", function() select_list_item(true) end)
 vim.keymap.set("o", "ax", ":normal vax<cr>")
+
+-- add to linkma a mapping that converts "[ ]" -> "~[ ]~" as in "this todo is
+-- worth keeping because it logs my thoughts at the time, but i'm canceling it"

@@ -7,7 +7,10 @@ vim.keymap.set(
     { buffer = true }
 )
 
-vim.keymap.set("n", "<leader>m", vim.cmd.make, { buffer = true })
+vim.keymap.set("n", "<leader>m", function()
+    vim.cmd.copen()
+    vim.cmd("silent make")
+end, { buffer = true })
 
 vim.bo.complete = ".,w,b,u" -- (because tag file is too big and slow)
 

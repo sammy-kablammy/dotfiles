@@ -57,6 +57,7 @@ Use `<leader>?` to open quick reference
 - `run` or `run arg1 arg2 arg3`
 - `b file:line` or `b function_name` create breakpoint
   - `clear file:line` clear breakpoint
+  - `delete num` delete breakpoint (by number instead of by file+line)
   - `info break` list breakpoints
   - `until linenumber` temporary breakpoint at linenumber
   - toggle breakpoints with their breakpoint number, not line number
@@ -67,6 +68,7 @@ Use `<leader>?` to open quick reference
 - `p expr` print value of expression. Remember `p *expr` when pointer to struct
   - `info locals`
   - `info args`
+  - `print myarray@N` print N elements of an array
 - `bt` show backtrace
 - Start the TUI with `gdb --tui`, `tui enable`, or `ctrl-x a`
   - `layout src` source code
@@ -220,6 +222,8 @@ VAR ?= howdy
 .PHONY: help
 help:
     echo whatever
+    # By default, 'make' prints what it's about to run. Use @ to run commands silently:
+    @echo whatever
 
 # conditionally defined job
 ifeq ( $(SOMEVAR), contents )
